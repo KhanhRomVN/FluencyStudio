@@ -78,26 +78,13 @@ export const EmulatorFrame: React.FC<EmulatorFrameProps> = ({ children, theme = 
 
   return (
     <div className="flex justify-center h-full max-h-[850px] w-full items-center p-8">
-      <div className="relative w-[375px] h-[812px] bg-gray-900 rounded-[3rem] shadow-2xl ring-8 ring-gray-950 overflow-hidden flex flex-col select-none">
-        {/* Notch/Status Bar Area */}
-        <div className="absolute top-0 inset-x-0 h-8 flex justify-center z-20 pointer-events-none">
-          <div className="w-40 h-[30px] bg-black rounded-b-[1.25rem] relative">
-            {/* Camera/Sensor dots simulation (optional detail) */}
-            <div className="absolute top-0 right-10 w-2 h-2 bg-[#1a1a1a] rounded-full mt-2 mr-2"></div>
-          </div>
-        </div>
-
+      <div
+        className="relative w-[375px] h-[812px] bg-background border border-border overflow-hidden flex flex-col select-none rounded-md"
+        style={themeStyles}
+      >
         {/* Screen Content */}
-        <div
-          className="flex-1 w-full h-full overflow-y-auto pt-10 pb-8 scrollbar-hide bg-background text-foreground relative z-10"
-          style={themeStyles}
-        >
+        <div className="flex-1 w-full h-full overflow-y-auto scrollbar-hide bg-background text-foreground relative z-10 ">
           {children}
-        </div>
-
-        {/* Home Indicator */}
-        <div className="absolute bottom-1 inset-x-0 h-6 flex justify-center items-center pointer-events-none z-20">
-          <div className="w-32 h-1 bg-gray-100/50 rounded-full"></div>
         </div>
       </div>
     </div>

@@ -3,8 +3,8 @@ import { useParams } from 'react-router-dom';
 import { ChevronRight, ChevronDown, BookOpen, FileText, CheckCircle, Palette } from 'lucide-react';
 import { CodeBlock } from '../../components/CodeBlock';
 import { EmulatorFrame } from './components/emulator/EmulatorFrame';
-import { CoursePreview } from './components/emulator/screens/CoursePreview';
-import { QuizPreview } from './components/emulator/screens/QuizPreview';
+import { CourseDetailScreen } from './components/emulator/screens/CourseDetailScreen';
+import { QuizPage } from './components/emulator/screens/QuizPage';
 import { folderService } from '../../shared/services/folderService';
 
 const STORAGE_KEY = 'fluency_course_paths';
@@ -115,9 +115,41 @@ const CoursePage = () => {
     setSelection({
       type: 'quiz',
       data: { ...quiz, _lessonTitle: lesson.title },
-      sourceData: lesson, // Show the FULL lesson JSON in CodeBlock
+      sourceData: quiz,
       id: quiz.id,
     });
+  };
+
+  const handleCodeChange = (newCode: string) => {
+    try {
+      const parsed = JSON.parse(newCode);
+
+      setSelection((prev) => {
+        // If we are editing a quiz, we need to preserve the _lessonTitle
+        if (prev.type === 'quiz') {
+          return {
+            ...prev,
+            sourceData: parsed,
+            data: { ...parsed, _lessonTitle: prev.data._lessonTitle },
+          };
+        }
+
+        // Default case
+        return {
+          ...prev,
+          sourceData: parsed,
+          data: parsed,
+        };
+      });
+    } catch (e) {
+      // Invalid JSON, just ignore update or maybe show error state?
+      // For now, allow typing (but it won't update emulator until valid)
+      // Actually, if we rely on prop update for CodeBlock value, we might block typing if we don't update state.
+      // But CodeBlock is uncontrolled-ish for typing (it keeps its own model).
+      // The prop `code` is only used to set value if it differs using setValue.
+      // Since we only update state on valid JSON, invalid JSON usage keeps local editor state but doesn't trigger emulator update.
+      // However, if we switch files, we depend on `code` prop.
+    }
   };
 
   // Render content based on selection
@@ -126,7 +158,7 @@ const CoursePage = () => {
 
     switch (selection.type) {
       case 'course':
-        return <CoursePreview courseData={selection.data} />;
+        return <CourseDetailScreen courseData={selection.data} />;
       case 'lesson':
         return (
           <div className="flex flex-col items-center justify-center h-full p-6 text-center text-gray-500">
@@ -136,7 +168,7 @@ const CoursePage = () => {
           </div>
         );
       case 'quiz':
-        return <QuizPreview quizData={selection.data} lessonTitle={selection.data._lessonTitle} />;
+        return <QuizPage quizData={selection.data} lessonTitle={selection.data._lessonTitle} />;
       default:
         return <div>Select an item</div>;
     }
@@ -238,6 +270,8 @@ const CoursePage = () => {
               code={JSON.stringify(selection.sourceData || selection.data, null, 2)}
               language="json"
               themeConfig={{ background: '#1e1e1e10' }}
+              readOnly={false}
+              onChange={handleCodeChange}
             />
           </div>
         </div>

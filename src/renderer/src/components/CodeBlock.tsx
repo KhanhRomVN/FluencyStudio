@@ -28,6 +28,8 @@ interface CodeBlockProps {
   className?: string;
   themeConfig?: CodeBlockThemeConfig;
   wordWrap?: 'off' | 'on' | 'wordWrapColumn' | 'bounded';
+  readOnly?: boolean;
+  onChange?: (value: string) => void;
 }
 
 const FLUENCY_THEME = {
@@ -52,9 +54,12 @@ const CodeBlock: React.FC<CodeBlockProps> = ({
   className,
   themeConfig,
   wordWrap = 'on',
+  readOnly = true,
+  onChange,
 }) => {
   const editorRef = useRef<HTMLDivElement>(null);
   const editorInstance = useRef<any>(null);
+  const subscriptionRef = useRef<any>(null);
 
   useEffect(() => {
     let mounted = true;
@@ -94,7 +99,7 @@ const CodeBlock: React.FC<CodeBlockProps> = ({
           value: code,
           language: language,
           theme: themeName,
-          readOnly: true,
+          readOnly: readOnly,
           minimap: { enabled: false },
           scrollBeyondLastLine: false,
           fontSize: 13,
@@ -103,6 +108,14 @@ const CodeBlock: React.FC<CodeBlockProps> = ({
           padding: { top: 16, bottom: 16 },
           wordWrap: wordWrap,
         });
+
+        // Trigger change on edit
+        if (onChange) {
+          subscriptionRef.current = editorInstance.current.onDidChangeModelContent(() => {
+            const value = editorInstance.current.getValue();
+            onChange(value);
+          });
+        }
       } catch (error) {
         console.error('Failed to create monaco editor instance:', error);
       }
@@ -169,7 +182,7 @@ const CodeBlock: React.FC<CodeBlockProps> = ({
         editorInstance.current.dispose();
       }
     };
-  }, [JSON.stringify(themeConfig), wordWrap, code, language]);
+  }, [JSON.stringify(themeConfig), wordWrap, language, readOnly]);
 
   // Update value
   useEffect(() => {

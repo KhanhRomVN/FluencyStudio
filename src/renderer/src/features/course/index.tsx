@@ -4,7 +4,7 @@ import { ChevronRight, ChevronDown, BookOpen, FileText, CheckCircle, Palette } f
 import { CodeBlock } from '../../components/CodeBlock';
 import { EmulatorFrame } from './components/emulator/EmulatorFrame';
 import { CourseDetailScreen } from './components/emulator/screens/CourseDetailScreen';
-import { QuizPage } from './components/emulator/screens/QuizPage';
+import { QuizPage } from './components/emulator/screens/Quiz';
 import { folderService } from '../../shared/services/folderService';
 
 const STORAGE_KEY = 'fluency_course_paths';
@@ -168,7 +168,7 @@ const CoursePage = () => {
           </div>
         );
       case 'quiz':
-        return <QuizPage quizData={selection.data} lessonTitle={selection.data._lessonTitle} />;
+        return <QuizPage quizData={selection.data} />;
       default:
         return <div>Select an item</div>;
     }
@@ -277,7 +277,7 @@ const CoursePage = () => {
         </div>
 
         {/* MOBILE EMULATOR AREA */}
-        <div className="w-[450px] border-l shadow-inner bg-background/20 flex flex-col items-center justify-center relative">
+        <div className="w-[450px] border-l bg-background/20 flex flex-col items-center justify-center relative">
           <button
             onClick={() =>
               setEmulatorTheme((prev) => (prev === 'DefaultDark' ? 'SoftTeal' : 'DefaultDark'))

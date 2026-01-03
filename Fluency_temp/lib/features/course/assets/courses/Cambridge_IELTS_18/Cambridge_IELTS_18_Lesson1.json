@@ -1,0 +1,393 @@
+{
+  "id": "l_01",
+  "title": "Test 1: Listening",
+  "lessonNumber": 1,
+  "quiz": [
+    {
+      "id": "ielts18_test1_part1",
+      "title": "Part 1: Transport survey",
+      "type": "gap-fill",
+      "instruction": "<p>Write ONE WORD AND/OR A NUMBER for each answer.</p>",
+      "quizNumber": 1,
+      "question": "<p>Transport survey</p></n><p>Name: Sadie Jones</p></n><p>Year of birth: 1991</p></n><p>Postcode: </p></gap id='answer_01'></n><p>Travelling by bus</p></n><p>Date of bus journey: </p></gap id='answer_02'></n><p>Reason for trip: shopping and visit to the </p></gap id='answer_03'></n><p>Travelled by bus because cost of </p></gap id='answer_04'><p> too high</p></n><p>Got on bus at </p></gap id='answer_05'><p> Street</p></n><p>Complaints about bus service:</p></n><p>- bus today was </p></gap id='answer_06'></n><p>- frequency of buses in the </p></gap id='answer_07'></n><p>Travelling by car</p></n><p>Goes to the </p></gap id='answer_08'><p> by car</p></n><p>Travelling by bicycle</p></n><p>Dislikes travelling by bike in the city centre because of the </p></gap id='answer_09'></n><p>Doesn’t own a bike because of a lack of </p></gap id='answer_10'>",
+      "audio": "./audio/Cambridge_IELTS_18_Test1_Listening_Part1.mp3",
+      "transcript": "<p>MAN: Excuse me. Would you mind if I asked you some questions? We’re doing a survey on transport.</p>\n<p>SADIE: Yes, that’s OK.</p>\n<p>MAN: First of all, can I take your name?</p>\n<p>SADIE: Yes. It’s Sadie Jones.</p>\n<p>(...transcript continues...)</p>",
+      "answers": [
+        {
+          "id": "answer_01",
+          "answer": "DW30 7YZ",
+          "explain": "<strong>Thông tin cần tìm:</strong> Mã bưu chính (Postcode).<br><strong>Giải thích:</strong> Sau khi xác nhận tên và năm sinh, người phỏng vấn hỏi 'next your postcode, please'. Sadie đánh vần rõ ràng: 'It's <strong>DW30 7YZ</strong>'.<br><strong>Lưu ý:</strong> Ngay sau đó có nhắc đến 'Wells' và 'Harborne', nhưng đó là tên địa danh. Bạn cần nghe kỹ các chữ cái và số để tránh nhầm lẫn, đặc biệt là chữ 'Z' trong tiếng Anh."
+        },
+        {
+          "id": "answer_02",
+          "answer": "24th April",
+          "explain": "<strong>Thông tin cần tìm:</strong> Ngày tháng của chuyến đi xe buýt.<br><strong>Giải thích:</strong> Người phỏng vấn xác nhận: 'It's the <strong>24th of April</strong>, isn't it?'. Sadie ban đầu thắc mắc 'Isn't it the 25th?' (Không phải 25 à?) nhưng sau đó sửa lại ngay 'No, actually, you're right'.<br><strong>Bẫy (Distractor):</strong> Ngày 25th được nhắc đến nhưng đã bị phủ định."
+        },
+        {
+          "id": "answer_03",
+          "answer": "dentist",
+          "explain": "<strong>Thông tin cần tìm:</strong> Lý do cho chuyến đi (ngoài việc mua sắm).<br><strong>Giải thích:</strong> Sadie xác nhận có đi mua sắm ('did some shopping') nhưng nhấn mạnh: 'but the main reason I came here was to go to the <strong>dentist</strong>' (lý do chính là đi nha sĩ).<br><strong>Từ vựng:</strong> Cụm 'visit to the...' trong câu hỏi khớp với 'go to the...' trong bài nghe."
+        },
+        {
+          "id": "answer_04",
+          "answer": "parking",
+          "explain": "<strong>Thông tin cần tìm:</strong> Nguyên nhân khiến chi phí (cost) quá cao.<br><strong>Giải thích:</strong> Sadie giải thích lý do cô ngừng lái xe ô tô: 'because <strong>parking</strong> was so difficult to find and it costs so much'.<br><strong>Phân tích:</strong> Cụm 'costs so much' tương đương với 'cost of... too high'. Yếu tố tốn kém ở đây chính là phí đỗ xe (parking)."
+        },
+        {
+          "id": "answer_05",
+          "answer": "Claxby",
+          "explain": "<strong>Thông tin cần tìm:</strong> Tên đường nơi bắt xe buýt.<br><strong>Giải thích:</strong> Sadie nói: 'At the bus stop on <strong>Claxby</strong> Street'.<br><strong>Hỗ trợ:</strong> Người phỏng vấn đánh vần lại từng ký tự để xác nhận: 'C-L-A-X-B-Y'. Bạn cần chú ý bắt kịp tốc độ đánh vần này."
+        },
+        {
+          "id": "answer_06",
+          "answer": "late",
+          "explain": "<strong>Thông tin cần tìm:</strong> Lời phàn nàn về tình trạng xe buýt hôm nay.<br><strong>Giải thích:</strong> Mặc dù bình thường xe tiện lợi, nhưng Sadie phàn nàn: 'but this morning it was <strong>late</strong>' (sáng nay xe bị trễ).<br><strong>Chi tiết:</strong> Cô nói thêm là trễ khoảng 10 phút, nhưng từ cần điền mô tả tính chất sự việc là 'late'."
+        },
+        {
+          "id": "answer_07",
+          "answer": "evening",
+          "explain": "<strong>Thông tin cần tìm:</strong> Khoảng thời gian mà tần suất xe buýt có vấn đề.<br><strong>Giải thích:</strong> Sadie phàn nàn rằng 'any time I've been in town in the <strong>evening</strong>... I've noticed you have to wait a long time'.<br><strong>Phân tích:</strong> 'Wait a long time' đồng nghĩa với tần suất xe thấp. Đáp án cần điền là thời gian 'evening'."
+        },
+        {
+          "id": "answer_08",
+          "answer": "supermarket",
+          "explain": "<strong>Thông tin cần tìm:</strong> Nơi Sadie thường đi bằng ô tô.<br><strong>Giải thích:</strong> Sadie nói cô ít dùng xe, 'Mainly just to go to the <strong>supermarket</strong>' (Chủ yếu chỉ để đi siêu thị).<br><strong>Bẫy (Distractor):</strong> 'Golf club' được nhắc đến ngay sau đó, nhưng là nơi chồng cô ấy đi, không phải Sadie."
+        },
+        {
+          "id": "answer_09",
+          "answer": "pollution",
+          "explain": "<strong>Thông tin cần tìm:</strong> Lý do không thích đạp xe trong trung tâm.<br><strong>Giải thích:</strong> Sadie nói: 'I'm not keen on cycling there because of all the <strong>pollution</strong>'.<br><strong>Từ đồng nghĩa:</strong> 'Not keen on' tương đương với 'Dislikes' trong câu hỏi. Nguyên nhân chính là sự ô nhiễm."
+        },
+        {
+          "id": "answer_10",
+          "answer": "storage",
+          "explain": "<strong>Thông tin cần tìm:</strong> Lý do không sở hữu xe đạp (thiếu cái gì?).<br><strong>Giải thích:</strong> Sadie sống ở căn hộ tầng 2 và vấn đề là: 'it doesn't have any <strong>storage</strong>' (không có chỗ cất giữ).<br><strong>Kết luận:</strong> Vì thiếu kho/chỗ để ('lack of storage') nên cô không mua xe."
+        }
+      ]
+    },
+    {
+      "id": "ielts18_test1_part2",
+      "title": "Part 2: Volunteering for ACE",
+      "type": "group",
+      "instruction": "Choose the correct letter, A, B or C.",
+      "quizNumber": 2,
+      "audio": "./audio/Cambridge_IELTS_18_Test1_Listening_Part2.mp3",
+      "transcript": "<p>Good evening, everyone. Let me start by welcoming you all to this talk...</p>",
+      "questions": [
+        {
+          "id": "q11",
+          "type": "multiple-choice",
+          "question": "Why does the speaker apologise about the seats?",
+          "options": [
+            { "key": "A", "text": "They are too small." },
+            { "key": "B", "text": "There are not enough of them." },
+            { "key": "C", "text": "Some of them are very close together." }
+          ],
+          "answer": "C",
+          "explain": "<strong>Giải thích:</strong> Diễn giả nói: 'people at the back of the room may be a bit <strong>squashed</strong>'.<br><strong>Phân tích từ vựng:</strong> Từ 'squashed' có nghĩa là bị ép chặt, chật chội do ngồi sát nhau, tương đương với ý 'very close together' trong đáp án C.<br><strong>Loại trừ:</strong> Đáp án B sai vì bà nói đã mang thêm ghế ('brought in extra seats') nên không ai phải đứng."
+        },
+        {
+          "id": "q12",
+          "type": "multiple-choice",
+          "question": "What does the speaker say about the age of volunteers?",
+          "options": [
+            {
+              "key": "A",
+              "text": "The age of volunteers is less important than other factors."
+            },
+            {
+              "key": "B",
+              "text": "Young volunteers are less reliable than older ones."
+            },
+            { "key": "C", "text": "Most volunteers are about 60 years old." }
+          ],
+          "answer": "A",
+          "explain": "<strong>Giải thích:</strong> Diễn giả nhấn mạnh rằng các yếu tố khác như sự tin cậy ('reliability') là cốt yếu ('crucial'), và khẳng định: '<strong>age isn't related to these</strong>' (tuổi tác không liên quan đến những phẩm chất này).<br><strong>Kết luận:</strong> Điều này có nghĩa là tuổi tác ít quan trọng hơn các yếu tố khác (Đáp án A).<br><strong>Loại trừ:</strong> Bà nói tình nguyện viên có thể từ 16 đến 60+, nên đáp án C (hầu hết là 60) là sai."
+        },
+        {
+          "id": "q13",
+          "type": "multiple-choice",
+          "question": "What does the speaker say about training?",
+          "options": [
+            { "key": "A", "text": "It is continuous." },
+            { "key": "B", "text": "It is conducted by a manager." },
+            { "key": "C", "text": "It takes place online." }
+          ],
+          "answer": "A",
+          "explain": "<strong>Giải thích:</strong> Diễn giả nói: 'training doesn't end when you start... It takes place <strong>before, during, and after</strong> periods of work'.<br><strong>Phân tích:</strong> Việc đào tạo diễn ra xuyên suốt quá trình làm việc đồng nghĩa với 'continuous' (liên tục).<br><strong>Loại trừ:</strong> Đáp án B sai vì thường do tình nguyện viên có kinh nghiệm hướng dẫn. Đáp án C sai vì 'it's all face to face' (trực tiếp)."
+        }
+      ]
+    },
+    {
+      "id": "ielts18_test1_part2_multi",
+      "title": "Part 2: Considerations & Jobs",
+      "type": "group",
+      "instruction": "Answer the questions below.",
+      "quizNumber": "14-20",
+      "audio": "./audio/Cambridge_IELTS_18_Test1_Listening_Part2.mp3",
+      "transcript": "...",
+      "questions": [
+        {
+          "id": "q14_15",
+          "type": "multiple-choice-multi-select",
+          "instruction": "Choose TWO letters, A–E.",
+          "question": "Which TWO issues does the speaker ask the audience to consider before they apply to be volunteers?",
+          "options": [
+            { "key": "A", "text": "their financial situation" },
+            { "key": "B", "text": "their level of commitment" },
+            { "key": "C", "text": "their work experience" },
+            { "key": "D", "text": "their ambition" },
+            { "key": "E", "text": "their availability" }
+          ],
+          "answers": ["B", "E"],
+          "explain": "<strong>Đáp án B (Commitment):</strong> Diễn giả nói 'What we value is <strong>dedication</strong>... give their full energy to the work'. Sự cống hiến/tận tâm tương đương với 'commitment'.<br><strong>Đáp án E (Availability):</strong> Bà nói 'it is critical that you have <strong>enough hours in the day</strong>'. Việc có đủ thời gian tương đương với 'availability'.<br><strong>Loại trừ:</strong> Bà nói rõ 'we don't ask about that' khi nhắc đến thu nhập (income - A)."
+        },
+        {
+          "id": "q16",
+          "type": "multiple-choice",
+          "instruction": "What is helpful for: <strong>Fundraising</strong>?",
+          "options": [
+            { "key": "A", "text": "experience on stage" },
+            { "key": "B", "text": "original, new ideas" },
+            { "key": "G", "text": "a good level of fitness" }
+          ],
+          "answer": "B",
+          "explain": "<strong>Từ khóa trong bài:</strong> 'creativity', 'imaginative or novel way'.<br><strong>Giải thích:</strong> Diễn giả tìm kiếm sự sáng tạo và các cách làm mới lạ ('novel way') để gây quỹ. Điều này khớp hoàn toàn với 'original, new ideas'."
+        },
+        {
+          "id": "q17",
+          "type": "multiple-choice",
+          "instruction": "What is helpful for: <strong>Litter collection</strong>?",
+          "options": [
+            { "key": "A", "text": "experience on stage" },
+            { "key": "B", "text": "original, new ideas" },
+            { "key": "G", "text": "a good level of fitness" }
+          ],
+          "answer": "G",
+          "explain": "<strong>Từ khóa trong bài:</strong> 'walk for long periods', 'uphill'.<br><strong>Giải thích:</strong> Công việc nhặt rác yêu cầu đi bộ đường dài và leo dốc, đòi hỏi sức khỏe tốt ('good level of fitness')."
+        },
+        {
+          "id": "q18",
+          "type": "multiple-choice",
+          "instruction": "What is helpful for: <strong>Playmates</strong>?",
+          "options": [
+            { "key": "C", "text": "parenting skills" },
+            { "key": "D", "text": "an understanding of food and diet" },
+            { "key": "F", "text": "a good memory" }
+          ],
+          "answer": "D",
+          "explain": "<strong>Từ khóa trong bài:</strong> 'know something about nutrition'.<br><strong>Giải thích:</strong> Vị trí này giúp trẻ em giữ gìn sức khỏe, nên kiến thức về dinh dưỡng ('nutrition') là hữu ích. Điều này đồng nghĩa với 'understanding of food and diet'."
+        },
+        {
+          "id": "q19",
+          "type": "multiple-choice",
+          "instruction": "What is helpful for: <strong>Story club</strong>?",
+          "options": [
+            { "key": "A", "text": "experience on stage" },
+            { "key": "E", "text": "retail experience" },
+            { "key": "F", "text": "a good memory" }
+          ],
+          "answer": "A",
+          "explain": "<strong>Từ khóa trong bài:</strong> 'done some acting', 'theatrical side'.<br><strong>Giải thích:</strong> Câu lạc bộ kể chuyện cần người hỗ trợ mảng sân khấu ('theatrical') và diễn xuất ('acting'). Điều này tương đương với 'experience on stage'."
+        },
+        {
+          "id": "q20",
+          "type": "multiple-choice",
+          "instruction": "What is helpful for: <strong>First aid</strong>?",
+          "options": [
+            { "key": "A", "text": "experience on stage" },
+            { "key": "E", "text": "retail experience" },
+            { "key": "F", "text": "a good memory" }
+          ],
+          "answer": "F",
+          "explain": "<strong>Từ khóa trong bài:</strong> 'take in a lot of information', 'not forget'.<br><strong>Giải thích:</strong> Người sơ cứu cần tiếp thu nhiều thông tin và 'không được quên' các bước quan trọng. Yêu cầu này chính là cần một trí nhớ tốt ('good memory')."
+        }
+      ]
+    },
+    {
+      "id": "ielts18_test1_part3",
+      "title": "Part 3: Jobs in fashion design",
+      "type": "group",
+      "instruction": "Choose the correct letter, A, B or C.",
+      "quizNumber": 3,
+      "audio": "./audio/Cambridge_IELTS_18_Test1_Listening_Part3.mp3",
+      "transcript": "<p>HUGO: Hi Chantal. What did you think of the talk, then?</p>...",
+      "questions": [
+        {
+          "id": "q21",
+          "type": "multiple-choice",
+          "question": "What problem did Chantal have at the start of the talk?",
+          "options": [
+            { "key": "A", "text": "Her view of the speaker was blocked." },
+            { "key": "B", "text": "She was unable to find an empty seat." },
+            { "key": "C", "text": "The students next to her were talking." }
+          ],
+          "answer": "A",
+          "explain": "<strong>Giải thích:</strong> Chantal kể rằng cô đến sớm để có chỗ ngồi, nhưng 'this guy sat right in front of me and he was so <strong>tall</strong>'.<br><strong>Kết quả:</strong> Hugo nói 'It's hard to see through people's heads' (Khó mà nhìn xuyên qua đầu người khác). Việc bị người cao ngồi chắn phía trước đồng nghĩa với 'View... was blocked'."
+        },
+        {
+          "id": "q22",
+          "type": "multiple-choice",
+          "question": "What were Hugo and Chantal surprised to hear about the job market?",
+          "options": [
+            {
+              "key": "A",
+              "text": "It has become more competitive than it used to be."
+            },
+            {
+              "key": "B",
+              "text": "There is more variety in it than they had realised."
+            },
+            {
+              "key": "C",
+              "text": "Some areas of it are more exciting than others."
+            }
+          ],
+          "answer": "B",
+          "explain": "<strong>Giải thích:</strong> Hugo ngạc nhiên vì có 'a whole range of areas of work that we hadn't even thought of' (hàng loạt lĩnh vực chưa từng nghĩ tới).<br><strong>Đồng thuận:</strong> Chantal cũng nói 'I wasn't expecting so many career options'. Sự đa dạng này tương ứng với từ '<strong>variety</strong>'."
+        },
+        {
+          "id": "q23",
+          "type": "multiple-choice",
+          "question": "Hugo and Chantal agree that the speaker’s message was",
+          "options": [
+            { "key": "A", "text": "unfair to them at times." },
+            { "key": "B", "text": "hard for them to follow." },
+            { "key": "C", "text": "critical of the industry." }
+          ],
+          "answer": "A",
+          "explain": "<strong>Giải thích:</strong> Chantal nhận xét diễn giả hơi 'harsh' (khắt khe/cay nghiệt) khi đánh giá sinh viên hẹp hòi.<br><strong>Lý do:</strong> Hugo đồng tình rằng họ mới chỉ là sinh viên năm nhất ('only first years'). Việc bị đánh giá gắt gao khi mới bắt đầu được họ xem là '<strong>unfair</strong>' (không công bằng)."
+        },
+        {
+          "id": "q24",
+          "type": "multiple-choice",
+          "question": "What do Hugo and Chantal criticise about their school careers advice?",
+          "options": [
+            { "key": "A", "text": "when they received the advice" },
+            { "key": "B", "text": "how much advice was given" },
+            { "key": "C", "text": "who gave the advice" }
+          ],
+          "answer": "C",
+          "explain": "<strong>Giải thích:</strong> Họ phàn nàn rằng ở trường họ được nghe nhiều về nghề nghiệp nhưng 'not by the <strong>experts</strong> who really know stuff' (không phải bởi những chuyên gia thực sự am hiểu).<br><strong>Kết luận:</strong> Vấn đề họ chỉ trích nằm ở người đưa ra lời khuyên ('<strong>who</strong> gave the advice')."
+        },
+        {
+          "id": "q25",
+          "type": "multiple-choice",
+          "question": "When discussing their future, Hugo and Chantal disagree on",
+          "options": [
+            { "key": "A", "text": "which is the best career in fashion." },
+            { "key": "B", "text": "when to choose a career in fashion." },
+            { "key": "C", "text": "why they would like a career in fashion." }
+          ],
+          "answer": "B",
+          "explain": "<strong>Giải thích:</strong> Chantal muốn giữ tư duy mở cho đến cuối khóa học ('keep an open mind till the end').<br><strong>Đối lập:</strong> Hugo lại nghĩ 'better to pick an area... <strong>now</strong>' (tốt hơn là chọn ngay bây giờ). Sự bất đồng nằm ở thời điểm đưa ra quyết định ('<strong>when</strong> to choose')."
+        },
+        {
+          "id": "q26",
+          "type": "multiple-choice",
+          "question": "How does Hugo feel about being an unpaid assistant?",
+          "options": [
+            { "key": "A", "text": "He is realistic about the practice." },
+            { "key": "B", "text": "He feels the practice is dishonest." },
+            {
+              "key": "C",
+              "text": "He thinks others want to change the practice."
+            }
+          ],
+          "answer": "A",
+          "explain": "<strong>Giải thích:</strong> Hugo nhận định: 'we'll be unpaid assistants... for quite a long time' và khẳng định 'I'm <strong>prepared</strong> for that' (Tôi đã chuẩn bị cho việc đó).<br><strong>Kết luận:</strong> Thái độ chấp nhận thực tế khó khăn này cho thấy anh ấy '<strong>realistic</strong>' (thực tế) về tình hình."
+        },
+        {
+          "id": "q27_28",
+          "type": "multiple-choice-multi-select",
+          "instruction": "Choose TWO letters, A–E.",
+          "question": "Which TWO mistakes did the speaker admit she made in her first job?",
+          "options": [
+            { "key": "A", "text": "being dishonest to her employer" },
+            {
+              "key": "B",
+              "text": "paying too much attention to how she looked"
+            },
+            { "key": "E", "text": "openly disliking her client" }
+          ],
+          "answers": ["B", "E"],
+          "explain": "<strong>Đáp án B:</strong> Diễn giả thừa nhận ông chủ đúng khi nói bà ấy 'more interested in her <strong>own appearance</strong> than his' (quan tâm ngoại hình bản thân hơn khách hàng).<br><strong>Đáp án E:</strong> Bà ấy cũng hối tiếc vì lẽ ra nên giấu đi cảm xúc tiêu cực ('hidden her negative feelings'), nghĩa là bà ấy đã thể hiện sự không thích khách hàng một cách công khai ('openly disliking')."
+        },
+        {
+          "id": "q29_30",
+          "type": "multiple-choice-multi-select",
+          "instruction": "Choose TWO letters, A–E.",
+          "question": "Which TWO pieces of retail information do Hugo and Chantal agree would be useful?",
+          "options": [
+            { "key": "A", "text": "the reasons people return fashion items" },
+            { "key": "C", "text": "fashion designs people want but can’t find" }
+          ],
+          "answers": ["A", "C"],
+          "explain": "<strong>Đáp án C:</strong> Hugo cho rằng sẽ hữu ích nếu biết 'gap in the market' - món đồ không ai bán nhưng khách tìm kiếm ('want but can't find').<br><strong>Đáp án A:</strong> Họ thảo luận về việc quần áo bị trả lại vì rách ('returned because they fell apart'). Biết được nguyên nhân trả hàng ('reasons return items') là thông tin hữu ích."
+        }
+      ]
+    },
+    {
+      "id": "ielts18_test1_part4",
+      "title": "Part 4: Elephant Translocation",
+      "type": "gap-fill",
+      "instruction": "<p>Write ONE WORD ONLY for each answer.</p>",
+      "quizNumber": 4,
+      "question": "<p>Elephant Translocation</p></n><p>- Problem: </p></gap id='q31'><p> of elephants.</p>...",
+      "audio": "./audio/Cambridge_IELTS_18_Test1_Listening_Part4.mp3",
+      "transcript": "<p>For my presentation today I want to tell you about how groups of elephants have been moved...</p>",
+      "answers": [
+        {
+          "id": "q31",
+          "answer": "overpopulation",
+          "explain": "<strong>Thông tin cần tìm:</strong> Vấn đề (Problem) của đàn voi.<br><strong>Transcript:</strong> 'The reason this is being done is because of <strong>overpopulation</strong> of elephants'.<br><strong>Giải thích:</strong> Từ khóa 'Problem' trong đề bài tương ứng với nguyên nhân 'reason... because of' trong bài nghe. Đáp án chính xác là 'overpopulation'."
+        },
+        {
+          "id": "q32",
+          "answer": "fences",
+          "explain": "<strong>Thông tin cần tìm:</strong> Thứ mà đàn voi húc đổ (knocking down).<br><strong>Transcript:</strong> 'Elephants were routinely knocking down <strong>fences</strong>'.<br><strong>Giải thích:</strong> Thông tin được đưa ra trực tiếp, từ cần điền là danh từ số nhiều 'fences' (hàng rào)."
+        },
+        {
+          "id": "q33",
+          "answer": "families",
+          "explain": "<strong>Thông tin cần tìm:</strong> Nhóm voi được di chuyển theo đơn vị nào để duy trì mối quan hệ.<br><strong>Transcript:</strong> 'elephants were moved in groups... all belonging to one <strong>family</strong>'.<br><strong>Lưu ý ngữ pháp:</strong> Đề bài 'moved in...', đáp án có thể là 'family' hoặc 'families'. Trong ngữ cảnh IELTS, danh từ số nhiều thường được chấp nhận khi nói chung chung."
+        },
+        {
+          "id": "q34",
+          "answer": "helicopters",
+          "explain": "<strong>Thông tin cần tìm:</strong> Phương tiện đội thú y dùng để tìm voi.<br><strong>Transcript:</strong> 'A team of vets and park rangers flew over the park in <strong>helicopters</strong>'.<br><strong>Giải thích:</strong> Động từ 'flew' (bay) gợi ý phương tiện hàng không. Đáp án là 'helicopters'."
+        },
+        {
+          "id": "q35",
+          "answer": "stress",
+          "explain": "<strong>Thông tin cần tìm:</strong> Mục đích dùng thuốc an thần (Tranquillisers) để giảm thiểu điều gì.<br><strong>Transcript:</strong> 'minimize the <strong>stress</strong>'.<br><strong>Giải thích:</strong> Động từ 'minimize' trong bài nghe khớp hoàn toàn với câu hỏi. Từ cần điền là 'stress'."
+        },
+        {
+          "id": "q36",
+          "answer": "breathing",
+          "explain": "<strong>Thông tin cần tìm:</strong> Dấu hiệu sức khỏe mà bác sĩ thú y kiểm tra.<br><strong>Transcript:</strong> 'It was very important to keep an eye on their <strong>breathing</strong>'.<br><strong>Giải thích:</strong> Cụm 'keep an eye on' (theo dõi) đồng nghĩa với 'checked'. Đáp án là 'breathing' (nhịp thở)."
+        },
+        {
+          "id": "q37",
+          "answer": "tusks",
+          "explain": "<strong>Thông tin cần tìm:</strong> Bộ phận nào của voi được đo đạc (Measurements taken of...).<br><strong>Transcript:</strong> 'Measurements were taken of each elephant's <strong>tusks</strong>'.<br><strong>Giải thích:</strong> Thông tin được nhắc đến trực tiếp. 'Tusks' là ngà voi."
+        },
+        {
+          "id": "q38",
+          "answer": "feet",
+          "explain": "<strong>Thông tin cần tìm:</strong> Nguy cơ chấn thương ở bộ phận nào đối với voi ngà lớn.<br><strong>Transcript:</strong> 'Elephants with large tusks would be at greater risk... of their <strong>feet</strong>'.<br><strong>Giải thích:</strong> Câu này hơi khó nghe vì cấu trúc liệt kê. Ngoài rủi ro từ kẻ săn trộm, voi ngà lớn còn dễ bị tổn thương ở chân ('feet') khi bị ngã hoặc vận chuyển."
+        },
+        {
+          "id": "q39",
+          "answer": "employment",
+          "explain": "<strong>Thông tin cần tìm:</strong> Lợi ích cho cộng đồng địa phương (Improved... prospects).<br><strong>Transcript:</strong> '<strong>Employment</strong> prospects have improved enormously'.<br><strong>Giải thích:</strong> Cụm từ 'Employment prospects' (triển vọng việc làm) được nhắc đến nguyên văn."
+        },
+        {
+          "id": "q40",
+          "answer": "tourism",
+          "explain": "<strong>Thông tin cần tìm:</strong> Yếu tố đóng góp vào GDP tăng lên.<br><strong>Transcript:</strong> 'All this has been a big draw for <strong>tourism</strong> which contributes... to GDP'.<br><strong>Giải thích:</strong> Ngành du lịch ('tourism') là yếu tố đóng góp tài chính được nhắc đến."
+        }
+      ]
+    }
+  ]
+}

@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { ChevronRight, ChevronDown, BookOpen, FileText, CheckCircle } from 'lucide-react';
+import { ChevronRight, ChevronDown, BookOpen, FileText, CheckCircle, Palette } from 'lucide-react';
 import { CodeBlock } from '../../components/CodeBlock';
 import { EmulatorFrame } from './components/emulator/EmulatorFrame';
 import { CoursePreview } from './components/emulator/screens/CoursePreview';
@@ -32,6 +32,8 @@ const CoursePage = () => {
     data: null,
     id: 'course-root',
   });
+
+  const [emulatorTheme, setEmulatorTheme] = useState<'DefaultDark' | 'SoftTeal'>('SoftTeal');
 
   // Load course data
   useEffect(() => {
@@ -241,15 +243,17 @@ const CoursePage = () => {
         </div>
 
         {/* MOBILE EMULATOR AREA */}
-        <div className="w-[450px] bg-gray-50 flex flex-col border-l shadow-inner">
-          <div className="h-10 border-b flex items-center justify-center bg-white">
-            <span className="text-xs font-medium text-gray-500 uppercase tracking-widest">
-              Device Preview
-            </span>
-          </div>
-          <div className="flex-1 overflow-hidden p-4">
-            <EmulatorFrame>{renderEmulatorContent()}</EmulatorFrame>
-          </div>
+        <div className="w-[450px] border-l shadow-inner bg-background/20 flex flex-col items-center justify-center relative">
+          <button
+            onClick={() =>
+              setEmulatorTheme((prev) => (prev === 'DefaultDark' ? 'SoftTeal' : 'DefaultDark'))
+            }
+            className="absolute top-4 right-4 p-2 rounded-full bg-background/50 hover:bg-background text-muted-foreground hover:text-foreground transition-colors md:ring-1 ring-border"
+            title="Toggle Emulator Theme"
+          >
+            <Palette size={16} />
+          </button>
+          <EmulatorFrame theme={emulatorTheme}>{renderEmulatorContent()}</EmulatorFrame>
         </div>
       </div>
     </div>

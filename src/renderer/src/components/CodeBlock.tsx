@@ -34,10 +34,10 @@ const FLUENCY_THEME = {
   base: 'vs-dark',
   inherit: true,
   rules: [
-    { token: 'string.key.json', foreground: '#e06c75' }, // Red/Pink for keys
-    { token: 'string.value.json', foreground: '#98c379' }, // Green for string values
-    { token: 'number', foreground: '#d19a66' }, // Orange for numbers
-    { token: 'keyword.json', foreground: '#56b6c2' }, // Cyan for booleans/null
+    { token: 'string.key.json', foreground: '#61afef' }, // Blue for keys
+    { token: 'string.value.json', foreground: '#9cdcfe' }, // Light Blue for string values
+    { token: 'number', foreground: '#56b6c2' }, // Cyan for numbers
+    { token: 'keyword.json', foreground: '#c678dd' }, // Purple for booleans/null
     { token: 'delimiter', foreground: '#abb2bf' }, // White/Grey for braces
   ],
   colors: {

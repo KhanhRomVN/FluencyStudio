@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Menu, FileText, ChevronLeft, X } from 'lucide-react';
 import { Quiz } from './types';
-import { GapFillQuiz } from './components/QuizType/GapFillQuiz';
-import { MultipleChoiceQuiz } from './components/QuizType/MultipleChoiceQuiz';
+import { GapFill } from './components/QuizType/GapFill';
+import { MultipleChoice } from './components/QuizType/MultipleChoice';
 import { MediaPlayer } from './components/MediaPlayer';
 import { QuizDrawer } from './components/QuizDrawer';
 import { TranscriptDrawer } from './components/TranscriptDrawer';
@@ -80,9 +80,9 @@ export const QuizPage: React.FC<QuizPageProps> = ({ quizData, parentLesson, onQu
       {/* Main Content */}
       <div className="flex-1 overflow-hidden relative">
         {quizType.includes('multiple-choice') ? (
-          <MultipleChoiceQuiz quiz={quizData} isChecked={isChecked} onCheck={handleCheck} />
+          <MultipleChoice quiz={quizData} isChecked={isChecked} onCheck={handleCheck} />
         ) : (
-          <GapFillQuiz quiz={quizData} isChecked={isChecked} onCheck={handleCheck} />
+          <GapFill quiz={quizData} isChecked={isChecked} onCheck={handleCheck} />
         )}
       </div>
 

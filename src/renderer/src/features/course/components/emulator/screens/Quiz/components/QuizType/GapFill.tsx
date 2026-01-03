@@ -1,16 +1,20 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { Quiz, QuizAnswer } from '../../types';
-import { RichTextParser } from '../RichTextParser';
 
-interface GapFillQuizProps {
+import { RichTextParser } from '../RichTextParser';
+import { ExplainDrawer } from '../ExplainDrawer';
+
+interface GapFillProps {
   quiz: Quiz;
   isChecked: boolean;
   onCheck: () => void;
 }
 
-export const GapFillQuiz: React.FC<GapFillQuizProps> = ({ quiz, isChecked, onCheck }) => {
+export const GapFill: React.FC<GapFillProps> = ({ quiz, isChecked, onCheck }) => {
   const [inputs, setInputs] = useState<{ [key: string]: string }>({});
   const [areAllGapsFilled, setAreAllGapsFilled] = useState(false);
+  const [isExplainOpen, setIsExplainOpen] = useState(false);
+  const [currentExplanation, setCurrentExplanation] = useState('');
 
   // Initialize checks
   useEffect(() => {
@@ -60,15 +64,29 @@ export const GapFillQuiz: React.FC<GapFillQuizProps> = ({ quiz, isChecked, onChe
           const maxLength = correctAnswer.length > 0 ? correctAnswer.length : 20;
 
           if (isChecked) {
+            const explanation = answerObj?.explain || '';
+            const handleExplain = () => {
+              setCurrentExplanation(explanation);
+              setIsExplainOpen(true);
+            };
+
             if (isCorrect) {
               return (
-                <span className="inline-block mx-1 font-bold text-[hsl(var(--primary))]">
+                <span
+                  key={`correct-${id}`}
+                  onClick={handleExplain}
+                  className="inline-block mx-1 font-bold text-[hsl(var(--primary))] cursor-pointer hover:underline"
+                >
                   {userAnswer}
                 </span>
               );
             } else {
               return (
-                <span className="inline-flex items-center mx-1 gap-1">
+                <span
+                  key={`wrong-${id}`}
+                  onClick={handleExplain}
+                  className="inline-flex items-center mx-1 gap-1 cursor-pointer hover:underline"
+                >
                   <span className="text-red-500 line-through decoration-red-500">{userAnswer}</span>
                   <span className="text-[hsl(var(--primary))] font-bold">{correctAnswer}</span>
                 </span>
@@ -122,6 +140,12 @@ export const GapFillQuiz: React.FC<GapFillQuizProps> = ({ quiz, isChecked, onChe
           </button>
         </div>
       )}
+
+      <ExplainDrawer
+        isOpen={isExplainOpen}
+        onClose={() => setIsExplainOpen(false)}
+        explanation={currentExplanation}
+      />
     </div>
   );
 };

@@ -1,20 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import { Quiz, QuizQuestion } from '../../types';
 import { Check, Info } from 'lucide-react';
+import { ExplainDrawer } from '../ExplainDrawer';
 
-interface MultipleChoiceQuizProps {
+interface MultipleChoiceProps {
   quiz: Quiz;
   isChecked: boolean;
   onCheck: () => void;
 }
 
-export const MultipleChoiceQuiz: React.FC<MultipleChoiceQuizProps> = ({
-  quiz,
-  isChecked,
-  onCheck,
-}) => {
+export const MultipleChoice: React.FC<MultipleChoiceProps> = ({ quiz, isChecked, onCheck }) => {
   const [selectedAnswers, setSelectedAnswers] = useState<{ [key: string]: string }>({});
   const [areAllAnswered, setAreAllAnswered] = useState(false);
+  const [isExplainOpen, setIsExplainOpen] = useState(false);
+  const [currentExplanation, setCurrentExplanation] = useState('');
 
   // Handle nested questions or single question
   // If quiz.questions exists (nested), use it. Otherwise assume the Quiz object itself is a question (flat legacy? or simple).
@@ -134,7 +133,13 @@ export const MultipleChoiceQuiz: React.FC<MultipleChoiceQuizProps> = ({
         </div>
 
         {isChecked && question.explain && (
-          <div className="mt-2 flex items-center text-[hsl(var(--primary))] text-sm font-bold underline cursor-pointer">
+          <div
+            className="mt-2 flex items-center text-[hsl(var(--primary))] text-sm font-bold underline cursor-pointer"
+            onClick={() => {
+              setCurrentExplanation(question.explain || '');
+              setIsExplainOpen(true);
+            }}
+          >
             <Info size={16} className="mr-1" />
             Explain
           </div>
@@ -173,6 +178,12 @@ export const MultipleChoiceQuiz: React.FC<MultipleChoiceQuizProps> = ({
           </button>
         </div>
       )}
+
+      <ExplainDrawer
+        isOpen={isExplainOpen}
+        onClose={() => setIsExplainOpen(false)}
+        explanation={currentExplanation}
+      />
     </div>
   );
 };

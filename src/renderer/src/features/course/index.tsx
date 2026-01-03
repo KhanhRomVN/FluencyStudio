@@ -1,90 +1,254 @@
+import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { useState } from 'react';
+import { ChevronRight, ChevronDown, BookOpen, FileText, CheckCircle } from 'lucide-react';
+import { CodeBlock } from '../../components/CodeBlock';
+import { EmulatorFrame } from './components/emulator/EmulatorFrame';
+import { CoursePreview } from './components/emulator/screens/CoursePreview';
+import { QuizPreview } from './components/emulator/screens/QuizPreview';
+import { folderService } from '../../shared/services/folderService';
+
+const STORAGE_KEY = 'fluency_course_paths';
+
+type SelectionType = 'course' | 'lesson' | 'quiz';
+
+interface SelectionState {
+  type: SelectionType;
+  data: any; // Data used for the Emulator (specific item)
+  sourceData?: any; // Data used for the Source Code Preview (file context)
+  id: string;
+}
 
 const CoursePage = () => {
   const { courseId } = useParams<{ courseId: string }>();
-  const [activeLesson, setActiveLesson] = useState<string>('Lesson 1');
+  const [course, setCourse] = useState<any>(null);
+  const [loading, setLoading] = useState(true);
 
-  // 4 panel split layout
+  // State for sidebar expansion
+  const [expandedLessons, setExpandedLessons] = useState<Set<string>>(new Set());
+
+  // State for selection
+  const [selection, setSelection] = useState<SelectionState>({
+    type: 'course',
+    data: null,
+    id: 'course-root',
+  });
+
+  // Load course data
+  useEffect(() => {
+    const loadCourseData = async () => {
+      if (!courseId) return;
+      setLoading(true);
+      try {
+        const storedPaths = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+        let foundPath = '';
+
+        // Simple ID matching logic (must match folderService creation logic)
+        for (const path of storedPaths) {
+          const folderName = path.split('/').pop() || '';
+          const id = folderName.toLowerCase().replace(/[^a-z0-9]/g, '_');
+          if (id === courseId) {
+            foundPath = path;
+            break;
+          }
+        }
+
+        if (foundPath) {
+          const courseData = await folderService.loadCourseFromPath(foundPath);
+          if (courseData) {
+            setCourse(courseData);
+            // Initial selection
+            setSelection({
+              type: 'course',
+              data: courseData,
+              sourceData: courseData,
+              id: 'course-root',
+            });
+          } else {
+            console.error('Failed to load course data from path:', foundPath);
+          }
+        } else {
+          console.error('Course path not found for ID:', courseId);
+        }
+      } catch (e) {
+        console.error('Error loading course:', e);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadCourseData();
+  }, [courseId]);
+
+  const toggleLesson = (lessonId: string) => {
+    const newExpanded = new Set(expandedLessons);
+    if (newExpanded.has(lessonId)) {
+      newExpanded.delete(lessonId);
+    } else {
+      newExpanded.add(lessonId);
+    }
+    setExpandedLessons(newExpanded);
+  };
+
+  const handleCourseClick = () => {
+    if (!course) return;
+    setSelection({
+      type: 'course',
+      data: course,
+      sourceData: course,
+      id: 'course-root',
+    });
+  };
+
+  const handleLessonClick = (lesson: any) => {
+    toggleLesson(lesson.id);
+    setSelection({
+      type: 'lesson',
+      data: lesson,
+      sourceData: lesson,
+      id: lesson.id,
+    });
+  };
+
+  const handleQuizClick = (quiz: any, lesson: any) => {
+    setSelection({
+      type: 'quiz',
+      data: { ...quiz, _lessonTitle: lesson.title },
+      sourceData: lesson, // Show the FULL lesson JSON in CodeBlock
+      id: quiz.id,
+    });
+  };
+
+  // Render content based on selection
+  const renderEmulatorContent = () => {
+    if (!selection.data) return <div className="p-4 text-center">Loading...</div>;
+
+    switch (selection.type) {
+      case 'course':
+        return <CoursePreview courseData={selection.data} />;
+      case 'lesson':
+        return (
+          <div className="flex flex-col items-center justify-center h-full p-6 text-center text-gray-500">
+            <BookOpen size={48} className="mb-4 text-blue-200" />
+            <h3 className="text-lg font-medium text-gray-700">{selection.data.title}</h3>
+            <p className="text-sm mt-2">Select a quiz from the sidebar to preview.</p>
+          </div>
+        );
+      case 'quiz':
+        return <QuizPreview quizData={selection.data} lessonTitle={selection.data._lessonTitle} />;
+      default:
+        return <div>Select an item</div>;
+    }
+  };
+
+  if (loading) {
+    return <div className="h-screen flex items-center justify-center">Loading course data...</div>;
+  }
+
+  if (!course) {
+    return (
+      <div className="h-screen flex items-center justify-center">
+        Course not found. Please return to dashboard.
+      </div>
+    );
+  }
+
   return (
-    <div className="h-screen flex flex-col">
-      <div className="border-b p-4">
-        <h1 className="text-2xl font-bold">Course: {courseId}</h1>
-        <p className="text-muted-foreground">Manage your course content and lessons</p>
+    <div className="h-screen flex flex-col bg-background">
+      {/* Header */}
+      <div className="h-14 border-b flex items-center px-4 bg-card">
+        <h1 className="text-lg font-semibold">Course Designer: {course.title}</h1>
       </div>
 
-      <div className="flex-1 flex">
-        {/* Panel 1: Lessons List */}
-        <div className="w-64 border-r p-4 overflow-auto">
-          <h2 className="font-semibold mb-3">Lessons</h2>
-          <div className="space-y-2">
-            {['Lesson 1', 'Lesson 2', 'Lesson 3', 'Lesson 4'].map((lesson) => (
+      <div className="flex-1 flex overflow-hidden">
+        {/* SIDEBAR */}
+        <div className="w-80 border-r bg-muted/10 flex flex-col">
+          <div className="p-3 font-medium text-xs uppercase text-muted-foreground tracking-wider">
+            Structure
+          </div>
+          <div className="flex-1 overflow-y-auto p-2 pt-0">
+            <div className="space-y-1">
+              {/* Course Root Item */}
               <div
-                key={lesson}
-                className={`p-3 rounded cursor-pointer ${activeLesson === lesson ? 'bg-accent' : 'hover:bg-muted'}`}
-                onClick={() => setActiveLesson(lesson)}
+                className={`flex items-center gap-2 p-2 rounded-md cursor-pointer transition-colors ${selection.id === 'course-root' ? 'bg-primary/10 text-primary font-medium' : 'hover:bg-muted'}`}
+                onClick={handleCourseClick}
               >
-                {lesson}
+                <BookOpen size={16} />
+                <span className="truncate">{course.title}</span>
               </div>
-            ))}
-          </div>
-        </div>
 
-        {/* Panel 2: Main Content */}
-        <div className="flex-1 p-4 overflow-auto">
-          <h2 className="font-semibold mb-3">Content</h2>
-          <div className="border rounded-lg p-4 h-full">
-            <p>Main content area for {activeLesson}</p>
-            <p className="mt-4">
-              This is where the lesson content, audio, video, or text will be displayed.
-            </p>
-          </div>
-        </div>
+              {/* Lessons List */}
+              <div className="pl-4 mt-2 border-l ml-3 space-y-2">
+                {course.lessons &&
+                  course.lessons.map((lesson: any) => (
+                    <div key={lesson.id}>
+                      <div
+                        className={`flex items-center gap-1 p-2 rounded-md cursor-pointer hover:bg-muted ${selection.id === lesson.id ? 'bg-accent' : ''}`}
+                        onClick={() => handleLessonClick(lesson)}
+                      >
+                        {expandedLessons.has(lesson.id) ? (
+                          <ChevronDown size={14} className="text-muted-foreground" />
+                        ) : (
+                          <ChevronRight size={14} className="text-muted-foreground" />
+                        )}
+                        <FileText size={16} className="text-blue-500" />
+                        <span className="text-sm truncate">{lesson.title}</span>
+                      </div>
 
-        {/* Panel 3: Resources */}
-        <div className="w-80 border-r p-4 overflow-auto">
-          <h2 className="font-semibold mb-3">Resources</h2>
-          <div className="space-y-3">
-            <div className="border rounded p-3">
-              <h3 className="font-medium">Audio Files</h3>
-              <p className="text-sm text-muted-foreground">MP3 files for listening practice</p>
-            </div>
-            <div className="border rounded p-3">
-              <h3 className="font-medium">Images</h3>
-              <p className="text-sm text-muted-foreground">Visual materials and diagrams</p>
-            </div>
-            <div className="border rounded p-3">
-              <h3 className="font-medium">Videos</h3>
-              <p className="text-sm text-muted-foreground">Video lessons and explanations</p>
-            </div>
-          </div>
-        </div>
-
-        {/* Panel 4: Notes & Controls */}
-        <div className="w-96 p-4 overflow-auto">
-          <h2 className="font-semibold mb-3">Notes & Controls</h2>
-          <div className="space-y-4">
-            <div className="border rounded p-3">
-              <h3 className="font-medium mb-2">Take Notes</h3>
-              <textarea
-                className="w-full h-32 border rounded p-2 text-sm"
-                placeholder="Write your notes here..."
-              />
-            </div>
-            <div className="border rounded p-3">
-              <h3 className="font-medium mb-2">Lesson Controls</h3>
-              <div className="space-y-2">
-                <button className="w-full bg-primary text-primary-foreground py-2 rounded">
-                  Play Audio
-                </button>
-                <button className="w-full bg-secondary text-secondary-foreground py-2 rounded">
-                  Show Transcript
-                </button>
-                <button className="w-full bg-accent text-accent-foreground py-2 rounded">
-                  Mark as Completed
-                </button>
+                      {/* Quizzes List */}
+                      {expandedLessons.has(lesson.id) && (
+                        <div className="pl-6 mt-1 space-y-0.5">
+                          {lesson.quiz &&
+                            lesson.quiz.map((quiz: any) => (
+                              <div
+                                key={quiz.id}
+                                className={`flex items-center gap-2 p-1.5 rounded-md cursor-pointer text-sm ${selection.id === quiz.id ? 'bg-primary/10 text-primary font-medium' : 'text-muted-foreground hover:bg-muted hover:text-foreground'}`}
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  handleQuizClick(quiz, lesson);
+                                }}
+                              >
+                                <CheckCircle
+                                  size={14}
+                                  className={
+                                    selection.id === quiz.id ? 'opacity-100' : 'opacity-70'
+                                  }
+                                />
+                                <span className="truncate">{quiz.title}</span>
+                              </div>
+                            ))}
+                        </div>
+                      )}
+                    </div>
+                  ))}
               </div>
             </div>
+          </div>
+        </div>
+
+        {/* CODE BLOCK AREA */}
+        <div className="flex-1 flex flex-col min-w-0 border-r">
+          <div className="h-10 border-b flex items-center px-4 bg-muted/20 justify-between">
+            <span className="text-xs font-medium text-muted-foreground">Source Code Preview</span>
+            <span className="text-xs text-muted-foreground bg-muted px-2 py-0.5 rounded">JSON</span>
+          </div>
+          <div className="flex-1 overflow-hidden relative">
+            <CodeBlock
+              code={JSON.stringify(selection.sourceData || selection.data, null, 2)}
+              language="json"
+              themeConfig={{ background: '#1e1e1e10' }}
+            />
+          </div>
+        </div>
+
+        {/* MOBILE EMULATOR AREA */}
+        <div className="w-[450px] bg-gray-50 flex flex-col border-l shadow-inner">
+          <div className="h-10 border-b flex items-center justify-center bg-white">
+            <span className="text-xs font-medium text-gray-500 uppercase tracking-widest">
+              Device Preview
+            </span>
+          </div>
+          <div className="flex-1 overflow-hidden p-4">
+            <EmulatorFrame>{renderEmulatorContent()}</EmulatorFrame>
           </div>
         </div>
       </div>

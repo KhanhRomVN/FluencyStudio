@@ -1,7 +1,0 @@
-{
-  "@@locale": "vi",
-  "helloWorld": "Xin chào thế giới",
-  "@helloWorld": {
-    "description": "Lời chào lập trình viên mới vào nghề"
-  }
-}

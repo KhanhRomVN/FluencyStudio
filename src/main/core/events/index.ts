@@ -143,4 +143,15 @@ export function setupEventHandlers() {
       return [];
     }
   });
+
+  // File handlers
+  ipcMain.handle('file:write', async (_, filePath: string, content: string) => {
+    try {
+      fs.writeFileSync(filePath, content, 'utf-8');
+      return true;
+    } catch (error) {
+      console.error('Error writing file:', error);
+      return false;
+    }
+  });
 }

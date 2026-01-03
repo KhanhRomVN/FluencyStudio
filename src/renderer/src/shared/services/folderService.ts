@@ -15,6 +15,11 @@ export interface CourseFolderStructure {
   isValid: boolean;
 }
 
+export interface FileSaveResult {
+  success: boolean;
+  error?: string;
+}
+
 class FolderService {
   /**
    * Open folder picker dialog
@@ -139,6 +144,22 @@ class FolderService {
     }
   }
 
+  /**
+   * Save content to file using IPC
+   */
+  async saveFile(filePath: string, content: string): Promise<FileSaveResult> {
+    try {
+      if (window.electron?.ipcRenderer) {
+        const success = await window.electron.ipcRenderer.invoke('file:write', filePath, content);
+        return { success };
+      }
+      return { success: false, error: 'No IPC available' };
+    } catch (error) {
+      console.error('Error saving file:', error);
+      return { success: false, error: String(error) };
+    }
+  }
+
   private getDefaultFolderStructure(): CourseFolderStructure {
     return {
       courseJson: undefined,
@@ -252,6 +273,8 @@ class FolderService {
           if (!lessonData.id) {
             lessonData.id = lessonFile.replace('.json', '');
           }
+          // Attach file path for saving
+          lessonData._filePath = lessonPath;
           lessons.push(lessonData);
         }
       }
@@ -261,6 +284,7 @@ class FolderService {
 
       return {
         ...courseData,
+        _filePath: structure.courseJson,
         lessons,
       };
     } catch (error) {

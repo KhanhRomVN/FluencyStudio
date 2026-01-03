@@ -60,6 +60,11 @@ const CodeBlock: React.FC<CodeBlockProps> = ({
   const editorRef = useRef<HTMLDivElement>(null);
   const editorInstance = useRef<any>(null);
   const subscriptionRef = useRef<any>(null);
+  const onChangeRef = useRef(onChange);
+
+  useEffect(() => {
+    onChangeRef.current = onChange;
+  }, [onChange]);
 
   useEffect(() => {
     let mounted = true;
@@ -110,10 +115,13 @@ const CodeBlock: React.FC<CodeBlockProps> = ({
         });
 
         // Trigger change on edit
-        if (onChange) {
+        if (onChangeRef.current) {
           subscriptionRef.current = editorInstance.current.onDidChangeModelContent(() => {
+            // Avoid triggering onChange if the change was API-driven (like setValue)
+            // However, setValue DOES trigger this.
+            // But we only care that we call the LATEST onChange handler.
             const value = editorInstance.current.getValue();
-            onChange(value);
+            onChangeRef.current?.(value);
           });
         }
       } catch (error) {

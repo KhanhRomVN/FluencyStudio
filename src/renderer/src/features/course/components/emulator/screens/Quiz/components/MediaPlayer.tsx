@@ -1,12 +1,12 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Play, Pause } from 'lucide-react';
 
-interface QuizMediaPlayerProps {
+interface MediaPlayerProps {
   audioPath: string;
   title: string;
 }
 
-export const QuizMediaPlayer: React.FC<QuizMediaPlayerProps> = ({ audioPath, title }) => {
+export const MediaPlayer: React.FC<MediaPlayerProps> = ({ audioPath, title }) => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [progress, setProgress] = useState(0); // 0 to 100
   const [duration, setDuration] = useState(60); // Mock duration in seconds

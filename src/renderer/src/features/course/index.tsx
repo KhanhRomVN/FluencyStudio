@@ -285,7 +285,13 @@ const CoursePage = () => {
           </div>
         );
       case 'quiz':
-        return <QuizPage quizData={selection.data} />;
+        return (
+          <QuizPage
+            quizData={selection.data}
+            parentLesson={selection.parentData} // Pass parent lesson
+            onQuizChange={(quiz) => handleQuizClick(quiz, selection.parentData)} // Allow switching
+          />
+        );
       default:
         return <div>Select an item</div>;
     }

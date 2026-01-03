@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Quiz, QuizQuestion } from '../types';
+import { Quiz, QuizQuestion } from '../../types';
 import { Check, Info } from 'lucide-react';
 
 interface MultipleChoiceQuizProps {

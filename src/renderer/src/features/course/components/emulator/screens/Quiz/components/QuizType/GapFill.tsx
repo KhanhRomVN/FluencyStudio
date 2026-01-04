@@ -127,16 +127,21 @@ export const GapFill: React.FC<GapFillProps> = ({ quiz, isChecked, onCheck, head
 
   return (
     <div className="flex flex-col h-full">
-      <div className="flex-1 overflow-y-auto px-4 py-3 text-[16px] leading-relaxed text-[hsl(var(--foreground))] [&::-webkit-scrollbar]:hidden">
+      <div className="flex-1 overflow-y-auto px-4 py-3 text-[15px] leading-relaxed text-[hsl(var(--foreground))] [&::-webkit-scrollbar]:hidden">
         {header}
-        <div className="flex flex-wrap items-baseline">{renderContent()}</div>
+        {quiz.instruction && (
+          <div className="mb-6 text-[hsl(var(--foreground))]">
+            <RichTextParser content={quiz.instruction} />
+          </div>
+        )}
+        <div>{renderContent()}</div>
       </div>
 
       {areAllGapsFilled && !isChecked && (
-        <div className="p-4 bg-[hsl(var(--background))]">
+        <div className="p-2 bg-[hsl(var(--background))]">
           <button
             onClick={onCheck}
-            className="w-full py-4 bg-[hsl(var(--primary))] text-white rounded-xl font-bold text-lg shadow-lg active:scale-[0.98] transition-all"
+            className="w-full py-2 bg-[hsl(var(--primary))] text-white rounded-md font-bold text-base active:scale-[0.98] transition-all"
           >
             Check answers
           </button>

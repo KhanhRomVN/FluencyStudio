@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Menu, FileText, ChevronLeft, X, AlignEndVertical, Info } from 'lucide-react';
+import { Menu, AudioLines, ChevronLeft, X, AlignEndVertical, Info } from 'lucide-react';
 import { Quiz } from './types';
 import { GapFill } from './components/QuizType/GapFill';
 import { MultipleChoice } from './components/QuizType/MultipleChoice';
@@ -86,7 +86,7 @@ export const QuizPage: React.FC<QuizPageProps> = ({ quizData, parentLesson, onQu
               onClick={() => setShowTranscript(true)}
               className="p-1.5 rounded-lg hover:bg-[hsl(var(--muted))] active:scale-95 transition-all text-[hsl(var(--foreground))]"
             >
-              <FileText size={18} />
+              <AudioLines size={18} />
             </button>
           )}
 

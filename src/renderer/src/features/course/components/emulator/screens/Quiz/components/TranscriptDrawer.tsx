@@ -1,5 +1,6 @@
 import React from 'react';
-import { X, FileText } from 'lucide-react';
+import { X, AudioLines } from 'lucide-react';
+import { RichTextParser } from './RichTextParser';
 
 interface TranscriptDrawerProps {
   isOpen: boolean;
@@ -24,7 +25,7 @@ export const TranscriptDrawer: React.FC<TranscriptDrawerProps> = ({
         <div className="h-1.5 w-12 bg-gray-300/50 rounded-full mx-auto mt-3 mb-2 flex-shrink-0" />
         <div className="px-6 py-2 border-b border-[hsl(var(--border))]/50 flex justify-between items-center bg-[hsl(var(--background))]">
           <div className="flex items-center gap-2">
-            <FileText size={18} className="text-[hsl(var(--primary))]" />
+            <AudioLines size={18} className="text-[hsl(var(--primary))]" />
             <h3 className="font-bold text-lg">Transcript</h3>
           </div>
           <button onClick={onClose} className="p-1 rounded-full hover:bg-[hsl(var(--muted))]">
@@ -33,8 +34,8 @@ export const TranscriptDrawer: React.FC<TranscriptDrawerProps> = ({
         </div>
         <div className="flex-1 overflow-y-auto p-6 text-[hsl(var(--foreground))]">
           {transcript ? (
-            <div className="prose prose-sm dark:prose-invert leading-loose max-w-none text-[16px]">
-              {transcript}
+            <div className="text-[16px]">
+              <RichTextParser content={transcript} />
             </div>
           ) : (
             <p className="text-center text-[hsl(var(--muted-foreground))]">

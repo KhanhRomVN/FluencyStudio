@@ -50,7 +50,7 @@ export const MediaPlayer: React.FC<MediaPlayerProps> = ({ audioPath, title }) =>
   };
 
   return (
-    <div className="bg-[hsl(var(--background))] border-t border-[hsl(var(--border))]/50 shadow-[0_-2px_10px_rgba(0,0,0,0.05)] px-4 py-3 pb-safe-bottom z-20">
+    <div className="bg-[hsl(var(--background))] border-t border-[hsl(var(--border))]/50  px-4 py-3 pb-safe-bottom z-20">
       <div className="flex items-center gap-3">
         {/* Play/Pause Button */}
         <button
@@ -87,7 +87,7 @@ export const MediaPlayer: React.FC<MediaPlayerProps> = ({ audioPath, title }) =>
 
               {/* Thumb */}
               <div
-                className="absolute w-3 h-3 bg-[hsl(var(--primary))] rounded-full shadow-sm hover:scale-125 transition-transform"
+                className="absolute w-3 h-3 bg-[hsl(var(--primary))] rounded-full hover:scale-125 transition-transform"
                 style={{ left: `${progress}%`, marginLeft: '-6px' }}
               />
             </div>

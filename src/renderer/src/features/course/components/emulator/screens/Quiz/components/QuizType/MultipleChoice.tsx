@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Quiz, QuizQuestion } from '../../types';
 import { Check, Info } from 'lucide-react';
 import { ExplainDrawer } from '../ExplainDrawer';
+import { RichTextParser } from '../RichTextParser';
 
 interface MultipleChoiceProps {
   quiz: Quiz;
@@ -167,10 +168,9 @@ export const MultipleChoice: React.FC<MultipleChoiceProps> = ({
       <div className="flex-1 overflow-y-auto px-4 py-3 [&::-webkit-scrollbar]:hidden">
         {header}
         {quiz.instruction && (
-          <div
-            className="mb-6 text-[hsl(var(--foreground))]"
-            dangerouslySetInnerHTML={{ __html: quiz.instruction }}
-          />
+          <div className="mb-6 text-[hsl(var(--foreground))]">
+            <RichTextParser content={quiz.instruction} />
+          </div>
         )}
         {questions.map(renderQuestion)}
       </div>

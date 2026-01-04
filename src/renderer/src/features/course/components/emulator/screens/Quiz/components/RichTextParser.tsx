@@ -68,6 +68,7 @@ export const RichTextParser: React.FC<RichTextParserProps> = ({ content, onGapFo
     const style: React.CSSProperties = {
       fontWeight: isBold ? 'bold' : 'normal',
       fontSize: fontSize,
+      whiteSpace: 'pre-wrap',
     };
 
     const className = isCenter ? 'w-full text-center block' : '';

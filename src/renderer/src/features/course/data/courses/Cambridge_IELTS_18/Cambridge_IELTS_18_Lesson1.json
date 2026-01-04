@@ -4,8 +4,8 @@
   "lessonNumber": 1,
   "quiz": [
     {
-      "id": "ielts18_test1_part1",
-      "title": "Part 1: Transport survey",
+      "id": "quiz_01",
+      "title": "",
       "type": "gap-fill",
       "instruction": "<p>Write </p><p style='bold'>ONE WORD AND/OR A NUMBER </p><p>for each answer.</p>",
       "quizNumber": 1,
@@ -16,67 +16,66 @@
         {
           "id": "answer_01",
           "answer": "DW307YZ",
-          "explain": "<strong>Thông tin cần tìm:</strong> Mã bưu chính (Postcode).<br><strong>Giải thích:</strong> Sau khi xác nhận tên và năm sinh, người phỏng vấn hỏi 'next your postcode, please'. Sadie đánh vần rõ ràng: 'It's <strong>DW30 7YZ</strong>'.<br><strong>Lưu ý:</strong> Ngay sau đó có nhắc đến 'Wells' và 'Harborne', nhưng đó là tên địa danh. Bạn cần nghe kỹ các chữ cái và số để tránh nhầm lẫn, đặc biệt là chữ 'Z' trong tiếng Anh."
+          "explain": ""
         },
         {
           "id": "answer_02",
           "answer": "24th April",
-          "explain": "<strong>Thông tin cần tìm:</strong> Ngày tháng của chuyến đi xe buýt.<br><strong>Giải thích:</strong> Người phỏng vấn xác nhận: 'It's the <strong>24th of April</strong>, isn't it?'. Sadie ban đầu thắc mắc 'Isn't it the 25th?' (Không phải 25 à?) nhưng sau đó sửa lại ngay 'No, actually, you're right'.<br><strong>Bẫy (Distractor):</strong> Ngày 25th được nhắc đến nhưng đã bị phủ định."
+          "explain": ""
         },
         {
           "id": "answer_03",
           "answer": "dentist",
-          "explain": "<strong>Thông tin cần tìm:</strong> Lý do cho chuyến đi (ngoài việc mua sắm).<br><strong>Giải thích:</strong> Sadie xác nhận có đi mua sắm ('did some shopping') nhưng nhấn mạnh: 'but the main reason I came here was to go to the <strong>dentist</strong>' (lý do chính là đi nha sĩ).<br><strong>Từ vựng:</strong> Cụm 'visit to the...' trong câu hỏi khớp với 'go to the...' trong bài nghe."
+          "explain": ""
         },
         {
           "id": "answer_04",
           "answer": "parking",
-          "explain": "<strong>Thông tin cần tìm:</strong> Nguyên nhân khiến chi phí (cost) quá cao.<br><strong>Giải thích:</strong> Sadie giải thích lý do cô ngừng lái xe ô tô: 'because <strong>parking</strong> was so difficult to find and it costs so much'.<br><strong>Phân tích:</strong> Cụm 'costs so much' tương đương với 'cost of... too high'. Yếu tố tốn kém ở đây chính là phí đỗ xe (parking)."
+          "explain": ""
         },
         {
           "id": "answer_05",
           "answer": "Claxby",
-          "explain": "<strong>Thông tin cần tìm:</strong> Tên đường nơi bắt xe buýt.<br><strong>Giải thích:</strong> Sadie nói: 'At the bus stop on <strong>Claxby</strong> Street'.<br><strong>Hỗ trợ:</strong> Người phỏng vấn đánh vần lại từng ký tự để xác nhận: 'C-L-A-X-B-Y'. Bạn cần chú ý bắt kịp tốc độ đánh vần này."
+          "explain": ""
         },
         {
           "id": "answer_06",
           "answer": "late",
-          "explain": "<strong>Thông tin cần tìm:</strong> Lời phàn nàn về tình trạng xe buýt hôm nay.<br><strong>Giải thích:</strong> Mặc dù bình thường xe tiện lợi, nhưng Sadie phàn nàn: 'but this morning it was <strong>late</strong>' (sáng nay xe bị trễ).<br><strong>Chi tiết:</strong> Cô nói thêm là trễ khoảng 10 phút, nhưng từ cần điền mô tả tính chất sự việc là 'late'."
+          "explain": ""
         },
         {
           "id": "answer_07",
           "answer": "evening",
-          "explain": "<strong>Thông tin cần tìm:</strong> Khoảng thời gian mà tần suất xe buýt có vấn đề.<br><strong>Giải thích:</strong> Sadie phàn nàn rằng 'any time I've been in town in the <strong>evening</strong>... I've noticed you have to wait a long time'.<br><strong>Phân tích:</strong> 'Wait a long time' đồng nghĩa với tần suất xe thấp. Đáp án cần điền là thời gian 'evening'."
+          "explain": ""
         },
         {
           "id": "answer_08",
           "answer": "supermarket",
-          "explain": "<strong>Thông tin cần tìm:</strong> Nơi Sadie thường đi bằng ô tô.<br><strong>Giải thích:</strong> Sadie nói cô ít dùng xe, 'Mainly just to go to the <strong>supermarket</strong>' (Chủ yếu chỉ để đi siêu thị).<br><strong>Bẫy (Distractor):</strong> 'Golf club' được nhắc đến ngay sau đó, nhưng là nơi chồng cô ấy đi, không phải Sadie."
+          "explain": ""
         },
         {
           "id": "answer_09",
           "answer": "pollution",
-          "explain": "<strong>Thông tin cần tìm:</strong> Lý do không thích đạp xe trong trung tâm.<br><strong>Giải thích:</strong> Sadie nói: 'I'm not keen on cycling there because of all the <strong>pollution</strong>'.<br><strong>Từ đồng nghĩa:</strong> 'Not keen on' tương đương với 'Dislikes' trong câu hỏi. Nguyên nhân chính là sự ô nhiễm."
+          "explain": ""
         },
         {
           "id": "answer_10",
           "answer": "storage",
-          "explain": "<strong>Thông tin cần tìm:</strong> Lý do không sở hữu xe đạp (thiếu cái gì?).<br><strong>Giải thích:</strong> Sadie sống ở căn hộ tầng 2 và vấn đề là: 'it doesn't have any <strong>storage</strong>' (không có chỗ cất giữ).<br><strong>Kết luận:</strong> Vì thiếu kho/chỗ để ('lack of storage') nên cô không mua xe."
+          "explain": ""
         }
-      ],
-      "_lessonTitle": "Test 1: Listening"
+      ]
     },
     {
-      "id": "ielts18_test1_part2",
-      "title": "Part 2: Volunteering for ACE",
+      "id": "quiz_02",
+      "title": "",
       "type": "multiple-choice",
-      "instruction": "Choose the correct letter, A, B or C.",
+      "instruction": "<p>Choose the correct letter, A, B or C.</p>",
       "quizNumber": 2,
       "audio": "./audio/Cambridge_IELTS_18_Test1_Listening_Part2.mp3",
       "transcript": "./audio/Cambridge_IELTS_18_Test1_Listening_Part2_Transcript.json",
       "questions": [
         {
-          "id": "q11",
+          "id": "question_01",
           "question": "Why does the speaker apologise about the seats?",
           "options": [
             {
@@ -93,10 +92,10 @@
             }
           ],
           "answer": "C",
-          "explain": "<strong>Giải thích:</strong> Diễn giả nói: 'people at the back of the room may be a bit <strong>squashed</strong>'.<br><strong>Phân tích từ vựng:</strong> Từ 'squashed' có nghĩa là bị ép chặt, chật chội do ngồi sát nhau, tương đương với ý 'very close together' trong đáp án C.<br><strong>Loại trừ:</strong> Đáp án B sai vì bà nói đã mang thêm ghế ('brought in extra seats') nên không ai phải đứng."
+          "explain": ""
         },
         {
-          "id": "q12",
+          "id": "question_02",
           "question": "What does the speaker say about the age of volunteers?",
           "options": [
             {
@@ -113,10 +112,10 @@
             }
           ],
           "answer": "A",
-          "explain": "<strong>Giải thích:</strong> Diễn giả nhấn mạnh rằng các yếu tố khác như sự tin cậy ('reliability') là cốt yếu ('crucial'), và khẳng định: '<strong>age isn't related to these</strong>' (tuổi tác không liên quan đến những phẩm chất này).<br><strong>Kết luận:</strong> Điều này có nghĩa là tuổi tác ít quan trọng hơn các yếu tố khác (Đáp án A).<br><strong>Loại trừ:</strong> Bà nói tình nguyện viên có thể từ 16 đến 60+, nên đáp án C (hầu hết là 60) là sai."
+          "explain": ""
         },
         {
-          "id": "q13",
+          "id": "question_03",
           "question": "What does the speaker say about training?",
           "options": [
             {
@@ -133,21 +132,21 @@
             }
           ],
           "answer": "A",
-          "explain": "<strong>Giải thích:</strong> Diễn giả nói: 'training doesn't end when you start... It takes place <strong>before, during, and after</strong> periods of work'.<br><strong>Phân tích:</strong> Việc đào tạo diễn ra xuyên suốt quá trình làm việc đồng nghĩa với 'continuous' (liên tục).<br><strong>Loại trừ:</strong> Đáp án B sai vì thường do tình nguyện viên có kinh nghiệm hướng dẫn. Đáp án C sai vì 'it's all face to face' (trực tiếp)."
+          "explain": ""
         }
       ]
     },
     {
-      "id": "ielts18_test1_part2_multi",
-      "title": "Part 2: Considerations & Jobs",
+      "id": "quiz_03",
+      "title": "",
       "type": "multiple-choice",
-      "instruction": "Answer the questions below.",
-      "quizNumber": "14-20",
+      "instruction": "<p>Answer the questions below.</p>",
+      "quizNumber": 3,
       "audio": "./audio/Cambridge_IELTS_18_Test1_Listening_Part2.mp3",
-      "transcript": "...",
+      "transcript": "./audio/Cambridge_IELTS_18_Test1_Listening_Part2_Transcript.mp3",
       "questions": [
         {
-          "id": "q14_15",
+          "id": "question_01",
           "question": "Which TWO issues does the speaker ask the audience to consider before they apply to be volunteers?",
           "options": [
             {
@@ -171,16 +170,10 @@
               "text": "their availability"
             }
           ],
-          "answers": [
-            "B",
-            "E"
-          ],
-          "explain": "<strong>Đáp án B (Commitment):</strong> Diễn giả nói 'What we value is <strong>dedication</strong>... give their full energy to the work'. Sự cống hiến/tận tâm tương đương với 'commitment'.<br><strong>Đáp án E (Availability):</strong> Bà nói 'it is critical that you have <strong>enough hours in the day</strong>'. Việc có đủ thời gian tương đương với 'availability'.<br><strong>Loại trừ:</strong> Bà nói rõ 'we don't ask about that' khi nhắc đến thu nhập (income - A)."
+          "answers": ["B", "E"],
+          "explain": ""
         }
       ]
-    },
-    {},
-    {}
-  ],
-  "_filePath": "/home/khanhromvn/Documents/Coding/Fluency/FluencyStudio/src/renderer/src/features/course/data/courses/Cambridge_IELTS_18/Cambridge_IELTS_18_Lesson1.json"
+    }
+  ]
 }

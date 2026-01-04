@@ -1,6 +1,7 @@
 import { ipcMain, dialog, app } from 'electron';
 import fs from 'fs';
 import path from 'path';
+import { fileWatcherService } from '../services/FileWatcherService';
 
 export function setupEventHandlers() {
   ipcMain.handle('ping', () => 'pong');
@@ -167,5 +168,16 @@ export function setupEventHandlers() {
       console.error('Error reading file:', error);
       return null;
     }
+  });
+
+  // Watcher handlers
+  ipcMain.handle('watcher:watch', (_, filePath: string) => {
+    fileWatcherService.watch(filePath);
+    return true;
+  });
+
+  ipcMain.handle('watcher:unwatch', (_, filePath: string) => {
+    fileWatcherService.unwatch(filePath);
+    return true;
   });
 }

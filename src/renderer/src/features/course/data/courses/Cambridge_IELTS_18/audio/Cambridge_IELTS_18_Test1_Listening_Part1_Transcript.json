@@ -2,229 +2,229 @@
   "language_code": "eng",
   "segments": [
     {
-      "speaker": "Speaker 4",
+      "speaker": "IELTS_Examiner",
       "start": "00:00",
       "end": "01:31",
       "text": "IELTS 18. Published by Cambridge University Press and Assessment, 2023. This recording is copyright. Test 1. This is the IELTS listening test. You will hear a number of different recordings and you will have to answer questions on what you hear. There will be time for you to read the instructions and questions and you will have a chance to check your work. All the recordings will be played once only. The test is in four parts. At the end of the test, you will be given 10 minutes to transfer your answers to an answer sheet. Now turn to part one. Part one. You will hear an interview with a woman who is doing a survey on transport. First, you have some time to look at questions one to five. Now listen carefully and answer questions 1 to 5."
     },
     {
-      "speaker": "Speaker 2",
+      "speaker": "Survey_Interviewer",
       "start": "01:31",
       "end": "01:53",
       "text": "Excuse me, would you mind if I asked you some questions? We're doing a survey on transport. Yes, that's OK. First of all, can I take your name? Yes, it's Sadie Jones. Thanks very much. And could I have your date of birth? Just the year will do, actually. Is that all right?"
     },
     {
-      "speaker": "Speaker 4",
+      "speaker": "Survey_Respondent",
       "start": "01:53",
       "end": "01:58",
       "text": "Yes, that's fine. It's 1991."
     },
     {
-      "speaker": "Speaker 2",
+      "speaker": "Survey_Interviewer",
       "start": "01:58",
       "end": "02:01",
       "text": "So, next, your postcode, please."
     },
     {
-      "speaker": "Speaker 4",
+      "speaker": "Survey_Respondent",
       "start": "02:01",
       "end": "02:07",
       "text": "It's DW 30 7YZ."
     },
     {
-      "speaker": "Speaker 2",
+      "speaker": "Survey_Interviewer",
       "start": "02:07",
       "end": "02:11",
       "text": "Great, thanks. Is that in Wells?"
     },
     {
-      "speaker": "Speaker 4",
+      "speaker": "Survey_Respondent",
       "start": "02:11",
       "end": "02:16",
       "text": "No, it's actually in Harborne. Wells isn't far from there, though. I"
     },
     {
-      "speaker": "Speaker 2",
+      "speaker": "Survey_Interviewer",
       "start": "02:16",
       "end": "02:21",
       "text": "really like that area. My grandmother lived there when I was a kid."
     },
     {
-      "speaker": "Speaker 4",
+      "speaker": "Survey_Respondent",
       "start": "02:21",
       "end": "02:23",
       "text": "Yes, it is nice."
     },
     {
-      "speaker": "Speaker 2",
+      "speaker": "Survey_Interviewer",
       "start": "02:23",
       "end": "02:32",
       "text": "Right, so now I want to ask you some questions about how you travelled here today. Did you use public transport?"
     },
     {
-      "speaker": "Speaker 4",
+      "speaker": "Survey_Respondent",
       "start": "02:32",
       "end": "02:34",
       "text": "Yes, I came by bus."
     },
     {
-      "speaker": "Speaker 2",
+      "speaker": "Survey_Interviewer",
       "start": "02:34",
       "end": "02:40",
       "text": "OK, and that was today. It's the 24th of April, isn't it?"
     },
     {
-      "speaker": "Speaker 4",
+      "speaker": "Survey_Respondent",
       "start": "02:40",
       "end": "02:46",
       "text": "Isn't it the 25th? Er, no. Actually, you're right."
     },
     {
-      "speaker": "Speaker 2",
+      "speaker": "Survey_Interviewer",
       "start": "02:46",
       "end": "02:53",
       "text": "And what was the reason for your trip today? I can see you've got some shopping with you."
     },
     {
-      "speaker": "Speaker 4",
+      "speaker": "Survey_Respondent",
       "start": "02:53",
       "end": "03:01",
       "text": "Yes, I did some shopping. But the main reason I came here was to go to the dentist."
     },
     {
-      "speaker": "Speaker 2",
+      "speaker": "Survey_Interviewer",
       "start": "03:01",
       "end": "03:04",
       "text": "That's not much fun. Hope it was nothing serious."
     },
     {
-      "speaker": "Speaker 4",
+      "speaker": "Survey_Respondent",
       "start": "03:04",
       "end": "03:07",
       "text": "No, it was just a check-up. It's fine."
     },
     {
-      "speaker": "Speaker 2",
+      "speaker": "Survey_Interviewer",
       "start": "03:07",
       "end": "03:12",
       "text": "Good. Do you normally travel by bus into the city centre?"
     },
     {
-      "speaker": "Speaker 4",
+      "speaker": "Survey_Respondent",
       "start": "03:12",
       "end": "03:21",
       "text": "Yes, I stopped driving in ages ago because parking was so difficult to find and it costs so much."
     },
     {
-      "speaker": "Speaker 2",
+      "speaker": "Survey_Interviewer",
       "start": "03:21",
       "end": "03:22",
       "text": "I see."
     },
     {
-      "speaker": "Speaker 4",
+      "speaker": "Survey_Respondent",
       "start": "03:22",
       "end": "03:28",
       "text": "The bus is much more convenient too. It only takes about 30 minutes."
     },
     {
-      "speaker": "Speaker 3",
+      "speaker": "Survey_Interviewer",
       "start": "03:28",
       "end": "03:32",
       "text": "That's good. So where did you start your journey?"
     },
     {
-      "speaker": "Speaker 1",
+      "speaker": "Survey_Respondent",
       "start": "03:32",
       "end": "03:44",
       "text": "At the bus stop on Claxby Street. Is that C-L-A-X-B-Y? That's right."
     },
     {
-      "speaker": "Speaker 4",
+      "speaker": "IELTS_Examiner",
       "start": "03:44",
       "end": "04:18",
       "text": "Before you hear the rest of the conversation, you have some time to look at questions 6 to 10. Now listen and answer questions six to ten."
     },
     {
-      "speaker": "Speaker 2",
+      "speaker": "Survey_Interviewer",
       "start": "04:18",
       "end": "04:26",
       "text": "And how satisfied with the service are you? Do you have any complaints?"
     },
     {
-      "speaker": "Speaker 4",
+      "speaker": "Survey_Respondent",
       "start": "04:26",
       "end": "04:38",
       "text": "Well, as I said, it's very convenient and quick when it's on time. But this morning it was late. Only about ten minutes, but still."
     },
     {
-      "speaker": "Speaker 2",
+      "speaker": "Survey_Interviewer",
       "start": "04:38",
       "end": "04:45",
       "text": "Yes, I understand that's annoying. And what about the timetable? Do you have any comments about that?"
     },
     {
-      "speaker": "Speaker 4",
+      "speaker": "Survey_Respondent",
       "start": "04:45",
       "end": "05:04",
       "text": "I suppose I mainly use the bus during the day, but any time I've been in town in the evening, for dinner or at the cinema, I've noticed you have to wait a long time for a bus. There aren't that many. OK,"
     },
     {
-      "speaker": "Speaker 2",
+      "speaker": "Survey_Interviewer",
       "start": "05:04",
       "end": "05:09",
       "text": "thanks. So now I'd like to ask you about your car use."
     },
     {
-      "speaker": "Speaker 4",
+      "speaker": "Survey_Respondent",
       "start": "05:09",
       "end": "05:24",
       "text": "Well, I have got a car, but I don't use it that often, mainly just to go to the supermarket. But that's about it, really. My husband uses it at the weekends to go to the golf club."
     },
     {
-      "speaker": "Speaker 2",
+      "speaker": "Survey_Interviewer",
       "start": "05:24",
       "end": "05:25",
       "text": "And what about a bicycle?"
     },
     {
-      "speaker": "Speaker 4",
+      "speaker": "Survey_Respondent",
       "start": "05:25",
       "end": "05:28",
       "text": "I don't actually have one at the moment."
     },
     {
-      "speaker": "Speaker 2",
+      "speaker": "Survey_Interviewer",
       "start": "05:28",
       "end": "05:32",
       "text": "What about the city bikes you can rent? Do you ever use those?"
     },
     {
-      "speaker": "Speaker 4",
+      "speaker": "Survey_Respondent",
       "start": "05:32",
       "end": "05:43",
       "text": "No, I'm not keen on cycling there because of all the pollution. But I would like to get a bike. It would be good to use it to get to work."
     },
     {
-      "speaker": "Speaker 2",
+      "speaker": "Survey_Interviewer",
       "start": "05:43",
       "end": "05:45",
       "text": "So why haven't you got one now?"
     },
     {
-      "speaker": "Speaker 4",
+      "speaker": "Survey_Respondent",
       "start": "05:45",
       "end": "05:56",
       "text": "Well, I live in a flat on the second floor and it doesn't have any storage. So we'd have to leave it in the hall outside the flat."
     },
     {
-      "speaker": "Speaker 1",
+      "speaker": "Survey_Interviewer",
       "start": "05:56",
       "end": "06:00",
       "text": "I see. OK, well, I think that's all we need from you"
     },
     {
-      "speaker": "Speaker 1",
+      "speaker": "IELTS_Examiner",
       "start": "06:00",
       "end": "06:10",
       "text": "today. You now have one minute to check your answers to part one."

@@ -96,51 +96,159 @@ const CoursePageContent = () => {
     };
   }, [isResizing]);
 
-  // Load course data
+  // State for course path
+  const [coursePath, setCoursePath] = useState<string | null>(null);
+
+  // Find course path from ID
   useEffect(() => {
-    const loadCourseData = async () => {
-      if (!courseId) return;
-      setLoading(true);
-      try {
-        const storedPaths = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
-        let foundPath = '';
-
-        // Simple ID matching logic (must match folderService creation logic)
-        for (const path of storedPaths) {
-          const folderName = path.split('/').pop() || '';
-          const id = folderName.toLowerCase().replace(/[^a-z0-9]/g, '_');
-          if (id === courseId) {
-            foundPath = path;
-            break;
-          }
+    if (!courseId) return;
+    try {
+      const storedPaths = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+      let foundPath = '';
+      for (const path of storedPaths) {
+        const folderName = path.split('/').pop() || '';
+        const id = folderName.toLowerCase().replace(/[^a-z0-9]/g, '_');
+        if (id === courseId) {
+          foundPath = path;
+          break;
         }
+      }
+      if (foundPath) {
+        setCoursePath(foundPath);
+      } else {
+        console.error('Course path not found for ID:', courseId);
+        setLoading(false);
+      }
+    } catch (e) {
+      console.error('Error finding course path:', e);
+      setLoading(false);
+    }
+  }, [courseId]);
 
-        if (foundPath) {
-          const courseData = await folderService.loadCourseFromPath(foundPath);
-          if (courseData) {
-            setCourse(courseData);
-            // Initial selection
-            setSelection({
-              type: 'course',
-              data: courseData,
-              sourceData: courseData,
-              id: 'course-root',
-            });
-          } else {
-            console.error('Failed to load course data from path:', foundPath);
-          }
-        } else {
-          console.error('Course path not found for ID:', courseId);
+  // Load course data and watch for changes
+  useEffect(() => {
+    if (!coursePath) return;
+
+    const load = async (isRefresh = false) => {
+      if (!isRefresh) setLoading(true); // Only show loading spinner on initial load
+      try {
+        const courseData = await folderService.loadCourseFromPath(coursePath);
+        if (courseData) {
+          setCourse(courseData);
+
+          // Update selection with new data
+          setSelection((prev) => {
+            // If just initializing, set default
+            if (prev.id === 'course-root' && !prev.data) {
+              return {
+                type: 'course',
+                data: courseData,
+                sourceData: courseData,
+                id: 'course-root',
+              };
+            }
+
+            // Otherwise try to maintain selection with fresh data
+            let newData = prev.data;
+            let newSourceData = prev.sourceData;
+            let newParentData = prev.parentData;
+
+            if (prev.type === 'course') {
+              newData = courseData;
+              newSourceData = courseData;
+            } else if (prev.type === 'lesson') {
+              let foundLesson = courseData.lessons?.find((l: any) => l.id === prev.id);
+
+              // Fallback: Try index if ID match failed
+              if (!foundLesson && courseData.lessons && prev.data) {
+                // Try to find index in previous course data if possible, or assume stable order?
+                // We don't have easy access to old course data here.
+                // But we can guess the index from the lessons list if we had it.
+                // Actually, we can rely on the fact that if ID changed, the user probably edited the *current* file.
+                // Let's rely on finding by index if we can determine it.
+                // We can't determine old index easily without scanning old `course` state, but we are inside setSelection updater.
+                // Hack: we can try to find a lesson with same title? Or just grab the first one if only 1?
+                // Better: Pass the old course state into this logic?
+                // Actually, let's use the `course` state from the outer scope!
+                // `course` (state) is still the OLD course at this exact moment of execution (synchronous setSelection call inside async load).
+                // Wait, `setCourse` was called just before. React state might not be updated yet in closure?
+                // NO. `setCourse` schedules update. `course` variable in this specific render cycle is still the OLD course.
+                // So we CAN use `course` to find the old index.
+
+                const oldIndex = course?.lessons?.findIndex((l: any) => l.id === prev.id);
+                if (oldIndex !== undefined && oldIndex !== -1) {
+                  foundLesson = courseData.lessons[oldIndex];
+                }
+              }
+
+              if (foundLesson) {
+                newData = foundLesson;
+                newSourceData = foundLesson;
+              }
+            } else if (prev.type === 'quiz') {
+              const parentId = prev.parentData?.id;
+              // We need to find the NEW parent lesson.
+              // If parent lesson ID changed, we have a bigger problem (cascading ID change).
+              // Let's assume parent lesson ID is stable for now, or apply similar fallback.
+              let foundLesson = courseData.lessons?.find((l: any) => l.id === parentId);
+
+              if (!foundLesson && course?.lessons) {
+                // Fallback for Lesson ID change
+                const oldLessonIndex = course.lessons.findIndex((l: any) => l.id === parentId);
+                if (oldLessonIndex !== -1) {
+                  foundLesson = courseData.lessons[oldLessonIndex];
+                }
+              }
+
+              if (foundLesson && foundLesson.quiz) {
+                let foundQuiz = foundLesson.quiz.find((q: any) => q.id === prev.id);
+
+                // Fallback: Try index
+                if (!foundQuiz && prev.parentData?.quiz) {
+                  const oldQuizIndex = prev.parentData.quiz.findIndex((q: any) => q.id === prev.id);
+                  if (oldQuizIndex !== -1 && foundLesson.quiz[oldQuizIndex]) {
+                    foundQuiz = foundLesson.quiz[oldQuizIndex];
+                  }
+                }
+
+                if (foundQuiz) {
+                  newData = { ...foundQuiz, _lessonTitle: foundLesson.title };
+                  newSourceData = foundQuiz;
+                  newParentData = foundLesson;
+                }
+              }
+            }
+
+            return {
+              ...prev,
+              data: newData,
+              sourceData: newSourceData,
+              parentData: newParentData,
+            };
+          });
         }
       } catch (e) {
         console.error('Error loading course:', e);
       } finally {
-        setLoading(false);
+        if (!isRefresh) setLoading(false);
       }
     };
 
-    loadCourseData();
-  }, [courseId]);
+    // Initial load
+    load();
+
+    // Setup watcher
+    const handleFileChange = (path: string, event: string) => {
+      console.log(`[Watcher] File ${event}: ${path}`);
+      load(true);
+    };
+
+    folderService.watchFile(coursePath, handleFileChange);
+
+    return () => {
+      folderService.unwatchFile(coursePath, handleFileChange);
+    };
+  }, [coursePath]);
 
   const toggleLesson = (lessonId: string) => {
     const newExpanded = new Set(expandedLessons);

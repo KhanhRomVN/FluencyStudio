@@ -21,6 +21,62 @@ export interface FileSaveResult {
 }
 
 class FolderService {
+  private listeners: Map<string, Set<(path: string, event: string) => void>> = new Map();
+
+  constructor() {
+    this.setupGlobalListener();
+  }
+
+  private setupGlobalListener() {
+    if (window.electron?.ipcRenderer) {
+      window.electron.ipcRenderer.on('file:changed', (_, { path, event }) => {
+        // Notify listeners for the specific path
+        if (this.listeners.has(path)) {
+          this.listeners.get(path)?.forEach((callback) => callback(path, event));
+        }
+
+        // Also notify listeners for parent directories if needed (optional, for now exact match)
+        // Find if any watched path is a parent of the changed file
+        for (const [watchedPath, callbacks] of this.listeners.entries()) {
+          if (path.startsWith(watchedPath) && path !== watchedPath) {
+            callbacks.forEach((cb) => cb(path, event));
+          }
+        }
+      });
+    }
+  }
+
+  /**
+   * Watch a file or directory for changes
+   */
+  async watchFile(path: string, callback: (path: string, event: string) => void): Promise<void> {
+    if (!this.listeners.has(path)) {
+      this.listeners.set(path, new Set());
+      // Tell main process to start watching this path
+      if (window.electron?.ipcRenderer) {
+        await window.electron.ipcRenderer.invoke('watcher:watch', path);
+      }
+    }
+    this.listeners.get(path)?.add(callback);
+  }
+
+  /**
+   * Stop watching a file or directory
+   */
+  async unwatchFile(path: string, callback: (path: string, event: string) => void): Promise<void> {
+    const callbacks = this.listeners.get(path);
+    if (callbacks) {
+      callbacks.delete(callback);
+      if (callbacks.size === 0) {
+        this.listeners.delete(path);
+        // Tell main process to stop watching
+        if (window.electron?.ipcRenderer) {
+          await window.electron.ipcRenderer.invoke('watcher:unwatch', path);
+        }
+      }
+    }
+  }
+
   /**
    * Open folder picker dialog
    */

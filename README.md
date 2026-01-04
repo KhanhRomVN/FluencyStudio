@@ -1,8 +1,100 @@
-Speaker 1
-(00:00) IELTS 18. Published by Cambridge University Press and Assessment, 2023. This recording is copyright. Test 1. This is the IELTS listening test. You will hear a number of different recordings and you will have to answer questions on what you hear. There will be time for you to read the instructions and questions and you will have a chance to check your work. All the recordings will be played once only. The test is in four parts. At the end of the test, you will be given 10 minutes to transfer your answers to an answer sheet. Now turn to part one. Part one. You will hear an interview with a woman who is doing a survey on transport. First, you have some time to look at questions one to five. Now listen carefully and answer questions 1 to 5.
-Speaker 4
-(01:31) Excuse me, would you mind if I asked you some questions? We're doing a survey on transport. Yes, that's OK. First of all, can I take your name? Yes, it's Sadie Jones. Thanks very much. And could I have your date of birth? Just the year will do, actually. Is that all right?
-Speaker 2
-(01:53) Yes, that's fine. It's 1991.
-Speaker 4
-(01:58) So, next, your postcode, please.
+# Template Electron App
+
+Professional, production-ready Electron application template featuring a modern tech stack and best practices.
+
+## Usage
+
+This is a CLI tool to bootstrap a new Electron application.
+
+### Scaffold a new project
+
+Use `npx` (recommended) to create a new project in seconds:
+
+```bash
+npx @khanhromvn/create-electron-app
+```
+
+Then follow the interactive prompts to set up your project name.
+
+After scaffolding:
+
+```bash
+cd <your-project-name>
+npm install
+npm run dev
+```
+
+## Features
+
+- 🏗 **Architecture**: Feature-based folder structure for scalability.
+- ⚡ **Tech Stack**: Electron, React, TypeScript, Vite.
+- 🎨 **Styling**: TailwindCSS with shadcn/ui integration.
+- 🎭 **Theming**: Advanced theme system with presets (Light/Dark/System).
+- 🧪 **Testing**: Vitest ready for Unit and Integration tests.
+- 🧹 **Code Quality**: ESLint, Prettier, Husky, lint-staged.
+- 📦 **Build**: efficient build process with electron-builder.
+
+## Project Structure
+
+```bash
+src/
+├── main/           # Main process
+│   ├── core/       # Core logic (WindowManager, Config)
+│   ├── features/   # Main process features
+│   └── index.ts    # Entry point
+├── preload/        # Preload scripts
+│   ├── api/        # Exposed APIs
+│   └── index.ts    # Entry point
+└── renderer/       # Renderer process (React)
+    ├── src/
+    │   ├── core/       # Core providers, routes, theme
+    │   ├── features/   # Feature modules (Dashboard, etc)
+    │   ├── shared/     # Shared components, hooks, utils
+    │   ├── assets/     # Static assets
+    │   └── main.tsx    # Entry point
+```
+
+## Development (Contributing)
+
+If you want to contribute to this template or run it locally as a standalone app:
+
+### Prerequisites
+
+- Node.js >= 18
+- npm or yarn
+
+### Installation
+
+```bash
+# Clone the repository
+git clone <repository-url>
+
+# Install dependencies
+npm install
+
+# Start development server
+npm run dev
+```
+
+## Scripts
+
+- `npm run dev`: Start development server.
+- `npm run build`: Build for production.
+- `npm test`: Run tests.
+- `npm run lint`: Lint code.
+- `npm run format`: Format code.
+
+## Documentation
+
+- [Architecture](./docs/ARCHITECTURE.md)
+- [Setup](./docs/SETUP.md)
+- [Development](./docs/DEVELOPMENT.md)
+- [Dependencies](./docs/DEPENDENCIES.md)
+
+## Contributing
+
+Please read [CONTRIBUTING.md](./docs/CONTRIBUTING.md) for details on our code of conduct and the process for submitting pull requests.
+
+## License
+
+MIT

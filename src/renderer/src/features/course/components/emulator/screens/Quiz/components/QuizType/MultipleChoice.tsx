@@ -8,6 +8,7 @@ interface MultipleChoiceProps {
   quiz: Quiz;
   isChecked: boolean;
   onCheck: () => void;
+  onUpdate?: (updatedQuiz: Quiz) => void;
   header?: React.ReactNode;
 }
 
@@ -15,6 +16,7 @@ export const MultipleChoice: React.FC<MultipleChoiceProps> = ({
   quiz,
   isChecked,
   onCheck,
+  onUpdate,
   header,
 }) => {
   // State now stores array of strings for each question ID
@@ -22,6 +24,12 @@ export const MultipleChoice: React.FC<MultipleChoiceProps> = ({
   const [areAllAnswered, setAreAllAnswered] = useState(false);
   const [isExplainOpen, setIsExplainOpen] = useState(false);
   const [currentExplanation, setCurrentExplanation] = useState('');
+
+  // Local state for editing in emulator
+  const [instruction, setInstruction] = useState(quiz.instruction || '');
+
+  // Note: If quiz prop updates from outside, we might want to sync local state,
+  // but for now we assume emulator is the driver of change or reset happens on remount.
 
   // Handle nested questions or single question
   const questions = quiz.questions && quiz.questions.length > 0 ? quiz.questions : [];
@@ -177,9 +185,15 @@ export const MultipleChoice: React.FC<MultipleChoiceProps> = ({
     <div className="flex flex-col h-full">
       <div className="flex-1 overflow-y-auto px-4 py-3 [&::-webkit-scrollbar]:hidden">
         {header}
-        {quiz.instruction && (
+        {instruction && (
           <div className="mb-6 text-[hsl(var(--foreground))]">
-            <RichTextParser content={quiz.instruction} />
+            <RichTextParser
+              content={instruction}
+              onChange={(newContent) => {
+                setInstruction(newContent);
+                onUpdate?.({ ...quiz, instruction: newContent });
+              }}
+            />
           </div>
         )}
         {questions.map(renderQuestion)}

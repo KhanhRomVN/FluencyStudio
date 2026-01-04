@@ -1,4 +1,15 @@
 import React, { ReactNode, useMemo } from 'react';
+import {
+  Bold,
+  Italic,
+  Underline,
+  Palette,
+  Type,
+  AlignLeft,
+  AlignCenter,
+  AlignRight,
+} from 'lucide-react';
+import { EmulatorEditProvider, useEmulatorEdit } from './EmulatorEditContext';
 import DefaultDark from '../../../../assets/themes/DefaultDark.json';
 import SoftTeal from '../../../../assets/themes/SoftTeal.json';
 
@@ -48,6 +59,52 @@ interface EmulatorFrameProps {
   theme?: keyof typeof THEMES;
 }
 
+const EmulatorToolbar = () => {
+  const { applyFormat } = useEmulatorEdit();
+
+  const ToolbarSeparator = () => <div className="w-px h-6 bg-border mx-2" />;
+
+  const ToolbarButton = ({ icon: Icon, onClick }: { icon: any; onClick?: () => void }) => (
+    <button
+      className="p-2 rounded hover:bg-muted text-muted-foreground hover:text-foreground transition-colors outline-none focus:ring-1 focus:ring-ring"
+      onMouseDown={(e) => e.preventDefault()}
+      onClick={onClick}
+    >
+      <Icon size={18} />
+    </button>
+  );
+
+  return (
+    <div className="flex items-center p-2 rounded-lg bg-background border border-border shadow-sm">
+      <div className="flex items-center space-x-0.5">
+        <ToolbarButton icon={Bold} onClick={() => applyFormat('bold')} />
+        <ToolbarButton icon={Italic} onClick={() => applyFormat('italic')} />
+        <ToolbarButton icon={Underline} onClick={() => applyFormat('underline')} />
+      </div>
+
+      <ToolbarSeparator />
+
+      <div className="flex items-center space-x-0.5">
+        <ToolbarButton icon={Palette} onClick={() => console.log('Palette clicked')} />
+      </div>
+
+      <ToolbarSeparator />
+
+      <div className="flex items-center space-x-0.5">
+        <ToolbarButton icon={Type} onClick={() => console.log('Type clicked')} />
+      </div>
+
+      <ToolbarSeparator />
+
+      <div className="flex items-center space-x-0.5">
+        <ToolbarButton icon={AlignLeft} onClick={() => applyFormat('left')} />
+        <ToolbarButton icon={AlignCenter} onClick={() => applyFormat('center')} />
+        <ToolbarButton icon={AlignRight} onClick={() => applyFormat('right')} />
+      </div>
+    </div>
+  );
+};
+
 export const EmulatorFrame: React.FC<EmulatorFrameProps> = ({ children, theme = 'SoftTeal' }) => {
   const themeStyles = useMemo(() => {
     const currentTheme = THEMES[theme];
@@ -77,16 +134,21 @@ export const EmulatorFrame: React.FC<EmulatorFrameProps> = ({ children, theme = 
   }, [theme]);
 
   return (
-    <div className="flex justify-center h-full max-h-[850px] w-full items-center p-8">
-      <div
-        className="relative w-[375px] h-[812px] bg-background border border-border overflow-hidden flex flex-col select-none rounded-md"
-        style={themeStyles}
-      >
-        {/* Screen Content */}
-        <div className="flex-1 w-full h-full overflow-y-auto scrollbar-hide bg-background text-foreground relative z-10 ">
-          {children}
+    <EmulatorEditProvider>
+      <div className="flex flex-col h-full max-h-[900px] w-full items-center p-8 gap-6">
+        <div
+          className="relative w-[375px] h-[812px] bg-background border border-border overflow-hidden flex flex-col select-none rounded-md shadow-xl"
+          style={themeStyles}
+        >
+          {/* Screen Content */}
+          <div className="flex-1 w-full h-full overflow-y-auto scrollbar-hide bg-background text-foreground relative z-10 ">
+            {children}
+          </div>
         </div>
+
+        {/* Formatting Toolbar */}
+        <EmulatorToolbar />
       </div>
-    </div>
+    </EmulatorEditProvider>
   );
 };

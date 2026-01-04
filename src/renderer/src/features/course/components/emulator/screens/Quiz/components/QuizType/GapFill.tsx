@@ -8,26 +8,31 @@ interface GapFillProps {
   quiz: Quiz;
   isChecked: boolean;
   onCheck: () => void;
+  onUpdate?: (updatedQuiz: Quiz) => void;
   header?: React.ReactNode;
 }
 
-export const GapFill: React.FC<GapFillProps> = ({ quiz, isChecked, onCheck, header }) => {
+export const GapFill: React.FC<GapFillProps> = ({ quiz, isChecked, onCheck, onUpdate, header }) => {
   const [inputs, setInputs] = useState<{ [key: string]: string }>({});
   const [areAllGapsFilled, setAreAllGapsFilled] = useState(false);
   const [isExplainOpen, setIsExplainOpen] = useState(false);
   const [currentExplanation, setCurrentExplanation] = useState('');
 
+  // Local state for editing
+  const [instruction, setInstruction] = useState(quiz.instruction || '');
+  const [question, setQuestion] = useState(quiz.question || '');
+
   // Initialize checks
   useEffect(() => {
-    if (!quiz.question) return;
+    if (!question) return;
     // Dart format: </gap id='...'>
     const regex = /<\/gap id='(.*?)'>/g;
     let match;
     let count = 0;
-    while ((match = regex.exec(quiz.question)) !== null) {
+    while ((match = regex.exec(question)) !== null) {
       count++;
     }
-  }, [quiz.question]);
+  }, [question]);
 
   const handleInputChange = (id: string, value: string) => {
     setInputs((prev) => {
@@ -37,7 +42,7 @@ export const GapFill: React.FC<GapFillProps> = ({ quiz, isChecked, onCheck, head
       const regex = /<\/gap id='(.*?)'>/g;
       let match;
       let allFilled = true;
-      while ((match = regex.exec(quiz.question)) !== null) {
+      while ((match = regex.exec(question)) !== null) {
         const gapId = match[1];
         if (!next[gapId] || next[gapId].trim() === '') {
           allFilled = false;
@@ -50,11 +55,15 @@ export const GapFill: React.FC<GapFillProps> = ({ quiz, isChecked, onCheck, head
   };
 
   const renderContent = () => {
-    if (!quiz.question) return null;
+    if (!question) return null;
 
     return (
       <RichTextParser
-        content={quiz.question}
+        content={question}
+        onChange={(newContent) => {
+          setQuestion(newContent);
+          onUpdate?.({ ...quiz, question: newContent });
+        }}
         onGapFound={(id) => {
           const answerObj = quiz.answers?.find((a) => a.id === id);
           const correctAnswer = answerObj?.answer || '';
@@ -129,9 +138,15 @@ export const GapFill: React.FC<GapFillProps> = ({ quiz, isChecked, onCheck, head
     <div className="flex flex-col h-full">
       <div className="flex-1 overflow-y-auto px-4 py-3 text-[15px] leading-relaxed text-[hsl(var(--foreground))] [&::-webkit-scrollbar]:hidden">
         {header}
-        {quiz.instruction && (
+        {instruction && (
           <div className="mb-6 text-[hsl(var(--foreground))]">
-            <RichTextParser content={quiz.instruction} />
+            <RichTextParser
+              content={instruction}
+              onChange={(newContent) => {
+                setInstruction(newContent);
+                onUpdate?.({ ...quiz, instruction: newContent });
+              }}
+            />
           </div>
         )}
         <div>{renderContent()}</div>

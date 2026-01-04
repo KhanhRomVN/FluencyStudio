@@ -13,9 +13,15 @@ interface QuizPageProps {
   quizData: Quiz & { _lessonTitle?: string };
   parentLesson?: any;
   onQuizChange?: (quiz: Quiz) => void;
+  onQuizUpdate?: (updatedQuiz: Quiz) => void;
 }
 
-export const QuizPage: React.FC<QuizPageProps> = ({ quizData, parentLesson, onQuizChange }) => {
+export const QuizPage: React.FC<QuizPageProps> = ({
+  quizData,
+  parentLesson,
+  onQuizChange,
+  onQuizUpdate,
+}) => {
   const [isChecked, setIsChecked] = useState(false);
   const [showTranscript, setShowTranscript] = useState(false);
   const [showMenu, setShowMenu] = useState(false);
@@ -133,6 +139,7 @@ export const QuizPage: React.FC<QuizPageProps> = ({ quizData, parentLesson, onQu
             quiz={quizData}
             isChecked={isChecked}
             onCheck={handleCheck}
+            onUpdate={onQuizUpdate}
             header={
               <h2 className="font-bold text-lg text-[hsl(var(--foreground))] leading-tight mb-3">
                 {displayTitle}
@@ -144,6 +151,7 @@ export const QuizPage: React.FC<QuizPageProps> = ({ quizData, parentLesson, onQu
             quiz={quizData}
             isChecked={isChecked}
             onCheck={handleCheck}
+            onUpdate={onQuizUpdate}
             header={
               <h2 className="font-bold text-lg text-[hsl(var(--foreground))] leading-tight mb-3">
                 {displayTitle}

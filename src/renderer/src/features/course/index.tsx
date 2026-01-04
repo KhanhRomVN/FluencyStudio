@@ -128,154 +128,107 @@ const CoursePage = () => {
 
   const saveTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
-  const handleCodeChange = (newCode: string) => {
-    try {
-      const parsed = JSON.parse(newCode);
+  const handleDataUpdate = (parsed: any) => {
+    // 1. Update Course State (In-Memory Consistency)
+    setCourse((prevCourse: any) => {
+      if (!prevCourse) return prevCourse;
+      const newCourse = { ...prevCourse };
 
-      // 1. Update Course State (In-Memory Consistency)
-      setCourse((prevCourse: any) => {
-        if (!prevCourse) return prevCourse;
-        const newCourse = { ...prevCourse };
+      if (selection.type === 'course') {
+        return { ...parsed, _filePath: prevCourse._filePath };
+      } else if (selection.type === 'lesson') {
+        if (newCourse.lessons) {
+          newCourse.lessons = newCourse.lessons.map((l: any) =>
+            l.id === selection.id ? { ...parsed, _filePath: l._filePath } : l,
+          );
+        }
+      } else if (selection.type === 'quiz') {
+        const parentLessonId = selection.parentData?.id;
+        if (parentLessonId && newCourse.lessons) {
+          newCourse.lessons = newCourse.lessons.map((l: any) => {
+            if (l.id === parentLessonId) {
+              if (l.quiz) {
+                return {
+                  ...l,
+                  quiz: l.quiz.map((q: any) => (q.id === selection.id ? parsed : q)),
+                };
+              }
+            }
+            return l;
+          });
+        }
+      }
+      return newCourse;
+    });
 
-        if (selection.type === 'course') {
-          // If we are editing the course itself
-          return { ...parsed, _filePath: prevCourse._filePath }; // Preserve filePath
-        } else if (selection.type === 'lesson') {
-          // Finding the lesson to update
-          if (newCourse.lessons) {
-            newCourse.lessons = newCourse.lessons.map((l: any) =>
-              l.id === selection.id ? { ...parsed, _filePath: l._filePath } : l,
+    // 2. Debounced File Save
+    if (saveTimeoutRef.current) {
+      clearTimeout(saveTimeoutRef.current);
+    }
+
+    saveTimeoutRef.current = setTimeout(async () => {
+      let filePathToSave = '';
+      let contentToSave = '';
+
+      if (selection.type === 'course') {
+        filePathToSave = selection.data._filePath;
+        contentToSave = JSON.stringify(parsed, null, 2);
+      } else if (selection.type === 'lesson') {
+        filePathToSave = selection.data._filePath;
+        contentToSave = JSON.stringify(parsed, null, 2);
+      } else if (selection.type === 'quiz') {
+        const parentLesson = selection.parentData;
+        if (parentLesson && parentLesson._filePath) {
+          filePathToSave = parentLesson._filePath;
+          const updatedLesson = { ...parentLesson };
+          if (updatedLesson.quiz) {
+            updatedLesson.quiz = updatedLesson.quiz.map((q: any) =>
+              q.id === selection.id ? parsed : q,
             );
           }
-        } else if (selection.type === 'quiz') {
-          // Finding the quiz nested in lesson
-          // We need to know which lesson it belongs to.
-          // selection.parentData has the lesson ID (from handleQuizClick)
-          const parentLessonId = selection.parentData?.id;
-          if (parentLessonId && newCourse.lessons) {
-            newCourse.lessons = newCourse.lessons.map((l: any) => {
-              if (l.id === parentLessonId) {
-                // Found the lesson, now update the quiz inside it
-                if (l.quiz) {
-                  return {
-                    ...l,
-                    quiz: l.quiz.map((q: any) => (q.id === selection.id ? parsed : q)),
-                  };
-                }
-              }
-              return l;
-            });
-          }
+          contentToSave = JSON.stringify(updatedLesson, null, 2);
         }
-        return newCourse;
-      });
-
-      // 2. Debounced File Save
-      if (saveTimeoutRef.current) {
-        clearTimeout(saveTimeoutRef.current);
       }
 
-      saveTimeoutRef.current = setTimeout(async () => {
-        let filePathToSave = '';
-        let contentToSave = '';
-
-        if (selection.type === 'course') {
-          filePathToSave = selection.data._filePath;
-          // Ensure we don't save _filePath into the file if not desired, but usually okay or stripped by serializer if careful.
-          // We use 'parsed' which comes from editor. If editor showed _filePath, it's there.
-          // If we want to be clean, we can rely on what user sees.
-          contentToSave = JSON.stringify(parsed, null, 2);
-        } else if (selection.type === 'lesson') {
-          filePathToSave = selection.data._filePath;
-          contentToSave = JSON.stringify(parsed, null, 2);
-        } else if (selection.type === 'quiz') {
-          // For quiz, we need to save the PARENT LESSON.
-          // But we need the UPDATED lesson content.
-          // We just updated 'course' state above, but we can't access that async 'newCourse' here easily without refs or getting it again.
-          // So we reconstruct the lesson update locally for saving.
-          const parentLesson = selection.parentData;
-          if (parentLesson && parentLesson._filePath) {
-            filePathToSave = parentLesson._filePath;
-
-            // Construct updated lesson
-            const updatedLesson = { ...parentLesson };
-            if (updatedLesson.quiz) {
-              updatedLesson.quiz = updatedLesson.quiz.map((q: any) =>
-                q.id === selection.id ? parsed : q,
-              );
-            }
-            // IMPORTANT: parentLesson from selection.parentData might be STALE if we made multiple edits?
-            // selection.parentData is set on CLICK.
-            // If we edit, we don't update selection.parentData in the local 'setSelection'.
-            // So specific subsequent edits might use stale 'parentLesson' from handleQuizClick time.
-            // HOWEVER, when we update 'course' state, we are keeping the master copy fresh.
-            // Maybe we should verify we have the latest lesson data.
-
-            // To be safe, we should fetch the latest lesson from the CURRENT 'course' state ref maybe?
-            // Or just trust that we are updating one field.
-            // If we have multiple rapid edits, the 'parsed' variable is correct for the focus item.
-            // But 'parentLesson' structure might be old.
-            // If users only edit the quiz json, 'parentLesson' structure (other fields) usually doesn't change.
-            // EXCEPT if we edit OTHER quizzes in the SAME lesson before navigating away.
-
-            // FIX: We need to update 'selection.parentData' as well in setSelection to match the in-memory changes?
-            // OR better: In this save function, we rely on the `parsed` (new quiz) and merge it into... what?
-            // If we merge it into `selection.parentData`, we effectively ignore previous edits to other parts of the lesson if `parentData` is stale.
-
-            // Ideally, we should grab the latest lesson from the newly set course state.
-            // But we don't have access to it here.
-
-            // Workaround: We will update `selection` state with new `parentData` too!
-
-            contentToSave = JSON.stringify(updatedLesson, null, 2);
-          }
+      if (filePathToSave && contentToSave) {
+        console.log('Autosaving file:', filePathToSave);
+        const result = await folderService.saveFile(filePathToSave, contentToSave);
+        if (!result.success) {
+          console.error('Autosave failed:', result.error);
+        } else {
+          console.log('Autosave success');
         }
+      }
+    }, 1000);
 
-        if (filePathToSave && contentToSave) {
-          console.log('Autosaving file:', filePathToSave);
-          const result = await folderService.saveFile(filePathToSave, contentToSave);
-          if (!result.success) {
-            console.error('Autosave failed:', result.error);
-            // Optionally set some error state here to show in UI
-            // But for now just log heavily as user requested fix
-          } else {
-            console.log('Autosave success');
-          }
+    // 3. Update Local Selection State (UI)
+    setSelection((prev) => {
+      if (prev.type === 'quiz') {
+        const updatedParent = prev.parentData ? { ...prev.parentData } : {};
+        if (updatedParent.quiz) {
+          updatedParent.quiz = updatedParent.quiz.map((q: any) => (q.id === prev.id ? parsed : q));
         }
-      }, 1000);
-
-      // 3. Update Local Selection State (UI)
-      setSelection((prev) => {
-        // If we are editing a quiz, we need to preserve the _lessonTitle
-        if (prev.type === 'quiz') {
-          // We also try to update parentData to avoid staleness for subsequent saves
-          // This is a partial fix; really 'parentData' should track 'course' state or be a Ref.
-          // But for now, updating it locally helps if we edit the *same* quiz repeatedly.
-
-          const updatedParent = prev.parentData ? { ...prev.parentData } : {};
-          if (updatedParent.quiz) {
-            updatedParent.quiz = updatedParent.quiz.map((q: any) =>
-              q.id === prev.id ? parsed : q,
-            );
-          }
-
-          return {
-            ...prev,
-            sourceData: parsed,
-            data: { ...parsed, _lessonTitle: prev.data._lessonTitle },
-            parentData: updatedParent,
-          };
-        }
-
-        // Default case
         return {
           ...prev,
           sourceData: parsed,
-          data: { ...parsed, _filePath: prev.data._filePath }, // Preserve _filePath
+          data: { ...parsed, _lessonTitle: prev.data._lessonTitle },
+          parentData: updatedParent,
         };
-      });
+      }
+      return {
+        ...prev,
+        sourceData: parsed,
+        data: { ...parsed, _filePath: prev.data._filePath },
+      };
+    });
+  };
+
+  const handleCodeChange = (newCode: string) => {
+    try {
+      const parsed = JSON.parse(newCode);
+      handleDataUpdate(parsed);
     } catch (e) {
-      // Invalid JSON, just ignore update
+      // Invalid JSON
     }
   };
 
@@ -300,6 +253,7 @@ const CoursePage = () => {
             quizData={selection.data}
             parentLesson={selection.parentData} // Pass parent lesson
             onQuizChange={(quiz) => handleQuizClick(quiz, selection.parentData)} // Allow switching
+            onQuizUpdate={handleDataUpdate}
           />
         );
       default:

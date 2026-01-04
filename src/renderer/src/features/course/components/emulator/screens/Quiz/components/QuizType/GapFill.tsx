@@ -8,9 +8,10 @@ interface GapFillProps {
   quiz: Quiz;
   isChecked: boolean;
   onCheck: () => void;
+  header?: React.ReactNode;
 }
 
-export const GapFill: React.FC<GapFillProps> = ({ quiz, isChecked, onCheck }) => {
+export const GapFill: React.FC<GapFillProps> = ({ quiz, isChecked, onCheck, header }) => {
   const [inputs, setInputs] = useState<{ [key: string]: string }>({});
   const [areAllGapsFilled, setAreAllGapsFilled] = useState(false);
   const [isExplainOpen, setIsExplainOpen] = useState(false);
@@ -126,7 +127,8 @@ export const GapFill: React.FC<GapFillProps> = ({ quiz, isChecked, onCheck }) =>
 
   return (
     <div className="flex flex-col h-full">
-      <div className="flex-1 overflow-y-auto px-4 py-4 text-[17px] leading-relaxed text-[hsl(var(--foreground))]">
+      <div className="flex-1 overflow-y-auto px-4 py-3 text-[16px] leading-relaxed text-[hsl(var(--foreground))] [&::-webkit-scrollbar]:hidden">
+        {header}
         <div className="flex flex-wrap items-baseline">{renderContent()}</div>
       </div>
 

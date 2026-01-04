@@ -7,9 +7,15 @@ interface MultipleChoiceProps {
   quiz: Quiz;
   isChecked: boolean;
   onCheck: () => void;
+  header?: React.ReactNode;
 }
 
-export const MultipleChoice: React.FC<MultipleChoiceProps> = ({ quiz, isChecked, onCheck }) => {
+export const MultipleChoice: React.FC<MultipleChoiceProps> = ({
+  quiz,
+  isChecked,
+  onCheck,
+  header,
+}) => {
   const [selectedAnswers, setSelectedAnswers] = useState<{ [key: string]: string }>({});
   const [areAllAnswered, setAreAllAnswered] = useState(false);
   const [isExplainOpen, setIsExplainOpen] = useState(false);
@@ -158,7 +164,8 @@ export const MultipleChoice: React.FC<MultipleChoiceProps> = ({ quiz, isChecked,
 
   return (
     <div className="flex flex-col h-full">
-      <div className="flex-1 overflow-y-auto px-4 py-4">
+      <div className="flex-1 overflow-y-auto px-4 py-3 [&::-webkit-scrollbar]:hidden">
+        {header}
         {quiz.instruction && (
           <div
             className="mb-6 text-[hsl(var(--foreground))]"

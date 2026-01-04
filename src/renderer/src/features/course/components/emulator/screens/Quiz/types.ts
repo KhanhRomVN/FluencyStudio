@@ -21,6 +21,7 @@ export interface QuizQuestion {
   id: string;
   question: string;
   options: { key: string; text: string }[];
-  answer: string;
+  answer?: string;
+  answers?: string[];
   explain: string;
 }

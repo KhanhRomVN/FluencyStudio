@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Quiz, QuizQuestion } from '../../types';
 import { Check, Info } from 'lucide-react';
 import { ExplainDrawer } from '../ExplainDrawer';
@@ -17,27 +17,46 @@ export const MultipleChoice: React.FC<MultipleChoiceProps> = ({
   onCheck,
   header,
 }) => {
-  const [selectedAnswers, setSelectedAnswers] = useState<{ [key: string]: string }>({});
+  // State now stores array of strings for each question ID
+  const [selectedAnswers, setSelectedAnswers] = useState<{ [key: string]: string[] }>({});
   const [areAllAnswered, setAreAllAnswered] = useState(false);
   const [isExplainOpen, setIsExplainOpen] = useState(false);
   const [currentExplanation, setCurrentExplanation] = useState('');
 
   // Handle nested questions or single question
-  // If quiz.questions exists (nested), use it. Otherwise assume the Quiz object itself is a question (flat legacy? or simple).
-  // The Dart code uses `widget.quiz.questions`.
   const questions = quiz.questions && quiz.questions.length > 0 ? quiz.questions : [];
-
-  // If no questions property, maybe the quiz itself defines one question?
-  // Reference `MultipleChoice.dart`: `final questions = widget.quiz.questions;`
-  // So we assume `questions` is populated.
 
   const handleOptionSelect = (questionId: string, optionKey: string) => {
     if (isChecked) return;
 
-    setSelectedAnswers((prev) => {
-      const next = { ...prev, [questionId]: optionKey };
+    const question = questions.find((q) => q.id === questionId);
+    // Determine if question allows multiple answers
+    const isMultiSelect = question?.answers && question.answers.length > 0;
 
-      const allAnswered = questions.every((q) => next[q.id]);
+    setSelectedAnswers((prev) => {
+      const currentSelection = prev[questionId] || [];
+      let newSelection: string[];
+
+      if (isMultiSelect) {
+        // Toggle selection
+        if (currentSelection.includes(optionKey)) {
+          newSelection = currentSelection.filter((k) => k !== optionKey);
+        } else {
+          newSelection = [...currentSelection, optionKey];
+        }
+      } else {
+        // Single select - replace
+        newSelection = [optionKey];
+      }
+
+      const next = { ...prev, [questionId]: newSelection };
+
+      // Check if all questions have enough answers selected
+      const allAnswered = questions.every((q) => {
+        const requiredCount = q.answers && q.answers.length > 0 ? q.answers.length : 1;
+        const currentCount = next[q.id] ? next[q.id].length : 0;
+        return currentCount >= requiredCount;
+      });
       setAreAllAnswered(allAnswered);
 
       return next;
@@ -45,8 +64,19 @@ export const MultipleChoice: React.FC<MultipleChoiceProps> = ({
   };
 
   const renderQuestion = (question: QuizQuestion) => {
-    const selectedKey = selectedAnswers[question.id];
-    const isCorrect = selectedKey === question.answer;
+    const userSelections = selectedAnswers[question.id] || [];
+
+    // Normalize correct answers to a Set for easy lookup
+    const correctAnswers = new Set<string>();
+    if (question.answers && question.answers.length > 0) {
+      question.answers.forEach((a) => correctAnswers.add(a));
+    } else if (question.answer) {
+      correctAnswers.add(question.answer);
+    }
+
+    const isQuestionCorrect =
+      userSelections.length === correctAnswers.size &&
+      userSelections.every((sel) => correctAnswers.has(sel));
 
     return (
       <div key={question.id} className="mb-8">
@@ -56,8 +86,8 @@ export const MultipleChoice: React.FC<MultipleChoiceProps> = ({
 
         <div className="space-y-3">
           {question.options.map((option) => {
-            const isSelected = selectedKey === option.key;
-            const isAnswerCorrect = option.key === question.answer;
+            const isSelected = userSelections.includes(option.key);
+            const isAnswerCorrect = correctAnswers.has(option.key);
 
             let containerClass = 'border-[hsl(var(--border))] bg-transparent';
             let textColor = 'text-[hsl(var(--foreground))]';
@@ -71,37 +101,17 @@ export const MultipleChoice: React.FC<MultipleChoiceProps> = ({
 
             if (isChecked) {
               if (isAnswerCorrect) {
+                // Correct answer (whether selected or not, show it's correct)
                 containerClass = 'border-[hsl(var(--primary))] bg-[hsl(var(--primary))]/10';
                 textColor = 'text-[hsl(var(--primary))]';
                 circleBorder = 'border-[hsl(var(--primary))]';
                 circleBg = 'bg-[hsl(var(--primary))]';
                 circleContent = <Check size={14} className="text-white" strokeWidth={3} />;
-              } else if (isSelected && !isCorrect) {
+              } else if (isSelected && !isAnswerCorrect) {
+                // User selected wrong answer
                 containerClass = 'border-red-500 bg-red-500/10';
                 textColor = 'text-red-500';
-                circleBorder = 'border-red-500'; // Based on Dart logic, selected is Primary?
-                // Dart: circle border color logic: _isChecked && isAnswerCorrect ? Primary : (isSelected ? Primary : Border)
-                // But circle bg logic: Same.
-                // Wait, checking Dart again for 'isSelected && !isCorrect' in checked mode.
-                // `isSelected` is true. `isAnswerCorrect` is false.
-                // color: (isSelected ? appColors.primary : Colors.transparent) -> Primary.
-                // border: (isSelected ? appColors.primary : appColors.border) -> Primary.
-                // So even if wrong, the circle is Primary if selected.
-                // BUT the Container border/bg would be Red (logic implied but not explicitly in snippet?
-                // Wait, the Dart snippet I read earlier:
-                /*
-                    if (_isChecked) {
-                      if (isAnswerCorrect) {
-                         borderColor = appColors.primary; backgroundColor = ...primary...
-                      } else if (isSelected && !isCorrect) {
-                         borderColor = Colors.red; backgroundColor = ...red...
-                      }
-                    }
-                   */
-                // So container is Red.
-                // Circle logic was separate in Dart snippet.
-                // Let's stick to Container Red, Circle Primary (showing "You chose this").
-                circleBorder = 'border-[hsl(var(--primary))]';
+                circleBorder = 'border-[hsl(var(--primary))]'; // Keep primary circle to show "You chose this"
                 circleBg = 'bg-[hsl(var(--primary))]';
                 circleContent = <Check size={14} className="text-white" strokeWidth={3} />;
               }
@@ -179,7 +189,7 @@ export const MultipleChoice: React.FC<MultipleChoiceProps> = ({
         <div className="p-4 bg-[hsl(var(--background))]">
           <button
             onClick={onCheck}
-            className="w-full py-4 bg-[hsl(var(--primary))] text-white rounded-xl font-bold text-lg shadow-lg active:scale-[0.98] transition-all"
+            className="w-full py-2 bg-[hsl(var(--primary))] text-white rounded-md font-bold text-base active:scale-[0.98] transition-all"
           >
             Check answers
           </button>

@@ -4,10 +4,10 @@ import {
   Italic,
   Underline,
   Palette,
-  Type,
   AlignLeft,
   AlignCenter,
   AlignRight,
+  ChevronLeft,
 } from 'lucide-react';
 import { EmulatorEditProvider, useEmulatorEdit } from './EmulatorEditContext';
 import DefaultDark from '../../../../assets/themes/DefaultDark.json';
@@ -59,47 +59,141 @@ interface EmulatorFrameProps {
   theme?: keyof typeof THEMES;
 }
 
+const COLORS = ['primary', 'red', 'green', 'blue', 'yellow', 'orange', 'purple', 'gray'];
+
 const EmulatorToolbar = () => {
-  const { applyFormat } = useEmulatorEdit();
+  const { applyFormat, activeFormats } = useEmulatorEdit();
+  const [showColors, setShowColors] = React.useState(false);
 
   const ToolbarSeparator = () => <div className="w-px h-6 bg-border mx-2" />;
 
-  const ToolbarButton = ({ icon: Icon, onClick }: { icon: any; onClick?: () => void }) => (
+  const ToolbarButton = ({
+    icon: Icon,
+    onClick,
+    isActive,
+    label,
+  }: {
+    icon?: any;
+    onClick?: () => void;
+    isActive?: boolean;
+    label?: string;
+  }) => (
     <button
-      className="p-2 rounded hover:bg-muted text-muted-foreground hover:text-foreground transition-colors outline-none focus:ring-1 focus:ring-ring"
+      className={`p-2 rounded transition-colors outline-none focus:ring-1 focus:ring-ring flex items-center justify-center min-w-[32px]
+        ${isActive ? 'bg-primary/20 text-primary' : 'hover:bg-muted text-muted-foreground hover:text-foreground'}`}
       onMouseDown={(e) => e.preventDefault()}
       onClick={onClick}
+      title={label}
     >
-      <Icon size={18} />
+      {Icon ? <Icon size={18} /> : <span className="text-sm font-bold">{label}</span>}
     </button>
   );
+
+  if (showColors) {
+    return (
+      <div className="flex items-center p-2 rounded-lg bg-background border border-border shadow-sm animate-in fade-in slide-in-from-bottom-2 duration-200">
+        <button
+          className="p-2 mr-2 rounded hover:bg-muted text-muted-foreground hover:text-foreground transition-colors outline-none"
+          onClick={() => setShowColors(false)}
+          onMouseDown={(e) => e.preventDefault()}
+        >
+          <ChevronLeft size={18} />
+        </button>
+        <div className="flex items-center space-x-1">
+          {COLORS.map((color) => (
+            <button
+              key={color}
+              className={`w-6 h-6 rounded-full border border-border transition-transform hover:scale-110 ${activeFormats.color === color ? 'ring-2 ring-primary ring-offset-1' : ''}`}
+              style={{ backgroundColor: color === 'primary' ? 'hsl(var(--primary))' : color }}
+              onMouseDown={(e) => e.preventDefault()}
+              onClick={() => {
+                applyFormat('color', color);
+                // setShowColors(false); // Keep open for multi-try or close? User didn't specify. Let's keep open.
+              }}
+            />
+          ))}
+          <button
+            className="ml-2 text-xs text-muted-foreground hover:text-foreground underline"
+            onClick={() => applyFormat('color', undefined)} // Reset
+            onMouseDown={(e) => e.preventDefault()}
+          >
+            Reset
+          </button>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="flex items-center p-2 rounded-lg bg-background border border-border shadow-sm">
       <div className="flex items-center space-x-0.5">
-        <ToolbarButton icon={Bold} onClick={() => applyFormat('bold')} />
-        <ToolbarButton icon={Italic} onClick={() => applyFormat('italic')} />
-        <ToolbarButton icon={Underline} onClick={() => applyFormat('underline')} />
+        <ToolbarButton
+          icon={Bold}
+          onClick={() => applyFormat('bold')}
+          isActive={activeFormats.isBold}
+          label="Bold (Ctrl+B)"
+        />
+        <ToolbarButton
+          icon={Italic}
+          onClick={() => applyFormat('italic')}
+          isActive={activeFormats.isItalic}
+          label="Italic (Ctrl+I)"
+        />
+        <ToolbarButton
+          icon={Underline}
+          onClick={() => applyFormat('underline')}
+          isActive={activeFormats.isUnderline}
+          label="Underline (Ctrl+U)"
+        />
       </div>
 
       <ToolbarSeparator />
 
       <div className="flex items-center space-x-0.5">
-        <ToolbarButton icon={Palette} onClick={() => console.log('Palette clicked')} />
+        <ToolbarButton
+          icon={Palette}
+          onClick={() => setShowColors(true)}
+          isActive={!!activeFormats.color}
+          label="Color"
+        />
       </div>
 
       <ToolbarSeparator />
 
       <div className="flex items-center space-x-0.5">
-        <ToolbarButton icon={Type} onClick={() => console.log('Type clicked')} />
+        <div className="relative flex items-center">
+          <input
+            type="number"
+            className="w-16 pl-7 pr-1 py-1 text-sm bg-transparent border border-border rounded focus:border-primary outline-none text-right"
+            value={parseInt(activeFormats.fontSize || '14')}
+            onMouseDown={(e) => e.stopPropagation()} // Allow focus
+            onChange={(e) => applyFormat('size', `${e.target.value}px`)}
+            min={10}
+            max={40}
+            placeholder="14"
+          />
+          <span className="ml-1 text-xs text-muted-foreground">px</span>
+        </div>
       </div>
 
       <ToolbarSeparator />
 
       <div className="flex items-center space-x-0.5">
-        <ToolbarButton icon={AlignLeft} onClick={() => applyFormat('left')} />
-        <ToolbarButton icon={AlignCenter} onClick={() => applyFormat('center')} />
-        <ToolbarButton icon={AlignRight} onClick={() => applyFormat('right')} />
+        <ToolbarButton
+          icon={AlignLeft}
+          onClick={() => applyFormat('left')}
+          isActive={activeFormats.align === 'left'}
+        />
+        <ToolbarButton
+          icon={AlignCenter}
+          onClick={() => applyFormat('center')}
+          isActive={activeFormats.align === 'center'}
+        />
+        <ToolbarButton
+          icon={AlignRight}
+          onClick={() => applyFormat('right')}
+          isActive={activeFormats.align === 'right'}
+        />
       </div>
     </div>
   );

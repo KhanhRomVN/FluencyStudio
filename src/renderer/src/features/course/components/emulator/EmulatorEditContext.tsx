@@ -13,19 +13,36 @@ type FormatType =
 
 interface EmulatorEditContextType {
   activeElementId: string | null;
+  activeFormats: ActiveFormats;
   registerElement: (
     id: string,
     callbacks: { onFormat: (type: FormatType, value?: any) => void },
   ) => void;
   unregisterElement: (id: string) => void;
   setActiveElement: (id: string | null) => void;
+  updateActiveFormats: (formats: ActiveFormats) => void;
   applyFormat: (type: FormatType, value?: any) => void;
+}
+
+export interface ActiveFormats {
+  isBold: boolean;
+  isItalic: boolean;
+  isUnderline: boolean;
+  align: 'left' | 'center' | 'right';
+  color?: string;
+  fontSize?: string;
 }
 
 const EmulatorEditContext = createContext<EmulatorEditContextType | undefined>(undefined);
 
 export const EmulatorEditProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [activeElementId, setActiveElementId] = useState<string | null>(null);
+  const [activeFormats, setActiveFormats] = useState<ActiveFormats>({
+    isBold: false,
+    isItalic: false,
+    isUnderline: false,
+    align: 'left',
+  });
   const [registry] = useState(
     new Map<string, { onFormat: (type: FormatType, value?: any) => void }>(),
   );
@@ -40,11 +57,8 @@ export const EmulatorEditProvider: React.FC<{ children: React.ReactNode }> = ({ 
   const unregisterElement = useCallback(
     (id: string) => {
       registry.delete(id);
-      if (activeElementId === id) {
-        setActiveElementId(null);
-      }
     },
-    [registry, activeElementId],
+    [registry],
   );
 
   const applyFormat = useCallback(
@@ -60,9 +74,11 @@ export const EmulatorEditProvider: React.FC<{ children: React.ReactNode }> = ({ 
     <EmulatorEditContext.Provider
       value={{
         activeElementId,
+        activeFormats,
         registerElement,
         unregisterElement,
         setActiveElement: setActiveElementId,
+        updateActiveFormats: setActiveFormats,
         applyFormat,
       }}
     >

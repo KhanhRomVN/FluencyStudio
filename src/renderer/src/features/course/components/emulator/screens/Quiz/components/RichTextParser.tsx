@@ -210,8 +210,14 @@ const ParagraphWrapper: React.FC<{
   onChange?: (newContent: string) => void;
   onTextClick?: (text: string) => void;
 }> = ({ id, className, style, children, fullText, startIndex, parts, onChange, onTextClick }) => {
-  const { registerElement, unregisterElement, setActiveElement, activeElementId } =
-    useEmulatorEdit();
+  const {
+    registerElement,
+    unregisterElement,
+    setActiveElement,
+    activeElementId,
+    updateActiveFormats,
+    applyFormat,
+  } = useEmulatorEdit();
 
   useEffect(() => {
     registerElement(id, {
@@ -247,7 +253,13 @@ const ParagraphWrapper: React.FC<{
           case 'italic':
             // Not supported by parser currently but let's add attribute
             if (lowerTag.includes('italic')) {
-              newTag = tag.replace(/\s+italic/i, '');
+              newTag = tag
+                .replace(/\s+italic/i, '')
+                .replace(/italic\s+/i, '')
+                .replace(/italic/i, '');
+
+              if (newTag.trim() === '<p>') newTag = '<p>';
+              else newTag = newTag.replace('<p ', '<p');
             } else {
               newTag = tag.slice(0, -1) + ' italic>';
             }
@@ -256,7 +268,13 @@ const ParagraphWrapper: React.FC<{
           case 'underline':
             // Not supported by parser currently
             if (lowerTag.includes('underline')) {
-              newTag = tag.replace(/\s+underline/i, '');
+              newTag = tag
+                .replace(/\s+underline/i, '')
+                .replace(/underline\s+/i, '')
+                .replace(/underline/i, '');
+
+              if (newTag.trim() === '<p>') newTag = '<p>';
+              else newTag = newTag.replace('<p ', '<p');
             } else {
               newTag = tag.slice(0, -1) + ' underline>';
             }
@@ -285,6 +303,68 @@ const ParagraphWrapper: React.FC<{
 
   const isActive = activeElementId === id;
 
+  // Sync active formats when active or content changes
+  useEffect(() => {
+    if (isActive) {
+      const tag = parts[startIndex].toLowerCase();
+      // Extract properties
+      const isBold = tag.includes('bold');
+      const isItalic = tag.includes('italic');
+      const isUnderline = tag.includes('underline');
+
+      let align: 'left' | 'center' | 'right' = 'left';
+      if (tag.includes('center')) align = 'center';
+      if (tag.includes('right')) align = 'right';
+
+      // Color
+      let color: string | undefined;
+      const colorMatch = tag.match(/color=['"](.*?)['"]/i);
+      if (colorMatch) color = colorMatch[1];
+
+      // Font Size
+      let fontSize: string | undefined;
+      const sizeMatch = tag.match(/size=['"]?(\d+)['"]?/);
+      if (sizeMatch) {
+        fontSize = sizeMatch[1];
+      } else {
+        const legacySizeMatch = tag.match(/\d+/);
+        // Only if it looks like a lone number and not part of color hex
+        // Simplified check
+        if (legacySizeMatch && !tag.match(/color=['"].*?['"]/)) {
+          fontSize = legacySizeMatch[0];
+        }
+      }
+
+      updateActiveFormats({
+        isBold,
+        isItalic,
+        isUnderline,
+        align,
+        color,
+        fontSize,
+      });
+    }
+  }, [isActive, parts, startIndex, updateActiveFormats]);
+
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.ctrlKey || e.metaKey) {
+      switch (e.key.toLowerCase()) {
+        case 'b':
+          e.preventDefault();
+          applyFormat('bold');
+          break;
+        case 'i':
+          e.preventDefault();
+          applyFormat('italic');
+          break;
+        case 'u':
+          e.preventDefault();
+          applyFormat('underline');
+          break;
+      }
+    }
+  };
+
   return (
     <span
       className={`${className} ${isActive ? 'border-primary bg-primary/5' : ''}`}
@@ -295,6 +375,7 @@ const ParagraphWrapper: React.FC<{
         setActiveElement(id);
         onTextClick?.(fullText);
       }}
+      onKeyDown={handleKeyDown}
       onFocus={(e) => {
         e.stopPropagation();
         setActiveElement(id);

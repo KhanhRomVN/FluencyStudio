@@ -8,13 +8,16 @@ import {
   CheckCircle,
   Palette,
   AudioWaveform,
+  FileSearch,
 } from 'lucide-react';
+import { FilePreviewPanel } from './components/FilePreviewPanel';
 import { CodeBlock } from '../../components/CodeBlock';
 import { EmulatorFrame } from './components/emulator/EmulatorFrame';
 import { CourseDetailScreen } from './components/emulator/screens/CourseDetailScreen';
 import { QuizPage } from './components/emulator/screens/Quiz';
 import { TranscriptDrawer } from './components/TranscriptDrawer';
 import { folderService } from '../../shared/services/folderService';
+import { EmulatorEditProvider, useEmulatorEdit } from './components/emulator/EmulatorEditContext';
 
 const STORAGE_KEY = 'fluency_course_paths';
 
@@ -28,7 +31,8 @@ interface SelectionState {
   parentData?: any; // To store parent lesson when a quiz is selected, or parent context
 }
 
-const CoursePage = () => {
+const CoursePageContent = () => {
+  const { activeElementContent } = useEmulatorEdit();
   const { courseId } = useParams<{ courseId: string }>();
   const [course, setCourse] = useState<any>(null);
   const [loading, setLoading] = useState(true);
@@ -45,6 +49,52 @@ const CoursePage = () => {
 
   const [emulatorTheme, setEmulatorTheme] = useState<'DefaultDark' | 'SoftTeal'>('SoftTeal');
   const [isTranscriptDrawerOpen, setIsTranscriptDrawerOpen] = useState(false);
+  const [isFilePreviewOpen, setIsFilePreviewOpen] = useState(false);
+  const [filePreviewWidth, setFilePreviewWidth] = useState(384); // Default 384px (w-96)
+  const [committedWidth, setCommittedWidth] = useState(384); // Width after resize ends
+  const widthRef = useRef(384); // Track live width for event handlers
+  const [isResizing, setIsResizing] = useState(false);
+  const sidebarRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      if (!isResizing) return;
+
+      // Calculate new width: Mouse X - Sidebar Width (roughly)
+      // A more robust way: FilePreview Right Edge - Mouse X? No, it's Left Edge + Width
+      // Let's use simple delta. But we need to know where we started.
+      // Better approach: Since Sidebar is fixed breadth, we can calculate based on page coord.
+      // Sidebar is 320px (w-80) constant.
+      // FilePreview starts at 320px.
+      // So Width = MouseX - 320.
+
+      const newWidth = e.clientX - 320;
+
+      // Min width 250, Max width 800
+      if (newWidth > 250 && newWidth < 800) {
+        setFilePreviewWidth(newWidth);
+        widthRef.current = newWidth;
+      }
+    };
+
+    const handleMouseUp = () => {
+      setIsResizing(false);
+      setCommittedWidth(widthRef.current); // Commit the final width
+      document.body.style.cursor = 'default';
+    };
+
+    if (isResizing) {
+      document.addEventListener('mousemove', handleMouseMove);
+      document.addEventListener('mouseup', handleMouseUp);
+      document.body.style.cursor = 'col-resize';
+    }
+
+    return () => {
+      document.removeEventListener('mousemove', handleMouseMove);
+      document.removeEventListener('mouseup', handleMouseUp);
+      document.body.style.cursor = 'default';
+    };
+  }, [isResizing]);
 
   // Load course data
   useEffect(() => {
@@ -278,13 +328,22 @@ const CoursePage = () => {
       {/* Header */}
       <div className="h-14 border-b flex items-center justify-between px-4 bg-card">
         <h1 className="text-lg font-semibold">Course Designer: {course.title}</h1>
-        <button
-          onClick={() => setIsTranscriptDrawerOpen(true)}
-          className="p-2 hover:bg-muted rounded-md transition-colors text-muted-foreground hover:text-primary"
-          title="Open Transcript Processor"
-        >
-          <AudioWaveform size={20} />
-        </button>
+        <div className="flex items-center gap-1">
+          <button
+            onClick={() => setIsFilePreviewOpen(!isFilePreviewOpen)}
+            className={`p-2 rounded-md transition-colors ${isFilePreviewOpen ? 'bg-muted text-primary' : 'text-muted-foreground hover:bg-muted hover:text-primary'}`}
+            title="Toggle File Preview"
+          >
+            <FileSearch size={20} />
+          </button>
+          <button
+            onClick={() => setIsTranscriptDrawerOpen(true)}
+            className="p-2 hover:bg-muted rounded-md transition-colors text-muted-foreground hover:text-primary"
+            title="Open Transcript Processor"
+          >
+            <AudioWaveform size={20} />
+          </button>
+        </div>
       </div>
 
       <div className="flex-1 flex overflow-hidden">
@@ -353,6 +412,21 @@ const CoursePage = () => {
           </div>
         </div>
 
+        {/* FILE PREVIEW PANEL */}
+        {isFilePreviewOpen && (
+          <div className="flex bg-background relative shrink-0" style={{ width: filePreviewWidth }}>
+            <FilePreviewPanel width={committedWidth} />
+            {/* Resizer Handle */}
+            <div
+              className="w-1 cursor-col-resize hover:bg-primary active:bg-primary transition-colors flex items-center justify-center bg-transparent relative z-10 -ml-0.5"
+              onMouseDown={(e) => {
+                e.preventDefault();
+                setIsResizing(true);
+              }}
+            />
+          </div>
+        )}
+
         {/* CODE BLOCK AREA */}
         <div className="flex-1 flex flex-col min-w-0 border-r">
           <div className="h-10 border-b flex items-center px-4 bg-muted/20 justify-between">
@@ -366,6 +440,7 @@ const CoursePage = () => {
               themeConfig={{ background: '#1e1e1e10' }}
               readOnly={false}
               onChange={handleCodeChange}
+              highlightText={activeElementContent}
             />
           </div>
         </div>
@@ -390,6 +465,14 @@ const CoursePage = () => {
         onClose={() => setIsTranscriptDrawerOpen(false)}
       />
     </div>
+  );
+};
+
+const CoursePage = () => {
+  return (
+    <EmulatorEditProvider>
+      <CoursePageContent />
+    </EmulatorEditProvider>
   );
 };
 

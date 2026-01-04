@@ -29,6 +29,7 @@ interface CodeBlockProps {
   themeConfig?: CodeBlockThemeConfig;
   wordWrap?: 'off' | 'on' | 'wordWrapColumn' | 'bounded';
   readOnly?: boolean;
+  highlightText?: string | null;
   onChange?: (value: string) => void;
 }
 
@@ -55,6 +56,7 @@ const CodeBlock: React.FC<CodeBlockProps> = ({
   themeConfig,
   wordWrap = 'on',
   readOnly = true,
+  highlightText,
   onChange,
 }) => {
   const editorRef = useRef<HTMLDivElement>(null);
@@ -192,6 +194,80 @@ const CodeBlock: React.FC<CodeBlockProps> = ({
     };
   }, [JSON.stringify(themeConfig), wordWrap, language, readOnly]);
 
+  // Highlight Text Effect
+  useEffect(() => {
+    if (!editorInstance.current || !window.monaco) return;
+
+    if (!highlightText) {
+      // Clear decorations if no text to highlight
+      const model = editorInstance.current.getModel();
+      if (model) {
+        editorInstance.current.deltaDecorations(
+          editorInstance.current
+            .getModel()
+            .getAllDecorations()
+            .filter((d: any) => d.options.className === 'code-highlight-line')
+            .map((d: any) => d.id),
+          [],
+        );
+      }
+      return;
+    }
+
+    const model = editorInstance.current.getModel();
+    if (!model) return;
+
+    // Normalize text for search (escape special chars if needed, but simple string search might suffice)
+    // We are searching for the string representation in the JSON, so we need to be careful.
+    // If highlightText is "Hello", in JSON it appears as "Hello".
+    // We might need to handle newlines or extensive formatting differences.
+    // For now, let's try a simple search.
+
+    // Better strategy: try to find the exact string occurrence.
+    // Since `highlightText` might contain HTML tags (from RichTextParser),
+    // it depends on what `activeElementContent` actually is.
+    // In `RichTextParser`, `fullText` is passed. This is the raw HTML content of the paragraph.
+    // In the JSON, it might be escaped. e.g. "<p>..." -> "\u003Cp\u003E..." or just "<p>..." depending on JSON.
+    // `JSON.stringify` usually keeps "<p>" as "<p>" but escapes quotes.
+
+    // Let's try to match the content. Only strictly match if we can find it.
+
+    // We expect the JSON value to contain the text.
+    const matches = model.findMatches(highlightText, false, false, false, null, true);
+
+    if (matches && matches.length > 0) {
+      // Highlight the first match for now, or all? Usually the specific one focused.
+      // But finding the *exact* one corresponding to the emulator node is hard without ID mapping.
+      // We will highlight all matches or just the first. Let's start with all.
+
+      const newDecorations = matches.map((match: { range: any }) => ({
+        range: match.range,
+        options: {
+          isWholeLine: false,
+          className: 'code-highlight-line',
+          glyphMarginClassName: 'code-highlight-glyph',
+        },
+      }));
+
+      // We need to keep track of old decorations to remove them.
+      // Since we don't have a ref for old decorations here easily without refactoring state,
+      // we can clear all with specific class or just assume we clear previous.
+
+      // Actually, simple way: remove all previous highlight decorations.
+      const currentDecorations = model.getAllDecorations();
+      const oldIds = currentDecorations
+        .filter((d: any) => d.options.className === 'code-highlight-line')
+        .map((d: any) => d.id);
+
+      editorInstance.current.deltaDecorations(oldIds, newDecorations);
+
+      // Reveal the first match
+      if (matches[0]) {
+        editorInstance.current.revealLineInCenter(matches[0].range.startLineNumber);
+      }
+    }
+  }, [highlightText, code]); // Re-run if text or code changes
+
   // Update value
   useEffect(() => {
     if (editorInstance.current && editorInstance.current.getValue() !== code) {
@@ -210,3 +286,13 @@ const CodeBlock: React.FC<CodeBlockProps> = ({
 };
 
 export { CodeBlock };
+
+// Add basic styles for the highlight
+const style = document.createElement('style');
+style.innerHTML = `
+  .code-highlight-line {
+    background-color: rgba(255, 255, 0, 0.3); /* Yellow highlight */
+    border-radius: 2px;
+  }
+`;
+document.head.appendChild(style);

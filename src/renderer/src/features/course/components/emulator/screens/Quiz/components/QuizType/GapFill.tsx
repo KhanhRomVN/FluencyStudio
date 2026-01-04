@@ -60,6 +60,7 @@ export const GapFill: React.FC<GapFillProps> = ({ quiz, isChecked, onCheck, onUp
     return (
       <RichTextParser
         content={question}
+        sectionId="question"
         onChange={(newContent) => {
           setQuestion(newContent);
           onUpdate?.({ ...quiz, question: newContent });
@@ -142,6 +143,7 @@ export const GapFill: React.FC<GapFillProps> = ({ quiz, isChecked, onCheck, onUp
           <div className="mb-6 text-[hsl(var(--foreground))]">
             <RichTextParser
               content={instruction}
+              sectionId="instruction"
               onChange={(newContent) => {
                 setInstruction(newContent);
                 onUpdate?.({ ...quiz, instruction: newContent });

@@ -35,6 +35,7 @@
     "prepare": "husky"
   },
   "dependencies": {
+    "@cyntler/react-doc-viewer": "^1.17.1",
     "@electron-toolkit/preload": "^2.0.0",
     "@electron-toolkit/utils": "^2.0.0",
     "@radix-ui/react-label": "^2.0.2",

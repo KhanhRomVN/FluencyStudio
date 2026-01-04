@@ -13,6 +13,7 @@ type FormatType =
 
 interface EmulatorEditContextType {
   activeElementId: string | null;
+  activeElementContent: string | null;
   activeFormats: ActiveFormats;
   registerElement: (
     id: string,
@@ -20,6 +21,7 @@ interface EmulatorEditContextType {
   ) => void;
   unregisterElement: (id: string) => void;
   setActiveElement: (id: string | null) => void;
+  setActiveContent: (content: string | null) => void;
   updateActiveFormats: (formats: ActiveFormats) => void;
   applyFormat: (type: FormatType, value?: any) => void;
 }
@@ -37,6 +39,7 @@ const EmulatorEditContext = createContext<EmulatorEditContextType | undefined>(u
 
 export const EmulatorEditProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [activeElementId, setActiveElementId] = useState<string | null>(null);
+  const [activeElementContent, setActiveElementContent] = useState<string | null>(null);
   const [activeFormats, setActiveFormats] = useState<ActiveFormats>({
     isBold: false,
     isItalic: false,
@@ -74,10 +77,12 @@ export const EmulatorEditProvider: React.FC<{ children: React.ReactNode }> = ({ 
     <EmulatorEditContext.Provider
       value={{
         activeElementId,
+        activeElementContent,
         activeFormats,
         registerElement,
         unregisterElement,
         setActiveElement: setActiveElementId,
+        setActiveContent: setActiveElementContent,
         updateActiveFormats: setActiveFormats,
         applyFormat,
       }}

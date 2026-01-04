@@ -8,6 +8,8 @@ import {
   AlignCenter,
   AlignRight,
   ChevronLeft,
+  ChevronUp,
+  ChevronDown,
 } from 'lucide-react';
 import { EmulatorEditProvider, useEmulatorEdit } from './EmulatorEditContext';
 import DefaultDark from '../../../../assets/themes/DefaultDark.json';
@@ -89,112 +91,120 @@ const EmulatorToolbar = () => {
     </button>
   );
 
-  if (showColors) {
-    return (
-      <div className="flex items-center p-2 rounded-lg bg-background border border-border shadow-sm animate-in fade-in slide-in-from-bottom-2 duration-200">
-        <button
-          className="p-2 mr-2 rounded hover:bg-muted text-muted-foreground hover:text-foreground transition-colors outline-none"
-          onClick={() => setShowColors(false)}
-          onMouseDown={(e) => e.preventDefault()}
-        >
-          <ChevronLeft size={18} />
-        </button>
-        <div className="flex items-center space-x-1">
-          {COLORS.map((color) => (
-            <button
-              key={color}
-              className={`w-6 h-6 rounded-full border border-border transition-transform hover:scale-110 ${activeFormats.color === color ? 'ring-2 ring-primary ring-offset-1' : ''}`}
-              style={{ backgroundColor: color === 'primary' ? 'hsl(var(--primary))' : color }}
-              onMouseDown={(e) => e.preventDefault()}
-              onClick={() => {
-                applyFormat('color', color);
-                // setShowColors(false); // Keep open for multi-try or close? User didn't specify. Let's keep open.
-              }}
-            />
-          ))}
-          <button
-            className="ml-2 text-xs text-muted-foreground hover:text-foreground underline"
-            onClick={() => applyFormat('color', undefined)} // Reset
-            onMouseDown={(e) => e.preventDefault()}
-          >
-            Reset
-          </button>
-        </div>
-      </div>
-    );
-  }
-
   return (
-    <div className="flex items-center p-2 rounded-lg bg-background border border-border shadow-sm">
-      <div className="flex items-center space-x-0.5">
-        <ToolbarButton
-          icon={Bold}
-          onClick={() => applyFormat('bold')}
-          isActive={activeFormats.isBold}
-          label="Bold (Ctrl+B)"
-        />
-        <ToolbarButton
-          icon={Italic}
-          onClick={() => applyFormat('italic')}
-          isActive={activeFormats.isItalic}
-          label="Italic (Ctrl+I)"
-        />
-        <ToolbarButton
-          icon={Underline}
-          onClick={() => applyFormat('underline')}
-          isActive={activeFormats.isUnderline}
-          label="Underline (Ctrl+U)"
-        />
-      </div>
-
-      <ToolbarSeparator />
-
-      <div className="flex items-center space-x-0.5">
-        <ToolbarButton
-          icon={Palette}
-          onClick={() => setShowColors(true)}
-          isActive={!!activeFormats.color}
-          label="Color"
-        />
-      </div>
-
-      <ToolbarSeparator />
-
-      <div className="flex items-center space-x-0.5">
-        <div className="relative flex items-center">
-          <input
-            type="number"
-            className="w-16 pl-7 pr-1 py-1 text-sm bg-transparent border border-border rounded focus:border-primary outline-none text-right"
-            value={parseInt(activeFormats.fontSize || '14')}
-            onMouseDown={(e) => e.stopPropagation()} // Allow focus
-            onChange={(e) => applyFormat('size', `${e.target.value}px`)}
-            min={10}
-            max={40}
-            placeholder="14"
+    <div className="flex flex-col items-center gap-2">
+      <div className="flex items-center p-2 rounded-lg bg-background border border-border shadow-sm">
+        <div className="flex items-center space-x-0.5">
+          <ToolbarButton
+            icon={Bold}
+            onClick={() => applyFormat('bold')}
+            isActive={activeFormats.isBold}
+            label="Bold (Ctrl+B)"
           />
-          <span className="ml-1 text-xs text-muted-foreground">px</span>
+          <ToolbarButton
+            icon={Italic}
+            onClick={() => applyFormat('italic')}
+            isActive={activeFormats.isItalic}
+            label="Italic (Ctrl+I)"
+          />
+          <ToolbarButton
+            icon={Underline}
+            onClick={() => applyFormat('underline')}
+            isActive={activeFormats.isUnderline}
+            label="Underline (Ctrl+U)"
+          />
+        </div>
+
+        <ToolbarSeparator />
+
+        <div className="flex items-center space-x-0.5">
+          <ToolbarButton
+            icon={Palette}
+            onClick={() => setShowColors(!showColors)} // Toggle
+            isActive={!!activeFormats.color || showColors}
+            label="Color"
+          />
+        </div>
+
+        <ToolbarSeparator />
+
+        <div className="flex items-center space-x-0.5">
+          <div className="relative flex items-center border border-border rounded overflow-hidden">
+            <div className="w-12 py-1 pl-2 text-sm bg-transparent outline-none text-center select-none flex items-center justify-center font-medium">
+              {parseInt(activeFormats.fontSize || '14')}
+            </div>
+            <div className="flex flex-col border-l border-border">
+              <button
+                className="px-1 h-[14px] flex items-center justify-center hover:bg-muted text-muted-foreground hover:text-primary transition-colors"
+                onMouseDown={(e) => e.preventDefault()}
+                onClick={() => {
+                  const current = parseInt(activeFormats.fontSize || '14');
+                  applyFormat('size', `${Math.min(40, current + 1)}px`);
+                }}
+              >
+                <ChevronUp size={10} strokeWidth={3} />
+              </button>
+              <button
+                className="px-1 h-[14px] flex items-center justify-center hover:bg-muted text-muted-foreground hover:text-primary transition-colors border-t border-border"
+                onMouseDown={(e) => e.preventDefault()}
+                onClick={() => {
+                  const current = parseInt(activeFormats.fontSize || '14');
+                  applyFormat('size', `${Math.max(10, current - 1)}px`);
+                }}
+              >
+                <ChevronDown size={10} strokeWidth={3} />
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <ToolbarSeparator />
+
+        <div className="flex items-center space-x-0.5">
+          <ToolbarButton
+            icon={AlignLeft}
+            onClick={() => applyFormat('left')}
+            isActive={activeFormats.align === 'left'}
+          />
+          <ToolbarButton
+            icon={AlignCenter}
+            onClick={() => applyFormat('center')}
+            isActive={activeFormats.align === 'center'}
+          />
+          <ToolbarButton
+            icon={AlignRight}
+            onClick={() => applyFormat('right')}
+            isActive={activeFormats.align === 'right'}
+          />
         </div>
       </div>
 
-      <ToolbarSeparator />
-
-      <div className="flex items-center space-x-0.5">
-        <ToolbarButton
-          icon={AlignLeft}
-          onClick={() => applyFormat('left')}
-          isActive={activeFormats.align === 'left'}
-        />
-        <ToolbarButton
-          icon={AlignCenter}
-          onClick={() => applyFormat('center')}
-          isActive={activeFormats.align === 'center'}
-        />
-        <ToolbarButton
-          icon={AlignRight}
-          onClick={() => applyFormat('right')}
-          isActive={activeFormats.align === 'right'}
-        />
-      </div>
+      {/* Color Picker placed below */}
+      {showColors && (
+        <div className="flex items-center p-2 rounded-lg bg-background border border-border shadow-sm animate-in fade-in slide-in-from-top-1 duration-200">
+          <div className="flex items-center space-x-1">
+            {COLORS.map((color) => (
+              <button
+                key={color}
+                className={`w-6 h-6 rounded-full border border-border transition-transform hover:scale-110 ${activeFormats.color === color ? 'ring-2 ring-primary ring-offset-1' : ''}`}
+                style={{ backgroundColor: color === 'primary' ? 'hsl(var(--primary))' : color }}
+                onMouseDown={(e) => e.preventDefault()}
+                onClick={() => {
+                  applyFormat('color', color);
+                  // Optional: setShowColors(false); if we want to close on selection
+                }}
+              />
+            ))}
+            <button
+              className="ml-2 text-xs text-muted-foreground hover:text-foreground underline"
+              onClick={() => applyFormat('color', undefined)} // Reset
+              onMouseDown={(e) => e.preventDefault()}
+            >
+              Reset
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
@@ -228,21 +238,19 @@ export const EmulatorFrame: React.FC<EmulatorFrameProps> = ({ children, theme = 
   }, [theme]);
 
   return (
-    <EmulatorEditProvider>
-      <div className="flex flex-col h-full max-h-[900px] w-full items-center p-8 gap-6">
-        <div
-          className="relative w-[375px] h-[812px] bg-background border border-border overflow-hidden flex flex-col select-none rounded-md shadow-xl"
-          style={themeStyles}
-        >
-          {/* Screen Content */}
-          <div className="flex-1 w-full h-full overflow-y-auto scrollbar-hide bg-background text-foreground relative z-10 ">
-            {children}
-          </div>
+    <div className="flex flex-col h-full max-h-[900px] w-full items-center p-8 gap-6">
+      <div
+        className="relative w-[375px] h-[812px] bg-background border border-border overflow-hidden flex flex-col select-none rounded-md shadow-xl"
+        style={themeStyles}
+      >
+        {/* Screen Content */}
+        <div className="flex-1 w-full h-full overflow-y-auto scrollbar-hide bg-background text-foreground relative z-10 ">
+          {children}
         </div>
-
-        {/* Formatting Toolbar */}
-        <EmulatorToolbar />
       </div>
-    </EmulatorEditProvider>
+
+      {/* Formatting Toolbar */}
+      <EmulatorToolbar />
+    </div>
   );
 };

@@ -189,6 +189,7 @@ export const MultipleChoice: React.FC<MultipleChoiceProps> = ({
           <div className="mb-6 text-[hsl(var(--foreground))]">
             <RichTextParser
               content={instruction}
+              sectionId="instruction"
               onChange={(newContent) => {
                 setInstruction(newContent);
                 onUpdate?.({ ...quiz, instruction: newContent });

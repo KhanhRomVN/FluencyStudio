@@ -16,6 +16,7 @@ const COLOR_MAP: Record<string, string> = {
 
 interface RichTextParserProps {
   content: string;
+  sectionId?: string;
   onGapFound?: (id: string) => React.ReactNode;
   onTextClick?: (text: string) => void;
   onChange?: (newContent: string) => void;
@@ -23,6 +24,7 @@ interface RichTextParserProps {
 
 export const RichTextParser: React.FC<RichTextParserProps> = ({
   content,
+  sectionId,
   onGapFound,
   onTextClick,
   onChange,
@@ -49,7 +51,16 @@ export const RichTextParser: React.FC<RichTextParserProps> = ({
   const flushParagraph = (closeIndex: number, startIndex: number) => {
     if (pChildren.length > 0) {
       const fullText = pTextAccumulator; // Capture current value
-      const uniqueId = `p-${startIndex}-${closeIndex}`;
+      const uniqueId = `${sectionId ? sectionId + '-' : ''}p-${startIndex}-${closeIndex}`;
+
+      // Construct full outer HTML for precise highlighting
+      // parts[startIndex] is the opening tag
+      // parts[closeIndex] is usually the closing tag if accessible, or we check if it is </p>
+      let closingTag = '';
+      if (closeIndex < parts.length && parts[closeIndex].toLowerCase() === '</p>') {
+        closingTag = parts[closeIndex];
+      }
+      const fullOuterHTML = `${parts[startIndex]}${fullText}${closingTag}`;
 
       const wrapperStyle: React.CSSProperties = {
         fontSize,
@@ -58,7 +69,7 @@ export const RichTextParser: React.FC<RichTextParserProps> = ({
       };
 
       const wrapperClass = `
-        relative inline-block rounded-md border border-dashed border-transparent
+        relative inline-block rounded-md border border-dashed
         hover:border-primary/50 focus:border-primary focus:bg-primary/5 focus:outline-none
         transition-all duration-200 cursor-text
         px-1 -mx-1
@@ -72,8 +83,10 @@ export const RichTextParser: React.FC<RichTextParserProps> = ({
           className={wrapperClass}
           style={wrapperStyle}
           fullText={fullText}
+          fullOuterHTML={fullOuterHTML}
           startIndex={startIndex}
           parts={parts}
+          currentTag={parts[startIndex]}
           onChange={onChange}
           onTextClick={onTextClick}
         >
@@ -205,11 +218,25 @@ const ParagraphWrapper: React.FC<{
   style: React.CSSProperties;
   children: React.ReactNode;
   fullText: string;
+  fullOuterHTML: string; // New prop
   startIndex: number;
   parts: string[];
+  currentTag: string; // New prop
   onChange?: (newContent: string) => void;
   onTextClick?: (text: string) => void;
-}> = ({ id, className, style, children, fullText, startIndex, parts, onChange, onTextClick }) => {
+}> = ({
+  id,
+  className,
+  style,
+  children,
+  fullText,
+  fullOuterHTML,
+  startIndex,
+  parts,
+  currentTag,
+  onChange,
+  onTextClick,
+}) => {
   const {
     registerElement,
     unregisterElement,
@@ -217,6 +244,7 @@ const ParagraphWrapper: React.FC<{
     activeElementId,
     updateActiveFormats,
     applyFormat,
+    setActiveContent,
   } = useEmulatorEdit();
 
   useEffect(() => {
@@ -288,7 +316,43 @@ const ParagraphWrapper: React.FC<{
             newTag = newTag.slice(0, -1) + ` ${type}>`;
             break;
 
-          // Add other cases as needed
+          case 'color':
+            // Handle color
+            if (lowerTag.match(/color=['"].*?['"]/)) {
+              // Replace
+              if (_value) {
+                newTag = tag.replace(/color=['"].*?['"]/i, `color='${_value}'`);
+              } else {
+                // Remove
+                newTag = tag.replace(/\s*color=['"].*?['"]/i, '');
+              }
+            } else {
+              // Add
+              if (_value) {
+                newTag = tag.slice(0, -1) + ` color='${_value}'>`;
+              }
+            }
+            break;
+
+          case 'size':
+            // Handle size
+            // _value is like '16px'
+            let sizeVal = _value ? _value.replace('px', '') : '';
+            if (lowerTag.match(/size=['"]?(\d+)['"]?/)) {
+              // Replace explicit size attr
+              newTag = tag.replace(/size=['"]?(\d+)['"]?/i, `size='${sizeVal}'`);
+            } else if (lowerTag.match(/\d+/)) {
+              // Replace legacy size if found
+              const m = tag.match(/\d+/);
+              if (m && !tag.match(/color/)) {
+                newTag = tag.replace(m[0], sizeVal);
+              } else {
+                newTag = tag.slice(0, -1) + ` size='${sizeVal}'>`;
+              }
+            } else {
+              newTag = tag.slice(0, -1) + ` size='${sizeVal}'>`;
+            }
+            break;
         }
 
         // Reconstruct
@@ -305,35 +369,63 @@ const ParagraphWrapper: React.FC<{
 
   // Sync active formats when active or content changes
   useEffect(() => {
-    if (isActive) {
-      const tag = parts[startIndex].toLowerCase();
-      // Extract properties
-      const isBold = tag.includes('bold');
-      const isItalic = tag.includes('italic');
-      const isUnderline = tag.includes('underline');
+    if (isActive && currentTag) {
+      // Parse properties from tag
+      const tag = currentTag;
+      const lowerTag = tag.toLowerCase();
 
+      // Defaults
+      let isBold = lowerTag.includes('bold');
+      let isItalic = lowerTag.includes('italic');
+      let isUnderline = lowerTag.includes('underline');
       let align: 'left' | 'center' | 'right' = 'left';
-      if (tag.includes('center')) align = 'center';
-      if (tag.includes('right')) align = 'right';
-
-      // Color
-      let color: string | undefined;
-      const colorMatch = tag.match(/color=['"](.*?)['"]/i);
-      if (colorMatch) color = colorMatch[1];
-
-      // Font Size
       let fontSize: string | undefined;
-      const sizeMatch = tag.match(/size=['"]?(\d+)['"]?/);
-      if (sizeMatch) {
-        fontSize = sizeMatch[1];
-      } else {
-        const legacySizeMatch = tag.match(/\d+/);
-        // Only if it looks like a lone number and not part of color hex
-        // Simplified check
-        if (legacySizeMatch && !tag.match(/color=['"].*?['"]/)) {
-          fontSize = legacySizeMatch[0];
+      let color: string | undefined;
+
+      // check for style attribute content for more precise parsing
+      const styleMatch = tag.match(/style=['"](.*?)['"]/i);
+      if (styleMatch) {
+        const styleContent = styleMatch[1].toLowerCase();
+        // Check keywords in style
+        if (styleContent.includes('center')) align = 'center';
+        else if (styleContent.includes('right')) align = 'right';
+
+        // Check for loose number in style (legacy size format like 'bold center 18')
+        const styleNumber = styleContent.match(/\b\d+\b/);
+        if (styleNumber) {
+          fontSize = styleNumber[0];
         }
       }
+
+      // Overrides/Fallbacks if not found in style (or if style didn't cover it)
+      // Alignment fallback
+      if (align === 'left') {
+        if (lowerTag.includes('center') && !lowerTag.includes('style='))
+          align = 'center'; // minimal safety check
+        else if (lowerTag.includes('align="center"') || lowerTag.includes("align='center'"))
+          align = 'center';
+        else if (lowerTag.includes('right') && !lowerTag.includes('style=')) align = 'right';
+        else if (lowerTag.includes('align="right"') || lowerTag.includes("align='right'"))
+          align = 'right';
+      }
+
+      // Font size fallback (explicit size attribute)
+      const sizeAttr = tag.match(/size=['"]?(\d+)['"]?/i);
+      if (sizeAttr) {
+        fontSize = sizeAttr[1];
+      } else if (!fontSize) {
+        // Legacy fallback: look for number in entire tag if not in style
+        // But careful not to match color or other attributes
+        // Only if we didn't find it in style
+        const legacyMatch = tag.match(/\b\d+\b/);
+        if (legacyMatch && !tag.match(/color=['"].*?['"]/i) && !tag.match(/id=['"].*?['"]/i)) {
+          fontSize = legacyMatch[0];
+        }
+      }
+
+      // Color extraction
+      const colorMatch = tag.match(/color=['"](.*?)['"]/i);
+      if (colorMatch) color = colorMatch[1];
 
       updateActiveFormats({
         isBold,
@@ -344,7 +436,7 @@ const ParagraphWrapper: React.FC<{
         fontSize,
       });
     }
-  }, [isActive, parts, startIndex, updateActiveFormats]);
+  }, [isActive, currentTag, updateActiveFormats]);
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
     if (e.ctrlKey || e.metaKey) {
@@ -367,18 +459,20 @@ const ParagraphWrapper: React.FC<{
 
   return (
     <span
-      className={`${className} ${isActive ? 'border-primary bg-primary/5' : ''}`}
+      className={`${className} ${isActive ? 'border-primary bg-primary/5' : 'border-transparent'}`}
       style={style}
       tabIndex={0}
       onClick={(e) => {
         e.stopPropagation();
         setActiveElement(id);
+        setActiveContent(fullOuterHTML);
         onTextClick?.(fullText);
       }}
       onKeyDown={handleKeyDown}
       onFocus={(e) => {
         e.stopPropagation();
         setActiveElement(id);
+        setActiveContent(fullOuterHTML);
       }}
     >
       {children}

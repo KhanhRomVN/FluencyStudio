@@ -72,7 +72,7 @@
       "instruction": "Choose the correct letter, A, B or C.",
       "quizNumber": 2,
       "audio": "./audio/Cambridge_IELTS_18_Test1_Listening_Part2.mp3",
-      "transcript": "<p>Good evening, everyone. Let me start by welcoming you all to this talk...</p>",
+      "transcript": "./audio/Cambridge_IELTS_18_Test1_Listening_Part2_Transcript.json",
       "questions": [
         {
           "id": "q11",

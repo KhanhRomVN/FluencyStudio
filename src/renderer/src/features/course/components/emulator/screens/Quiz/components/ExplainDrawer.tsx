@@ -34,7 +34,7 @@ export const ExplainDrawer: React.FC<ExplainDrawerProps> = ({ isOpen, onClose, e
             <X size={20} className="text-[hsl(var(--muted-foreground))]" />
           </button>
         </div>
-        <div className="flex-1 overflow-y-auto p-6 text-[hsl(var(--foreground))]">
+        <div className="flex-1 overflow-y-auto p-6 text-[hsl(var(--foreground))] [&::-webkit-scrollbar]:hidden">
           <RichTextParser content={content} />
         </div>
       </div>

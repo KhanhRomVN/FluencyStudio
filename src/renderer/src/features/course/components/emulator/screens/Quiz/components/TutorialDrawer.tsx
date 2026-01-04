@@ -34,7 +34,7 @@ export const TutorialDrawer: React.FC<TutorialDrawerProps> = ({ isOpen, onClose,
             <X size={20} className="text-[hsl(var(--muted-foreground))]" />
           </button>
         </div>
-        <div className="flex-1 overflow-y-auto p-6 text-[hsl(var(--foreground))] space-y-6">
+        <div className="flex-1 overflow-y-auto p-6 text-[hsl(var(--foreground))] space-y-6 [&::-webkit-scrollbar]:hidden">
           {/* Quiz Type & How to */}
           <div className="space-y-2">
             <h4 className="font-bold text-base text-[hsl(var(--primary))] uppercase tracking-wider">

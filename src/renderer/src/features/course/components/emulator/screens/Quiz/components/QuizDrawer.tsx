@@ -40,7 +40,7 @@ export const QuizDrawer: React.FC<QuizDrawerProps> = ({
             <X size={20} className="text-[hsl(var(--muted-foreground))]" />
           </button>
         </div>
-        <div className="flex-1 overflow-y-auto p-6 text-[hsl(var(--foreground))]">
+        <div className="flex-1 overflow-y-auto p-6 text-[hsl(var(--foreground))] [&::-webkit-scrollbar]:hidden">
           <div className="grid grid-cols-5 gap-3">
             {quizzes.map((q, i) => (
               <button

@@ -100,7 +100,7 @@ export const TranscriptDrawer: React.FC<TranscriptDrawerProps> = ({
           </button>
         </div>
 
-        <div className="flex-1 overflow-y-auto p-0 text-[hsl(var(--foreground))] bg-[hsl(var(--background))] pb-20">
+        <div className="flex-1 overflow-y-auto p-0 text-[hsl(var(--foreground))] bg-[hsl(var(--background))] pb-20 [&::-webkit-scrollbar]:hidden">
           {loading && (
             <div className="flex items-center justify-center h-40 text-[hsl(var(--muted-foreground))]">
               Loading...
@@ -113,27 +113,49 @@ export const TranscriptDrawer: React.FC<TranscriptDrawerProps> = ({
 
           {!loading && !error && data && (
             <div className="divide-y divide-[hsl(var(--border))]/30">
-              {data.segments.map((segment, index) => (
-                <div
-                  key={index}
-                  className="px-6 py-4 hover:bg-[hsl(var(--muted))]/30 transition-colors group cursor-pointer active:bg-[hsl(var(--muted))]/50"
-                  onClick={() => handleSegmentClick(segment.start)}
-                >
-                  <div className="flex items-baseline justify-between mb-1.5">
-                    <div className="flex items-center gap-2 text-[hsl(var(--primary))] font-semibold text-sm">
-                      <User size={14} />
-                      <span>{segment.speaker}</span>
+              {data.segments.map((segment, index) => {
+                const startTime = parseTime(segment.start);
+                const endTime = parseTime(segment.end);
+                const isActive =
+                  audioState.currentTime >= startTime && audioState.currentTime <= endTime; // Use inclusive or slightly lenient comparison if needed, but < endTime is standard. Let's stick to simple logic first.
+                // Actually, often subtitle logic is [start, end).
+                // Let's use isActive based on the user's description.
+
+                // Re-calculating specific helper if needed or just use logic inline.
+                // Since I need to compute start/end anyway for comparison.
+
+                return (
+                  <div
+                    key={index}
+                    className={`px-6 py-4 transition-colors group cursor-pointer border-l-4 ${
+                      isActive
+                        ? 'bg-[hsl(var(--primary))]/10 border-[hsl(var(--primary))]'
+                        : 'hover:bg-[hsl(var(--muted))]/30 border-transparent active:bg-[hsl(var(--muted))]/50'
+                    }`}
+                    onClick={() => handleSegmentClick(segment.start)}
+                  >
+                    <div className="flex items-baseline justify-between mb-1.5">
+                      <div className="flex items-center gap-2 text-[hsl(var(--primary))] font-semibold text-sm">
+                        <User size={14} />
+                        <span>{segment.speaker}</span>
+                      </div>
+                      <div
+                        className={`flex items-center gap-1.5 text-xs font-mono px-1.5 py-0.5 rounded transition-colors ${
+                          isActive
+                            ? 'text-[hsl(var(--primary))] bg-[hsl(var(--primary))]/20'
+                            : 'text-[hsl(var(--muted-foreground))] bg-[hsl(var(--muted))]/50 group-hover:bg-[hsl(var(--primary))]/10 group-hover:text-[hsl(var(--primary))]'
+                        }`}
+                      >
+                        <Clock size={12} />
+                        <span>{segment.start}</span>
+                      </div>
                     </div>
-                    <div className="flex items-center gap-1.5 text-[hsl(var(--muted-foreground))] text-xs font-mono bg-[hsl(var(--muted))]/50 px-1.5 py-0.5 rounded group-hover:bg-[hsl(var(--primary))]/10 group-hover:text-[hsl(var(--primary))] transition-colors">
-                      <Clock size={12} />
-                      <span>{segment.start}</span>
-                    </div>
+                    <p className="text-[15px] leading-relaxed text-[hsl(var(--foreground))]/90">
+                      {segment.text}
+                    </p>
                   </div>
-                  <p className="text-[15px] leading-relaxed text-[hsl(var(--foreground))]/90">
-                    {segment.text}
-                  </p>
-                </div>
-              ))}
+                );
+              })}
             </div>
           )}
 

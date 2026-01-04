@@ -1,0 +1,19 @@
+{
+  "id": "l_02",
+  "title": "Test 2: Listening",
+  "lessonNumber": 1,
+  "quiz": [
+    {
+      "id": "quiz_01",
+      "title": "IELTS Listening Test 1 - Part 1: Transport Survey Interview",
+      "type": "chatting",
+      "instruction": "<p>Write </p><p style='bold'>ONE WORD AND/OR A NUMBER </p><p>for each answer.</p>",
+      "quizNumber": 1,
+      "question": "<p style='bold center 18'>Transport survey</p></n><p style='bold'>Name: </p><p size='14'>Sadie Jones</p></n><p style='bold'>Year of birth:</p> <p>1991</p></n><p style='bold'>Postcode: </p></gap id='answer_01'></n></n><p style='bold'>Travelling by bus</p></n><p>Date of bus journey: </p></gap id='answer_02'></n><p>Reason for trip: </p><p>shopping and visit to the </p></gap id='answer_03'></n><p>Travelled by bus because cost of </p></gap id='answer_04'><p> too high</p></n><p>Got on bus at </p></gap id='answer_05'><p> Street</p></n><p>Complaints about bus service:</p></n><p>- bus today was </p></gap id='answer_06'></n><p>- frequency of buses in the </p></gap id='answer_07'></n><p bold>Travelling by car</p></n><p>Goes to the </p></gap id='answer_08'><p> by car</p></n><p bold>Travelling by bicycle</p></n><p>Dislikes travelling by bike in the city centre because of the </p></gap id='answer_09'></n><p>Doesn’t own a bike because of a lack of </p></gap id='answer_10'>",
+      "audio": "./audio/Cambridge_IELTS_18_Test1_Listening_Part1.mp3",
+      "transcript": "./audio/Cambridge_IELTS_18_Test1_Listening_Part1_Transcript.json",
+      "chats": []
+    }
+  ],
+  "_filePath": "/home/khanhromvn/Documents/Coding/Fluency/FluencyStudio/src/renderer/src/features/course/data/courses/Cambridge_IELTS_18/Cambridge_IELTS_18_Lesson2.json"
+}

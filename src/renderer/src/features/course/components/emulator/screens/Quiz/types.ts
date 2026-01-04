@@ -13,7 +13,7 @@ export interface Quiz {
 
 export interface QuizAnswer {
   id: string;
-  answer: string;
+  answer: string | string[];
   explain: string;
 }
 

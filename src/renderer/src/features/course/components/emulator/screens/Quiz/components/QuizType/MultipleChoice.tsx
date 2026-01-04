@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Quiz, QuizQuestion } from '../../types';
 import { Check, Info } from 'lucide-react';
 import { ExplainDrawer } from '../ExplainDrawer';
@@ -10,6 +10,7 @@ interface MultipleChoiceProps {
   onCheck: () => void;
   onUpdate?: (updatedQuiz: Quiz) => void;
   header?: React.ReactNode;
+  onExplainRequest?: (isOpen: boolean) => void;
 }
 
 export const MultipleChoice: React.FC<MultipleChoiceProps> = ({
@@ -18,6 +19,7 @@ export const MultipleChoice: React.FC<MultipleChoiceProps> = ({
   onCheck,
   onUpdate,
   header,
+  onExplainRequest,
 }) => {
   // State now stores array of strings for each question ID
   const [selectedAnswers, setSelectedAnswers] = useState<{ [key: string]: string[] }>({});
@@ -27,6 +29,11 @@ export const MultipleChoice: React.FC<MultipleChoiceProps> = ({
 
   // Local state for editing in emulator
   const [instruction, setInstruction] = useState(quiz.instruction || '');
+
+  // Notify parent about explain drawer state
+  useEffect(() => {
+    onExplainRequest?.(isExplainOpen);
+  }, [isExplainOpen, onExplainRequest]);
 
   // Note: If quiz prop updates from outside, we might want to sync local state,
   // but for now we assume emulator is the driver of change or reset happens on remount.

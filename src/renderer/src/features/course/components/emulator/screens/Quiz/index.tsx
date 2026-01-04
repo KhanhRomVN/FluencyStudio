@@ -3,6 +3,7 @@ import { AudioLines, ChevronLeft, AlignEndVertical, Info } from 'lucide-react';
 import { Quiz } from './types';
 import { GapFill } from './components/QuizType/GapFill';
 import { MultipleChoice } from './components/QuizType/MultipleChoice';
+import { MatchingDropdown } from './components/QuizType/MatchingDropdown';
 import { MediaPlayer } from './components/MediaPlayer';
 import { QuizDrawer } from './components/QuizDrawer';
 import { TranscriptDrawer } from './components/TranscriptDrawer';
@@ -26,6 +27,8 @@ export const QuizPage: React.FC<QuizPageProps> = ({
   const [showTranscript, setShowTranscript] = useState(false);
   const [showMenu, setShowMenu] = useState(false);
   const [showTutorial, setShowTutorial] = useState(false);
+
+  const [showExplainDrawer, setShowExplainDrawer] = useState(false);
 
   // Track visited quizzes to show colored help icon only on first visit
   const [visitedQuizzes, setVisitedQuizzes] = useState<Set<string>>(new Set());
@@ -60,6 +63,7 @@ export const QuizPage: React.FC<QuizPageProps> = ({
     setIsChecked(false);
     setShowTranscript(false);
     setShowTutorial(false);
+    setShowExplainDrawer(false);
   }, [quizData.id]);
 
   const handleCheck = () => {
@@ -140,6 +144,20 @@ export const QuizPage: React.FC<QuizPageProps> = ({
             isChecked={isChecked}
             onCheck={handleCheck}
             onUpdate={onQuizUpdate}
+            onExplainRequest={setShowExplainDrawer}
+            header={
+              <h2 className="font-bold text-lg text-[hsl(var(--foreground))] leading-tight mb-3">
+                {displayTitle}
+              </h2>
+            }
+          />
+        ) : quizType === 'matching-dropdown' ? (
+          <MatchingDropdown
+            quiz={quizData}
+            isChecked={isChecked}
+            onCheck={handleCheck}
+            onUpdate={onQuizUpdate}
+            onExplainRequest={setShowExplainDrawer}
             header={
               <h2 className="font-bold text-lg text-[hsl(var(--foreground))] leading-tight mb-3">
                 {displayTitle}
@@ -152,6 +170,7 @@ export const QuizPage: React.FC<QuizPageProps> = ({
             isChecked={isChecked}
             onCheck={handleCheck}
             onUpdate={onQuizUpdate}
+            onExplainRequest={setShowExplainDrawer}
             header={
               <h2 className="font-bold text-lg text-[hsl(var(--foreground))] leading-tight mb-3">
                 {displayTitle}
@@ -162,7 +181,7 @@ export const QuizPage: React.FC<QuizPageProps> = ({
       </div>
 
       {/* Audio Player */}
-      {quizData.audio && (
+      {quizData.audio && !showExplainDrawer && (
         <MediaPlayer
           title={quizData.audio.split('/').pop() || 'Audio'}
           isPlaying={isPlaying}

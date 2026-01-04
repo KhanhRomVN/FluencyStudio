@@ -10,9 +10,17 @@ interface GapFillProps {
   onCheck: () => void;
   onUpdate?: (updatedQuiz: Quiz) => void;
   header?: React.ReactNode;
+  onExplainRequest?: (isOpen: boolean) => void;
 }
 
-export const GapFill: React.FC<GapFillProps> = ({ quiz, isChecked, onCheck, onUpdate, header }) => {
+export const GapFill: React.FC<GapFillProps> = ({
+  quiz,
+  isChecked,
+  onCheck,
+  onUpdate,
+  header,
+  onExplainRequest,
+}) => {
   const [inputs, setInputs] = useState<{ [key: string]: string }>({});
   const [areAllGapsFilled, setAreAllGapsFilled] = useState(false);
   const [isExplainOpen, setIsExplainOpen] = useState(false);
@@ -21,6 +29,11 @@ export const GapFill: React.FC<GapFillProps> = ({ quiz, isChecked, onCheck, onUp
   // Local state for editing
   const [instruction, setInstruction] = useState(quiz.instruction || '');
   const [question, setQuestion] = useState(quiz.question || '');
+
+  // Notify parent about explain drawer state
+  useEffect(() => {
+    onExplainRequest?.(isExplainOpen);
+  }, [isExplainOpen, onExplainRequest]);
 
   // Initialize checks
   useEffect(() => {
@@ -67,12 +80,28 @@ export const GapFill: React.FC<GapFillProps> = ({ quiz, isChecked, onCheck, onUp
         }}
         onGapFound={(id) => {
           const answerObj = quiz.answers?.find((a) => a.id === id);
-          const correctAnswer = answerObj?.answer || '';
+
+          let possibleAnswers: string[] = [];
+          if (Array.isArray(answerObj?.answer)) {
+            possibleAnswers = answerObj?.answer.map(String) || [];
+          } else if (answerObj?.answer) {
+            possibleAnswers = [String(answerObj.answer)];
+          }
+
           const userAnswer = inputs[id] || '';
 
           const isCorrect =
-            isChecked && userAnswer.toLowerCase().trim() === correctAnswer.toLowerCase().trim();
-          const maxLength = correctAnswer.length > 0 ? correctAnswer.length : 20;
+            isChecked &&
+            possibleAnswers.some(
+              (ans) => ans.toLowerCase().trim() === userAnswer.toLowerCase().trim(),
+            );
+
+          const longestAnswerLength = possibleAnswers.reduce(
+            (max, ans) => Math.max(max, ans.length),
+            0,
+          );
+          const maxLength = longestAnswerLength > 0 ? longestAnswerLength : 20;
+          const displayCorrectAnswer = possibleAnswers.length > 0 ? possibleAnswers[0] : '';
 
           if (isChecked) {
             const explanation = answerObj?.explain || '';
@@ -99,7 +128,9 @@ export const GapFill: React.FC<GapFillProps> = ({ quiz, isChecked, onCheck, onUp
                   className="inline-flex items-center mx-1 gap-1 cursor-pointer hover:underline"
                 >
                   <span className="text-red-500 line-through decoration-red-500">{userAnswer}</span>
-                  <span className="text-[hsl(var(--primary))] font-bold">{correctAnswer}</span>
+                  <span className="text-[hsl(var(--primary))] font-bold">
+                    {displayCorrectAnswer}
+                  </span>
                 </span>
               );
             }

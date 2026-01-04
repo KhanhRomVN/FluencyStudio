@@ -5,69 +5,94 @@
   "quiz": [
     {
       "id": "quiz_01",
-      "title": "",
+      "title": "IELTS Listening Test 1 - Part 1: Transport Survey Interview",
       "type": "gap-fill",
       "instruction": "<p>Write </p><p style='bold'>ONE WORD AND/OR A NUMBER </p><p>for each answer.</p>",
       "quizNumber": 1,
-      "question": "<p style='bold center 18' size='' size='' size='' size=''>Transport survey</p></n><p style='bold'>Name: </p><p size='14'>Sadie Jones</p></n><p style='bold'>Year of birth:</p> <p>1991</p></n><p style='bold'>Postcode: </p></gap id='answer_01'></n></n><p style='bold'>Travelling by bus</p></n><p>Date of bus journey: </p></gap id='answer_02'></n><p>Reason for trip: </p><p>shopping and visit to the </p></gap id='answer_03'></n><p>Travelled by bus because cost of </p></gap id='answer_04'><p> too high</p></n><p>Got on bus at </p></gap id='answer_05'><p> Street</p></n><p>Complaints about bus service:</p></n><p>- bus today was </p></gap id='answer_06'></n><p>- frequency of buses in the </p></gap id='answer_07'></n><p bold>Travelling by car</p></n><p>Goes to the </p></gap id='answer_08'><p> by car</p></n><p bold>Travelling by bicycle</p></n><p>Dislikes travelling by bike in the city centre because of the </p></gap id='answer_09'></n><p>Doesn’t own a bike because of a lack of </p></gap id='answer_10'>",
+      "question": "<p style='bold center 18'>Transport survey</p></n><p style='bold'>Name: </p><p size='14'>Sadie Jones</p></n><p style='bold'>Year of birth:</p> <p>1991</p></n><p style='bold'>Postcode: </p></gap id='answer_01'></n></n><p style='bold'>Travelling by bus</p></n><p>Date of bus journey: </p></gap id='answer_02'></n><p>Reason for trip: </p><p>shopping and visit to the </p></gap id='answer_03'></n><p>Travelled by bus because cost of </p></gap id='answer_04'><p> too high</p></n><p>Got on bus at </p></gap id='answer_05'><p> Street</p></n><p>Complaints about bus service:</p></n><p>- bus today was </p></gap id='answer_06'></n><p>- frequency of buses in the </p></gap id='answer_07'></n><p bold>Travelling by car</p></n><p>Goes to the </p></gap id='answer_08'><p> by car</p></n><p bold>Travelling by bicycle</p></n><p>Dislikes travelling by bike in the city centre because of the </p></gap id='answer_09'></n><p>Doesn’t own a bike because of a lack of </p></gap id='answer_10'>",
       "audio": "./audio/Cambridge_IELTS_18_Test1_Listening_Part1.mp3",
       "transcript": "./audio/Cambridge_IELTS_18_Test1_Listening_Part1_Transcript.json",
       "answers": [
         {
           "id": "answer_01",
-          "answer": "DW307YZ",
-          "explain": ""
+          "answer": [
+            "DW307YZ",
+            "DW30 7YZ",
+            "DW 307YZ"
+          ],
+          "explain": "<p>Đáp án này xuất hiện trong đoạn hội thoại khi người phỏng vấn hỏi \"your postcode, please\" và người trả lời đáp: \"It's DW 30 7YZ\".</p>\n<p>Trong IELTS Listening, mã bưu điện thường được đánh vần từng phần. Các dạng viết liền (DW307YZ) hoặc có khoảng cách (DW30 7YZ, DW 307YZ) đều được chấp nhận vì đều đại diện cho cùng một mã bưu điện.</p>\n<p>Lưu ý quan trọng: Đây là dạng câu hỏi \"ONE WORD AND/OR A NUMBER\" nên dù mã bưu điện có chứa cả chữ và số, nó vẫn được tính là một \"từ\" (word) trong ngữ cảnh này.</p>"
         },
         {
           "id": "answer_02",
-          "answer": "24th April",
-          "explain": ""
+          "answer": [
+            "24th April",
+            "24 April",
+            "April 24th",
+            "24th of April"
+          ],
+          "explain": "<p>Người phỏng vấn xác nhận: \"OK, and that was today. It's the 24th of April, isn't it?\" và người trả lời đồng ý.</p>\n<p>Trong bài nghe, có một chút nhầm lẫn khi người trả lời ban đầu nghĩ là 25th nhưng sau đó tự sửa lại: \"Isn't it the 25th? Er, no. Actually, you're right.\" Điều này kiểm tra khả năng nghe chi tiết và theo dõi thông tin được sửa chữa.</p>\n<p>Các dạng viết ngày tháng khác nhau đều được chấp nhận trong IELTS miễn là đúng thông tin. Lưu ý rằng \"24th April\" và \"April 24th\" đều là cách viết đúng.</p>"
         },
         {
           "id": "answer_03",
-          "answer": "dentist",
-          "explain": ""
+          "answer": [
+            "dentist"
+          ],
+          "explain": "<p>Khi được hỏi về lý do cho chuyến đi, người trả lời nói: \"Yes, I did some shopping. But the main reason I came here was to go to the dentist.\"</p>\n<p>Từ khóa \"dentist\" xuất hiện rõ ràng và là danh từ đơn nên chỉ cần điền một từ này. Câu hỏi có cấu trúc \"visit to the ______\" nên chúng ta cần một danh từ chỉ địa điểm/nơi chốn.</p>\n<p>Đây là dạng câu hỏi yêu cầu nghe thông tin cụ thể sau khi người nói đã đề cập đến một hoạt động khác (shopping).</p>"
         },
         {
           "id": "answer_04",
-          "answer": "parking",
-          "explain": ""
+          "answer": [
+            "parking"
+          ],
+          "explain": "<p>Người trả lời giải thích lý do không lái xe: \"Yes, I stopped driving in ages ago because parking was so difficult to find and it costs so much.\"</p>\n<p>Từ \"parking\" được nhấn mạnh như là lý do chính vì chi phí cao. Cấu trúc câu hỏi \"cost of ______ too high\" gợi ý rằng chúng ta cần một danh từ chỉ thứ gì đó có chi phí cao.</p>\n<p>Trong ngữ cảnh giao thông đô thị, \"parking\" (đỗ xe) là chi phí phổ biến mà người lái xe phải trả khi vào trung tâm thành phố.</p>"
         },
         {
           "id": "answer_05",
-          "answer": "Claxby",
-          "explain": ""
+          "answer": [
+            "Claxby"
+          ],
+          "explain": "<p>Khi được hỏi \"So where did you start your journey?\", người trả lời đáp: \"At the bus stop on Claxby Street.\" Sau đó người phỏng vấn đánh vần để xác nhận: \"Is that C-L-A-X-B-Y? That's right.\"</p>\n<p>Tên đường \"Claxby\" được đánh vần rõ ràng, giúp thí sinh kiểm tra chính tả. Đây là dạng câu hỏi thường gặp trong IELTS Listening Part 1, yêu cầu nghe tên riêng và đánh vần.</p>\n<p>Lưu ý viết hoa chữ cái đầu vì đây là tên riêng (tên đường).</p>"
         },
         {
           "id": "answer_06",
-          "answer": "late",
-          "explain": ""
+          "answer": [
+            "late"
+          ],
+          "explain": "<p>Khi được hỏi về khiếu nại với dịch vụ xe buýt, người trả lời nói: \"Well, as I said, it's very convenient and quick when it's on time. But this morning it was late.\"</p>\n<p>Từ \"late\" xuất hiện ngay sau khi người nói đề cập đến ưu điểm của dịch vụ. Đây là kỹ thuật \"bait and switch\" phổ biến trong IELTS - người nói đề cập đến điều tích cực trước rồi mới đến tiêu cực.</p>\n<p>Câu hỏi có cấu trúc \"bus today was ______\" nên cần một tính từ mô tả tình trạng của xe buýt.</p>"
         },
         {
           "id": "answer_07",
-          "answer": "evening",
-          "explain": ""
+          "answer": [
+            "evening"
+          ],
+          "explain": "<p>Về tần suất xe buýt, người trả lời phàn nàn: \"I suppose I mainly use the bus during the day, but any time I've been in town in the evening, for dinner or at the cinema, I've noticed you have to wait a long time for a bus.\"</p>\n<p>Từ khóa \"evening\" xuất hiện trong ngữ cảnh so sánh giữa ban ngày và buổi tối. Câu hỏi có cấu trúc \"frequency of buses in the ______\" nên cần một danh từ chỉ thời gian trong ngày.</p>\n<p>Đây là ví dụ về việc thông tin không được đưa ra trực tiếp mà cần suy luận từ ngữ cảnh.</p>"
         },
         {
           "id": "answer_08",
-          "answer": "supermarket",
-          "explain": ""
+          "answer": [
+            "supermarket"
+          ],
+          "explain": "<p>Khi nói về việc sử dụng ô tô, người trả lời cho biết: \"Well, I have got a car, but I don't use it that often, mainly just to go to the supermarket.\"</p>\n<p>Từ \"supermarket\" được đề cập như là mục đích sử dụng chính của xe hơi. Cấu trúc câu hỏi \"Goes to the ______ by car\" hoàn toàn khớp với thông tin trong bài nghe.</p>\n<p>Đây là dạng câu hỏi trực tiếp, thông tin xuất hiện ngay sau câu hỏi của người phỏng vấn về việc sử dụng ô tô.</p>"
         },
         {
           "id": "answer_09",
-          "answer": "pollution",
-          "explain": ""
+          "answer": [
+            "pollution"
+          ],
+          "explain": "<p>Khi được hỏi về xe đạp thành phố, người trả lời giải thích: \"No, I'm not keen on cycling there because of all the pollution.\"</p>\n<p>Từ \"pollution\" là lý do trực tiếp được đưa ra cho việc không thích đạp xe trong trung tâm thành phố. Cấu trúc \"because of the ______\" trong câu hỏi khớp hoàn toàn với \"because of all the pollution\" trong bài nghe.</p>\n<p>Ô nhiễm là vấn đề phổ biến ở các thành phố lớn và thường được đề cập như một rào cản đối với việc đạp xe.</p>"
         },
         {
           "id": "answer_10",
-          "answer": "storage",
-          "explain": ""
+          "answer": [
+            "storage"
+          ],
+          "explain": "<p>Khi được hỏi tại sao không có xe đạp, người trả lời giải thích: \"Well, I live in a flat on the second floor and it doesn't have any storage.\"</p>\n<p>Từ \"storage\" xuất hiện như là lý do chính. Cấu trúc câu hỏi \"lack of ______\" tương ứng với \"doesn't have any storage\" trong bài nghe.</p>\n<p>Đây là vấn đề thực tế đối với cư dân chung cư - thiếu không gian lưu trữ cho xe đạp. Thông tin này xuất hiện ở phần cuối của bài phỏng vấn, đòi hỏi thí sinh phải tập trung đến phút cuối.</p>"
         }
       ]
     },
     {
       "id": "quiz_02",
-      "title": "",
+      "title": "IELTS Listening Test 1 - Part 2: Volunteer Organization Presentation",
       "type": "multiple-choice",
       "instruction": "<p>Choose the correct letter, A, B or C.</p>",
       "quizNumber": 2,
@@ -92,7 +117,7 @@
             }
           ],
           "answer": "C",
-          "explain": ""
+          "explain": "<p>Diễn giả nói: \"We have brought in extra seats so that no one has to stand, but it does mean that the people at the back of the room may be a bit squashed.\"</p>\n<p>Từ khóa \"squashed\" có nghĩa là bị ép chặt, chật chội, tương đương với \"very close together\" trong lựa chọn C.</p>\n<p>Phân tích các phương án sai:</p>\n<p>A. \"They are too small\" - Không được đề cập trong bài. Diễn giả chỉ nói về khoảng cách giữa các ghế, không nói về kích thước ghế.</p>\n<p>B. \"There are not enough of them\" - Ngược lại với thông tin thực tế: \"We have brought in extra seats so that no one has to stand\" - Đã có thêm ghế để không ai phải đứng.</p>\n<p>Đây là ví dụ về việc sử dụng từ đồng nghĩa/paraphrase trong IELTS. \"Squashed\" được paraphrase thành \"very close together\".</p>"
         },
         {
           "id": "question_02",
@@ -112,7 +137,7 @@
             }
           ],
           "answer": "A",
-          "explain": ""
+          "explain": "<p>Diễn giả nói: \"Other considerations, such as reliability, are crucial in voluntary work and age isn't related to these in our experience.\"</p>\n<p>Câu này có nghĩa: Các yếu tố khác như độ tin cậy là quan trọng trong công việc tình nguyện, và theo kinh nghiệm của họ, tuổi tác không liên quan đến những yếu tố này. Điều này tương đương với phương án A - tuổi của tình nguyện viên ít quan trọng hơn các yếu tố khác.</p>\n<p>Phân tích các phương án sai:</p>\n<p>B. \"Young volunteers are less reliable than older ones\" - Ngược lại với thông tin: \"age isn't related to these\" (tuổi tác không liên quan đến độ tin cậy).</p>\n<p>C. \"Most volunteers are about 60 years old\" - Không được đề cập. Diễn giả chỉ nói bạn có thể từ 16 đến 60 tuổi trở lên, không nói hầu hết khoảng 60 tuổi.</p>\n<p>Đây là dạng câu hỏi yêu cầu hiểu ý chính thay vì thông tin chi tiết cụ thể.</p>"
         },
         {
           "id": "question_03",
@@ -132,13 +157,13 @@
             }
           ],
           "answer": "A",
-          "explain": ""
+          "explain": "<p>Diễn giả nói: \"What's more, training doesn't end when you start working for us. It takes place before, during and after periods of work.\"</p>\n<p>Cụm \"before, during and after\" mô tả quá trình đào tạo liên tục, không ngừng, tương đương với \"continuous\" trong phương án A.</p>\n<p>Phân tích các phương án sai:</p>\n<p>B. \"It is conducted by a manager\" - Ngược lại với thông tin: \"Often it's run by other experienced volunteers as managers tend to prefer to get on with other things.\" - Thường được thực hiện bởi các tình nguyện viên có kinh nghiệm vì các quản lý thường thích làm việc khác.</p>\n<p>C. \"It takes place online\" - Ngược lại với thông tin: \"Well, there's plenty of that and it's all face-to-face.\" - Tất cả đều trực tiếp mặt đối mặt.</p>\n<p>Đây là ví dụ về việc thông tin chính xác được đưa ra ngay sau khi đề cập đến chủ đề, và các phương án sai chứa thông tin trái ngược hoặc không được đề cập.</p>"
         }
       ]
     },
     {
       "id": "quiz_03",
-      "title": "",
+      "title": "IELTS Listening Test 1 - Part 2: Volunteer Organization Presentation",
       "type": "multiple-choice",
       "instruction": "<p>Answer the questions below.</p>",
       "quizNumber": 3,
@@ -170,10 +195,56 @@
               "text": "their availability"
             }
           ],
-          "answers": ["B", "E"],
-          "explain": ""
+          "answers": [
+            "B",
+            "E"
+          ],
+          "explain": "<p>Diễn giả đề cập hai vấn đề chính cần cân nhắc:</p>\n<p>1. Về commitment (mức độ cam kết): \"What we value is dedication. Some of our most loyal volunteers earn very little themselves but still give their full energy to the work they do with us.\" - Tương ứng với phương án B.</p>\n<p>2. Về availability (khả năng sẵn sàng/thời gian có sẵn): \"But it is critical that you have enough hours in the day for whatever role we agree is suitable for you.\" - Tương ứng với phương án E.</p>\n<p>Phân tích các phương án sai:</p>\n<p>A. \"their financial situation\" - Ngược lại với thông tin: \"You may think that your income is important, but we don't ask about that.\"</p>\n<p>C. \"their work experience\" - Không được đề cập là vấn đề cần cân nhắc trước khi ứng tuyển. Diễn giả chỉ nói về lý do mọi người muốn làm tình nguyện (có thể để có kinh nghiệm làm việc).</p>\n<p>D. \"their ambition\" - Không được đề cập. Diễn giả nói: \"We don't worry about why you want to be a volunteer.\" - Họ không quan tâm đến lý do/ambition của ứng viên.</p>\n<p>Đây là dạng câu hỏi chọn 2 đáp án đúng, yêu cầu thí sinh phải xác định được tất cả các thông tin liên quan và loại trừ các phương án sai. Lưu ý rằng thông tin cho hai đáp án đúng thường xuất hiện gần nhau trong bài nghe.</p>"
         }
       ]
-    }
-  ]
+    },
+    {
+      "id": "quiz_04",
+      "title": "IELTS Listening Test 1 - Part 2: Volunteer Work Areas",
+      "type": "matching-dropdown",
+      "instruction": "<p>Choose </p><p style='bold'>FIVE </p><p>answers from the box and write the correct letter, </p><p style='bold'>A–G</p><p>, next to Questions 16–20.</p>",
+      "quizNumber": 4,
+      "audio": "./audio/Cambridge_IELTS_18_Test1_Listening_Part2.mp3",
+      "transcript": "./audio/Cambridge_IELTS_18_Test1_Listening_Part2_Transcript.json",
+      "matchings": [
+        {
+          "id": "matching_01",
+          "question": "16 Fundraising",
+          "answer": "original, new ideas",
+          "explain": "<p>Diễn giả nói: \"Fundraising is an area where you'll be very welcome, especially if you have new ideas.\"</p>\n<p>Cụm \"new ideas\" tương ứng trực tiếp với \"original, new ideas\" (đáp án B).</p>\n<p>Đây là ví dụ về matching trực tiếp - từ khóa xuất hiện y hệt trong cả câu hỏi và đáp án.</p>"
+        },
+        {
+          "id": "matching_02",
+          "question": "17 Litter collection",
+          "answer": "a good level of fitness",
+          "explain": "<p>Diễn giả nói: \"If you enjoy being outdoors and getting some exercise while you're doing something useful, you might prefer litter collection in the local park.\"</p>\n<p>Cụm \"getting some exercise\" tương đương với \"a good level of fitness\" (đáp án G). Công việc này yêu cầu hoạt động ngoài trời và thể lực tốt.</p>\n<p>Đây là ví dụ về paraphrase - \"getting exercise\" được thay bằng \"good level of fitness\".</p>"
+        },
+        {
+          "id": "matching_03",
+          "question": "18 'Playmates'",
+          "answer": "parenting skills",
+          "explain": "<p>Diễn giả nói: \"If working with children appeals to you, we have three vacancies for what we call 'playmates'. These volunteers help children learn about staying healthy through a range of out-of-school activities. For this role, it's quite useful if you have experience with children.\"</p>\n<p>Cụm \"experience with children\" tương đương với \"parenting skills\" (đáp án C). Kỹ năng nuôi dạy con cái là kinh nghiệm làm việc với trẻ em.</p>\n<p>Đây là ví dụ về synonym/paraphrase - \"experience with children\" ≈ \"parenting skills\".</p>"
+        },
+        {
+          "id": "matching_04",
+          "question": "19 Story club",
+          "answer": "a good memory",
+          "explain": "<p>Diễn giả nói: \"If you're interested in storytelling, we have a story club for disabled children every Monday afternoon. Help with preparing the activities would be appreciated. But above all, we need people who have a real passion for literature and won't mind switching from one story to another if the children aren't engaged.\"</p>\n<p>Cụm \"won't mind switching from one story to another\" ngụ ý cần nhớ nhiều câu chuyện khác nhau, tương ứng với \"a good memory\" (đáp án F).</p>\n<p>Đây là ví dụ về inference - thông tin không được nói trực tiếp mà cần suy luận từ ngữ cảnh.</p>"
+        },
+        {
+          "id": "matching_05",
+          "question": "20 First aid",
+          "answer": "an understanding of food and diet",
+          "explain": "<p>Diễn giả nói: \"You don't need to be medically trained because all first aiders complete a course that teaches you everything you need to know. But we do ask that you learn a little about the importance of a healthy diet.\"</p>\n<p>Cụm \"importance of a healthy diet\" tương ứng trực tiếp với \"an understanding of food and diet\" (đáp án D).</p>\n<p>Đây là ví dụ về paraphrase - \"healthy diet\" được mở rộng thành \"understanding of food and diet\".</p>"
+        }
+      ]
+    },
+    {}
+  ],
+  "_filePath": "/home/khanhromvn/Documents/Coding/Fluency/FluencyStudio/src/renderer/src/features/course/data/courses/Cambridge_IELTS_18/Cambridge_IELTS_18_Lesson1.json"
 }

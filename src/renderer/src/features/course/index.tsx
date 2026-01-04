@@ -1,10 +1,19 @@
 import { useState, useEffect, useRef } from 'react';
 import { useParams } from 'react-router-dom';
-import { ChevronRight, ChevronDown, BookOpen, FileText, CheckCircle, Palette } from 'lucide-react';
+import {
+  ChevronRight,
+  ChevronDown,
+  BookOpen,
+  FileText,
+  CheckCircle,
+  Palette,
+  AudioWaveform,
+} from 'lucide-react';
 import { CodeBlock } from '../../components/CodeBlock';
 import { EmulatorFrame } from './components/emulator/EmulatorFrame';
 import { CourseDetailScreen } from './components/emulator/screens/CourseDetailScreen';
 import { QuizPage } from './components/emulator/screens/Quiz';
+import { TranscriptDrawer } from './components/TranscriptDrawer';
 import { folderService } from '../../shared/services/folderService';
 
 const STORAGE_KEY = 'fluency_course_paths';
@@ -35,6 +44,7 @@ const CoursePage = () => {
   });
 
   const [emulatorTheme, setEmulatorTheme] = useState<'DefaultDark' | 'SoftTeal'>('SoftTeal');
+  const [isTranscriptDrawerOpen, setIsTranscriptDrawerOpen] = useState(false);
 
   // Load course data
   useEffect(() => {
@@ -312,8 +322,15 @@ const CoursePage = () => {
   return (
     <div className="h-screen flex flex-col bg-background">
       {/* Header */}
-      <div className="h-14 border-b flex items-center px-4 bg-card">
+      <div className="h-14 border-b flex items-center justify-between px-4 bg-card">
         <h1 className="text-lg font-semibold">Course Designer: {course.title}</h1>
+        <button
+          onClick={() => setIsTranscriptDrawerOpen(true)}
+          className="p-2 hover:bg-muted rounded-md transition-colors text-muted-foreground hover:text-primary"
+          title="Open Transcript Processor"
+        >
+          <AudioWaveform size={20} />
+        </button>
       </div>
 
       <div className="flex-1 flex overflow-hidden">
@@ -413,6 +430,11 @@ const CoursePage = () => {
           <EmulatorFrame theme={emulatorTheme}>{renderEmulatorContent()}</EmulatorFrame>
         </div>
       </div>
+
+      <TranscriptDrawer
+        isOpen={isTranscriptDrawerOpen}
+        onClose={() => setIsTranscriptDrawerOpen(false)}
+      />
     </div>
   );
 };

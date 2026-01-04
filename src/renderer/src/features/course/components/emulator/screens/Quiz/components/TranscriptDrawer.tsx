@@ -1,18 +1,58 @@
-import React from 'react';
-import { X, AudioLines } from 'lucide-react';
-import { RichTextParser } from './RichTextParser';
+import React, { useEffect, useState } from 'react';
+import { X, AudioLines, Clock, User } from 'lucide-react';
+import { folderService } from '../../../../../../../shared/services/folderService';
 
 interface TranscriptDrawerProps {
   isOpen: boolean;
   onClose: () => void;
-  transcript?: string;
+  transcriptPath?: string;
+}
+
+interface Segment {
+  speaker: string;
+  start: string;
+  end: string;
+  text: string;
+}
+
+interface TranscriptData {
+  language_code: string;
+  segments: Segment[];
 }
 
 export const TranscriptDrawer: React.FC<TranscriptDrawerProps> = ({
   isOpen,
   onClose,
-  transcript,
+  transcriptPath,
 }) => {
+  const [data, setData] = useState<TranscriptData | null>(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (isOpen && transcriptPath) {
+      setLoading(true);
+      setError(null);
+      folderService
+        .parseCourseMetadata(transcriptPath)
+        .then((result) => {
+          if (result && Array.isArray(result.segments)) {
+            setData(result as TranscriptData);
+          } else {
+            // Fallback for html string if legacy or mixed
+            // But user said it will ONLY accept path.
+            // If result is null/invalid
+            setError('Invalid transcript format');
+          }
+        })
+        .catch((err) => {
+          console.error(err);
+          setError('Failed to load transcript');
+        })
+        .finally(() => setLoading(false));
+    }
+  }, [isOpen, transcriptPath]);
+
   return (
     <>
       <div
@@ -32,13 +72,44 @@ export const TranscriptDrawer: React.FC<TranscriptDrawerProps> = ({
             <X size={20} className="text-[hsl(var(--muted-foreground))]" />
           </button>
         </div>
-        <div className="flex-1 overflow-y-auto p-6 text-[hsl(var(--foreground))]">
-          {transcript ? (
-            <div className="text-[16px]">
-              <RichTextParser content={transcript} />
+        <div className="flex-1 overflow-y-auto p-0 text-[hsl(var(--foreground))] bg-[hsl(var(--background))]">
+          {loading && (
+            <div className="flex items-center justify-center h-40 text-[hsl(var(--muted-foreground))]">
+              Loading...
             </div>
-          ) : (
-            <p className="text-center text-[hsl(var(--muted-foreground))]">
+          )}
+
+          {error && !loading && (
+            <div className="flex items-center justify-center h-40 text-red-500">{error}</div>
+          )}
+
+          {!loading && !error && data && (
+            <div className="divide-y divide-[hsl(var(--border))]/30">
+              {data.segments.map((segment, index) => (
+                <div
+                  key={index}
+                  className="px-6 py-4 hover:bg-[hsl(var(--muted))]/30 transition-colors group"
+                >
+                  <div className="flex items-baseline justify-between mb-1.5">
+                    <div className="flex items-center gap-2 text-[hsl(var(--primary))] font-semibold text-sm">
+                      <User size={14} />
+                      <span>{segment.speaker}</span>
+                    </div>
+                    <div className="flex items-center gap-1.5 text-[hsl(var(--muted-foreground))] text-xs font-mono bg-[hsl(var(--muted))]/50 px-1.5 py-0.5 rounded">
+                      <Clock size={12} />
+                      <span>{segment.start}</span>
+                    </div>
+                  </div>
+                  <p className="text-[15px] leading-relaxed text-[hsl(var(--foreground))]/90">
+                    {segment.text}
+                  </p>
+                </div>
+              ))}
+            </div>
+          )}
+
+          {!loading && !error && !data && !transcriptPath && (
+            <p className="text-center text-[hsl(var(--muted-foreground))] mt-10">
               No transcript available.
             </p>
           )}

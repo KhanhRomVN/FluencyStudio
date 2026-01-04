@@ -151,7 +151,13 @@ export const QuizPage: React.FC<QuizPageProps> = ({ quizData, parentLesson, onQu
       <TranscriptDrawer
         isOpen={showTranscript}
         onClose={() => setShowTranscript(false)}
-        transcript={quizData.transcript}
+        transcriptPath={
+          quizData.transcript && parentLesson?._filePath
+            ? quizData.transcript.startsWith('./')
+              ? `${parentLesson._filePath.substring(0, parentLesson._filePath.lastIndexOf('/'))}/${quizData.transcript.substring(2)}`
+              : quizData.transcript
+            : undefined
+        }
       />
 
       {/* Tutorial Drawer */}

@@ -1,51 +1,52 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Play, Pause } from 'lucide-react';
 
 interface MediaPlayerProps {
-  audioPath: string;
   title: string;
+  isPlaying: boolean;
+  currentTime: number;
+  duration: number;
+  onTogglePlay: () => void;
+  onSeek: (time: number) => void;
 }
 
-export const MediaPlayer: React.FC<MediaPlayerProps> = ({ audioPath, title }) => {
-  const [isPlaying, setIsPlaying] = useState(false);
-  const [progress, setProgress] = useState(0); // 0 to 100
-  const [duration, setDuration] = useState(60); // Mock duration in seconds
-  const [currentTime, setCurrentTime] = useState(0);
+export const MediaPlayer: React.FC<MediaPlayerProps> = ({
+  title,
+  isPlaying,
+  currentTime,
+  duration,
+  onTogglePlay,
+  onSeek,
+}) => {
+  const [progress, setProgress] = useState(0);
 
-  // Mock audio simulation
+  // Sync progress with currentTime/duration
   useEffect(() => {
-    let interval: NodeJS.Timeout;
-    if (isPlaying) {
-      interval = setInterval(() => {
-        setCurrentTime((prev) => {
-          if (prev >= duration) {
-            setIsPlaying(false);
-            return 0;
-          }
-          return prev + 1;
-        });
-      }, 1000);
+    if (duration > 0) {
+      setProgress((currentTime / duration) * 100);
+    } else {
+      setProgress(0);
     }
-    return () => clearInterval(interval);
-  }, [isPlaying, duration]);
-
-  useEffect(() => {
-    setProgress((currentTime / duration) * 100);
   }, [currentTime, duration]);
 
-  // Reset when audio source changes
-  useEffect(() => {
-    setIsPlaying(false);
-    setCurrentTime(0);
-    setProgress(0);
-    // In a real app, we'd load the audio duration here
-  }, [audioPath]);
+  const handleSeek = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+    const progressBar = e.currentTarget;
+    const rect = progressBar.getBoundingClientRect();
+    const clickX = e.clientX - rect.left;
+    const width = rect.width;
+    const percentage = clickX / width;
+    const newTime = percentage * duration;
+    onSeek(newTime);
+  };
 
   const formatTime = (seconds: number) => {
+    if (isNaN(seconds)) return '00:00';
     const mins = Math.floor(seconds / 60)
       .toString()
       .padStart(2, '0');
-    const secs = (seconds % 60).toString().padStart(2, '0');
+    const secs = Math.floor(seconds % 60)
+      .toString()
+      .padStart(2, '0');
     return `${mins}:${secs}`;
   };
 
@@ -54,7 +55,7 @@ export const MediaPlayer: React.FC<MediaPlayerProps> = ({ audioPath, title }) =>
       <div className="flex items-center gap-3">
         {/* Play/Pause Button */}
         <button
-          onClick={() => setIsPlaying(!isPlaying)}
+          onClick={onTogglePlay}
           className="w-10 h-10 flex items-center justify-center rounded-full hover:bg-[hsl(var(--muted))] active:scale-95 transition-all"
         >
           {isPlaying ? (
@@ -75,7 +76,10 @@ export const MediaPlayer: React.FC<MediaPlayerProps> = ({ audioPath, title }) =>
               {formatTime(currentTime)}
             </span>
 
-            <div className="relative flex-1 h-3 group flex items-center cursor-pointer">
+            <div
+              className="relative flex-1 h-3 group flex items-center cursor-pointer"
+              onClick={handleSeek}
+            >
               {/* Track */}
               <div className="absolute inset-0 m-auto h-[3px] bg-[hsl(var(--border))] rounded-full w-full">
                 {/* Active Track */}

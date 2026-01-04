@@ -1,11 +1,22 @@
 import React, { useEffect, useState } from 'react';
 import { X, AudioLines, Clock, User } from 'lucide-react';
 import { folderService } from '../../../../../../../shared/services/folderService';
+import { MediaPlayer } from './MediaPlayer';
 
 interface TranscriptDrawerProps {
   isOpen: boolean;
   onClose: () => void;
   transcriptPath?: string;
+  audioState: {
+    isPlaying: boolean;
+    currentTime: number;
+    duration: number;
+  };
+  audioHandlers: {
+    togglePlay: () => void;
+    seek: (time: number) => void;
+  };
+  audioTitle: string;
 }
 
 interface Segment {
@@ -24,6 +35,9 @@ export const TranscriptDrawer: React.FC<TranscriptDrawerProps> = ({
   isOpen,
   onClose,
   transcriptPath,
+  audioState,
+  audioHandlers,
+  audioTitle,
 }) => {
   const [data, setData] = useState<TranscriptData | null>(null);
   const [loading, setLoading] = useState(false);
@@ -39,9 +53,6 @@ export const TranscriptDrawer: React.FC<TranscriptDrawerProps> = ({
           if (result && Array.isArray(result.segments)) {
             setData(result as TranscriptData);
           } else {
-            // Fallback for html string if legacy or mixed
-            // But user said it will ONLY accept path.
-            // If result is null/invalid
             setError('Invalid transcript format');
           }
         })
@@ -52,6 +63,22 @@ export const TranscriptDrawer: React.FC<TranscriptDrawerProps> = ({
         .finally(() => setLoading(false));
     }
   }, [isOpen, transcriptPath]);
+
+  const parseTime = (timeStr: string) => {
+    const parts = timeStr.split(':');
+    if (parts.length === 2) {
+      return parseInt(parts[0]) * 60 + parseInt(parts[1]);
+    }
+    return 0;
+  };
+
+  const handleSegmentClick = (start: string) => {
+    const seconds = parseTime(start);
+    audioHandlers.seek(seconds);
+    if (!audioState.isPlaying) {
+      audioHandlers.togglePlay();
+    }
+  };
 
   return (
     <>
@@ -72,7 +99,8 @@ export const TranscriptDrawer: React.FC<TranscriptDrawerProps> = ({
             <X size={20} className="text-[hsl(var(--muted-foreground))]" />
           </button>
         </div>
-        <div className="flex-1 overflow-y-auto p-0 text-[hsl(var(--foreground))] bg-[hsl(var(--background))]">
+
+        <div className="flex-1 overflow-y-auto p-0 text-[hsl(var(--foreground))] bg-[hsl(var(--background))] pb-20">
           {loading && (
             <div className="flex items-center justify-center h-40 text-[hsl(var(--muted-foreground))]">
               Loading...
@@ -88,14 +116,15 @@ export const TranscriptDrawer: React.FC<TranscriptDrawerProps> = ({
               {data.segments.map((segment, index) => (
                 <div
                   key={index}
-                  className="px-6 py-4 hover:bg-[hsl(var(--muted))]/30 transition-colors group"
+                  className="px-6 py-4 hover:bg-[hsl(var(--muted))]/30 transition-colors group cursor-pointer active:bg-[hsl(var(--muted))]/50"
+                  onClick={() => handleSegmentClick(segment.start)}
                 >
                   <div className="flex items-baseline justify-between mb-1.5">
                     <div className="flex items-center gap-2 text-[hsl(var(--primary))] font-semibold text-sm">
                       <User size={14} />
                       <span>{segment.speaker}</span>
                     </div>
-                    <div className="flex items-center gap-1.5 text-[hsl(var(--muted-foreground))] text-xs font-mono bg-[hsl(var(--muted))]/50 px-1.5 py-0.5 rounded">
+                    <div className="flex items-center gap-1.5 text-[hsl(var(--muted-foreground))] text-xs font-mono bg-[hsl(var(--muted))]/50 px-1.5 py-0.5 rounded group-hover:bg-[hsl(var(--primary))]/10 group-hover:text-[hsl(var(--primary))] transition-colors">
                       <Clock size={12} />
                       <span>{segment.start}</span>
                     </div>
@@ -113,6 +142,18 @@ export const TranscriptDrawer: React.FC<TranscriptDrawerProps> = ({
               No transcript available.
             </p>
           )}
+        </div>
+
+        {/* Embedded Media Player */}
+        <div className="border-t border-[hsl(var(--border))]/50">
+          <MediaPlayer
+            title={audioTitle}
+            isPlaying={audioState.isPlaying}
+            currentTime={audioState.currentTime}
+            duration={audioState.duration}
+            onTogglePlay={audioHandlers.togglePlay}
+            onSeek={audioHandlers.seek}
+          />
         </div>
       </div>
     </>

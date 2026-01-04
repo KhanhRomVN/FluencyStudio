@@ -154,4 +154,18 @@ export function setupEventHandlers() {
       return false;
     }
   });
+
+  ipcMain.handle('file:read', async (_, filePath: string, options?: { encoding?: string }) => {
+    try {
+      if (!fs.existsSync(filePath)) {
+        return null;
+      }
+      const encoding = options?.encoding === 'base64' ? 'base64' : 'utf-8';
+      const content = fs.readFileSync(filePath, encoding as BufferEncoding);
+      return content;
+    } catch (error) {
+      console.error('Error reading file:', error);
+      return null;
+    }
+  });
 }

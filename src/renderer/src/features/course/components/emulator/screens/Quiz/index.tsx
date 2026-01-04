@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Menu, AudioLines, ChevronLeft, X, AlignEndVertical, Info } from 'lucide-react';
+import { AudioLines, ChevronLeft, AlignEndVertical, Info } from 'lucide-react';
 import { Quiz } from './types';
 import { GapFill } from './components/QuizType/GapFill';
 import { MultipleChoice } from './components/QuizType/MultipleChoice';
@@ -7,6 +7,7 @@ import { MediaPlayer } from './components/MediaPlayer';
 import { QuizDrawer } from './components/QuizDrawer';
 import { TranscriptDrawer } from './components/TranscriptDrawer';
 import { TutorialDrawer } from './components/TutorialDrawer';
+import { useAudio } from '../../../../hooks/useAudio';
 
 interface QuizPageProps {
   quizData: Quiz & { _lessonTitle?: string };
@@ -34,6 +35,19 @@ export const QuizPage: React.FC<QuizPageProps> = ({ quizData, parentLesson, onQu
 
   // Mark quiz as new/unvisited if not in set
   const isNewQuiz = !visitedQuizzes.has(quizData.id);
+
+  // Audio Hook
+  const resolveAudioPath = (path: string | undefined) => {
+    if (!path) return undefined;
+    if (path.startsWith('./') && parentLesson?._filePath) {
+      const dir = parentLesson._filePath.substring(0, parentLesson._filePath.lastIndexOf('/'));
+      return `file://${dir}/${path.substring(2)}`;
+    }
+    return path;
+  };
+  const audioSrc = resolveAudioPath(quizData.audio);
+
+  const { isPlaying, currentTime, duration, togglePlay, seek } = useAudio(audioSrc);
 
   // Reset state when quiz changes
   useEffect(() => {
@@ -142,8 +156,12 @@ export const QuizPage: React.FC<QuizPageProps> = ({ quizData, parentLesson, onQu
       {/* Audio Player */}
       {quizData.audio && (
         <MediaPlayer
-          audioPath={quizData.audio}
           title={quizData.audio.split('/').pop() || 'Audio'}
+          isPlaying={isPlaying}
+          currentTime={currentTime}
+          duration={duration}
+          onTogglePlay={togglePlay}
+          onSeek={seek}
         />
       )}
 
@@ -158,6 +176,9 @@ export const QuizPage: React.FC<QuizPageProps> = ({ quizData, parentLesson, onQu
               : quizData.transcript
             : undefined
         }
+        audioState={{ isPlaying, currentTime, duration }}
+        audioHandlers={{ togglePlay, seek }}
+        audioTitle={quizData.audio?.split('/').pop() || 'Audio'}
       />
 
       {/* Tutorial Drawer */}

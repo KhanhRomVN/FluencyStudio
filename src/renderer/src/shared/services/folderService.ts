@@ -160,6 +160,27 @@ class FolderService {
     }
   }
 
+  /**
+   * Load audio file as base64 string
+   */
+  async loadAudioFile(filePath: string): Promise<string | null> {
+    try {
+      if (window.electron?.ipcRenderer) {
+        // Assuming 'file:read' returns base64 string or Buffer
+        const content = await window.electron.ipcRenderer.invoke('file:read', filePath, {
+          encoding: 'base64',
+        });
+        if (content) {
+          return `data:audio/mpeg;base64,${content}`;
+        }
+      }
+      return null;
+    } catch (error) {
+      console.error('Error loading audio file:', error);
+      return null;
+    }
+  }
+
   private getDefaultFolderStructure(): CourseFolderStructure {
     return {
       courseJson: undefined,

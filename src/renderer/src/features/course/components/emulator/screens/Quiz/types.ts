@@ -4,6 +4,7 @@ export interface Quiz {
   type: string; // 'gap-fill' | 'multiple-choice'
   question: string;
   audio?: string; // Path to audio file
+  passage?: string; // Path to passage file
   transcript?: string;
   instruction?: string; // Added to match Dart's usage in MultipleChoice
   answers?: QuizAnswer[]; // Changed to object array to match Dart

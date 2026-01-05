@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { AudioLines, ChevronLeft, AlignEndVertical, Info, BadgeInfo } from 'lucide-react';
+import { AudioLines, ChevronLeft, AlignEndVertical, Info, BadgeInfo, Pilcrow } from 'lucide-react';
 import { Quiz } from './types';
 import { GapFill } from './components/QuizType/GapFill';
 import { MultipleChoice } from './components/QuizType/MultipleChoice';
@@ -11,6 +11,7 @@ import { QuizDrawer } from './components/QuizDrawer';
 import { TranscriptDrawer } from './components/TranscriptDrawer';
 import { TutorialDrawer } from './components/TutorialDrawer';
 import { WritingInstructionDrawer } from './components/WritingInstructionDrawer';
+import { PassageDrawer } from './components/PassageDrawer';
 import { useAudio } from '../../../../hooks/useAudio';
 
 interface QuizPageProps {
@@ -33,6 +34,7 @@ export const QuizPage: React.FC<QuizPageProps> = ({
 
   const [showExplainDrawer, setShowExplainDrawer] = useState(false);
   const [showInstructionDrawer, setShowInstructionDrawer] = useState(false);
+  const [showPassageDrawer, setShowPassageDrawer] = useState(false);
 
   // Track visited quizzes to show colored help icon only on first visit
   const [visitedQuizzes, setVisitedQuizzes] = useState<Set<string>>(new Set());
@@ -68,6 +70,7 @@ export const QuizPage: React.FC<QuizPageProps> = ({
     setShowTranscript(false);
     setShowTutorial(false);
     setShowExplainDrawer(false);
+    setShowPassageDrawer(false);
   }, [quizData.id]);
 
   const handleCheck = () => {
@@ -109,6 +112,14 @@ export const QuizPage: React.FC<QuizPageProps> = ({
         </div>
 
         <div className="flex items-center gap-0.5">
+          {quizData.passage && (
+            <button
+              onClick={() => setShowPassageDrawer(true)}
+              className="p-1.5 rounded-lg hover:bg-[hsl(var(--muted))] active:scale-95 transition-all text-[hsl(var(--foreground))]"
+            >
+              <Pilcrow size={18} />
+            </button>
+          )}
           {quizData.type === 'writing' && (
             <button
               onClick={() => setShowInstructionDrawer(true)}
@@ -261,6 +272,13 @@ export const QuizPage: React.FC<QuizPageProps> = ({
         isOpen={showInstructionDrawer}
         onClose={() => setShowInstructionDrawer(false)}
         instruction={quizData.instruction || ''}
+      />
+
+      <PassageDrawer
+        isOpen={showPassageDrawer}
+        onClose={() => setShowPassageDrawer(false)}
+        passagePath={quizData.passage}
+        parentFilePath={parentLesson?._filePath}
       />
     </div>
   );

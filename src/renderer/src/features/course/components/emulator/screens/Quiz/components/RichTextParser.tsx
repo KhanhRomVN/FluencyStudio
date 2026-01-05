@@ -69,11 +69,10 @@ export const RichTextParser: React.FC<RichTextParserProps> = ({
       };
 
       const wrapperClass = `
-        relative inline-block rounded-md border border-dashed
+        relative ${isCenter ? 'block w-full text-center' : 'inline'} rounded-md border border-dashed
         hover:border-primary/50 focus:border-primary focus:bg-primary/5 focus:outline-none
         transition-all duration-200 cursor-text
         px-1 -mx-1
-        ${isCenter ? 'w-full text-center block' : ''}
       `.trim();
 
       widgets.push(

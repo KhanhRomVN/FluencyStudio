@@ -2,7 +2,7 @@ import React, { useState, useEffect, useMemo } from 'react';
 import { Quiz } from '../../types';
 import { RichTextParser } from '../RichTextParser';
 import { ExplainDrawer } from '../ExplainDrawer';
-import { ChevronDown, Check, X, Info } from 'lucide-react';
+import { ChevronDown, Check, Info, AlertCircle } from 'lucide-react';
 
 // Extend Quiz type to include matchings and quizNumber as per user JSON
 interface MatchingItem {
@@ -47,6 +47,11 @@ export const MatchingDropdown: React.FC<MatchingDropdownProps> = ({
   const [instruction, setInstruction] = useState(quiz.instruction || '');
   const [questionContent, setQuestionContent] = useState(quiz.question || '');
 
+  useEffect(() => {
+    setInstruction(quiz.instruction || '');
+    setQuestionContent(quiz.question || '');
+  }, [quiz.instruction, quiz.question]);
+
   // Parse options from the question content (The Box)
   const options = useMemo(() => {
     const opts: Option[] = [];
@@ -76,6 +81,17 @@ export const MatchingDropdown: React.FC<MatchingDropdownProps> = ({
     // Sort options alphabetically by key just in case
     return opts.sort((a, b) => a.key.localeCompare(b.key));
   }, [questionContent]);
+
+  // Derived state: Available options for each row
+  // We want to hide options that are already selected in OTHER rows.
+  // Unless the option is the one currently selected for THIS row.
+  const getAvailableOptions = (currentMatchingId: string) => {
+    const selectedKeys = Object.entries(selectedAnswers)
+      .filter(([id]) => id !== currentMatchingId) // Ignore current row's selection
+      .map(([, key]) => key);
+
+    return options.filter((opt) => !selectedKeys.includes(opt.key));
+  };
 
   // Notify parent about explain drawer state
   useEffect(() => {
@@ -113,100 +129,144 @@ export const MatchingDropdown: React.FC<MatchingDropdownProps> = ({
 
   const renderMatchingRow = (matching: MatchingItem) => {
     const selectedKey = selectedAnswers[matching.id] || '';
+    // Correct Text lookup - finding option text that matches matching.answer
+    // Note: matching.answer itself *is* the text in this data structure,
+    // but let's stick to using matching.answer directly as requested "Display correct answer".
+    const correctText = matching.answer;
+
+    // We still calculate correctness
     const correctKey = getCorrectOptionKey(matching.answer);
     const isCorrect = isChecked && selectedKey === correctKey;
     const isWrong = isChecked && !isCorrect;
 
+    const selectedOption = options.find((o) => o.key === selectedKey);
+    const selectedText = selectedOption ? selectedOption.text : 'Choose an answer';
+
+    // Threshold for "long" content that triggers full-width layout
+    const isLongAnswer = selectedText.length > 35;
+
     return (
       <div
         key={matching.id}
-        className="flex items-center justify-between py-3 border-b border-[hsl(var(--border))] last:border-0"
+        className="py-3 border-b border-[hsl(var(--border))] last:border-0 flex flex-col gap-2"
       >
-        <div className="text-[15px] font-medium text-[hsl(var(--foreground))] flex-1 mr-4">
-          <RichTextParser content={matching.question} />
-        </div>
-
-        <div className="flex items-center gap-2">
-          {/* Dropdown */}
-          <div className="relative">
-            <select
-              value={selectedKey}
-              onChange={(e) => handleSelect(matching.id, e.target.value)}
-              disabled={isChecked}
-              className={`
-                 max-w-[400px] // Limit width to prevent overflow
-                 appearance-none
-                 pl-4 pr-10 py-2
-                 rounded-md
-                 border-2
-                 font-bold
-                 bg-[hsl(var(--background))]
-                 text-[hsl(var(--foreground))]
-                 cursor-pointer
-                 focus:outline-none focus:border-[hsl(var(--primary))]
-                 transition-colors
-                 ${
-                   isChecked
-                     ? isCorrect
-                       ? 'border-green-500 text-green-600 bg-green-50/10'
-                       : 'border-red-500 text-red-600 bg-red-50/10'
-                     : selectedKey
-                       ? 'border-[hsl(var(--primary))]'
-                       : 'border-[hsl(var(--input))]'
-                 }
-               `}
-              style={{ minWidth: '80px' }} // Standard width for letter
-            >
-              <option value="" disabled>
-                -
-              </option>
-              {options.map((opt) => (
-                <option key={opt.key} value={opt.key}>
-                  {opt.key}
-                </option>
-              ))}
-            </select>
-
-            <ChevronDown
-              size={16}
-              className={`
-                 absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none
-                 ${isChecked ? (isCorrect ? 'text-green-500' : 'text-red-500') : 'text-[hsl(var(--muted-foreground))]'}
-               `}
-            />
+        {/* Top Row: Question + Dropdown */}
+        <div
+          className={`flex ${isLongAnswer ? 'flex-col items-start gap-2' : 'flex-row items-center justify-between'}`}
+        >
+          <div
+            className={`text-[15px] font-medium text-[hsl(var(--foreground))] ${isLongAnswer ? 'w-full' : 'flex-1 mr-4'}`}
+          >
+            <RichTextParser content={matching.question} />
           </div>
 
-          {/* Feedback & Explain */}
-          {isChecked && (
-            <div className="flex items-center gap-2 ml-2">
-              {isCorrect ? (
-                <Check size={20} className="text-green-500" strokeWidth={3} />
-              ) : (
-                <div className="flex items-center gap-2">
-                  {correctKey && (
-                    <span className="text-green-600 font-bold text-lg bg-green-100 dark:bg-green-900/30 px-2 py-0.5 rounded">
-                      {correctKey}
-                    </span>
-                  )}
-                  <X size={20} className="text-red-500" strokeWidth={3} />
-                </div>
-              )}
+          {/* Dropdown + Feedback Wrapper */}
+          <div
+            className={`
+            flex items-center gap-3
+            ${isLongAnswer ? 'w-full' : 'shrink-0'}
+          `}
+          >
+            {/* Dropdown Container */}
+            <div
+              className={`
+              relative group
+              ${isLongAnswer ? 'flex-1' : 'w-[220px]'}
+            `}
+            >
+              {/* Visual Display Layer (The "Fake" Select) */}
+              <div
+                className={`
+                   w-full min-h-[36px] h-auto
+                   flex items-center justify-between
+                   pl-3 pr-2 py-1.5
+                   rounded-md border-2
+                   text-sm font-bold
+                   bg-[hsl(var(--background))]
+                   text-[hsl(var(--foreground))]
+                   transition-colors
+                   ${
+                     isChecked
+                       ? isCorrect
+                         ? 'border-green-500 text-green-600 bg-green-50/10'
+                         : 'border-red-500 text-red-600 bg-red-50/10'
+                       : selectedKey
+                         ? 'border-[hsl(var(--primary))]'
+                         : 'border-[hsl(var(--input))]'
+                   }
+                `}
+              >
+                <span className="whitespace-normal break-words leading-tight mr-2 select-none">
+                  {selectedText}
+                </span>
 
-              {matching.explain && (
-                <button
-                  onClick={() => {
-                    setCurrentExplanation(matching.explain);
-                    setIsExplainOpen(true);
-                  }}
-                  className="ml-2 text-[hsl(var(--primary))] hover:text-[hsl(var(--primary))]/80 transition-colors"
-                  title="Show Explanation"
-                >
-                  <Info size={20} strokeWidth={2.5} />
-                </button>
-              )}
+                <ChevronDown
+                  size={16}
+                  className={`
+                     shrink-0
+                     ${isChecked ? (isCorrect ? 'text-green-500' : 'text-red-500') : 'text-[hsl(var(--muted-foreground))]'}
+                   `}
+                />
+              </div>
+
+              {/* Interactive Layer (The Real Hidden Select) */}
+              <select
+                value={selectedKey}
+                onChange={(e) => handleSelect(matching.id, e.target.value)}
+                disabled={isChecked}
+                className="absolute inset-0 w-full h-full opacity-0 cursor-pointer disabled:cursor-not-allowed"
+              >
+                <option value="" disabled>
+                  Choose an answer
+                </option>
+                {getAvailableOptions(matching.id).map((opt) => (
+                  <option key={opt.key} value={opt.key}>
+                    {opt.text}
+                  </option>
+                ))}
+              </select>
             </div>
-          )}
+
+            {/* Feedback Icons (Check/X) - Flex Sibling */}
+            {isChecked && (
+              <div className="flex items-center gap-2 shrink-0">
+                {/* Info button only for Correct or Undetermined, for Wrong we show it below */}
+                {!isWrong && matching.explain && (
+                  <button
+                    onClick={(e) => {
+                      e.preventDefault();
+                      e.stopPropagation();
+                      setCurrentExplanation(matching.explain);
+                      setIsExplainOpen(true);
+                    }}
+                    className="text-[hsl(var(--primary))] hover:text-[hsl(var(--primary))]/80 transition-colors"
+                    title="Show Explanation"
+                  >
+                    <Info size={20} strokeWidth={2.5} />
+                  </button>
+                )}
+              </div>
+            )}
+          </div>
         </div>
+
+        {/* Bottom Row: Correction Display (Only when wrong) */}
+        {isWrong && (
+          <div
+            className="flex items-center gap-2 mt-1 cursor-pointer group/explain w-fit"
+            onClick={() => {
+              if (matching.explain) {
+                setCurrentExplanation(matching.explain);
+                setIsExplainOpen(true);
+              }
+            }}
+          >
+            <AlertCircle size={16} className="text-red-500 shrink-0" strokeWidth={2.5} />
+            <span className="text-[13px] font-bold text-red-500/90 hover:underline decoration-red-500/50 underline-offset-2">
+              {correctText}
+            </span>
+          </div>
+        )}
       </div>
     );
   };

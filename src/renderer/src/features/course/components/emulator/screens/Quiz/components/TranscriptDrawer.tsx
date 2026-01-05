@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { X, AudioLines, Clock, User } from 'lucide-react';
+import React, { useEffect, useState, useRef } from 'react';
+import { X, AudioLines, Clock, User, ScanEye } from 'lucide-react';
 import { folderService } from '../../../../../../../shared/services/folderService';
 import { MediaPlayer } from './MediaPlayer';
 
@@ -19,16 +19,25 @@ interface TranscriptDrawerProps {
   audioTitle: string;
 }
 
+interface Dialogue {
+  id: string;
+  original: string;
+  translation: string;
+}
+
 interface Segment {
+  id: number;
   speaker: string;
-  start: string;
-  end: string;
-  text: string;
+  timestamps: {
+    start: string;
+    end: string;
+  };
+  dialogues: Dialogue[];
 }
 
 interface TranscriptData {
-  language_code: string;
-  segments: Segment[];
+  metadata: any;
+  transcript: Segment[];
 }
 
 export const TranscriptDrawer: React.FC<TranscriptDrawerProps> = ({
@@ -43,14 +52,19 @@ export const TranscriptDrawer: React.FC<TranscriptDrawerProps> = ({
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
+  // Track active dialogue ID for manual translation toggle
+  const [activeDialogueId, setActiveDialogueId] = useState<string | null>(null);
+
+  const activeSegmentRef = useRef<HTMLDivElement | null>(null);
+
   useEffect(() => {
     if (isOpen && transcriptPath) {
       setLoading(true);
       setError(null);
       folderService
         .parseCourseMetadata(transcriptPath)
-        .then((result) => {
-          if (result && Array.isArray(result.segments)) {
+        .then((result: any) => {
+          if (result && Array.isArray(result.transcript)) {
             setData(result as TranscriptData);
           } else {
             setError('Invalid transcript format');
@@ -64,6 +78,13 @@ export const TranscriptDrawer: React.FC<TranscriptDrawerProps> = ({
     }
   }, [isOpen, transcriptPath]);
 
+  // Scroll active segment into view
+  useEffect(() => {
+    if (activeSegmentRef.current && isOpen) {
+      activeSegmentRef.current.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+  }, [audioState.currentTime, isOpen]); // Using currentTime might trigger frequent updates but is standard for karaoke-like scrolling.
+
   const parseTime = (timeStr: string) => {
     const parts = timeStr.split(':');
     if (parts.length === 2) {
@@ -72,12 +93,17 @@ export const TranscriptDrawer: React.FC<TranscriptDrawerProps> = ({
     return 0;
   };
 
-  const handleSegmentClick = (start: string) => {
+  const handleSeek = (start: string) => {
     const seconds = parseTime(start);
     audioHandlers.seek(seconds);
     if (!audioState.isPlaying) {
       audioHandlers.togglePlay();
     }
+  };
+
+  const toggleDialogue = (id: string, e: React.MouseEvent) => {
+    e.stopPropagation();
+    setActiveDialogueId((prev) => (prev === id ? null : id));
   };
 
   return (
@@ -113,46 +139,85 @@ export const TranscriptDrawer: React.FC<TranscriptDrawerProps> = ({
 
           {!loading && !error && data && (
             <div className="divide-y divide-[hsl(var(--border))]/30">
-              {data.segments.map((segment, index) => {
-                const startTime = parseTime(segment.start);
-                const endTime = parseTime(segment.end);
-                const isActive =
-                  audioState.currentTime >= startTime && audioState.currentTime <= endTime; // Use inclusive or slightly lenient comparison if needed, but < endTime is standard. Let's stick to simple logic first.
-                // Actually, often subtitle logic is [start, end).
-                // Let's use isActive based on the user's description.
-
-                // Re-calculating specific helper if needed or just use logic inline.
-                // Since I need to compute start/end anyway for comparison.
+              {data.transcript.map((segment, index) => {
+                const startTime = parseTime(segment.timestamps.start);
+                const endTime = parseTime(segment.timestamps.end);
+                // Active segment highlight logic based on audio
+                const isSegmentActive =
+                  audioState.currentTime >= startTime && audioState.currentTime < endTime;
 
                 return (
                   <div
-                    key={index}
-                    className={`px-6 py-4 transition-colors group cursor-pointer border-l-4 ${
-                      isActive
-                        ? 'bg-[hsl(var(--primary))]/10 border-[hsl(var(--primary))]'
-                        : 'hover:bg-[hsl(var(--muted))]/30 border-transparent active:bg-[hsl(var(--muted))]/50'
+                    key={segment.id || index}
+                    ref={isSegmentActive ? activeSegmentRef : null}
+                    className={`px-6 py-4 transition-colors group relative border-l-4 ${
+                      isSegmentActive
+                        ? 'bg-[hsl(var(--primary))]/5 border-[hsl(var(--primary))]'
+                        : 'border-transparent hover:bg-[hsl(var(--muted))]/30'
                     }`}
-                    onClick={() => handleSegmentClick(segment.start)}
                   >
-                    <div className="flex items-baseline justify-between mb-1.5">
+                    {/* Header: Speaker + Timestamp */}
+                    <div className="flex items-baseline justify-between mb-2">
                       <div className="flex items-center gap-2 text-[hsl(var(--primary))] font-semibold text-sm">
                         <User size={14} />
-                        <span>{segment.speaker}</span>
+                        <span className="capitalize">{segment.speaker.replace(/_/g, ' ')}</span>
                       </div>
-                      <div
-                        className={`flex items-center gap-1.5 text-xs font-mono px-1.5 py-0.5 rounded transition-colors ${
-                          isActive
-                            ? 'text-[hsl(var(--primary))] bg-[hsl(var(--primary))]/20'
-                            : 'text-[hsl(var(--muted-foreground))] bg-[hsl(var(--muted))]/50 group-hover:bg-[hsl(var(--primary))]/10 group-hover:text-[hsl(var(--primary))]'
-                        }`}
-                      >
-                        <Clock size={12} />
-                        <span>{segment.start}</span>
+
+                      <div className="flex items-center gap-2">
+                        <div
+                          className={`flex items-center gap-1.5 text-xs font-mono px-1.5 py-0.5 rounded transition-colors ${
+                            isSegmentActive
+                              ? 'text-[hsl(var(--primary))] bg-[hsl(var(--primary))]/20'
+                              : 'text-[hsl(var(--muted-foreground))] bg-[hsl(var(--muted))]/50'
+                          }`}
+                        >
+                          <Clock size={12} />
+                          <span>{segment.timestamps.start}</span>
+                        </div>
+
+                        {/* ScanEye Icon - Only visible on hover and NOT active */}
+                        {!isSegmentActive && (
+                          <button
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              handleSeek(segment.timestamps.start);
+                            }}
+                            className="p-1 text-[hsl(var(--muted-foreground))] hover:text-[hsl(var(--primary))]"
+                            title="Jump to this segment"
+                          >
+                            <ScanEye size={16} />
+                          </button>
+                        )}
                       </div>
                     </div>
-                    <p className="text-[15px] leading-relaxed text-[hsl(var(--foreground))]/90">
-                      {segment.text}
-                    </p>
+
+                    {/* Content */}
+                    <div className="text-[15px] leading-relaxed text-[hsl(var(--foreground))]/90">
+                      {segment.dialogues.map((dlg) => {
+                        const isDialogueActive = activeDialogueId === dlg.id;
+
+                        return (
+                          <span key={dlg.id} className="inline group/dialogue">
+                            {/* Original Text - Clickable to toggle translation */}
+                            <span
+                              onClick={(e) => toggleDialogue(dlg.id, e)}
+                              className="inline cursor-pointer hover:bg-[hsl(var(--muted))]/50 rounded px-1 -mx-1 transition-colors [&_p]:inline [&_p]:m-0"
+                              dangerouslySetInnerHTML={{ __html: dlg.original }}
+                            />
+
+                            {/* Translation - Manual Toggle */}
+                            {isDialogueActive && (
+                              <span
+                                className="inline ml-2 px-2 py-0.5 rounded bg-[hsl(var(--secondary))] text-[hsl(var(--secondary-foreground))] font-medium italic text-sm [&_p]:inline [&_p]:m-0 animate-in fade-in zoom-in-95 duration-200 border border-[hsl(var(--border))]"
+                                dangerouslySetInnerHTML={{ __html: `(${dlg.translation})` }}
+                              />
+                            )}
+                            {/* Add a space after each dialogue to prevent running together */}
+                            <span className="inline"> </span>
+                          </span>
+                        );
+                      })}
+                    </div>
                   </div>
                 );
               })}

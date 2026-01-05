@@ -16,6 +16,14 @@ export const Writing: React.FC<WritingProps> = ({ quiz, header }) => {
   const [showHintDrawer, setShowHintDrawer] = useState(false);
   const [currentHint, setCurrentHint] = useState<string>('');
 
+  // Reset state when quiz changes
+  React.useEffect(() => {
+    setContent('');
+    setIsSubmitted(false);
+    setShowHintDrawer(false);
+    setCurrentHint('');
+  }, [quiz.id]);
+
   const wordCount = content
     .trim()
     .split(/\s+/)
@@ -42,17 +50,35 @@ export const Writing: React.FC<WritingProps> = ({ quiz, header }) => {
             <span>Minimum words: {quiz.min || 150}</span>
             <span>Word count: {wordCount}</span>
           </div>
-          <textarea
-            className="w-full h-64 p-4 rounded-lg border border-[hsl(var(--border))] bg-[hsl(var(--card))] text-[hsl(var(--foreground))] resize-none focus:outline-none focus:ring-2 focus:ring-[hsl(var(--primary))]"
-            placeholder="Type your answer here..."
-            value={content}
-            onChange={(e) => setContent(e.target.value)}
-            disabled={isSubmitted}
-          />
+          {isSubmitted ? (
+            <div className="text-[hsl(var(--foreground))] leading-relaxed text-sm whitespace-pre-wrap">
+              {content}
+            </div>
+          ) : (
+            <textarea
+              className="w-full h-64 p-4 rounded-lg border border-[hsl(var(--border))] bg-[hsl(var(--card))] text-[hsl(var(--foreground))] resize-none focus:outline-none focus:ring-2 focus:ring-[hsl(var(--primary))]"
+              placeholder="Type your answer here..."
+              value={content}
+              onChange={(e) => setContent(e.target.value)}
+              disabled={isSubmitted}
+            />
+          )}
         </div>
 
-        {/* Submit Button */}
-        {!isSubmitted && wordCount >= (quiz.min || 150) && (
+        {/* Example / Result Section */}
+        {isSubmitted && quiz.example && (
+          <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
+            <h3 className="font-bold text-lg mb-3 text-[hsl(var(--foreground))]">Sample Answer</h3>
+            <div className="text-[hsl(var(--foreground))] leading-relaxed text-sm">
+              <RichTextParser content={quiz.example} onHintClick={handleHintClick} />
+            </div>
+          </div>
+        )}
+      </div>
+
+      {/* Fixed Submit Button */}
+      {!isSubmitted && wordCount >= (quiz.min || 150) && (
+        <div className="p-4 border-t border-[hsl(var(--border))] bg-[hsl(var(--background))]">
           <button
             onClick={handleSubmit}
             className="w-full py-3 rounded-lg bg-[hsl(var(--primary))] text-[hsl(var(--primary-foreground))] font-bold hover:opacity-90 transition-all active:scale-[0.98] flex items-center justify-center gap-2"
@@ -60,18 +86,8 @@ export const Writing: React.FC<WritingProps> = ({ quiz, header }) => {
             <Send size={18} />
             Submit
           </button>
-        )}
-
-        {/* Example / Result Section */}
-        {isSubmitted && quiz.example && (
-          <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
-            <h3 className="font-bold text-lg mb-3 text-[hsl(var(--foreground))]">Sample Answer</h3>
-            <div className="p-4 rounded-lg bg-[hsl(var(--secondary)/30)] border border-[hsl(var(--border))] text-[hsl(var(--foreground))] leading-relaxed text-sm">
-              <RichTextParser content={quiz.example} onHintClick={handleHintClick} />
-            </div>
-          </div>
-        )}
-      </div>
+        </div>
+      )}
 
       <WritingHintDrawer
         isOpen={showHintDrawer}

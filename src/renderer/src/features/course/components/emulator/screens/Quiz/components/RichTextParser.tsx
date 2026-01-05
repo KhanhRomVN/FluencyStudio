@@ -34,7 +34,10 @@ export const RichTextParser: React.FC<RichTextParserProps> = ({
   if (!content) return null;
 
   // Split by tags we care about: </gap ...>, </n>, <p...>, </p>
-  const parts = content.split(/((?:<\/gap id='.*?'>)|(?:<\/n\s*?>)|(?:<p.*?>)|(?:<\/p>))/gi);
+  // Improved regex to handle attributes containing ">" (like hints with HTML)
+  const parts = content.split(
+    /((?:<\/gap id='.*?'>)|(?:<\/n\s*?>)|(?:<p(?:\s+(?:[^>"']|"[^"]*"|'[^']*')*)*>)|(?:<\/p>))/gi,
+  );
 
   const widgets: React.ReactNode[] = [];
 
@@ -50,6 +53,7 @@ export const RichTextParser: React.FC<RichTextParserProps> = ({
   let fontSize: string | undefined = undefined;
   let color: string | undefined = undefined;
   let hint: string | undefined = undefined;
+  let importance: 'low' | 'medium' | 'high' | undefined = undefined;
 
   const flushParagraph = (closeIndex: number, startIndex: number) => {
     if (pChildren.length > 0) {
@@ -71,9 +75,27 @@ export const RichTextParser: React.FC<RichTextParserProps> = ({
         fontWeight: isBold ? 'bold' : 'normal',
       };
 
+      let borderColorClass = 'border-transparent';
+      if (hint) {
+        switch (importance) {
+          case 'low':
+            borderColorClass = 'border-green-500';
+            break;
+          case 'medium':
+            borderColorClass = 'border-orange-500';
+            break;
+          case 'high':
+            borderColorClass = 'border-red-500';
+            break;
+          default:
+            borderColorClass = 'border-primary';
+            break;
+        }
+      }
+
       const wrapperClass = `
         relative ${isCenter ? 'block w-full text-center' : 'inline'} rounded-md
-        ${hint ? 'border border-dashed border-primary/30 cursor-pointer hover:bg-primary/5' : 'border border-dashed border-transparent'}
+        ${hint ? `border border-dashed ${borderColorClass} cursor-pointer hover:bg-primary/5` : 'border border-dashed border-transparent'}
         transition-all duration-200
         px-1 -mx-1
       `.trim();
@@ -108,6 +130,7 @@ export const RichTextParser: React.FC<RichTextParserProps> = ({
     fontSize = undefined;
     color = undefined;
     hint = undefined;
+    importance = undefined;
   };
 
   parts.forEach((part, index) => {
@@ -158,7 +181,12 @@ export const RichTextParser: React.FC<RichTextParserProps> = ({
         fontSize = `${sizeMatch[1]}px`;
       } else {
         const legacySizeMatch = part.match(/\d+/);
-        if (legacySizeMatch && !part.match(/color=['"].*?['"]/)) {
+        // Avoid legacy size matching if color or hint attributes are present, as distinct numbers like "Task 1" in hint could trigger it
+        if (
+          legacySizeMatch &&
+          !part.match(/color=['"].*?['"]/) &&
+          !part.match(/hint=['"].*?['"]/)
+        ) {
           fontSize = `${legacySizeMatch[0]}px`;
         }
       }
@@ -172,10 +200,17 @@ export const RichTextParser: React.FC<RichTextParserProps> = ({
         }
       }
 
-      // Hint extraction
-      const hintMatch = part.match(/hint=['"](.*?)['"]/i);
+      // Hint extraction - handles nested quotes/HTML
+      // Fixed: Avoid backreference in character class by using alternation for ' and "
+      const hintMatch = part.match(/hint=(?:'((?:[^']|\\')*?)'|"((?:[^"]|\\")*?)")/i);
       if (hintMatch) {
-        hint = hintMatch[1];
+        hint = hintMatch[1] || hintMatch[2]; // Group 1 for single quotes, Group 2 for double quotes
+      }
+
+      // Importance extraction
+      const importanceMatch = part.match(/importance=['"](low|medium|high)['"]/i);
+      if (importanceMatch) {
+        importance = importanceMatch[1] as 'low' | 'medium' | 'high';
       }
 
       return;

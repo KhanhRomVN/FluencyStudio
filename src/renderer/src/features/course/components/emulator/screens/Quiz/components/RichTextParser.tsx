@@ -19,6 +19,7 @@ interface RichTextParserProps {
   sectionId?: string;
   onGapFound?: (id: string) => React.ReactNode;
   onTextClick?: (text: string) => void;
+  onHintClick?: (hint: string) => void;
   onChange?: (newContent: string) => void;
 }
 
@@ -27,6 +28,7 @@ export const RichTextParser: React.FC<RichTextParserProps> = ({
   sectionId,
   onGapFound,
   onTextClick,
+  onHintClick,
   onChange,
 }) => {
   if (!content) return null;
@@ -47,6 +49,7 @@ export const RichTextParser: React.FC<RichTextParserProps> = ({
   let isCenter = false;
   let fontSize: string | undefined = undefined;
   let color: string | undefined = undefined;
+  let hint: string | undefined = undefined;
 
   const flushParagraph = (closeIndex: number, startIndex: number) => {
     if (pChildren.length > 0) {
@@ -69,9 +72,9 @@ export const RichTextParser: React.FC<RichTextParserProps> = ({
       };
 
       const wrapperClass = `
-        relative ${isCenter ? 'block w-full text-center' : 'inline'} rounded-md border border-dashed
-        hover:border-primary/50 focus:border-primary focus:bg-primary/5 focus:outline-none
-        transition-all duration-200 cursor-text
+        relative ${isCenter ? 'block w-full text-center' : 'inline'} rounded-md
+        ${hint ? 'border border-dashed border-primary/30 cursor-pointer hover:bg-primary/5' : 'border border-dashed border-transparent'}
+        transition-all duration-200
         px-1 -mx-1
       `.trim();
 
@@ -88,6 +91,8 @@ export const RichTextParser: React.FC<RichTextParserProps> = ({
           currentTag={parts[startIndex]}
           onChange={onChange}
           onTextClick={onTextClick}
+          onHintClick={onHintClick}
+          hint={hint}
         >
           {pChildren}
         </ParagraphWrapper>,
@@ -102,6 +107,7 @@ export const RichTextParser: React.FC<RichTextParserProps> = ({
     isCenter = false;
     fontSize = undefined;
     color = undefined;
+    hint = undefined;
   };
 
   parts.forEach((part, index) => {
@@ -166,6 +172,12 @@ export const RichTextParser: React.FC<RichTextParserProps> = ({
         }
       }
 
+      // Hint extraction
+      const hintMatch = part.match(/hint=['"](.*?)['"]/i);
+      if (hintMatch) {
+        hint = hintMatch[1];
+      }
+
       return;
     }
 
@@ -223,6 +235,8 @@ const ParagraphWrapper: React.FC<{
   currentTag: string; // New prop
   onChange?: (newContent: string) => void;
   onTextClick?: (text: string) => void;
+  onHintClick?: (hint: string) => void;
+  hint?: string;
 }> = ({
   id,
   className,
@@ -235,6 +249,8 @@ const ParagraphWrapper: React.FC<{
   currentTag,
   onChange,
   onTextClick,
+  onHintClick,
+  hint,
 }) => {
   const {
     registerElement,
@@ -458,11 +474,15 @@ const ParagraphWrapper: React.FC<{
 
   return (
     <span
-      className={`${className} ${isActive ? 'border-primary bg-primary/5' : 'border-transparent'}`}
+      className={`${className} ${isActive ? 'border-primary bg-primary/5' : ''}`}
       style={style}
       tabIndex={0}
       onClick={(e) => {
         e.stopPropagation();
+        if (hint && onHintClick) {
+          onHintClick(hint);
+          return;
+        }
         setActiveElement(id);
         setActiveContent(fullOuterHTML);
         onTextClick?.(fullText);

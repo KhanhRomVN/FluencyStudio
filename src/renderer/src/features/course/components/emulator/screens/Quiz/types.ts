@@ -12,6 +12,8 @@ export interface Quiz {
   matchings?: MatchingItem[];
   quizNumber?: number;
   subtype?: 'single-answer' | 'multi-answer';
+  min?: number;
+  example?: string;
 }
 
 export interface MatchingItem {

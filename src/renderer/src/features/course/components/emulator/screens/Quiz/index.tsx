@@ -1,13 +1,15 @@
 import React, { useState, useEffect } from 'react';
-import { AudioLines, ChevronLeft, AlignEndVertical, Info } from 'lucide-react';
+import { AudioLines, ChevronLeft, AlignEndVertical, Info, BadgeInfo } from 'lucide-react';
 import { Quiz } from './types';
 import { GapFill } from './components/QuizType/GapFill';
 import { MultipleChoice } from './components/QuizType/MultipleChoice';
 import { MatchingDropdown } from './components/QuizType/MatchingDropdown';
+import { Writing } from './components/QuizType/Writing';
 import { MediaPlayer } from './components/MediaPlayer';
 import { QuizDrawer } from './components/QuizDrawer';
 import { TranscriptDrawer } from './components/TranscriptDrawer';
 import { TutorialDrawer } from './components/TutorialDrawer';
+import { WritingInstructionDrawer } from './components/WritingInstructionDrawer';
 import { useAudio } from '../../../../hooks/useAudio';
 
 interface QuizPageProps {
@@ -29,6 +31,7 @@ export const QuizPage: React.FC<QuizPageProps> = ({
   const [showTutorial, setShowTutorial] = useState(false);
 
   const [showExplainDrawer, setShowExplainDrawer] = useState(false);
+  const [showInstructionDrawer, setShowInstructionDrawer] = useState(false);
 
   // Track visited quizzes to show colored help icon only on first visit
   const [visitedQuizzes, setVisitedQuizzes] = useState<Set<string>>(new Set());
@@ -105,6 +108,14 @@ export const QuizPage: React.FC<QuizPageProps> = ({
         </div>
 
         <div className="flex items-center gap-0.5">
+          {quizData.type === 'writing' && (
+            <button
+              onClick={() => setShowInstructionDrawer(true)}
+              className="p-1.5 rounded-lg hover:bg-[hsl(var(--muted))] active:scale-95 transition-all text-[hsl(var(--foreground))]"
+            >
+              <BadgeInfo size={18} />
+            </button>
+          )}
           {isChecked && quizData.transcript && (
             <button
               onClick={() => setShowTranscript(true)}
@@ -158,6 +169,16 @@ export const QuizPage: React.FC<QuizPageProps> = ({
             onCheck={handleCheck}
             onUpdate={onQuizUpdate}
             onExplainRequest={setShowExplainDrawer}
+            header={
+              <h2 className="font-bold text-lg text-[hsl(var(--foreground))] leading-tight mb-3">
+                {displayTitle}
+              </h2>
+            }
+          />
+        ) : quizType === 'writing' ? (
+          <Writing
+            quiz={quizData}
+            onUpdate={onQuizUpdate}
             header={
               <h2 className="font-bold text-lg text-[hsl(var(--foreground))] leading-tight mb-3">
                 {displayTitle}
@@ -223,6 +244,12 @@ export const QuizPage: React.FC<QuizPageProps> = ({
         activeQuizIndex={activeQuizIndex}
         onQuizSelected={(index) => handleQuizSelect(quizzes[index])}
         lessonTitle={parentLesson?.title}
+      />
+
+      <WritingInstructionDrawer
+        isOpen={showInstructionDrawer}
+        onClose={() => setShowInstructionDrawer(false)}
+        instruction={quizData.instruction || ''}
       />
     </div>
   );

@@ -1,20 +1,13 @@
 import React, { useState, useEffect, useMemo } from 'react';
-import { Quiz } from '../../types';
+import { Quiz, MatchingItem } from '../../types';
 import { RichTextParser } from '../RichTextParser';
 import { ExplainDrawer } from '../ExplainDrawer';
-import { ChevronDown, Check, Info, AlertCircle } from 'lucide-react';
+import { ChevronDown, Info, AlertCircle } from 'lucide-react';
 
-// Extend Quiz type to include matchings and quizNumber as per user JSON
-interface MatchingItem {
-  id: string;
-  question: string;
-  answer: string;
-  explain: string;
-}
+// Extended from Quiz which now includes these fields
 
 interface MatchingDropdownQuiz extends Quiz {
-  matchings?: MatchingItem[];
-  quizNumber?: number;
+  options?: string[];
 }
 
 interface MatchingDropdownProps {
@@ -26,10 +19,7 @@ interface MatchingDropdownProps {
   onExplainRequest?: (isOpen: boolean) => void;
 }
 
-interface Option {
-  key: string;
-  text: string;
-}
+// Option interface removed as it was unused or better defined inline if needed
 
 export const MatchingDropdown: React.FC<MatchingDropdownProps> = ({
   quiz,
@@ -45,47 +35,32 @@ export const MatchingDropdown: React.FC<MatchingDropdownProps> = ({
 
   // Local state for editing
   const [instruction, setInstruction] = useState(quiz.instruction || '');
-  const [questionContent, setQuestionContent] = useState(quiz.question || '');
 
   useEffect(() => {
     setInstruction(quiz.instruction || '');
-    setQuestionContent(quiz.question || '');
-  }, [quiz.instruction, quiz.question]);
+  }, [quiz.instruction]);
 
-  // Parse options from the question content (The Box)
+  // Generate options from the quiz.options array
   const options = useMemo(() => {
-    const opts: Option[] = [];
-    if (!questionContent) return opts;
-
-    // Pattern to match: <p><span style='bold'>A</span> experience on stage</p>
-    // Adjust regex to be flexible with attributes and whitespace
-    // Capture group 1: Letter, Capture group 2: Text content
-    const regex = /<span[^>]*>\s*([A-Z])\s*<\/span>\s*(.*?)(?=<\/p>)/gi;
-
-    let match;
-    // We iterate over the string finding matches
-    // Note: This simple regex assumes the structure provided in the JSON.
-    // If the HTML structure is complex (nested divs), DOM parsing might be better
-    // but regex is often sufficient for this predictable format.
-    const tempContent = questionContent.replace(/[\n\r]/g, ''); // Remove newlines for easier regex
-
-    while ((match = regex.exec(tempContent)) !== null) {
-      if (match[1] && match[2]) {
-        opts.push({
-          key: match[1].trim(),
-          text: match[2].trim(),
-        });
-      }
+    if (quiz.options && Array.isArray(quiz.options)) {
+      return quiz.options.map((text, index) => ({
+        key: String.fromCharCode(65 + index), // A, B, C...
+        text: text,
+      }));
     }
-
-    // Sort options alphabetically by key just in case
-    return opts.sort((a, b) => a.key.localeCompare(b.key));
-  }, [questionContent]);
+    return [];
+  }, [quiz.options]);
 
   // Derived state: Available options for each row
-  // We want to hide options that are already selected in OTHER rows.
-  // Unless the option is the one currently selected for THIS row.
+  // We want to hide options that are already selected in OTHER rows
+  // ONLY IF subtype is NOT 'multi-answer'
   const getAvailableOptions = (currentMatchingId: string) => {
+    // If subtype is multi-answer, all options are always available
+    if (quiz.subtype === 'multi-answer') {
+      return options;
+    }
+
+    // Default behavior (single-answer): Hide options selected in other rows
     const selectedKeys = Object.entries(selectedAnswers)
       .filter(([id]) => id !== currentMatchingId) // Ignore current row's selection
       .map(([, key]) => key);

@@ -1,6 +1,6 @@
 {
-  "id": "l_01",
-  "title": "Test 1: Listening",
+  "id": "lesson_01",
+  "title": "Lesson 1: Listening Part 1",
   "lessonNumber": 1,
   "quiz": [
     {
@@ -207,9 +207,18 @@
       "id": "quiz_04",
       "title": "IELTS Listening Test 1 - Part 2: Volunteer Work Areas",
       "type": "matching-dropdown",
+      "subtype": "single-answer",
       "instruction": "<p>Choose </p><p style='bold'>FIVE </p><p>answers from the box and write the correct letter.</p>",
       "quizNumber": 4,
-      "question": "<p>Box options:</p><p><span style='bold'>A</span> financial situation</p><p><span style='bold'>B</span> original, new ideas</p><p><span style='bold'>C</span> parenting skills</p><p><span style='bold'>D</span> an understanding of food and diet</p><p><span style='bold'>E</span> availability</p><p><span style='bold'>F</span> a good memory</p><p><span style='bold'>G</span> a good level of fitness</p>",
+      "options": [
+        "financial situation",
+        "original, new ideas",
+        "parenting skills",
+        "an understanding of food and diet",
+        "availability",
+        "a good memory",
+        "a good level of fitness"
+      ],
       "audio": "./audio/Cambridge_IELTS_18_Test1_Listening_Part2.mp3",
       "transcript": "./audio/Cambridge_IELTS_18_Test1_Listening_Part2_Transcript.json",
       "matchings": [

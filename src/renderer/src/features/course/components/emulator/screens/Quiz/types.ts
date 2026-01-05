@@ -7,8 +7,18 @@ export interface Quiz {
   transcript?: string;
   instruction?: string; // Added to match Dart's usage in MultipleChoice
   answers?: QuizAnswer[]; // Changed to object array to match Dart
-  options?: { key: string; text: string }[];
+  options?: { key: string; text: string }[] | string[];
   questions?: QuizQuestion[]; // For nested questions in MC
+  matchings?: MatchingItem[];
+  quizNumber?: number;
+  subtype?: 'single-answer' | 'multi-answer';
+}
+
+export interface MatchingItem {
+  id: string;
+  question: string;
+  answer: string;
+  explain: string;
 }
 
 export interface QuizAnswer {

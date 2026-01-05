@@ -1,0 +1,15 @@
+{
+  "id": "lesson_03",
+  "title": "Lesson 3: Writing Part 1",
+  "lessonNumber": 3,
+  "quiz": [
+    {
+      "id": "quiz_01",
+      "title": "IELTS Writing Task 1: ",
+      "type": "writing",
+      "instruction": "<p style='bold'>The graph below gives information about the percentage of the population in four Asian countries living in cities from 1970 to 2020, with predictions for 2030 and 2040.</p></n><p style='bold'>Summarise the information by selecting and reporting the main features, and\nmake comparisons where relevant</p></n><image src='./image/Test1_Writing.png'>",
+      "min": 150
+    }
+  ],
+  "_filePath": "/home/khanhromvn/Documents/Coding/Fluency/FluencyStudio/src/renderer/src/features/course/data/courses/Cambridge_IELTS_18/Cambridge_IELTS_18_Lesson3.json"
+}

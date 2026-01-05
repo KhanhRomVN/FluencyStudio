@@ -6,6 +6,7 @@ import { MultipleChoice } from './components/QuizType/MultipleChoice';
 import { MatchingDropdown } from './components/QuizType/MatchingDropdown';
 import { Writing } from './components/QuizType/Writing';
 import { Speaking } from './components/QuizType/Speaking';
+import { Chatting } from './components/QuizType/Chatting';
 import { MediaPlayer } from './components/MediaPlayer';
 import { QuizDrawer } from './components/QuizDrawer';
 import { TranscriptDrawer } from './components/TranscriptDrawer';
@@ -199,6 +200,16 @@ export const QuizPage: React.FC<QuizPageProps> = ({
           />
         ) : quizType === 'speaking' ? (
           <Speaking
+            quiz={quizData}
+            onUpdate={onQuizUpdate}
+            header={
+              <h2 className="font-bold text-lg text-[hsl(var(--foreground))] leading-tight mb-3">
+                {displayTitle}
+              </h2>
+            }
+          />
+        ) : quizType === 'chatting' ? (
+          <Chatting
             quiz={quizData}
             onUpdate={onQuizUpdate}
             header={

@@ -964,7 +964,6 @@
           "title": "IELTS Speaking Part 1: ",
           "type": "speaking",
           "subtype": "ielts_speaking_1",
-          "instruction": "The examiner asks you about yourself, your home, work or studies and other familiar topics.",
           "questions": [
             {
               "id": "question_01",
@@ -993,7 +992,7 @@
           "title": "IELTS Speaking Part 2: ",
           "type": "speaking",
           "subtype": "ielts_speaking_2",
-          "instruction": "<p hint='<p>Part 2 yêu cầu nói liên tục 1-2 phút về một chủ đề cụ thể với cấu trúc rõ ràng.</p>' importance='high'>Describe some food or drink that you learned to prepare.</p><p>You should say:</p><p>• what food or drink you learned to prepare</p><p>• when and where you learned to prepare this</p><p>• how you learned to prepare this</p><p>• and explain how you felt about learning to prepare this food or drink.</p>",
+          "instruction": "<p>Describe some food or drink that you learned to prepare.</p><p>You should say:</p><p>• what food or drink you learned to prepare</p><p>• when and where you learned to prepare this</p><p>• how you learned to prepare this</p><p>• and explain how you felt about learning to prepare this food or drink.</p>",
           "example": "<p hint='<p>Mở bài giới thiệu món ăn một cách tự nhiên, trực tiếp trả lời câu hỏi đầu tiên.</p>' importance='high'>I'd like to talk about learning to make Vietnamese pho, which is a traditional noodle soup that's incredibly popular in my country.</p><p hint='<p>Trả lời câu hỏi thứ hai: thời gian và địa điểm học, sử dụng thì quá khứ đơn.</p>' importance='high'>I learned how to make it about three years ago when I was visiting my grandmother in the countryside during summer vacation.</p><p hint='<p>Mô tả quá trình học chi tiết, sử dụng các từ nối thời gian.</p>' importance='medium'>She had a small cooking area in her backyard where she would prepare family meals, and that's where she taught me the entire process.</p><p hint='<p>Trả lời câu hỏi thứ ba: phương pháp học, tập trung vào trải nghiệm thực hành.</p>' importance='high'>I learned through hands-on experience - my grandmother didn't give me a recipe book but rather showed me each step patiently. First, we prepared the broth by simmering beef bones with spices like star anise and cinnamon for several hours. Then, we prepared the fresh rice noodles and thinly sliced beef. The most challenging part was getting the seasoning right - balancing fish sauce, sugar, and salt to create that perfect umami flavor.</p><p hint='<p>Trả lời câu hỏi cuối: cảm xúc và bài học rút ra, sử dụng tính từ mô tả cảm xúc.</p>' importance='high'>As for how I felt about learning this, it was actually quite emotional. Initially, I felt overwhelmed by the complexity of the dish, but as I practiced under my grandmother's guidance, I began to feel a deep sense of connection to my cultural heritage. Completing the dish successfully gave me an incredible sense of accomplishment, and now whenever I make pho, it reminds me of those precious moments with my grandmother. What's more, it's become a valuable skill that allows me to share my culture with friends from different backgrounds.</p><p hint='<p>Kết thúc tự nhiên, có thể thêm một câu tổng kết ngắn gọn.</p>' importance='low'>So, that's the story of how I learned to make pho, and it remains one of my favorite dishes to prepare for special occasions.</p>"
         },
         {
@@ -1026,6 +1025,50 @@
         }
       ],
       "_filePath": "/home/khanhromvn/Documents/Coding/Fluency/FluencyStudio/src/renderer/src/features/course/data/courses/Cambridge_IELTS_18/Cambridge_IELTS_18_Lesson4.json"
+    },
+    {
+      "id": "lesson_05",
+      "title": "",
+      "lessonNumber": 5,
+      "quiz": [
+        {
+          "id": "quiz_01",
+          "title": "",
+          "type": "gap-fill",
+          "instruction": "",
+          "questions": "",
+          "audio": "./audio/Cambridge_IELTS_18_Test2_Listening_Part1.mp3",
+          "transcript": "./audio/Cambridge_IELTS_18_Test2_Listening_Part1_Transcript.json",
+          "answers": []
+        }
+      ],
+      "_filePath": "/home/khanhromvn/Documents/Coding/Fluency/FluencyStudio/src/renderer/src/features/course/data/courses/Cambridge_IELTS_18/Cambridge_IELTS_18_Lesson5.json"
+    },
+    {
+      "id": "lesson_17",
+      "title": "",
+      "lessonNumber": 17,
+      "quiz": [
+        {
+          "id": "quiz_01",
+          "title": "",
+          "type": "chatting",
+          "instruction": "",
+          "chats": [
+            {
+              "id": "chat_01",
+              "role": "bot",
+              "content": "Hello"
+            },
+            {
+              "id": "chat_02",
+              "role": "user",
+              "content": "How are you?"
+            }
+          ]
+        }
+      ],
+      "_filePath": "/home/khanhromvn/Documents/Coding/Fluency/FluencyStudio/src/renderer/src/features/course/data/courses/Cambridge_IELTS_18/Cambridge_IELTS_18_Lesson17.json"
     }
   ]
 }

@@ -15,6 +15,13 @@ export interface Quiz {
   subtype?: 'single-answer' | 'multi-answer';
   min?: number;
   example?: string;
+  chats?: ChatMessage[];
+}
+
+export interface ChatMessage {
+  id: string;
+  role: 'bot' | 'user';
+  content: string;
 }
 
 export interface MatchingItem {

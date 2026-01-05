@@ -7,7 +7,7 @@ import { ChevronDown, Info, AlertCircle } from 'lucide-react';
 // Extended from Quiz which now includes these fields
 
 interface MatchingDropdownQuiz extends Quiz {
-  options?: string[];
+  options?: string[] | { key: string; text: string }[];
 }
 
 interface MatchingDropdownProps {
@@ -42,13 +42,18 @@ export const MatchingDropdown: React.FC<MatchingDropdownProps> = ({
 
   // Generate options from the quiz.options array
   const options = useMemo(() => {
-    if (quiz.options && Array.isArray(quiz.options)) {
-      return quiz.options.map((text, index) => ({
-        key: String.fromCharCode(65 + index), // A, B, C...
-        text: text,
-      }));
+    if (!quiz.options || !Array.isArray(quiz.options)) return [];
+
+    // Handle case where options are already objects with keys
+    if (quiz.options.length > 0 && typeof quiz.options[0] === 'object') {
+      return quiz.options as { key: string; text: string }[];
     }
-    return [];
+
+    // Handle string array case - generate keys (A, B, C...)
+    return (quiz.options as string[]).map((text, index) => ({
+      key: String.fromCharCode(65 + index),
+      text: text,
+    }));
   }, [quiz.options]);
 
   // Derived state: Available options for each row

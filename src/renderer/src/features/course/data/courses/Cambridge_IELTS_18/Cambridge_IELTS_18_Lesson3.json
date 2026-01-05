@@ -7,8 +7,9 @@
       "id": "quiz_01",
       "title": "IELTS Writing Task 1: ",
       "type": "writing",
-      "instruction": "<p style='bold'>The graph below gives information about the percentage of the population in four Asian countries living in cities from 1970 to 2020, with predictions for 2030 and 2040.</p></n><p style='bold'>Summarise the information by selecting and reporting the main features, and\nmake comparisons where relevant</p></n><image src='./image/Test1_Writing.png'>",
-      "min": 150
+      "instruction": "<p style='bold'>The graph below gives information about the percentage of the population in four Asian countries living in cities from 1970 to 2020, with predictions for 2030 and 2040.</p></n><p style='bold'>Summarise the information by selecting and reporting the main features, and\nmake comparisons where relevant</p></n><image src='./image/Test1_Writing.png'> style='center'",
+      "min": 150,
+      "example": "<p>The line graph illustrates the proportion of people residing in urban areas across four Asian nations—Philippines, Malaysia, Thailand, and Indonesia—over a 70-year period from 1970 to 2040.</p></n><p>Overall, all four countries experienced an upward trend in urbanization throughout the period. Malaysia consistently maintained the highest urbanization rate, while the Philippines showed the most dramatic increase, eventually surpassing Thailand and Indonesia.</p></n><p>In 1970, Malaysia had the highest urban population at around 30%, followed by the Philippines at approximately 31%. Thailand and Indonesia started at similar levels, around 18% and 15% respectively. By 2000, the Philippines had risen sharply to about 48%, overtaking Malaysia which reached roughly 60%.</p></n><p>Looking at the projections, Malaysia is expected to reach approximately 83% by 2040, maintaining its leading position. The Philippines is forecast to increase to around 63%, while Thailand and Indonesia are predicted to rise more gradually to about 50% and 60% respectively. The gap between Malaysia and the other three nations is projected to widen significantly by 2040.</p>"
     }
   ],
   "_filePath": "/home/khanhromvn/Documents/Coding/Fluency/FluencyStudio/src/renderer/src/features/course/data/courses/Cambridge_IELTS_18/Cambridge_IELTS_18_Lesson3.json"

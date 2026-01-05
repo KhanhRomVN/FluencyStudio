@@ -1,6 +1,8 @@
-import React, { useEffect, useState } from 'react';
-import { X, Pilcrow, BookOpen } from 'lucide-react';
+import React, { useEffect, useState, useRef } from 'react';
+import { X, Pilcrow } from 'lucide-react';
 import { folderService } from '../../../../../../../shared/services/folderService';
+import { DirectoryDrawer } from './DirectoryDrawer';
+import { directoryStorage } from '../services/directoryStorage';
 
 interface PassageDrawerProps {
   isOpen: boolean;
@@ -31,6 +33,12 @@ export const PassageDrawer: React.FC<PassageDrawerProps> = ({
   const [error, setError] = useState<string | null>(null);
   const [activeSegmentIndex, setActiveSegmentIndex] = useState<number | null>(null);
 
+  const [directoryOpen, setDirectoryOpen] = useState(false);
+  const [selectedWord, setSelectedWord] = useState<string | null>(null);
+  const longPressTimer = useRef<NodeJS.Timeout | null>(null);
+  const isLongPress = useRef(false);
+  const startPos = useRef({ x: 0, y: 0 });
+
   useEffect(() => {
     if (isOpen && passagePath) {
       setLoading(true);
@@ -60,6 +68,133 @@ export const PassageDrawer: React.FC<PassageDrawerProps> = ({
         .finally(() => setLoading(false));
     }
   }, [isOpen, passagePath, parentFilePath]);
+
+  const getWordFromPoint = (x: number, y: number): string | null => {
+    // @ts-ignore - Webkit specific
+    if (typeof document.caretRangeFromPoint !== 'undefined') {
+      // @ts-ignore
+      const range = document.caretRangeFromPoint(x, y);
+      if (range && range.startContainer.nodeType === Node.TEXT_NODE) {
+        const textNode = range.startContainer;
+        const text = textNode.textContent || '';
+        const offset = range.startOffset;
+
+        // Expand to word boundaries
+        let start = offset;
+        let end = offset;
+
+        // Look back
+        while (start > 0 && /[\w'-]/.test(text[start - 1])) {
+          start--;
+        }
+
+        // Look forward
+        while (end < text.length && /[\w'-]/.test(text[end])) {
+          end++;
+        }
+
+        return text.substring(start, end);
+      }
+    } else if (typeof document.caretPositionFromPoint !== 'undefined') {
+      // Firefox support just in case
+      // @ts-ignore
+      const pos = document.caretPositionFromPoint(x, y);
+      if (pos && pos.offsetNode.nodeType === Node.TEXT_NODE) {
+        const textNode = pos.offsetNode;
+        const text = textNode.textContent || '';
+        const offset = pos.offset;
+
+        let start = offset;
+        let end = offset;
+
+        while (start > 0 && /[\w'-]/.test(text[start - 1])) {
+          start--;
+        }
+
+        while (end < text.length && /[\w'-]/.test(text[end])) {
+          end++;
+        }
+        return text.substring(start, end);
+      }
+    }
+    return null;
+  };
+
+  const handlePointerDown = (e: React.PointerEvent) => {
+    // Only process left click for hold (mouse) or touch
+    if (e.pointerType === 'mouse' && e.button !== 0) return;
+
+    isLongPress.current = false;
+    startPos.current = { x: e.clientX, y: e.clientY };
+
+    // Clear any existing timer
+    if (longPressTimer.current) clearTimeout(longPressTimer.current);
+
+    longPressTimer.current = setTimeout(() => {
+      isLongPress.current = true;
+      const word = getWordFromPoint(e.clientX, e.clientY);
+      if (word) {
+        // Clean punctuation
+        const cleanWord = word.replace(/^[^\w]+|[^\w]+$/g, '');
+        if (cleanWord && cleanWord.length > 0) {
+          const finalWord = cleanWord.toLowerCase();
+
+          // Fetch via directory service first.
+          // If we have data, we open. If not, we do nothing.
+          // To avoid UI freezing or no feedback, could show a spinner.
+          // But requirement is "only show if data".
+          directoryStorage.fetchAndSave(finalWord).then((entry) => {
+            if (entry) {
+              setSelectedWord(finalWord);
+              setDirectoryOpen(true);
+            } else {
+              // Optional: Simple toast or console log
+              console.log('No dictionary data found for', finalWord);
+            }
+          });
+        }
+      }
+    }, 600); // 600ms hold
+  };
+
+  const handlePointerMove = (e: React.PointerEvent) => {
+    if (longPressTimer.current) {
+      const dist = Math.sqrt(
+        Math.pow(e.clientX - startPos.current.x, 2) + Math.pow(e.clientY - startPos.current.y, 2),
+      );
+      if (dist > 10) {
+        clearTimeout(longPressTimer.current);
+        longPressTimer.current = null;
+      }
+    }
+  };
+
+  const handlePointerUp = (e: React.PointerEvent, index: number) => {
+    if (longPressTimer.current) {
+      clearTimeout(longPressTimer.current);
+      longPressTimer.current = null;
+    }
+
+    if (!isLongPress.current) {
+      // It was a click, assume intention to toggle
+      setActiveSegmentIndex(activeSegmentIndex === index ? null : index);
+    }
+    // If long press occurred, we suppress the click action naturally by checking isLongPress
+    // And reset it for next time
+    // We might want to delay resetting isLongPress to prevent 'click' firing after 'pointerup'
+    // but React handles Synthetic Events differently.
+    setTimeout(() => {
+      isLongPress.current = false;
+    }, 0);
+  };
+
+  const handlePointerCancel = () => {
+    if (longPressTimer.current) {
+      clearTimeout(longPressTimer.current);
+      longPressTimer.current = null;
+    }
+    isLongPress.current = false;
+  };
 
   return (
     <>
@@ -104,19 +239,25 @@ export const PassageDrawer: React.FC<PassageDrawerProps> = ({
           )}
 
           {!loading && !error && data && (
-            <div className="text-[16px] leading-relaxed whitespace-pre-wrap">
+            <div className="text-[16px] leading-relaxed whitespace-pre-wrap select-none">
               <h1 className="text-xl font-bold mb-4 text-[hsl(var(--foreground))]">{data.title}</h1>
               {data.segments.map((segment, index) => {
                 const isActive = activeSegmentIndex === index;
                 return (
                   <React.Fragment key={index}>
                     <span
-                      className={`inline cursor-pointer px-1 py-0.5 rounded mx-1 outline outline-1 outline-dashed transition-all duration-200 ${
+                      className={`inline cursor-pointer px-1 py-0.5 rounded mx-1 transition-all duration-200 select-text ${
                         isActive
-                          ? 'outline-[hsl(var(--primary))] bg-[hsl(var(--primary))]/20 shadow-sm'
-                          : 'outline-[hsl(var(--primary))]/40 hover:outline-[hsl(var(--primary))] hover:bg-[hsl(var(--primary))]/5'
+                          ? 'bg-[hsl(var(--primary))]/20 shadow-sm'
+                          : 'hover:bg-[hsl(var(--primary))]/5'
                       } [&_p]:inline [&_p]:m-0`}
-                      onClick={() => setActiveSegmentIndex(isActive ? null : index)}
+                      onPointerDown={handlePointerDown}
+                      onPointerMove={handlePointerMove}
+                      onPointerUp={(e) => handlePointerUp(e, index)}
+                      onPointerCancel={handlePointerCancel}
+                      onContextMenu={(e) => {
+                        // Prevent context menu
+                      }}
                       dangerouslySetInnerHTML={{ __html: segment.content }}
                     />
 
@@ -141,6 +282,12 @@ export const PassageDrawer: React.FC<PassageDrawerProps> = ({
           )}
         </div>
       </div>
+
+      <DirectoryDrawer
+        isOpen={directoryOpen}
+        onClose={() => setDirectoryOpen(false)}
+        word={selectedWord}
+      />
     </>
   );
 };

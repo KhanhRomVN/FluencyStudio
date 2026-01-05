@@ -496,7 +496,7 @@ const CoursePageContent = () => {
                             lesson.quiz.map((quiz: any) => (
                               <div
                                 key={quiz.id}
-                                className={`flex items-center gap-2 p-1.5 rounded-md cursor-pointer text-sm ${selection.id === quiz.id ? 'bg-primary/10 text-primary font-medium' : 'text-muted-foreground hover:bg-muted hover:text-foreground'}`}
+                                className={`flex items-center gap-2 p-1.5 rounded-md cursor-pointer text-sm ${selection.id === quiz.id && selection.parentData?.id === lesson.id ? 'bg-primary/10 text-primary font-medium' : 'text-muted-foreground hover:bg-muted hover:text-foreground'}`}
                                 onClick={(e) => {
                                   e.stopPropagation();
                                   handleQuizClick(quiz, lesson);
@@ -505,7 +505,10 @@ const CoursePageContent = () => {
                                 <CheckCircle
                                   size={14}
                                   className={
-                                    selection.id === quiz.id ? 'opacity-100' : 'opacity-70'
+                                    selection.id === quiz.id &&
+                                    selection.parentData?.id === lesson.id
+                                      ? 'opacity-100'
+                                      : 'opacity-70'
                                   }
                                 />
                                 <span className="truncate">{quiz.title}</span>

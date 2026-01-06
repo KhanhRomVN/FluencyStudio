@@ -1,6 +1,6 @@
 {
   "id": "lesson_17",
-  "title": "Lesson 17 - Pronunciation Practice",
+  "title": "Lesson 17 - Practice",
   "lessonNumber": 17,
   "quiz": [
     {
@@ -40,6 +40,161 @@
           "ipa": "/naɪs tuː miːt juː/",
           "translate": "Rất vui được gặp bạn",
           "hiddenWord": "meet"
+        }
+      ]
+    },
+    {
+      "id": "quiz_02",
+      "title": "Sentence Builder",
+      "type": "sentence-builder",
+      "instruction": "Arrange the words to form a correct sentence.",
+      "sentences": [
+        {
+          "id": "sb_01",
+          "words": [
+            "the",
+            "is",
+            "weather",
+            "today",
+            "nice"
+          ],
+          "correctOrder": [
+            0,
+            4,
+            1,
+            2,
+            3
+          ],
+          "translate": "Thời tiết hôm nay đẹp"
+        },
+        {
+          "id": "sb_02",
+          "words": [
+            "you",
+            "do",
+            "where",
+            "live",
+            "?"
+          ],
+          "correctOrder": [
+            2,
+            1,
+            0,
+            3,
+            4
+          ],
+          "translate": "Bạn sống ở đâu?"
+        },
+        {
+          "id": "sb_03",
+          "words": [
+            "learning",
+            "I",
+            "am",
+            "English"
+          ],
+          "correctOrder": [
+            1,
+            2,
+            0,
+            3
+          ],
+          "translate": "Tôi đang học tiếng Anh"
+        },
+        {
+          "id": "sb_04",
+          "words": [
+            "coffee",
+            "she",
+            "in",
+            "drinks",
+            "the",
+            "morning"
+          ],
+          "correctOrder": [
+            1,
+            3,
+            0,
+            2,
+            4,
+            5
+          ],
+          "translate": "Cô ấy uống cà phê vào buổi sáng"
+        },
+        {
+          "id": "sb_05",
+          "words": [
+            "have",
+            "been",
+            "you",
+            "to",
+            "London",
+            "?"
+          ],
+          "correctOrder": [
+            2,
+            0,
+            1,
+            3,
+            4,
+            5
+          ],
+          "translate": "Bạn đã từng đến London chưa?"
+        }
+      ]
+    },
+    {
+      "id": "quiz_03",
+      "title": "Sentence Transformation",
+      "type": "sentence-transformation",
+      "instruction": "Rewrite the sentence using the given word, keeping the same meaning.",
+      "transformations": [
+        {
+          "id": "st_01",
+          "original": "I haven't seen him for three years.",
+          "keyword": "LAST",
+          "answer": [
+            "The last time I saw him was three years ago.",
+            "I last saw him three years ago."
+          ],
+          "explain": "We use 'last' to indicate the most recent time something happened. 'The last time I saw him was...' or 'I last saw him...' both work here."
+        },
+        {
+          "id": "st_02",
+          "original": "She is too young to drive a car.",
+          "keyword": "ENOUGH",
+          "answer": [
+            "She is not old enough to drive a car.",
+            "She isn't old enough to drive a car."
+          ],
+          "explain": "'Too young to' can be transformed to 'not old enough to'. Remember: too + adjective + to = not + opposite adjective + enough + to"
+        },
+        {
+          "id": "st_03",
+          "original": "They have lived here since 2010.",
+          "keyword": "FOR",
+          "answer": "They have lived here for 14 years.",
+          "explain": "'Since' indicates a starting point in time, while 'for' indicates a duration. Calculate the years from 2010 to present."
+        },
+        {
+          "id": "st_04",
+          "original": "It's a pity I don't have a car.",
+          "keyword": "WISH",
+          "answer": [
+            "I wish I had a car.",
+            "I wish I had a car."
+          ],
+          "explain": "We use 'I wish + past simple' to express regret about present situations. The past tense 'had' doesn't refer to past time but to an unreal present."
+        },
+        {
+          "id": "st_05",
+          "original": "Nobody has ever spoken to me like that before.",
+          "keyword": "FIRST",
+          "answer": [
+            "This is the first time anyone has spoken to me like that.",
+            "It's the first time anyone has spoken to me like that."
+          ],
+          "explain": "'This/It is the first time + present perfect' is used to express that something has never happened before."
         }
       ]
     }

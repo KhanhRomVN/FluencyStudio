@@ -8,6 +8,8 @@ import { Writing } from './components/QuizType/Writing';
 import { Speaking } from './components/QuizType/Speaking';
 import { Chatting } from './components/QuizType/Chatting';
 import { PronunciationDrill } from './components/QuizType/PronunciationDrill';
+import { SentenceBuilder } from './components/QuizType/SentenceBuilder';
+import { SentenceTransformation } from './components/QuizType/SentenceTransformation';
 import { MediaPlayer } from './components/MediaPlayer';
 import { QuizDrawer } from './components/QuizDrawer';
 import { TranscriptDrawer } from './components/TranscriptDrawer';
@@ -283,6 +285,26 @@ export const QuizPage: React.FC<QuizPageProps> = ({
           />
         ) : quizType === 'pronunciation-drill' ? (
           <PronunciationDrill
+            quiz={quizData}
+            onUpdate={onQuizUpdate}
+            header={
+              <h2 className="font-bold text-lg text-[hsl(var(--foreground))] leading-tight mb-3">
+                {displayTitle}
+              </h2>
+            }
+          />
+        ) : quizType === 'sentence-builder' ? (
+          <SentenceBuilder
+            quiz={quizData}
+            onUpdate={onQuizUpdate}
+            header={
+              <h2 className="font-bold text-lg text-[hsl(var(--foreground))] leading-tight mb-3">
+                {displayTitle}
+              </h2>
+            }
+          />
+        ) : quizType === 'sentence-transformation' ? (
+          <SentenceTransformation
             quiz={quizData}
             onUpdate={onQuizUpdate}
             header={

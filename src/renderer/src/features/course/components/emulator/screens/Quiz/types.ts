@@ -6,10 +6,25 @@ export interface PronunciationDrillItem {
   hiddenWord?: string; // For phrases: word to hide until success
 }
 
+export interface SentenceBuilderItem {
+  id: string;
+  words: string[]; // Shuffled word blocks
+  correctOrder: number[]; // Correct indices order
+  translate?: string; // Vietnamese translation hint
+}
+
+export interface SentenceTransformationItem {
+  id: string;
+  original: string; // Original sentence
+  keyword: string; // Keyword that must be used
+  answer: string | string[]; // Correct answer(s)
+  explain?: string; // Explanation
+}
+
 export interface Quiz {
   id: string;
   title: string;
-  type: string; // 'gap-fill' | 'multiple-choice' | 'pronunciation-drill'
+  type: string; // 'gap-fill' | 'multiple-choice' | 'pronunciation-drill' | 'sentence-builder' | 'sentence-transformation'
   question: string;
   audio?: string; // Path to audio file
   passage?: string; // Path to passage file
@@ -25,6 +40,8 @@ export interface Quiz {
   example?: string;
   chats?: ChatMessage[];
   drills?: PronunciationDrillItem[]; // For pronunciation drill quizzes
+  sentences?: SentenceBuilderItem[]; // For sentence builder quizzes
+  transformations?: SentenceTransformationItem[]; // For sentence transformation quizzes
 }
 
 export interface ChatMessage {

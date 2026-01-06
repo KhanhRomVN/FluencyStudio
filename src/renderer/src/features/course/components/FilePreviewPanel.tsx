@@ -5,6 +5,7 @@ import { pdfjs, Document, Page } from 'react-pdf';
 import '@cyntler/react-doc-viewer/dist/index.css';
 import 'react-pdf/dist/Page/AnnotationLayer.css';
 import 'react-pdf/dist/Page/TextLayer.css';
+import { folderService } from '../../../shared/services/folderService';
 
 // Configure PDF.js worker
 pdfjs.GlobalWorkerOptions.workerSrc = new URL(
@@ -12,7 +13,7 @@ pdfjs.GlobalWorkerOptions.workerSrc = new URL(
   import.meta.url,
 ).toString();
 
-const PDFPreview = ({ file }: { file: File }) => {
+const PDFPreview = ({ file, targetPage }: { file: File; targetPage?: number }) => {
   const [numPages, setNumPages] = useState<number>(0);
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [pageInput, setPageInput] = useState('1');
@@ -61,6 +62,13 @@ const PDFPreview = ({ file }: { file: File }) => {
       setPageInput(String(pageNum));
     }
   };
+
+  // Auto-scroll to targetPage when it changes
+  useEffect(() => {
+    if (targetPage && targetPage >= 1 && targetPage <= numPages) {
+      scrollToPage(targetPage);
+    }
+  }, [targetPage, numPages]);
 
   const handlePageSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -176,141 +184,183 @@ const PDFPreview = ({ file }: { file: File }) => {
   );
 };
 
-export const FilePreviewPanel = memo(({ width }: { width?: number | string }) => {
-  const [dragActive, setDragActive] = useState(false);
-  const [file, setFile] = useState<File | null>(null);
-  const inputRef = useRef<HTMLInputElement>(null);
+interface FilePreviewPanelProps {
+  width?: number | string;
+  bookUrl?: string;
+  coursePath?: string;
+  targetPage?: number;
+}
 
-  const handleDrag = (e: React.DragEvent) => {
-    e.preventDefault();
-    e.stopPropagation();
-    if (e.type === 'dragenter' || e.type === 'dragover') {
-      setDragActive(true);
-    } else if (e.type === 'dragleave') {
+export const FilePreviewPanel = memo(
+  ({ width, bookUrl, coursePath, targetPage }: FilePreviewPanelProps) => {
+    const [dragActive, setDragActive] = useState(false);
+    const [file, setFile] = useState<File | null>(null);
+    const inputRef = useRef<HTMLInputElement>(null);
+
+    // Auto-load PDF from bookUrl on mount or when bookUrl changes
+    useEffect(() => {
+      if (bookUrl && coursePath && !file) {
+        // Resolve relative bookUrl to absolute path
+        // bookUrl is like "./Cambridge_IELTS_18.pdf"
+        // coursePath is like "/home/.../Cambridge_IELTS_18"
+        const absolutePath = bookUrl.startsWith('./')
+          ? `${coursePath}/${bookUrl.substring(2)}`
+          : `${coursePath}/${bookUrl}`;
+
+        // Use folderService to read file via Electron IPC
+        folderService.loadPdfFile(absolutePath).then((dataUrl) => {
+          if (dataUrl) {
+            try {
+              // Convert base64 data URL to Blob directly (CSP blocks fetch to data: URLs)
+              const base64Data = dataUrl.split(',')[1];
+              const binaryString = atob(base64Data);
+              const bytes = new Uint8Array(binaryString.length);
+              for (let i = 0; i < binaryString.length; i++) {
+                bytes[i] = binaryString.charCodeAt(i);
+              }
+              const blob = new Blob([bytes], { type: 'application/pdf' });
+              const fileName = bookUrl.split('/').pop() || 'book.pdf';
+              const pdfFile = new File([blob], fileName, { type: 'application/pdf' });
+              setFile(pdfFile);
+            } catch (err) {
+              console.error('Failed to convert PDF data URL to File:', err);
+            }
+          }
+        });
+      }
+    }, [bookUrl, coursePath]);
+
+    const handleDrag = (e: React.DragEvent) => {
+      e.preventDefault();
+      e.stopPropagation();
+      if (e.type === 'dragenter' || e.type === 'dragover') {
+        setDragActive(true);
+      } else if (e.type === 'dragleave') {
+        setDragActive(false);
+      }
+    };
+
+    const handleDrop = (e: React.DragEvent) => {
+      e.preventDefault();
+      e.stopPropagation();
       setDragActive(false);
-    }
-  };
+      if (e.dataTransfer.files && e.dataTransfer.files[0]) {
+        setFile(e.dataTransfer.files[0]);
+      }
+    };
 
-  const handleDrop = (e: React.DragEvent) => {
-    e.preventDefault();
-    e.stopPropagation();
-    setDragActive(false);
-    if (e.dataTransfer.files && e.dataTransfer.files[0]) {
-      setFile(e.dataTransfer.files[0]);
-    }
-  };
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+      e.preventDefault();
+      if (e.target.files && e.target.files[0]) {
+        setFile(e.target.files[0]);
+      }
+    };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    e.preventDefault();
-    if (e.target.files && e.target.files[0]) {
-      setFile(e.target.files[0]);
-    }
-  };
+    const onButtonClick = () => {
+      inputRef.current?.click();
+    };
 
-  const onButtonClick = () => {
-    inputRef.current?.click();
-  };
+    const isPDF = file?.type === 'application/pdf' || file?.name.toLowerCase().endsWith('.pdf');
 
-  const isPDF = file?.type === 'application/pdf' || file?.name.toLowerCase().endsWith('.pdf');
+    // Manage Object URL for DocViewer (only needed if NOT PDF)
+    const [activeDoc, setActiveDoc] = useState<{ uri: string; fileName: string }[]>([]);
 
-  // Manage Object URL for DocViewer (only needed if NOT PDF)
-  const [activeDoc, setActiveDoc] = useState<{ uri: string; fileName: string }[]>([]);
+    useEffect(() => {
+      if (file && !isPDF) {
+        const objectUrl = URL.createObjectURL(file);
+        setActiveDoc([{ uri: objectUrl, fileName: file.name }]);
 
-  useEffect(() => {
-    if (file && !isPDF) {
-      const objectUrl = URL.createObjectURL(file);
-      setActiveDoc([{ uri: objectUrl, fileName: file.name }]);
+        return () => {
+          URL.revokeObjectURL(objectUrl);
+        };
+      } else {
+        setActiveDoc([]);
+      }
+    }, [file, isPDF]);
 
-      return () => {
-        URL.revokeObjectURL(objectUrl);
-      };
-    } else {
-      setActiveDoc([]);
-    }
-  }, [file, isPDF]);
-
-  return (
-    <div
-      className="border-r flex flex-col bg-background h-full transition-colors"
-      style={{ width: width || '100%' }}
-    >
-      <div className="h-10 border-b flex items-center px-4 bg-muted/20 justify-between shrink-0">
-        <span className="text-xs font-medium text-muted-foreground flex items-center gap-2">
-          <FileText size={14} />
-          File Preview
-        </span>
-        {file && (
-          <button
-            onClick={() => setFile(null)}
-            className="text-muted-foreground hover:text-destructive"
-          >
-            <X size={14} />
-          </button>
-        )}
-      </div>
-
+    return (
       <div
-        className={`flex-1 flex flex-col items-center justify-center relative overflow-hidden ${dragActive ? 'bg-primary/5' : ''} ${!file ? 'p-6' : ''}`}
-        onDragEnter={handleDrag}
-        onDragLeave={handleDrag}
-        onDragOver={handleDrag}
-        onDrop={handleDrop}
+        className="border-r flex flex-col bg-background h-full transition-colors"
+        style={{ width: width || '100%' }}
       >
-        {file ? (
-          <div className="w-full h-full overflow-hidden flex flex-col relative group">
-            {isPDF ? (
-              <PDFPreview file={file} />
-            ) : (
-              <DocViewer
-                key={String(width)}
-                documents={activeDoc}
-                pluginRenderers={DocViewerRenderers}
-                style={{ height: '100%', width: '100%', background: 'transparent' }}
-                config={{
-                  header: {
-                    disableHeader: false,
-                    disableFileName: true,
-                    retainURLParams: false,
-                  },
-                }}
-              />
-            )}
-          </div>
-        ) : (
-          <>
-            <div
-              className={`p-4 rounded-full bg-muted/50 mb-4 transition-transform ${dragActive ? 'scale-110' : ''}`}
-            >
-              <Upload size={24} className="text-muted-foreground" />
-            </div>
-            <p className="text-sm font-medium">Drop file or click to upload</p>
-            <p className="text-xs text-muted-foreground mt-2 max-w-[200px]">
-              Support for PDF, DOCX (Preview coming soon)
-            </p>
+        <div className="h-10 border-b flex items-center px-4 bg-muted/20 justify-between shrink-0">
+          <span className="text-xs font-medium text-muted-foreground flex items-center gap-2">
+            <FileText size={14} />
+            File Preview
+          </span>
+          {file && (
             <button
-              onClick={onButtonClick}
-              className="mt-4 px-4 py-2 bg-primary text-primary-foreground text-xs font-medium rounded-md hover:bg-primary/90 transition-colors"
+              onClick={() => setFile(null)}
+              className="text-muted-foreground hover:text-destructive"
             >
-              Select File
+              <X size={14} />
             </button>
-          </>
-        )}
+          )}
+        </div>
 
-        {/* Drag Overlay */}
-        {dragActive && (
-          <div className="absolute inset-0 bg-primary/10 border-2 border-primary border-dashed rounded-lg m-2 pointer-events-none flex items-center justify-center">
-            <p className="text-primary font-medium">Drop file to open</p>
-          </div>
-        )}
+        <div
+          className={`flex-1 flex flex-col items-center justify-center relative overflow-hidden ${dragActive ? 'bg-primary/5' : ''} ${!file ? 'p-6' : ''}`}
+          onDragEnter={handleDrag}
+          onDragLeave={handleDrag}
+          onDragOver={handleDrag}
+          onDrop={handleDrop}
+        >
+          {file ? (
+            <div className="w-full h-full overflow-hidden flex flex-col relative group">
+              {isPDF ? (
+                <PDFPreview file={file} targetPage={targetPage} />
+              ) : (
+                <DocViewer
+                  key={String(width)}
+                  documents={activeDoc}
+                  pluginRenderers={DocViewerRenderers}
+                  style={{ height: '100%', width: '100%', background: 'transparent' }}
+                  config={{
+                    header: {
+                      disableHeader: false,
+                      disableFileName: true,
+                      retainURLParams: false,
+                    },
+                  }}
+                />
+              )}
+            </div>
+          ) : (
+            <>
+              <div
+                className={`p-4 rounded-full bg-muted/50 mb-4 transition-transform ${dragActive ? 'scale-110' : ''}`}
+              >
+                <Upload size={24} className="text-muted-foreground" />
+              </div>
+              <p className="text-sm font-medium">Drop file or click to upload</p>
+              <p className="text-xs text-muted-foreground mt-2 max-w-[200px]">
+                Support for PDF, DOCX (Preview coming soon)
+              </p>
+              <button
+                onClick={onButtonClick}
+                className="mt-4 px-4 py-2 bg-primary text-primary-foreground text-xs font-medium rounded-md hover:bg-primary/90 transition-colors"
+              >
+                Select File
+              </button>
+            </>
+          )}
 
-        <input
-          ref={inputRef}
-          type="file"
-          className="hidden"
-          onChange={handleChange}
-          accept=".pdf,.docx,.txt,.md"
-        />
+          {/* Drag Overlay */}
+          {dragActive && (
+            <div className="absolute inset-0 bg-primary/10 border-2 border-primary border-dashed rounded-lg m-2 pointer-events-none flex items-center justify-center">
+              <p className="text-primary font-medium">Drop file to open</p>
+            </div>
+          )}
+
+          <input
+            ref={inputRef}
+            type="file"
+            className="hidden"
+            onChange={handleChange}
+            accept=".pdf,.docx,.txt,.md"
+          />
+        </div>
       </div>
-    </div>
-  );
-});
+    );
+  },
+);

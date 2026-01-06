@@ -16,6 +16,7 @@
   "shortDescription": "The latest official Cambridge IELTS practice tests.",
   "fullDescription": "Authentic examination papers from Cambridge Assessment English provide perfect practice because they are EXACTLY like the real test. Inside IELTS 18 with Answers with Audio you will find FOUR complete examination papers plus details of the different parts of the test and the scoring system, so you can familiarise yourself with the test format and practise your exam technique.",
   "targetAudience": "vi",
+  "bookUrl": "./Cambridge_IELTS_18.pdf",
   "_filePath": "/home/khanhromvn/Documents/Coding/Fluency/FluencyStudio/src/renderer/src/features/course/data/courses/Cambridge_IELTS_18/Cambridge_IELTS_18_Course.json",
   "lessons": [
     {
@@ -29,6 +30,7 @@
           "type": "gap-fill",
           "instruction": "<p>Write </p><p style='bold'>ONE WORD AND/OR A NUMBER </p><p>for each answer.</p>",
           "quizNumber": 1,
+          "page": 4,
           "question": "<p style='bold center 18'>Transport survey</p></n><p style='bold'>Name: </p><p size='14'>Sadie Jones</p></n><p style='bold'>Year of birth:</p> <p>1991</p></n><p style='bold'>Postcode: </p></gap id='answer_01'></n></n><p style='bold'>Travelling by bus</p></n><p>Date of bus journey: </p></gap id='answer_02'></n><p>Reason for trip: </p><p>shopping and visit to the </p></gap id='answer_03'></n><p>Travelled by bus because cost of </p></gap id='answer_04'><p> too high</p></n><p>Got on bus at </p></gap id='answer_05'><p> Street</p></n><p>Complaints about bus service:</p></n><p>- bus today was </p></gap id='answer_06'></n><p>- frequency of buses in the </p></gap id='answer_07'></n><p bold>Travelling by car</p></n><p>Goes to the </p></gap id='answer_08'><p> by car</p></n><p bold>Travelling by bicycle</p></n><p>Dislikes travelling by bike in the city centre because of the </p></gap id='answer_09'></n><p>Doesn’t own a bike because of a lack of </p></gap id='answer_10'>",
           "audio": "./audio/Cambridge_IELTS_18_Test1_Listening_Part1.mp3",
           "transcript": "./audio/Cambridge_IELTS_18_Test1_Listening_Part1_Transcript.json",
@@ -116,6 +118,7 @@
           "type": "multiple-choice",
           "instruction": "<p>Choose the correct letter, A, B or C.</p>",
           "quizNumber": 2,
+          "page": 5,
           "audio": "./audio/Cambridge_IELTS_18_Test1_Listening_Part2.mp3",
           "transcript": "./audio/Cambridge_IELTS_18_Test1_Listening_Part2_Transcript.json",
           "questions": [
@@ -187,6 +190,7 @@
           "type": "multiple-choice",
           "instruction": "<p>Answer the questions below.</p>",
           "quizNumber": 3,
+          "page": 5,
           "audio": "./audio/Cambridge_IELTS_18_Test1_Listening_Part2.mp3",
           "transcript": "./audio/Cambridge_IELTS_18_Test1_Listening_Part2_Transcript.mp3",
           "questions": [
@@ -230,6 +234,7 @@
           "subtype": "single-answer",
           "instruction": "<p>Choose </p><p style='bold'>FIVE </p><p>answers from the box and write the correct letter.</p>",
           "quizNumber": 4,
+          "page": 6,
           "options": [
             "financial situation",
             "original, new ideas",
@@ -280,6 +285,7 @@
           "type": "multiple-choice",
           "instruction": "<p>Choose the correct letter, A, B or C.</p>",
           "quizNumber": 5,
+          "page": 7,
           "audio": "./audio/Cambridge_IELTS_18_Test1_Listening_Part3.mp3",
           "transcript": "./audio/Cambridge_IELTS_18_Test1_Listening_Part3_Transcript.json",
           "questions": [
@@ -411,6 +417,7 @@
           "type": "multiple-choice",
           "instruction": "<p>Choose</p><p style='bold'> TWO </p><p>letters, </p><p style='bold'>A–E</p>",
           "quizNumber": 6,
+          "page": 7,
           "audio": "./audio/Cambridge_IELTS_18_Test1_Listening_Part3.mp3",
           "transcript": "./audio/Cambridge_IELTS_18_Test1_Listening_Part3_Transcript.json",
           "questions": [
@@ -484,6 +491,7 @@
           "type": "gap-fill",
           "instruction": "<p>Write</p><p style='bold'> ONE WORD ONLY </p><p>for each answer.</p>",
           "quizNumber": 7,
+          "page": 8,
           "question": "<p style='bold center 18'>Elephant translocation</p></n></n><p style='bold'>Reasons for overpopulation at Majete National Park</p></n><p>- strict enforcement of anti-poaching laws</p></n><p>- successful breeding</p></n></n><p style='bold'>Problems caused by elephant overpopulation</p></n><p>- greater competition, causing hunger for elephants</p></n><p>- damage to </p></gap id='answer_01'><p> in the park</p></n></n><p style='bold'>The translocation process</p></n><p>- a suitable group of elephants from the same </p></gap id='answer_02'><p> was selected</p></n><p>- vets and park staff made use of </p></gap id='answer_03'><p> to help guide the elephants into an open plain</p></n><p>- elephants were immobilised with tranquilisers</p></n><p>  - this process had to be completed quickly to reduce </p></gap id='answer_04'></n><p>  - elephants had to be turned on their </p></gap id='answer_05'><p> to avoid damage to their lungs</p></n><p>  - elephants' </p></gap id='answer_06'><p> had to be monitored constantly</p></n><p>  - tracking devices were fitted to the matriarchs</p></n<p>  - data including the size of their tusks and </p></gap id='answer_07'><p> was taken</p></n><p>- elephants were taken by truck to their new reserve</p></n></n><p style='bold'>Advantages of translocation at Nkotakota Wildlife Park</p></n><p>- </p></gap id='answer_08'><p> opportunities</p></n><p>- a reduction in the number of poachers and </p></gap id='answer_09'></n><p>- an example of conservation that other parks can follow</p></n><p>- an increase in </p></gap id='answer_10'><p> as a contributor to GDP</p>",
           "audio": "./audio/Cambridge_IELTS_18_Test1_Listening_Part4.mp3",
           "transcript": "./audio/Cambridge_IELTS_18_Test1_Listening_Part4_Transcript.json",
@@ -594,36 +602,41 @@
           "instruction": "<p>Reading Passage 2 has seven paragraphs, A–G.</p><p>Which paragraph contains the following information?</p><p>Write the correct letter, A–G, in boxes 14–18 on your answer sheet.</p>",
           "quizNumber": 3,
           "passage": "./passage/Test1_Passage2.json",
+          "options": [
+            "A",
+            "B",
+            "C"
+          ],
           "matchings": [
             {
               "id": "matching_14",
               "question": "bad outcomes for a forest when people focus only on its financial reward",
               "answer": "B",
-              "explain": "<p>Paragraph B discusses how focusing only on high-quality timber (financial reward) through 'high-grading' has left a legacy of low-use wood, which decreases forest health.</p>"
+              "explain": ""
             },
             {
               "id": "matching_15",
               "question": "reference to the aspects of any tree that contribute to its worth",
               "answer": "A",
-              "explain": "<p>Paragraph A begins by explaining that a tree's value depends on several factors including species, size, form, condition, etc.</p>"
+              "explain": ""
             },
             {
               "id": "matching_16",
               "question": "mention of the potential use of wood to help run vehicles",
               "answer": "C",
-              "explain": "<p>Paragraph C states: \"Wood can also be gasified for electrical generation and can even be made into liquid fuels like ethanol and gasoline for lorries and cars.\"</p>"
+              "explain": ""
             },
             {
               "id": "matching_17",
               "question": "examples of insects that attack trees",
               "answer": "E",
-              "explain": "<p>Paragraph E lists pests and pathogens including \"hemlock wooly adelgid, Asian longhorned beetle, emerald ash borer, and gypsy moth\".</p>"
+              "explain": ""
             },
             {
               "id": "matching_18",
               "question": "an alternative name for trees that produce low-use wood",
               "answer": "B",
-              "explain": "<p>Paragraph B says: \"Some people even call these 'junk trees'...\" referring to trees that produce low-use wood.</p>"
+              "explain": "</p>"
             }
           ]
         },
@@ -636,37 +649,28 @@
           "quizNumber": 4,
           "passage": "./passage/Test1_Passage2.json",
           "options": [
-            {
-              "key": "A",
-              "text": "a TSI Cut"
-            },
-            {
-              "key": "B",
-              "text": "a Salvage Cut"
-            },
-            {
-              "key": "C",
-              "text": "a Shelterwood Cut"
-            }
+            "a TSI Cut",
+            "a Salvage Cut",
+            "a Shelterwood Cut"
           ],
           "matchings": [
             {
               "id": "matching_19",
               "question": "to remove trees that are diseased",
-              "answer": "B",
-              "explain": "<p>Paragraph E describes Salvage Cuts: \"These types of cut reduce the number of sick trees and seek to manage the future spread of a pest problem.\"</p>"
+              "answer": "",
+              "explain": ""
             },
             {
               "id": "matching_20",
               "question": "to generate income across a number of years",
-              "answer": "C",
-              "explain": "<p>Paragraph F states about Shelterwood Cut: \"There are two harvests and the money that comes in is spread out over a decade or more.\"</p>"
+              "answer": "",
+              "explain": "<"
             },
             {
               "id": "matching_21",
               "question": "to create a forest whose trees are close in age",
               "answer": "C",
-              "explain": "<p>Paragraph F says: \"It leaves a young forest where all trees are at a similar point in their growth.\"</p>"
+              "explain": ""
             }
           ]
         },
@@ -676,49 +680,7 @@
           "type": "gap-fill",
           "instruction": "<p>Choose </p><p style='bold'>ONE WORD ONLY</p><p> from the passage for each answer.</p>",
           "quizNumber": 5,
-          "passage": "./passage/Test1_Passage2.json",
-          "questions": [
-            {
-              "id": "question_22",
-              "question": "Some dead wood is removed to avoid the possibility of ……….",
-              "answer": [
-                "fire"
-              ],
-              "explain": "<p>Paragraph G states: \"Thinnings and dense and dead wood removal for fire prevention...\" So the answer is 'fire'.</p>"
-            },
-            {
-              "id": "question_23",
-              "question": "The ………. from the tops of cut trees can help improve soil quality.",
-              "answer": [
-                "nutrients"
-              ],
-              "explain": "<p>Paragraph G says: \"The tops of trees that have been cut down should be left on the site so that their nutrients cycle back into the soil.\"</p>"
-            },
-            {
-              "id": "question_24",
-              "question": "Some damaged trees should be left, as their ………. provide habitats for a range of creatures.",
-              "answer": [
-                "cavities"
-              ],
-              "explain": "<p>Paragraph G mentions: \"trees with many cavities are extremely important habitats for insect predators...\"</p>"
-            },
-            {
-              "id": "question_25",
-              "question": "Some trees that are small, such as ………., are a source of food for animals and insects.",
-              "answer": [
-                "hawthorn"
-              ],
-              "explain": "<p>Paragraph G gives the example: \"many species like hawthorn provide food for wildlife.\"</p>"
-            },
-            {
-              "id": "question_26",
-              "question": "Any trees that are ………. should be left to grow, as they add to the variety of species in the forest.",
-              "answer": [
-                "rare"
-              ],
-              "explain": "<p>Paragraph G states: \"Finally, rare species of trees in a forest should also stay behind as they add to its structural diversity.\"</p>"
-            }
-          ]
+          "passage": "./passage/Test1_Passage2.json"
         },
         {
           "id": "quiz_06",

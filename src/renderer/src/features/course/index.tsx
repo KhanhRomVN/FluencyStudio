@@ -439,10 +439,21 @@ const CoursePageContent = () => {
         <div className="flex items-center gap-1">
           <button
             onClick={() => setIsFilePreviewOpen(!isFilePreviewOpen)}
-            className={`p-2 rounded-md transition-colors ${isFilePreviewOpen ? 'bg-muted text-primary' : 'text-muted-foreground hover:bg-muted hover:text-primary'}`}
-            title="Toggle File Preview"
+            className={`p-2 rounded-md transition-colors relative ${
+              isFilePreviewOpen
+                ? 'bg-muted text-primary'
+                : course.bookUrl
+                  ? 'text-green-500 hover:bg-muted hover:text-green-600'
+                  : 'text-muted-foreground hover:bg-muted hover:text-primary'
+            }`}
+            title={
+              course.bookUrl ? `Toggle File Preview (${course.bookUrl})` : 'Toggle File Preview'
+            }
           >
             <FileSearch size={20} />
+            {course.bookUrl && !isFilePreviewOpen && (
+              <span className="absolute top-1 right-1 w-2 h-2 bg-green-500 rounded-full" />
+            )}
           </button>
           <button
             onClick={() => setIsTranscriptDrawerOpen(true)}
@@ -526,7 +537,12 @@ const CoursePageContent = () => {
         {/* FILE PREVIEW PANEL */}
         {isFilePreviewOpen && (
           <div className="flex bg-background relative shrink-0" style={{ width: filePreviewWidth }}>
-            <FilePreviewPanel width={committedWidth} />
+            <FilePreviewPanel
+              width={committedWidth}
+              bookUrl={course.bookUrl}
+              coursePath={coursePath || undefined}
+              targetPage={selection.type === 'quiz' ? selection.data?.page : undefined}
+            />
             {/* Resizer Handle */}
             <div
               className="w-1 cursor-col-resize hover:bg-primary active:bg-primary transition-colors flex items-center justify-center bg-transparent relative z-10 -ml-0.5"

@@ -237,6 +237,26 @@ class FolderService {
     }
   }
 
+  /**
+   * Load PDF file as base64 data URL
+   */
+  async loadPdfFile(filePath: string): Promise<string | null> {
+    try {
+      if (window.electron?.ipcRenderer) {
+        const content = await window.electron.ipcRenderer.invoke('file:read', filePath, {
+          encoding: 'base64',
+        });
+        if (content) {
+          return `data:application/pdf;base64,${content}`;
+        }
+      }
+      return null;
+    } catch (error) {
+      console.error('Error loading PDF file:', error);
+      return null;
+    }
+  }
+
   private getDefaultFolderStructure(): CourseFolderStructure {
     return {
       courseJson: undefined,

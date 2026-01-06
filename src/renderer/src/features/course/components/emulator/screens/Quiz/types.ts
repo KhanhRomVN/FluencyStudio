@@ -1,7 +1,15 @@
+export interface PronunciationDrillItem {
+  id: string;
+  text: string; // Word or phrase to pronounce
+  ipa: string; // IPA phonetic transcription
+  translate: string; // Vietnamese translation
+  hiddenWord?: string; // For phrases: word to hide until success
+}
+
 export interface Quiz {
   id: string;
   title: string;
-  type: string; // 'gap-fill' | 'multiple-choice'
+  type: string; // 'gap-fill' | 'multiple-choice' | 'pronunciation-drill'
   question: string;
   audio?: string; // Path to audio file
   passage?: string; // Path to passage file
@@ -16,6 +24,7 @@ export interface Quiz {
   min?: number;
   example?: string;
   chats?: ChatMessage[];
+  drills?: PronunciationDrillItem[]; // For pronunciation drill quizzes
 }
 
 export interface ChatMessage {

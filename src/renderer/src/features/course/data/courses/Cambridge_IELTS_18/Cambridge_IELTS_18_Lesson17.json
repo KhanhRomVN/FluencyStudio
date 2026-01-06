@@ -1,23 +1,45 @@
 {
   "id": "lesson_17",
-  "title": "",
+  "title": "Lesson 17 - Pronunciation Practice",
   "lessonNumber": 17,
   "quiz": [
     {
       "id": "quiz_01",
-      "title": "",
-      "type": "chatting",
-      "instruction": "",
-      "chats": [
+      "title": "Pronunciation Practice",
+      "type": "pronunciation-drill",
+      "instruction": "Listen and repeat each word or phrase. Speak clearly and try to match the pronunciation.",
+      "drills": [
         {
-          "id": "chat_01",
-          "role": "bot",
-          "content": "Hello"
+          "id": "drill_01",
+          "text": "Hello",
+          "ipa": "/həˈloʊ/",
+          "translate": "Xin chào"
         },
         {
-          "id": "chat_02",
-          "role": "user",
-          "content": "How are you s?"
+          "id": "drill_02",
+          "text": "Goodbye",
+          "ipa": "/ˌɡʊdˈbaɪ/",
+          "translate": "Tạm biệt"
+        },
+        {
+          "id": "drill_03",
+          "text": "Thank you",
+          "ipa": "/θæŋk juː/",
+          "translate": "Cảm ơn"
+        },
+        {
+          "id": "drill_04",
+          "text": "Hello, how are you?",
+          "ipa": "/həˈloʊ haʊ ɑːr juː/",
+          "translate": "Xin chào, bạn khỏe không?",
+          "hiddenWord": "how"
+        },
+        {
+          "id": "drill_05",
+          "text": "Nice to meet you",
+          "ipa": "/naɪs tuː miːt juː/",
+          "translate": "Rất vui được gặp bạn",
+          "hiddenWord": "meet"
         }
       ]
     }

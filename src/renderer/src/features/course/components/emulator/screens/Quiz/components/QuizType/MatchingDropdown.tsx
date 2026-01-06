@@ -122,41 +122,23 @@ export const MatchingDropdown: React.FC<MatchingDropdownProps> = ({
     const selectedOption = options.find((o) => o.key === selectedKey);
     const selectedText = selectedOption ? selectedOption.text : 'Choose an answer';
 
-    // Threshold for "long" content that triggers full-width layout
-    const isLongAnswer = selectedText.length > 35;
-
     return (
       <div
         key={matching.id}
         className="py-3 border-b border-[hsl(var(--border))] last:border-0 flex flex-col gap-2"
       >
-        {/* Top Row: Question + Dropdown */}
-        <div
-          className={`flex ${isLongAnswer ? 'flex-col items-start gap-2' : 'flex-row items-center justify-between'}`}
-        >
-          <div
-            className={`text-[15px] font-medium text-[hsl(var(--foreground))] ${isLongAnswer ? 'w-full' : 'flex-1 mr-4'}`}
-          >
-            <RichTextParser content={matching.question} />
-          </div>
+        {/* Question Row */}
+        <div className="text-[15px] font-medium text-[hsl(var(--foreground))]">
+          <RichTextParser content={matching.question} />
+        </div>
 
-          {/* Dropdown + Feedback Wrapper */}
-          <div
-            className={`
-            flex items-center gap-3
-            ${isLongAnswer ? 'w-full' : 'shrink-0'}
-          `}
-          >
-            {/* Dropdown Container */}
+        {/* Dropdown Row */}
+        <div className="flex items-center gap-3 w-full">
+          {/* Dropdown Container */}
+          <div className="relative group flex-1">
+            {/* Visual Display Layer (The "Fake" Select) */}
             <div
               className={`
-              relative group
-              ${isLongAnswer ? 'flex-1' : 'w-[220px]'}
-            `}
-            >
-              {/* Visual Display Layer (The "Fake" Select) */}
-              <div
-                className={`
                    w-full min-h-[36px] h-auto
                    flex items-center justify-between
                    pl-3 pr-2 py-1.5
@@ -175,59 +157,58 @@ export const MatchingDropdown: React.FC<MatchingDropdownProps> = ({
                          : 'border-[hsl(var(--input))]'
                    }
                 `}
-              >
-                <span className="whitespace-normal break-words leading-tight mr-2 select-none">
-                  {selectedText}
-                </span>
+            >
+              <span className="whitespace-normal break-words leading-tight mr-2 select-none">
+                {selectedText}
+              </span>
 
-                <ChevronDown
-                  size={16}
-                  className={`
+              <ChevronDown
+                size={16}
+                className={`
                      shrink-0
                      ${isChecked ? (isCorrect ? 'text-green-500' : 'text-red-500') : 'text-[hsl(var(--muted-foreground))]'}
                    `}
-                />
-              </div>
-
-              {/* Interactive Layer (The Real Hidden Select) */}
-              <select
-                value={selectedKey}
-                onChange={(e) => handleSelect(matching.id, e.target.value)}
-                disabled={isChecked}
-                className="absolute inset-0 w-full h-full opacity-0 cursor-pointer disabled:cursor-not-allowed"
-              >
-                <option value="" disabled>
-                  Choose an answer
-                </option>
-                {getAvailableOptions(matching.id).map((opt) => (
-                  <option key={opt.key} value={opt.key}>
-                    {opt.text}
-                  </option>
-                ))}
-              </select>
+              />
             </div>
 
-            {/* Feedback Icons (Check/X) - Flex Sibling */}
-            {isChecked && (
-              <div className="flex items-center gap-2 shrink-0">
-                {/* Info button only for Correct or Undetermined, for Wrong we show it below */}
-                {!isWrong && matching.explain && (
-                  <button
-                    onClick={(e) => {
-                      e.preventDefault();
-                      e.stopPropagation();
-                      setCurrentExplanation(matching.explain);
-                      setIsExplainOpen(true);
-                    }}
-                    className="text-[hsl(var(--primary))] hover:text-[hsl(var(--primary))]/80 transition-colors"
-                    title="Show Explanation"
-                  >
-                    <Info size={20} strokeWidth={2.5} />
-                  </button>
-                )}
-              </div>
-            )}
+            {/* Interactive Layer (The Real Hidden Select) */}
+            <select
+              value={selectedKey}
+              onChange={(e) => handleSelect(matching.id, e.target.value)}
+              disabled={isChecked}
+              className="absolute inset-0 w-full h-full opacity-0 cursor-pointer disabled:cursor-not-allowed"
+            >
+              <option value="" disabled>
+                Choose an answer
+              </option>
+              {getAvailableOptions(matching.id).map((opt) => (
+                <option key={opt.key} value={opt.key}>
+                  {opt.text}
+                </option>
+              ))}
+            </select>
           </div>
+
+          {/* Feedback Icons (Check/X) - Flex Sibling */}
+          {isChecked && (
+            <div className="flex items-center gap-2 shrink-0">
+              {/* Info button only for Correct or Undetermined, for Wrong we show it below */}
+              {!isWrong && matching.explain && (
+                <button
+                  onClick={(e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    setCurrentExplanation(matching.explain);
+                    setIsExplainOpen(true);
+                  }}
+                  className="text-[hsl(var(--primary))] hover:text-[hsl(var(--primary))]/80 transition-colors"
+                  title="Show Explanation"
+                >
+                  <Info size={20} strokeWidth={2.5} />
+                </button>
+              )}
+            </div>
+          )}
         </div>
 
         {/* Bottom Row: Correction Display (Only when wrong) */}

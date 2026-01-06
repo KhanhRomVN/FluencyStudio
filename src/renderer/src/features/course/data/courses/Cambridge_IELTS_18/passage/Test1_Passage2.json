@@ -103,11 +103,11 @@
       "translate": "<p>Những loại khai thác này làm giảm số lượng cây bị bệnh và tìm cách quản lý sự lây lan của vấn đề sâu bệnh trong tương lai.</p></n>"
     },
     {
-      "content": "<p>They leave vigorous trees that have survived healthy enough to survive the outbreak.</p>",
+      "content": "<p>They leave vigorous trees that have survived healthy enough to survive the outbreak.</p></n>",
       "translate": "<p>Chúng để lại những cây khỏe mạnh đã sống sót, đủ sức khỏe để tồn tại sau đợt bùng phát.</p></n>"
     },
     {
-      "content": "<p style='bold 24'>F</p> A Shelterwood Cut, which only takes place in a mature forest that has already been thinned several times, involves removing all the mature trees when other seedlings have become established.</p>",
+      "content": "<p style='bold 24'>F</p><p> A Shelterwood Cut, which only takes place in a mature forest that has already been thinned several times, involves removing all the mature trees when other seedlings have become established.</p>",
       "translate": "<p>Khai thác Tạo tán che (Shelterwood Cut), chỉ diễn ra trong một khu rừng trưởng thành đã được tỉa thưa nhiều lần, liên quan đến việc loại bỏ tất cả các cây trưởng thành khi các cây con khác đã được thiết lập.</p>"
     },
     {
@@ -123,12 +123,12 @@
       "translate": "<p>Nó cũng có thể được sử dụng để phát triển một cấu trúc rừng hai tầng.</p>"
     },
     {
-      "content": "<p>There are two harvests and the money that comes in is spread out over a decade or more.</p>",
-      "translate": "<p>Có hai vụ thu hoạch và số tiền thu được trải dài trong một thập kỷ hoặc hơn.</p>"
+      "content": "<p>There are two harvests and the money that comes in is spread out over a decade or more.</p></n>",
+      "translate": "<p>Có hai vụ thu hoạch và số tiền thu được trải dài trong một thập kỷ hoặc hơn.</p></n>"
     },
     {
-      "content": "<p><p style='bold'>G</p> Thinnings and dense and dead wood removal for fire prevention also center on the production of low-use wood.</p>",
-      "translate": "<p><p style='bold'>G</p> Việc tỉa thưa và loại bỏ gỗ rậm rạp, chết để phòng cháy cũng tập trung vào sản xuất gỗ ít giá trị sử dụng.</p>"
+      "content": "<p style='bold 24'>G</p><p> Thinnings and dense and dead wood removal for fire prevention also center on the production of low-use wood.</p>",
+      "translate": "<p>Việc tỉa thưa và loại bỏ gỗ rậm rạp, chết để phòng cháy cũng tập trung vào sản xuất gỗ ít giá trị sử dụng.</p>"
     },
     {
       "content": "<p>However, it is important to remember that some retention of what many people classify as low-use wood is very important.</p>",

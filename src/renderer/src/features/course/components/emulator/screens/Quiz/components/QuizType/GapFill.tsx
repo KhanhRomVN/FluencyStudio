@@ -30,6 +30,14 @@ export const GapFill: React.FC<GapFillProps> = ({
   const [instruction, setInstruction] = useState(quiz.instruction || '');
   const [question, setQuestion] = useState(quiz.question || '');
 
+  // Sync with quiz prop changes
+  useEffect(() => {
+    setInstruction(quiz.instruction || '');
+    setQuestion(quiz.question || '');
+    setInputs({});
+    setAreAllGapsFilled(false);
+  }, [quiz.id, quiz.instruction, quiz.question]);
+
   // Notify parent about explain drawer state
   useEffect(() => {
     onExplainRequest?.(isExplainOpen);

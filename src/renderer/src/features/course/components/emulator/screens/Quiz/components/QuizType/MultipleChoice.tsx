@@ -30,13 +30,17 @@ export const MultipleChoice: React.FC<MultipleChoiceProps> = ({
   // Local state for editing in emulator
   const [instruction, setInstruction] = useState(quiz.instruction || '');
 
+  // Sync with quiz prop changes
+  useEffect(() => {
+    setInstruction(quiz.instruction || '');
+    setSelectedAnswers({});
+    setAreAllAnswered(false);
+  }, [quiz.id, quiz.instruction]);
+
   // Notify parent about explain drawer state
   useEffect(() => {
     onExplainRequest?.(isExplainOpen);
   }, [isExplainOpen, onExplainRequest]);
-
-  // Note: If quiz prop updates from outside, we might want to sync local state,
-  // but for now we assume emulator is the driver of change or reset happens on remount.
 
   // Handle nested questions or single question
   const questions = quiz.questions && quiz.questions.length > 0 ? quiz.questions : [];

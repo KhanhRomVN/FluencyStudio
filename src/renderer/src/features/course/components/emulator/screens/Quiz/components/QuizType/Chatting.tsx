@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Quiz } from '../../types';
 import { RichTextParser } from '../RichTextParser';
 
@@ -13,6 +13,11 @@ interface ChattingProps {
 
 export const Chatting: React.FC<ChattingProps> = ({ quiz, header, onUpdate }) => {
   const [instruction, setInstruction] = useState(quiz.instruction || '');
+
+  // Sync with quiz prop changes
+  useEffect(() => {
+    setInstruction(quiz.instruction || '');
+  }, [quiz.id, quiz.instruction]);
 
   const chats = quiz.chats || [];
 

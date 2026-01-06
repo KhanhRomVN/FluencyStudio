@@ -38,7 +38,8 @@ export const MatchingDropdown: React.FC<MatchingDropdownProps> = ({
 
   useEffect(() => {
     setInstruction(quiz.instruction || '');
-  }, [quiz.instruction]);
+    setSelectedAnswers({});
+  }, [quiz.id, quiz.instruction]);
 
   // Generate options from the quiz.options array
   const options = useMemo(() => {

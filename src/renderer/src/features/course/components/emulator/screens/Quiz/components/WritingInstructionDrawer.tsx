@@ -25,7 +25,7 @@ export const WritingInstructionDrawer: React.FC<WritingInstructionDrawerProps> =
         <div className="px-6 py-2 border-b border-[hsl(var(--border))]/50 flex justify-between items-center bg-[hsl(var(--background))]">
           <div className="flex items-center gap-2">
             <BadgeInfo size={20} className="text-[hsl(var(--primary))]" />
-            <h3 className="font-bold text-lg">Instruction</h3>
+            <h3 className="font-bold text-lg">Instruction CC</h3>
           </div>
           <button onClick={onClose} className="p-1 rounded-full hover:bg-[hsl(var(--muted))]">
             <X size={20} className="text-[hsl(var(--muted-foreground))]" />

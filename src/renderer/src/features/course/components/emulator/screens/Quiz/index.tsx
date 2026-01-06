@@ -10,7 +10,6 @@ import { Chatting } from './components/QuizType/Chatting';
 import { MediaPlayer } from './components/MediaPlayer';
 import { QuizDrawer } from './components/QuizDrawer';
 import { TranscriptDrawer } from './components/TranscriptDrawer';
-import { TutorialDrawer } from './components/TutorialDrawer';
 import { WritingInstructionDrawer } from './components/WritingInstructionDrawer';
 import { PassageDrawer } from './components/PassageDrawer';
 import { useAudio } from '../../../../hooks/useAudio';
@@ -31,11 +30,16 @@ export const QuizPage: React.FC<QuizPageProps> = ({
   const [isChecked, setIsChecked] = useState(false);
   const [showTranscript, setShowTranscript] = useState(false);
   const [showMenu, setShowMenu] = useState(false);
-  const [showTutorial, setShowTutorial] = useState(false);
 
   const [showExplainDrawer, setShowExplainDrawer] = useState(false);
   const [showInstructionDrawer, setShowInstructionDrawer] = useState(false);
   const [showPassageDrawer, setShowPassageDrawer] = useState(false);
+
+  // Delayed mount states for drawer animations
+  const [transcriptMounted, setTranscriptMounted] = useState(false);
+  const [menuMounted, setMenuMounted] = useState(false);
+  const [instructionMounted, setInstructionMounted] = useState(false);
+  const [passageMounted, setPassageMounted] = useState(false);
 
   // Track visited quizzes to show colored help icon only on first visit
   const [visitedQuizzes, setVisitedQuizzes] = useState<Set<string>>(new Set());
@@ -69,10 +73,69 @@ export const QuizPage: React.FC<QuizPageProps> = ({
   useEffect(() => {
     setIsChecked(false);
     setShowTranscript(false);
-    setShowTutorial(false);
     setShowExplainDrawer(false);
     setShowPassageDrawer(false);
   }, [quizData.id]);
+
+  // States for drawer open animation (visible after mount)
+  const [transcriptVisible, setTranscriptVisible] = useState(false);
+  const [menuVisible, setMenuVisible] = useState(false);
+  const [instructionVisible, setInstructionVisible] = useState(false);
+  const [passageVisible, setPassageVisible] = useState(false);
+
+  // Delayed mount/unmount effects for drawer animations
+  useEffect(() => {
+    if (showTranscript) {
+      setTranscriptMounted(true);
+      // Delay to next frame for open animation
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => setTranscriptVisible(true));
+      });
+    } else {
+      setTranscriptVisible(false);
+      const timer = setTimeout(() => setTranscriptMounted(false), 300);
+      return () => clearTimeout(timer);
+    }
+  }, [showTranscript]);
+
+  useEffect(() => {
+    if (showMenu) {
+      setMenuMounted(true);
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => setMenuVisible(true));
+      });
+    } else {
+      setMenuVisible(false);
+      const timer = setTimeout(() => setMenuMounted(false), 300);
+      return () => clearTimeout(timer);
+    }
+  }, [showMenu]);
+
+  useEffect(() => {
+    if (showInstructionDrawer) {
+      setInstructionMounted(true);
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => setInstructionVisible(true));
+      });
+    } else {
+      setInstructionVisible(false);
+      const timer = setTimeout(() => setInstructionMounted(false), 300);
+      return () => clearTimeout(timer);
+    }
+  }, [showInstructionDrawer]);
+
+  useEffect(() => {
+    if (showPassageDrawer) {
+      setPassageMounted(true);
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => setPassageVisible(true));
+      });
+    } else {
+      setPassageVisible(false);
+      const timer = setTimeout(() => setPassageMounted(false), 300);
+      return () => clearTimeout(timer);
+    }
+  }, [showPassageDrawer]);
 
   const handleCheck = () => {
     setIsChecked(true);
@@ -92,7 +155,6 @@ export const QuizPage: React.FC<QuizPageProps> = ({
         return next;
       });
     }
-    setShowTutorial(true);
   };
 
   return (
@@ -247,50 +309,51 @@ export const QuizPage: React.FC<QuizPageProps> = ({
       )}
 
       {/* Transcript Drawer */}
-      <TranscriptDrawer
-        isOpen={showTranscript}
-        onClose={() => setShowTranscript(false)}
-        transcriptPath={
-          quizData.transcript && parentLesson?._filePath
-            ? quizData.transcript.startsWith('./')
-              ? `${parentLesson._filePath.substring(0, parentLesson._filePath.lastIndexOf('/'))}/${quizData.transcript.substring(2)}`
-              : quizData.transcript
-            : undefined
-        }
-        audioState={{ isPlaying, currentTime, duration }}
-        audioHandlers={{ togglePlay, seek }}
-        audioTitle={quizData.audio?.split('/').pop() || 'Audio'}
-      />
-
-      {/* Tutorial Drawer */}
-      <TutorialDrawer
-        isOpen={showTutorial}
-        onClose={() => setShowTutorial(false)}
-        quiz={quizData}
-      />
+      {transcriptMounted && (
+        <TranscriptDrawer
+          isOpen={transcriptVisible}
+          onClose={() => setShowTranscript(false)}
+          transcriptPath={
+            quizData.transcript && parentLesson?._filePath
+              ? quizData.transcript.startsWith('./')
+                ? `${parentLesson._filePath.substring(0, parentLesson._filePath.lastIndexOf('/'))}/${quizData.transcript.substring(2)}`
+                : quizData.transcript
+              : undefined
+          }
+          audioState={{ isPlaying, currentTime, duration }}
+          audioHandlers={{ togglePlay, seek }}
+          audioTitle={quizData.audio?.split('/').pop() || 'Audio'}
+        />
+      )}
 
       {/* Menu Drawer */}
-      <QuizDrawer
-        isOpen={showMenu}
-        onClose={() => setShowMenu(false)}
-        quizzes={quizzes}
-        activeQuizIndex={activeQuizIndex}
-        onQuizSelected={(index) => handleQuizSelect(quizzes[index])}
-        lessonTitle={parentLesson?.title}
-      />
+      {menuMounted && (
+        <QuizDrawer
+          isOpen={menuVisible}
+          onClose={() => setShowMenu(false)}
+          quizzes={quizzes}
+          activeQuizIndex={activeQuizIndex}
+          onQuizSelected={(index) => handleQuizSelect(quizzes[index])}
+          lessonTitle={parentLesson?.title}
+        />
+      )}
 
-      <WritingInstructionDrawer
-        isOpen={showInstructionDrawer}
-        onClose={() => setShowInstructionDrawer(false)}
-        instruction={quizData.instruction || ''}
-      />
+      {quizData.type === 'writing' && instructionMounted && (
+        <WritingInstructionDrawer
+          isOpen={instructionVisible}
+          onClose={() => setShowInstructionDrawer(false)}
+          instruction={quizData.instruction || ''}
+        />
+      )}
 
-      <PassageDrawer
-        isOpen={showPassageDrawer}
-        onClose={() => setShowPassageDrawer(false)}
-        passagePath={quizData.passage}
-        parentFilePath={parentLesson?._filePath}
-      />
+      {quizData.passage && passageMounted && (
+        <PassageDrawer
+          isOpen={passageVisible}
+          onClose={() => setShowPassageDrawer(false)}
+          passagePath={quizData.passage}
+          parentFilePath={parentLesson?._filePath}
+        />
+      )}
     </div>
   );
 };

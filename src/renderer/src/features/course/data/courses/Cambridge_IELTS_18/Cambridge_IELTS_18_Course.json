@@ -16,7 +16,7 @@
   "shortDescription": "The latest official Cambridge IELTS practice tests.",
   "fullDescription": "Authentic examination papers from Cambridge Assessment English provide perfect practice because they are EXACTLY like the real test. Inside IELTS 18 with Answers with Audio you will find FOUR complete examination papers plus details of the different parts of the test and the scoring system, so you can familiarise yourself with the test format and practise your exam technique.",
   "targetAudience": "vi",
-  "_filePath": "/home/khanhromvn/Documents/Coding/Fluency/FluencyStudio/src/renderer/src/features/course/data/courses/Cambridge_IELTS_18/Cambridge_IELTS_18_Course.json",
+  "_filePath": "D:\\KhanhRom\\FluencyStudio\\src\\renderer\\src\\features\\course\\data\\courses\\Cambridge_IELTS_18\\Cambridge_IELTS_18_Course.json",
   "lessons": [
     {
       "id": "lesson_01",
@@ -561,7 +561,7 @@
           ]
         }
       ],
-      "_filePath": "/home/khanhromvn/Documents/Coding/Fluency/FluencyStudio/src/renderer/src/features/course/data/courses/Cambridge_IELTS_18/Cambridge_IELTS_18_Lesson1.json"
+      "_filePath": "D:\\KhanhRom\\FluencyStudio\\src\\renderer\\src\\features\\course\\data\\courses\\Cambridge_IELTS_18/Cambridge_IELTS_18_Lesson1.json"
     },
     {
       "id": "lesson_02",
@@ -928,7 +928,7 @@
           ]
         }
       ],
-      "_filePath": "/home/khanhromvn/Documents/Coding/Fluency/FluencyStudio/src/renderer/src/features/course/data/courses/Cambridge_IELTS_18/Cambridge_IELTS_18_Lesson2.json"
+      "_filePath": "D:\\KhanhRom\\FluencyStudio\\src\\renderer\\src\\features\\course\\data\\courses\\Cambridge_IELTS_18/Cambridge_IELTS_18_Lesson2.json"
     },
     {
       "id": "lesson_03",
@@ -952,7 +952,7 @@
           "example": "<p hint='<p>Mở bài nên nêu rõ quan điểm và có tính chất cân bằng (balanced view). Đây là yêu cầu cơ bản của IELTS Writing Task 2.</p>' importance='high'>I strongly agree that the primary goal of science should be the betterment of human life, though I acknowledge that the pursuit of knowledge for its own sake also holds significant value.</p><p hint='<p>Đoạn body đầu tiên nên đưa ra luận điểm mạnh mẽ nhất ủng hộ quan điểm, kèm ví dụ cụ thể.</p>' importance='high'>The most compelling argument for this view is the tangible impact science has on our daily well-being. Medical science, for instance, has drastically increased life expectancy and reduced suffering through vaccines, antibiotics, and advanced surgical techniques. Agricultural science has developed high-yield crops and efficient farming methods, combating famine and malnutrition for millions. These fields demonstrate science's direct and vital role in solving fundamental human problems of health and survival.</p><p>Furthermore, technology, a practical application of scientific discovery, has revolutionized communication, transportation, and access to information, thereby enhancing economic opportunities, education, and social connectivity. The development of the internet, renewable energy sources, and mobile technology are clear examples of science improving quality of life on a global scale. Prioritizing research that addresses pressing issues like climate change, pandemics, or clean water scarcity is not only practical but also </p><p hint='<p>\"an ethical imperative\" là cụm từ học thuật mạnh mẽ thể hiện trách nhiệm đạo đức. Đây là từ vựng nâng cao giúp tăng band score.</p>' importance='medium'>an ethical imperative</p><p> to ensure a sustainable and equitable future.</p><p hint='<p>Đoạn này thể hiện tư duy phản biện (critical thinking) - yếu tố quan trọng trong IELTS Writing Task 2 để đạt band điểm cao.</p>' importance='high'>However, it is important to recognize that not all scientific inquiry yields immediate practical benefits. Fundamental or blue-sky research, such as astronomy or particle physics, expands our understanding of the universe. While its applications may not be instantly apparent, this pursuit of pure knowledge has often led to unexpected breakthroughs that ultimately benefit humanity, like the development of GPS from relativity theory.</p><p hint='<p>Kết bài nên tóm tắt lại quan điểm và đưa ra thông điệp mạnh mẽ. Đây là phần bắt buộc phải có trong bài luận.</p>' importance='high'>In conclusion, while curiosity-driven exploration remains a noble aspect of science, I believe its most critical objective must be to enhance human welfare. Directing resources and focus towards challenges that affect people's lives ensures that scientific progress translates into meaningful, positive change for society as a whole.</p>"
         }
       ],
-      "_filePath": "/home/khanhromvn/Documents/Coding/Fluency/FluencyStudio/src/renderer/src/features/course/data/courses/Cambridge_IELTS_18/Cambridge_IELTS_18_Lesson3.json"
+      "_filePath": "D:\\KhanhRom\\FluencyStudio\\src\\renderer\\src\\features\\course\\data\\courses\\Cambridge_IELTS_18/Cambridge_IELTS_18_Lesson3.json"
     },
     {
       "id": "lesson_04",
@@ -1024,7 +1024,7 @@
           ]
         }
       ],
-      "_filePath": "/home/khanhromvn/Documents/Coding/Fluency/FluencyStudio/src/renderer/src/features/course/data/courses/Cambridge_IELTS_18/Cambridge_IELTS_18_Lesson4.json"
+      "_filePath": "D:\\KhanhRom\\FluencyStudio\\src\\renderer\\src\\features\\course\\data\\courses\\Cambridge_IELTS_18/Cambridge_IELTS_18_Lesson4.json"
     },
     {
       "id": "lesson_05",
@@ -1042,33 +1042,136 @@
           "answers": []
         }
       ],
-      "_filePath": "/home/khanhromvn/Documents/Coding/Fluency/FluencyStudio/src/renderer/src/features/course/data/courses/Cambridge_IELTS_18/Cambridge_IELTS_18_Lesson5.json"
+      "_filePath": "D:\\KhanhRom\\FluencyStudio\\src\\renderer\\src\\features\\course\\data\\courses\\Cambridge_IELTS_18/Cambridge_IELTS_18_Lesson5.json"
     },
     {
       "id": "lesson_17",
-      "title": "",
+      "title": "Daily Conversation: At the Coffee Shop",
       "lessonNumber": 17,
       "quiz": [
         {
           "id": "quiz_01",
-          "title": "",
+          "title": "Conversation Practice",
           "type": "chatting",
-          "instruction": "",
+          "instruction": "💬 Read the conversation below and choose the best response for each turn.",
           "chats": [
             {
               "id": "chat_01",
               "role": "bot",
-              "content": "Hello"
+              "content": "Good morning! What can I get for you today?",
+              "ipa": "ɡʊd ˈmɔːrnɪŋ! wɒt kæn aɪ ɡɛt fɔː juː təˈdeɪ?",
+              "explain": "Standard greeting at a shop."
             },
             {
               "id": "chat_02",
               "role": "user",
-              "content": "How are you?"
+              "content": "",
+              "options": [
+                {
+                  "key": "A",
+                  "text": "Good morning. I'd like a cup of coffee, please."
+                },
+                {
+                  "key": "B",
+                  "text": "Ordering pizza."
+                },
+                {
+                  "key": "C",
+                  "text": "I am sleeping."
+                }
+              ],
+              "answer": "A",
+              "explain": "Option A is a polite and direct request suitable for a coffee shop. B and C are irrelevant contextually."
+            },
+            {
+              "id": "chat_03",
+              "role": "bot",
+              "content": "Sure. Would you like it hot or iced?",
+              "ipa": "ʃʊə. wʊd juː laɪk ɪt hɒt ɔːr aɪst?"
+            },
+            {
+              "id": "chat_04",
+              "role": "user",
+              "content": "",
+              "options": [
+                {
+                  "key": "A",
+                  "text": "I like it spicy."
+                },
+                {
+                  "key": "B",
+                  "text": "Hot, please."
+                },
+                {
+                  "key": "C",
+                  "text": "No water."
+                }
+              ],
+              "answer": "B",
+              "explain": "Coffee is typically served hot or iced. 'Spicy' refers to food heat usually."
+            },
+            {
+              "id": "chat_05",
+              "role": "bot",
+              "content": "Would you like milk or sugar?",
+              "ipa": "wʊd juː laɪk mɪlk ɔː ˈʃʊɡə?"
+            },
+            {
+              "id": "chat_06",
+              "role": "user",
+              "content": "",
+              "options": [
+                {
+                  "key": "A",
+                  "text": "Just a little milk, no sugar."
+                },
+                {
+                  "key": "B",
+                  "text": "Lots of salt."
+                },
+                {
+                  "key": "C",
+                  "text": "Yes, orange juice."
+                }
+              ],
+              "answer": "A"
+            },
+            {
+              "id": "chat_07",
+              "role": "bot",
+              "content": "Alright. That will be three dollars.",
+              "ipa": "ɔːlˈraɪt. ðæt wɪl biː θriː ˈdɒləz."
+            },
+            {
+              "id": "chat_08",
+              "role": "user",
+              "content": "",
+              "options": [
+                {
+                  "key": "A",
+                  "text": "I'm not paying."
+                },
+                {
+                  "key": "B",
+                  "text": "Here is my credit card."
+                },
+                {
+                  "key": "C",
+                  "text": "Here you go."
+                }
+              ],
+              "answer": "C"
+            },
+            {
+              "id": "chat_09",
+              "role": "bot",
+              "content": "Thank you! Have a nice day.",
+              "ipa": "θæŋk juː! hæv ə naɪs deɪ."
             }
           ]
         }
       ],
-      "_filePath": "/home/khanhromvn/Documents/Coding/Fluency/FluencyStudio/src/renderer/src/features/course/data/courses/Cambridge_IELTS_18/Cambridge_IELTS_18_Lesson17.json"
+      "_filePath": "D:\\KhanhRom\\FluencyStudio\\src\\renderer\\src\\features\\course\\data\\courses\\Cambridge_IELTS_18/Cambridge_IELTS_18_Lesson17.json"
     }
   ]
 }

@@ -22,6 +22,11 @@ export interface ChatMessage {
   id: string;
   role: 'bot' | 'user';
   content: string;
+  options?: { key: string; text: string }[];
+  answer?: string; // Key of the correct/selected answer
+  ipa?: string;
+  audio?: string;
+  explain?: string;
 }
 
 export interface MatchingItem {

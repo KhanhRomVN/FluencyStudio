@@ -1,26 +1,129 @@
 {
   "id": "lesson_17",
-  "title": "",
+  "title": "Daily Conversation: At the Coffee Shop",
   "lessonNumber": 17,
   "quiz": [
     {
       "id": "quiz_01",
-      "title": "",
+      "title": "Conversation Practice",
       "type": "chatting",
-      "instruction": "",
+      "instruction": "💬 Read the conversation below and choose the best response for each turn.",
       "chats": [
         {
           "id": "chat_01",
           "role": "bot",
-          "content": "Hello"
+          "content": "Good morning! What can I get for you today?",
+          "ipa": "ɡʊd ˈmɔːrnɪŋ! wɒt kæn aɪ ɡɛt fɔː juː təˈdeɪ?",
+          "explain": "Standard greeting at a shop."
         },
         {
           "id": "chat_02",
           "role": "user",
-          "content": "How are you?"
+          "content": "",
+          "options": [
+            {
+              "key": "A",
+              "text": "Good morning. I'd like a cup of coffee, please."
+            },
+            {
+              "key": "B",
+              "text": "Ordering pizza."
+            },
+            {
+              "key": "C",
+              "text": "I am sleeping."
+            }
+          ],
+          "answer": "A",
+          "explain": "Option A is a polite and direct request suitable for a coffee shop. B and C are irrelevant contextually."
+        },
+        {
+          "id": "chat_03",
+          "role": "bot",
+          "content": "Sure. Would you like it hot or iced?",
+          "ipa": "ʃʊə. wʊd juː laɪk ɪt hɒt ɔːr aɪst?"
+        },
+        {
+          "id": "chat_04",
+          "role": "user",
+          "content": "",
+          "options": [
+            {
+              "key": "A",
+              "text": "I like it spicy."
+            },
+            {
+              "key": "B",
+              "text": "Hot, please."
+            },
+            {
+              "key": "C",
+              "text": "No water."
+            }
+          ],
+          "answer": "B",
+          "explain": "Coffee is typically served hot or iced. 'Spicy' refers to food heat usually."
+        },
+        {
+          "id": "chat_05",
+          "role": "bot",
+          "content": "Would you like milk or sugar?",
+          "ipa": "wʊd juː laɪk mɪlk ɔː ˈʃʊɡə?"
+        },
+        {
+          "id": "chat_06",
+          "role": "user",
+          "content": "",
+          "options": [
+            {
+              "key": "A",
+              "text": "Just a little milk, no sugar."
+            },
+            {
+              "key": "B",
+              "text": "Lots of salt."
+            },
+            {
+              "key": "C",
+              "text": "Yes, orange juice."
+            }
+          ],
+          "answer": "A"
+        },
+        {
+          "id": "chat_07",
+          "role": "bot",
+          "content": "Alright. That will be three dollars.",
+          "ipa": "ɔːlˈraɪt. ðæt wɪl biː θriː ˈdɒləz."
+        },
+        {
+          "id": "chat_08",
+          "role": "user",
+          "content": "",
+          "options": [
+            {
+              "key": "A",
+              "text": "I'm not paying."
+            },
+            {
+              "key": "B",
+              "text": "Here is my credit card."
+            },
+            {
+              "key": "C",
+              "text": "Here you go."
+            }
+          ],
+          "answer": "C"
+        },
+        {
+          "id": "chat_09",
+          "role": "bot",
+          "content": "Thank you! Have a nice day.",
+          "ipa": "θæŋk juː! hæv ə naɪs deɪ."
         }
       ]
     }
   ],
-  "_filePath": "/home/khanhromvn/Documents/Coding/Fluency/FluencyStudio/src/renderer/src/features/course/data/courses/Cambridge_IELTS_18/Cambridge_IELTS_18_Lesson17.json"
+  "_filePath": "D:\\KhanhRom\\FluencyStudio\\src\\renderer\\src\\features\\course\\data\\courses\\Cambridge_IELTS_18/Cambridge_IELTS_18_Lesson17.json"
 }

@@ -1,0 +1,65 @@
+{
+  "id": "cambridge_ielts_17",
+  "title": "Cambridge IELTS 17 - Speaking Test",
+  "lessonNumber": 1,
+  "quiz": [
+    {
+      "id": "q_ielts_17_part1",
+      "title": "Speaking Part 1: Work and Studies",
+      "type": "chatting",
+      "instruction": "In this part, the examiner will ask you general questions about yourself and a range of familiar topics, such as home, family, work, studies and interests.",
+      "chats": [
+        {
+          "id": "c_01",
+          "role": "bot",
+          "content": "Good afternoon. My name is Sarah. Could you tell me your full name, please?"
+        },
+        {
+          "id": "c_02",
+          "role": "user",
+          "content": "Good afternoon, Sarah. My name is Nguyen Van A."
+        },
+        {
+          "id": "c_03",
+          "role": "bot",
+          "content": "Thank you. And can I see your identification?"
+        },
+        {
+          "id": "c_04",
+          "role": "user",
+          "content": "Yes, certainly. Here is my passport."
+        },
+        {
+          "id": "c_05",
+          "role": "bot",
+          "content": "Thank you, that's fine. Now, in this first part, I'd like to ask you some questions about yourself. Let's talk about what you do. Do you work or are you a student?"
+        },
+        {
+          "id": "c_06",
+          "role": "user",
+          "content": "I am currently a student at the University of Science."
+        },
+        {
+          "id": "c_07",
+          "role": "bot",
+          "content": "What are you studying?"
+        },
+        {
+          "id": "c_08",
+          "role": "user",
+          "content": "I'm majoring in Computer Science. I find it very interesting because I love technology and problem-solving."
+        },
+        {
+          "id": "c_09",
+          "role": "bot",
+          "content": "Why did you choose that subject?"
+        },
+        {
+          "id": "c_10",
+          "role": "user",
+          "content": "Well, ever since I was young, I've been fascinated by computers. I think it's a field with a lot of potential for the future."
+        }
+      ]
+    }
+  ]
+}

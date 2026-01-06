@@ -2,6 +2,7 @@ import React, { useEffect, useState, useRef } from 'react';
 import { X, AudioLines, Clock, User, ScanEye } from 'lucide-react';
 import { folderService } from '../../../../../../../shared/services/folderService';
 import { MediaPlayer } from './MediaPlayer';
+import { DirectoryDrawer } from './DirectoryDrawer';
 
 interface TranscriptDrawerProps {
   isOpen: boolean;
@@ -55,6 +56,15 @@ export const TranscriptDrawer: React.FC<TranscriptDrawerProps> = ({
   // Track active dialogue ID for manual translation toggle
   const [activeDialogueId, setActiveDialogueId] = useState<string | null>(null);
 
+  // DirectoryDrawer state
+  const [directoryOpen, setDirectoryOpen] = useState(false);
+  const [selectedWord, setSelectedWord] = useState<string | null>(null);
+
+  // Long press handling
+  const longPressTimer = useRef<NodeJS.Timeout | null>(null);
+  const isLongPress = useRef(false);
+  const startPos = useRef({ x: 0, y: 0 });
+
   const activeSegmentRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
@@ -83,7 +93,7 @@ export const TranscriptDrawer: React.FC<TranscriptDrawerProps> = ({
     if (activeSegmentRef.current && isOpen) {
       activeSegmentRef.current.scrollIntoView({ behavior: 'smooth', block: 'center' });
     }
-  }, [audioState.currentTime, isOpen]); // Using currentTime might trigger frequent updates but is standard for karaoke-like scrolling.
+  }, [audioState.currentTime, isOpen]);
 
   const parseTime = (timeStr: string) => {
     const parts = timeStr.split(':');
@@ -101,9 +111,102 @@ export const TranscriptDrawer: React.FC<TranscriptDrawerProps> = ({
     }
   };
 
-  const toggleDialogue = (id: string, e: React.MouseEvent) => {
-    e.stopPropagation();
-    setActiveDialogueId((prev) => (prev === id ? null : id));
+  const getWordFromPoint = (x: number, y: number): string | null => {
+    // @ts-ignore - Webkit specific
+    if (typeof document.caretRangeFromPoint !== 'undefined') {
+      // @ts-ignore
+      const range = document.caretRangeFromPoint(x, y);
+      if (range && range.startContainer.nodeType === Node.TEXT_NODE) {
+        const textNode = range.startContainer;
+        const text = textNode.textContent || '';
+        const offset = range.startOffset;
+
+        let start = offset;
+        let end = offset;
+
+        while (start > 0 && /[\w'-]/.test(text[start - 1])) {
+          start--;
+        }
+
+        while (end < text.length && /[\w'-]/.test(text[end])) {
+          end++;
+        }
+
+        return text.substring(start, end);
+      }
+    } else if (typeof document.caretPositionFromPoint !== 'undefined') {
+      // @ts-ignore
+      const pos = document.caretPositionFromPoint(x, y);
+      if (pos && pos.offsetNode.nodeType === Node.TEXT_NODE) {
+        const textNode = pos.offsetNode;
+        const text = textNode.textContent || '';
+        const offset = pos.offset;
+
+        let start = offset;
+        let end = offset;
+
+        while (start > 0 && /[\w'-]/.test(text[start - 1])) {
+          start--;
+        }
+
+        while (end < text.length && /[\w'-]/.test(text[end])) {
+          end++;
+        }
+        return text.substring(start, end);
+      }
+    }
+    return null;
+  };
+
+  const handlePointerDown = (e: React.PointerEvent) => {
+    startPos.current = { x: e.clientX, y: e.clientY };
+    isLongPress.current = false;
+
+    longPressTimer.current = setTimeout(() => {
+      isLongPress.current = true;
+      const word = getWordFromPoint(e.clientX, e.clientY);
+      if (word && word.length > 1) {
+        setSelectedWord(word);
+        setDirectoryOpen(true);
+      }
+    }, 500); // 500ms long press
+  };
+
+  const handlePointerMove = (e: React.PointerEvent) => {
+    if (longPressTimer.current) {
+      const dist = Math.sqrt(
+        Math.pow(e.clientX - startPos.current.x, 2) + Math.pow(e.clientY - startPos.current.y, 2),
+      );
+      if (dist > 10) {
+        clearTimeout(longPressTimer.current);
+        longPressTimer.current = null;
+      }
+    }
+  };
+
+  const handlePointerUp = (dlgId: string, e: React.PointerEvent) => {
+    if (longPressTimer.current) {
+      clearTimeout(longPressTimer.current);
+      longPressTimer.current = null;
+    }
+
+    if (!isLongPress.current) {
+      // It was a click, toggle translation
+      e.stopPropagation();
+      setActiveDialogueId((prev) => (prev === dlgId ? null : dlgId));
+    }
+
+    setTimeout(() => {
+      isLongPress.current = false;
+    }, 0);
+  };
+
+  const handlePointerCancel = () => {
+    if (longPressTimer.current) {
+      clearTimeout(longPressTimer.current);
+      longPressTimer.current = null;
+    }
+    isLongPress.current = false;
   };
 
   return (
@@ -142,7 +245,6 @@ export const TranscriptDrawer: React.FC<TranscriptDrawerProps> = ({
               {data.transcript.map((segment, index) => {
                 const startTime = parseTime(segment.timestamps.start);
                 const endTime = parseTime(segment.timestamps.end);
-                // Active segment highlight logic based on audio
                 const isSegmentActive =
                   audioState.currentTime >= startTime && audioState.currentTime < endTime;
 
@@ -175,7 +277,7 @@ export const TranscriptDrawer: React.FC<TranscriptDrawerProps> = ({
                           <span>{segment.timestamps.start}</span>
                         </div>
 
-                        {/* ScanEye Icon - Only visible on hover and NOT active */}
+                        {/* ScanEye Icon - Only visible when NOT active */}
                         {!isSegmentActive && (
                           <button
                             onClick={(e) => {
@@ -198,9 +300,13 @@ export const TranscriptDrawer: React.FC<TranscriptDrawerProps> = ({
 
                         return (
                           <span key={dlg.id} className="inline group/dialogue">
-                            {/* Original Text - Clickable to toggle translation */}
+                            {/* Original Text - Click to toggle translation, Long press for dictionary */}
                             <span
-                              onClick={(e) => toggleDialogue(dlg.id, e)}
+                              onPointerDown={handlePointerDown}
+                              onPointerMove={handlePointerMove}
+                              onPointerUp={(e) => handlePointerUp(dlg.id, e)}
+                              onPointerCancel={handlePointerCancel}
+                              onContextMenu={(e) => e.preventDefault()}
                               className="inline cursor-pointer hover:bg-[hsl(var(--muted))]/50 rounded px-1 -mx-1 transition-colors [&_p]:inline [&_p]:m-0"
                               dangerouslySetInnerHTML={{ __html: dlg.original }}
                             />
@@ -212,7 +318,7 @@ export const TranscriptDrawer: React.FC<TranscriptDrawerProps> = ({
                                 dangerouslySetInnerHTML={{ __html: `(${dlg.translation})` }}
                               />
                             )}
-                            {/* Add a space after each dialogue to prevent running together */}
+                            {/* Add a space after each dialogue */}
                             <span className="inline"> </span>
                           </span>
                         );
@@ -243,6 +349,13 @@ export const TranscriptDrawer: React.FC<TranscriptDrawerProps> = ({
           />
         </div>
       </div>
+
+      {/* Directory Drawer for word lookup */}
+      <DirectoryDrawer
+        isOpen={directoryOpen}
+        onClose={() => setDirectoryOpen(false)}
+        word={selectedWord}
+      />
     </>
   );
 };

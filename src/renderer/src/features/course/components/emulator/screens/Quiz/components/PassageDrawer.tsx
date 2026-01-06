@@ -1,8 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { X, Pilcrow } from 'lucide-react';
 import { folderService } from '../../../../../../../shared/services/folderService';
-// import { DirectoryDrawer } from './DirectoryDrawer';
-import { directoryStorage } from '../services/directoryStorage';
+import { DirectoryDrawer } from './DirectoryDrawer';
 
 interface PassageDrawerProps {
   isOpen: boolean;
@@ -32,6 +31,12 @@ export const PassageDrawer: React.FC<PassageDrawerProps> = ({
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [activeSegmentIndex, setActiveSegmentIndex] = useState<number | null>(null);
+
+  // DirectoryDrawer state
+  const [directoryOpen, setDirectoryOpen] = useState(false);
+  const [selectedWord, setSelectedWord] = useState<string | null>(null);
+
+  // Long press handling
   const longPressTimer = useRef<NodeJS.Timeout | null>(null);
   const isLongPress = useRef(false);
   const startPos = useRef({ x: 0, y: 0 });
@@ -93,7 +98,7 @@ export const PassageDrawer: React.FC<PassageDrawerProps> = ({
         return text.substring(start, end);
       }
     } else if (typeof document.caretPositionFromPoint !== 'undefined') {
-      // Firefox support just in case
+      // Firefox support
       // @ts-ignore
       const pos = document.caretPositionFromPoint(x, y);
       if (pos && pos.offsetNode.nodeType === Node.TEXT_NODE) {
@@ -117,6 +122,20 @@ export const PassageDrawer: React.FC<PassageDrawerProps> = ({
     return null;
   };
 
+  const handlePointerDown = (e: React.PointerEvent) => {
+    startPos.current = { x: e.clientX, y: e.clientY };
+    isLongPress.current = false;
+
+    longPressTimer.current = setTimeout(() => {
+      isLongPress.current = true;
+      const word = getWordFromPoint(e.clientX, e.clientY);
+      if (word && word.length > 1) {
+        setSelectedWord(word);
+        setDirectoryOpen(true);
+      }
+    }, 500); // 500ms long press
+  };
+
   const handlePointerMove = (e: React.PointerEvent) => {
     if (longPressTimer.current) {
       const dist = Math.sqrt(
@@ -136,13 +155,10 @@ export const PassageDrawer: React.FC<PassageDrawerProps> = ({
     }
 
     if (!isLongPress.current) {
-      // It was a click, assume intention to toggle
+      // It was a click, toggle translation
       setActiveSegmentIndex(activeSegmentIndex === index ? null : index);
     }
-    // If long press occurred, we suppress the click action naturally by checking isLongPress
-    // And reset it for next time
-    // We might want to delay resetting isLongPress to prevent 'click' firing after 'pointerup'
-    // but React handles Synthetic Events differently.
+
     setTimeout(() => {
       isLongPress.current = false;
     }, 0);
@@ -211,12 +227,11 @@ export const PassageDrawer: React.FC<PassageDrawerProps> = ({
                           ? 'bg-[hsl(var(--primary))]/20 shadow-sm'
                           : 'hover:bg-[hsl(var(--primary))]/5'
                       } [&_p]:inline [&_p]:m-0`}
+                      onPointerDown={handlePointerDown}
                       onPointerMove={handlePointerMove}
                       onPointerUp={(e) => handlePointerUp(e, index)}
                       onPointerCancel={handlePointerCancel}
-                      onContextMenu={(e) => {
-                        // Prevent context menu
-                      }}
+                      onContextMenu={(e) => e.preventDefault()}
                       dangerouslySetInnerHTML={{ __html: segment.content }}
                     />
 
@@ -242,11 +257,12 @@ export const PassageDrawer: React.FC<PassageDrawerProps> = ({
         </div>
       </div>
 
-      {/* <DirectoryDrawer
+      {/* Directory Drawer for word lookup */}
+      <DirectoryDrawer
         isOpen={directoryOpen}
         onClose={() => setDirectoryOpen(false)}
         word={selectedWord}
-      /> */}
+      />
     </>
   );
 };

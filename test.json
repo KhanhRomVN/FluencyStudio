@@ -1,0 +1,467 @@
+{
+  "word": "woman",
+  "entries": [
+    {
+      "language": {
+        "code": "en",
+        "name": "English"
+      },
+      "partOfSpeech": "noun",
+      "pronunciations": [
+        {
+          "type": "ipa",
+          "text": "/ˈwʊm.ən/",
+          "tags": ["Received Pronunciation", "US"]
+        },
+        {
+          "type": "ipa",
+          "text": "/ˈwoʊ.mən/",
+          "tags": ["US", "dialectal"]
+        },
+        {
+          "type": "ipa",
+          "text": "[ˈwo.mɪn]",
+          "tags": ["US", "dialectal"]
+        },
+        {
+          "type": "ipa",
+          "text": "/ˈwʊm.ɘn/",
+          "tags": ["New Zealand"]
+        }
+      ],
+      "forms": [
+        {
+          "word": "women",
+          "tags": ["plural"]
+        },
+        {
+          "word": "womxn",
+          "tags": ["alternative"]
+        },
+        {
+          "word": "womyn",
+          "tags": ["alternative"]
+        },
+        {
+          "word": "womxn",
+          "tags": ["alternative"]
+        },
+        {
+          "word": "womyn",
+          "tags": ["alternative"]
+        },
+        {
+          "word": "wymyn",
+          "tags": ["alternative"]
+        },
+        {
+          "word": "womin",
+          "tags": ["alternative"]
+        },
+        {
+          "word": "wommon",
+          "tags": ["alternative"]
+        },
+        {
+          "word": "womon",
+          "tags": ["alternative"]
+        },
+        {
+          "word": "wimin",
+          "tags": ["alternative"]
+        },
+        {
+          "word": "wimmin",
+          "tags": ["alternative"]
+        },
+        {
+          "word": "wimmen",
+          "tags": ["alternative"]
+        },
+        {
+          "word": "wymmyn",
+          "tags": ["alternative"]
+        },
+        {
+          "word": "weoman",
+          "tags": ["alternative"]
+        },
+        {
+          "word": "whoman",
+          "tags": ["alternative"]
+        },
+        {
+          "word": "wimen",
+          "tags": ["alternative"]
+        },
+        {
+          "word": "womans",
+          "tags": ["alternative"]
+        },
+        {
+          "word": "womens",
+          "tags": ["alternative"]
+        }
+      ],
+      "senses": [
+        {
+          "definition": "An adult female human.",
+          "tags": [],
+          "examples": [],
+          "quotes": [
+            {
+              "text": "But this woman is a nice German woman that fell on the ice and sprained her ankle last winter, and we saw to her well as we could till she got better.",
+              "reference": "1887, Helen Campbell, Prisoners of poverty: their trades and their lives, page 120:"
+            },
+            {
+              "text": "Dr. J. H. Vincent, the great lecturer, says that a man's greatness consists in his courage; his inherent nobleness; his noble deeds, great exploits, and benefits to the world; but that behind every great man is a great woman - his mother.",
+              "reference": "1888 September 6, Michigan School Moderator, page 402, column 3:"
+            },
+            {
+              "text": "Cause I'm every woman / It's all in me",
+              "reference": "1978, Ashford & Simpson, “I’m Every Woman”, in Chaka, performed by Chaka Khan:"
+            },
+            {
+              "text": "During World War II, many women worked as blacksmiths in the shipbuilding industry and found they liked the challenging, independent work.",
+              "reference": "1979, Muriel Lederer, Blue-collar jobs for women, page 59:"
+            },
+            {
+              "text": "But of course Britain since 1979 has had a woman prime minister, while no woman has ever come near to being president of the United States.",
+              "reference": "1985, Anthony King, The British Prime Minister, Duke University Press, →ISBN:"
+            },
+            {
+              "text": "\"There is nothing wrong with Melissa or the way she was raised. She is a sweet, kind, intelligent woman with a generous heart and more love for her child than you and Mother ever showed for either of your children.\"",
+              "reference": "2012, Kate Welsh, Substitute Daddy, →ISBN:"
+            },
+            {
+              "text": "You can't spend months studying the history of the suffrage movement without gaining a new appreciation for the grit and gumption it takes to be a powerful woman leader.",
+              "reference": "2020 August 18, Veronica Chambers, The Staff of The New York Times, Finish The Fight!: The Brave and Revolutionary Women Who Fought for the Right to Vote, HarperCollins, →ISBN:"
+            }
+          ],
+          "synonyms": [],
+          "antonyms": [],
+          "translations": [],
+          "subsenses": []
+        },
+        {
+          "definition": "(collective) All female humans collectively; womankind.",
+          "tags": ["collective"],
+          "examples": [],
+          "quotes": [
+            {
+              "text": "Listen, Holly. Thou art a good and honest man, and I fain would spare thee; but, oh! it is so hard for woman to be merciful.",
+              "reference": "1886 October – 1887 January, H[enry] Rider Haggard, “The Balance Turns”, in She: A History of Adventure, London: Longmans, Green, and Co., published 1887, →OCLC, page 191:"
+            },
+            {
+              "text": "“[…] it is not fair of you to bring against mankind double weapons ! Dangerous enough you are as woman alone, without bringing to your aid those gifts of mind suited to problems which men have been accustomed to arrogate to themselves.”",
+              "reference": "1910, Emerson Hough, chapter I, in The Purchase Price: Or The Cause of Compromise, Indianapolis, Ind.: The Bobbs-Merrill Company, →OCLC:"
+            },
+            {
+              "text": "I am Woman, hear me roar / In numbers too big to ignore",
+              "reference": "1972, Helen Reddy, I Am Woman, first line:"
+            },
+            {
+              "text": "For if modern woman is so intent on keeping her surname alive, why not demand it be passed along to her children?",
+              "reference": "1997, Bob Grant, Let's Be Heard, page 42:"
+            },
+            {
+              "text": "Unsurprisingly, if modern man is a sort of camera, modern woman is a picture.",
+              "reference": "2011, Eileen Gray and the Design of Sapphic Modernity: Staying In, page 109:"
+            }
+          ],
+          "synonyms": [],
+          "antonyms": [],
+          "translations": [],
+          "subsenses": []
+        },
+        {
+          "definition": "A female person, usually an adult; a (generally adult) female sentient being, whether human, supernatural, elf, alien, etc.",
+          "tags": [],
+          "examples": [],
+          "quotes": [
+            {
+              "text": "Sir, have you ever served with any Bajoran women?",
+              "reference": "1993, Michael Piller, “Emissary”, in Star Trek: Deep Space Nine, season 1, episode 1, spoken by Chief O'Brien (Colm Meaney):"
+            },
+            {
+              "text": "To be born a woman has been to be born, within an allotted and confined space, into the keeping of men.",
+              "reference": "2003, Amelia Jones, The Feminism and Visual Culture Reader, Psychology Press, →ISBN, page 37:"
+            },
+            {
+              "text": "One of the elves, a woman with long auburn hair, was garbed identically to the two dwarves.",
+              "reference": "2007, Clifford B. Bowyer, The Siege of Zoldex, Silver Leaf Books, LLC, →ISBN, page 307:"
+            },
+            {
+              "text": "Clearing a space between the tables, the men tested their prowess against one another with feats of wrestling and archery and bouts with quarterstaves. Two of the elves, a man and a woman, demonstrated their skill with swordplay—[…]",
+              "reference": "2008, Christopher Paolini, Brisingr: Or The Seven Promises of Eragon Shadeslayer and Saphira Bjartskular - Inheritance Book Three, →ISBN, page 549:"
+            },
+            {
+              "text": "At the very dawn of religion, God was a woman.",
+              "reference": "2012, Merlin Stone, When God Was A Woman:"
+            },
+            {
+              "text": "There was a pair of burly dwarves – a woman and a man – bearing the markings of the formidable Thane Guards.",
+              "reference": "2014, Oisin McGann, Kings of the Realm: Cruel Salvation, Penguin UK, →ISBN:"
+            }
+          ],
+          "synonyms": [],
+          "antonyms": [],
+          "translations": [],
+          "subsenses": []
+        },
+        {
+          "definition": "A wife (or sometimes a fiancée or girlfriend).",
+          "tags": [],
+          "examples": [
+            "And then, when he lies with his woman, the man may concurrently be with God, and so get increase of his soul."
+          ],
+          "quotes": [],
+          "synonyms": [],
+          "antonyms": [],
+          "translations": [],
+          "subsenses": []
+        },
+        {
+          "definition": "A female person who is extremely fond of or devoted to a specified type of thing. (Used as the last element of a compound.)",
+          "tags": [],
+          "examples": [],
+          "quotes": [
+            {
+              "text": "Perhaps my problem is that I am a cat woman. I can't imagine any finicky feline (and they all are that at one time or another) slobbering over anyone, even a beloved owner, the way a dog does.",
+              "reference": "2004, Hyveth Williams, Secrets of a Happy Heart: A Fresh Look at the Sermon on the Mount, page 70:"
+            }
+          ],
+          "synonyms": [],
+          "antonyms": [],
+          "translations": [],
+          "subsenses": []
+        },
+        {
+          "definition": "A female attendant or servant.",
+          "tags": [],
+          "examples": [],
+          "quotes": [
+            {
+              "text": "By her woman I sent your message.",
+              "reference": "1613 (date written), William Shakespeare, [John Fletcher], “The Famous History of the Life of King Henry the Eight”, in Mr. William Shakespeares Comedies, Histories, & Tragedies […] (First Folio), London: […] Isaac Iaggard, and Ed[ward] Blount, published 1623, →OCLC, [Act V, scene ii]:"
+            }
+          ],
+          "synonyms": [],
+          "antonyms": [],
+          "translations": [],
+          "subsenses": []
+        }
+      ],
+      "synonyms": [
+        "lady",
+        "female",
+        "more at Thesaurus:woman",
+        "babe",
+        "baggage",
+        "bim",
+        "bint",
+        "bird",
+        "bitch",
+        "blone",
+        "broad",
+        "chick",
+        "covess",
+        "dame",
+        "donna",
+        "feme",
+        "femme",
+        "femoid",
+        "frau",
+        "frow",
+        "gal",
+        "gentlelady",
+        "ginch",
+        "hen",
+        "ho",
+        "huwoman",
+        "maness",
+        "mort",
+        "mulier",
+        "placket",
+        "pussy",
+        "queen",
+        "she",
+        "sheila",
+        "skirt",
+        "squaw",
+        "thot",
+        "tía",
+        "twist",
+        "vaginoid",
+        "wan",
+        "wife",
+        "woman",
+        "wommon",
+        "womon",
+        "womxn",
+        "womyn",
+        "wimmin"
+      ],
+      "antonyms": ["man", "girl"]
+    },
+    {
+      "language": {
+        "code": "en",
+        "name": "English"
+      },
+      "partOfSpeech": "verb",
+      "pronunciations": [
+        {
+          "type": "ipa",
+          "text": "/ˈwʊm.ən/",
+          "tags": ["Received Pronunciation", "US"]
+        },
+        {
+          "type": "ipa",
+          "text": "/ˈwoʊ.mən/",
+          "tags": ["US", "dialectal"]
+        },
+        {
+          "type": "ipa",
+          "text": "[ˈwo.mɪn]",
+          "tags": ["US", "dialectal"]
+        },
+        {
+          "type": "ipa",
+          "text": "/ˈwʊm.ɘn/",
+          "tags": ["New Zealand"]
+        }
+      ],
+      "forms": [
+        {
+          "word": "womans",
+          "tags": ["present", "singular", "third-person"]
+        },
+        {
+          "word": "womaning",
+          "tags": ["participle", "present"]
+        },
+        {
+          "word": "womanning",
+          "tags": ["participle", "present"]
+        },
+        {
+          "word": "womaned",
+          "tags": ["participle", "past"]
+        },
+        {
+          "word": "womaned",
+          "tags": ["past"]
+        },
+        {
+          "word": "womanned",
+          "tags": ["participle", "past"]
+        },
+        {
+          "word": "womanned",
+          "tags": ["past"]
+        }
+      ],
+      "senses": [
+        {
+          "definition": "To staff with female labor.",
+          "tags": [],
+          "examples": [],
+          "quotes": [
+            {
+              "text": "[…]he should prove, from the testimony of the most experienced seamen, that the vessel was, if not, strictly speaking, sufficiently manned, yet that she was sufficiently manned and womanned. The Gypsey was a vessel of 43 tons burden, and there were on board two able seamen and the Captain’s wife, who was a very good sailor;",
+              "reference": "1813, “Yorkshire Assizes. May a woman be deemed a sailor sufficient in manning a vessel? Case of Insurance.—Cook v. Thompson.”, in The Literary Panorama, […], volume XIV, London: […] Cox and Baylis, […] for C[harles] Taylor, […], page 683:"
+            },
+            {
+              "text": "Apparently the Sixty-ninth Street office of Bagby Answers, Inc., was being womaned for the day from other offices.",
+              "reference": "1956, Rex Stout, Three Witnesses, The Viking Press, page 54:"
+            },
+            {
+              "text": "Gus Dinsmore, the public beach parking lot attendent,^([sic]) said he guessed that so many cars must be just stopped dead along the road that even those manned (or womaned) by able drivers would be unable to move.",
+              "reference": "1990, Stephen King, chapter 28, in The Stand: The Complete & Uncut Edition, New York, N.Y.: Signet, published 1991 May, →ISBN, page 235:"
+            },
+            {
+              "text": "The information desk is now manned (womaned) by someone whose main job is to help you reserve time slots for the computers or guide you through the arduous process of “logging on.”",
+              "reference": "2010, Julia Glass, The Widower's Tale, page 77:"
+            }
+          ],
+          "synonyms": [],
+          "antonyms": [],
+          "translations": [],
+          "subsenses": []
+        },
+        {
+          "definition": "(transitive) To make effeminate or womanish.",
+          "tags": ["transitive"],
+          "examples": [],
+          "quotes": [
+            {
+              "text": "I have felt so many quirks of joy and grief / That the first face of neither on the start / Can woman me unto't.",
+              "reference": "c. 1604–1605 (date written), William Shakespeare, “All’s Well, that Ends Well”, in Mr. William Shakespeares Comedies, Histories, & Tragedies […] (First Folio), London: […] Isaac Iaggard, and Ed[ward] Blount, published 1623, →OCLC, [Act III, scene ii], line 50:"
+            }
+          ],
+          "synonyms": [],
+          "antonyms": [],
+          "translations": [
+            {
+              "language": {
+                "code": "bg",
+                "name": "Bulgarian"
+              },
+              "word": "феминизирам"
+            },
+            {
+              "language": {
+                "code": "de",
+                "name": "German"
+              },
+              "word": "feminisieren"
+            },
+            {
+              "language": {
+                "code": "de",
+                "name": "German"
+              },
+              "word": "verweiblichen"
+            }
+          ],
+          "subsenses": []
+        },
+        {
+          "definition": "(transitive) To furnish with, or unite to, a woman.",
+          "tags": ["transitive"],
+          "examples": [],
+          "quotes": [
+            {
+              "text": "And think it no addition, nor my wish, / To have him see me woman'd.",
+              "reference": "c. 1603–1604 (date written), William Shakespeare, “The Tragedie of Othello, the Moore of Venice”, in Mr. William Shakespeares Comedies, Histories, & Tragedies […] (First Folio), London: […] Isaac Iaggard, and Ed[ward] Blount, published 1623, →OCLC, [Act III, scene iv], line 191:"
+            }
+          ],
+          "synonyms": [],
+          "antonyms": [],
+          "translations": [],
+          "subsenses": []
+        },
+        {
+          "definition": "(transitive) To call (a person) \"woman\" in a disrespectful fashion.",
+          "tags": ["transitive"],
+          "examples": [],
+          "quotes": [],
+          "synonyms": [],
+          "antonyms": [],
+          "translations": [],
+          "subsenses": []
+        }
+      ],
+      "synonyms": [],
+      "antonyms": []
+    }
+  ],
+  "source": {
+    "url": "https://en.wiktionary.org/wiki/woman",
+    "license": {
+      "name": "CC BY-SA 4.0",
+      "url": "https://creativecommons.org/licenses/by-sa/4.0/"
+    }
+  }
+}

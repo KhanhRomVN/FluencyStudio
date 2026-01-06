@@ -12,9 +12,9 @@
         {
           "id": "chat_01",
           "role": "bot",
-          "content": "Good morning! What can I get for you today?",
+          "content": "Good morning! \nWhat can I get for you today?",
           "ipa": "ɡʊd ˈmɔːrnɪŋ! wɒt kæn aɪ ɡɛt fɔː juː təˈdeɪ?",
-          "explain": "Standard greeting at a shop."
+          "explain": "A standard and polite way for a shop assistant to greet a customer and ask for their order."
         },
         {
           "id": "chat_02",
@@ -35,13 +35,14 @@
             }
           ],
           "answer": "A",
-          "explain": "Option A is a polite and direct request suitable for a coffee shop. B and C are irrelevant contextually."
+          "explain": "Option A is the most appropriate and polite response in this context. Option B is grammatically incorrect for a request, and Option C makes no sense."
         },
         {
           "id": "chat_03",
           "role": "bot",
-          "content": "Sure. Would you like it hot or iced?",
-          "ipa": "ʃʊə. wʊd juː laɪk ɪt hɒt ɔːr aɪst?"
+          "content": "Sure. \nWould you like it hot or iced?",
+          "ipa": "ʃʊə. wʊd juː laɪk ɪt hɒt ɔːr aɪst?",
+          "explain": "The barista needs to know your preference for the temperature of the drink."
         },
         {
           "id": "chat_04",
@@ -62,13 +63,14 @@
             }
           ],
           "answer": "B",
-          "explain": "Coffee is typically served hot or iced. 'Spicy' refers to food heat usually."
+          "explain": "Coffee is typically served hot or iced. 'Spicy' refers to food heat or flavor, which is unusual for coffee."
         },
         {
           "id": "chat_05",
           "role": "bot",
           "content": "Would you like milk or sugar?",
-          "ipa": "wʊd juː laɪk mɪlk ɔː ˈʃʊɡə?"
+          "ipa": "wʊd juː laɪk mɪlk ɔː ˈʃʊɡə?",
+          "explain": "Asking about additions (condiments) to the coffee."
         },
         {
           "id": "chat_06",
@@ -88,13 +90,15 @@
               "text": "Yes, orange juice."
             }
           ],
-          "answer": "A"
+          "answer": "A",
+          "explain": "Salt and orange juice are not standard additions to coffee."
         },
         {
           "id": "chat_07",
           "role": "bot",
-          "content": "Alright. That will be three dollars.",
-          "ipa": "ɔːlˈraɪt. ðæt wɪl biː θriː ˈdɒləz."
+          "content": "Alright. \nThat will be three dollars.",
+          "ipa": "ɔːlˈraɪt. ðæt wɪl biː θriː ˈdɒləz.",
+          "explain": "Stating the total price of the order."
         },
         {
           "id": "chat_08",
@@ -114,13 +118,36 @@
               "text": "Here you go."
             }
           ],
-          "answer": "C"
+          "answer": "C",
+          "explain": "'Here you go' is a common phrase used when handing something (like money) to someone."
         },
         {
           "id": "chat_09",
           "role": "bot",
-          "content": "Thank you! Have a nice day.",
-          "ipa": "θæŋk juː! hæv ə naɪs deɪ."
+          "content": "Thank you! \nHave a nice day.",
+          "ipa": "θæŋk juː! hæv ə naɪs deɪ.",
+          "explain": "A polite closing to the interaction."
+        },
+        {
+          "id": "chat_10",
+          "role": "user",
+          "content": "",
+          "options": [
+            {
+              "key": "A",
+              "text": "You too, thanks!"
+            },
+            {
+              "key": "B",
+              "text": "I hate days."
+            },
+            {
+              "key": "C",
+              "text": "No thank you."
+            }
+          ],
+          "answer": "A",
+          "explain": "Reciprocating the good wishes is the polite response."
         }
       ]
     }

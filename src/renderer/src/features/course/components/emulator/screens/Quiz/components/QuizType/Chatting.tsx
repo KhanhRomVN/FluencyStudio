@@ -37,7 +37,8 @@ export const Chatting: React.FC<ChattingProps> = ({ quiz, header, onUpdate }) =>
     }
   }, [visibleChats, isTyping, expandedExplanation]);
 
-  const playAudio = (text: string, audioUrl?: string, id?: string) => {
+  const playAudio = (e: React.MouseEvent, text: string, audioUrl?: string, id?: string) => {
+    e.stopPropagation(); // Prevent bubble click
     if (audioUrl) {
       if (audioRef.current) {
         audioRef.current.pause();
@@ -62,6 +63,13 @@ export const Chatting: React.FC<ChattingProps> = ({ quiz, header, onUpdate }) =>
     }
   };
 
+  const handleReplay = () => {
+    setVisibleChats([]);
+    setCurrentIndex(0);
+    setAnsweredState({});
+    setExpandedExplanation(null);
+  };
+
   // Process conversation flow
   useEffect(() => {
     if (currentIndex >= chats.length) return;
@@ -82,8 +90,6 @@ export const Chatting: React.FC<ChattingProps> = ({ quiz, header, onUpdate }) =>
         });
         setIsTyping(false);
         setCurrentIndex((prev) => prev + 1);
-
-        // Auto-play audio for bot if available (optional, maybe distracting, so kept manual for now)
       }, 1000);
       return () => clearTimeout(timer);
     }
@@ -101,10 +107,8 @@ export const Chatting: React.FC<ChattingProps> = ({ quiz, header, onUpdate }) =>
       return () => clearTimeout(timer);
     }
 
-    // If it has options, we wait for user interaction.
-    // However, if we are revisiting and it was technically "done", we might need to handle that,
-    // but here we rely on local state flow.
-  }, [currentIndex, chats, visibleChats]); // Added visibleChats to deps to check existence
+    return undefined;
+  }, [currentIndex, chats, visibleChats]);
 
   const handleOptionSelect = (optionKey: string, optionText: string) => {
     const currentChat = chats[currentIndex];
@@ -116,12 +120,6 @@ export const Chatting: React.FC<ChattingProps> = ({ quiz, header, onUpdate }) =>
       ...prev,
       [currentChat.id]: { selected: optionKey, isCorrect },
     }));
-
-    // If incorrect, we verify but do NOT advance content immediately?
-    // User requested "cơ chế chọn đúng sai". Usually implies you must pick correct one to proceed or just show result.
-    // Let's allow proceeding only if correct, or just proceed with the chosen one but mark it?
-    // For educational flow, usually we want them to get it right.
-    // But to keep flow smooth: if correct -> advance. If wrong -> show error shake/effect but stay.
 
     if (isCorrect) {
       // Resolve the chat content with the correct selected text
@@ -143,12 +141,23 @@ export const Chatting: React.FC<ChattingProps> = ({ quiz, header, onUpdate }) =>
   // Current interaction state
   const currentAnswerState = currentChat ? answeredState[currentChat.id] : undefined;
 
+  // Progress calculation
+  // current index is roughly the number of turns completed.
+  const progressPercent = Math.min(100, (currentIndex / chats.length) * 100);
+
   return (
-    <div className="flex flex-col h-full bg-[hsl(var(--background))] text-sm">
-      {/* Reduced base text size */}
+    <div className="flex flex-col h-full bg-[hsl(var(--background))] text-sm relative">
+      {/* Progress Bar */}
+      <div className="w-full bg-[hsl(var(--muted))] h-1 absolute top-0 left-0 z-10">
+        <div
+          className="bg-green-500 h-1 transition-all duration-500 ease-out"
+          style={{ width: `${progressPercent}%` }}
+        />
+      </div>
+
       <div
         ref={scrollRef}
-        className="flex-1 overflow-y-auto px-3 py-2 [&::-webkit-scrollbar]:hidden scroll-smooth"
+        className="flex-1 overflow-y-auto px-3 py-4 [&::-webkit-scrollbar]:hidden scroll-smooth mt-1"
       >
         {header}
         {instruction && (
@@ -164,7 +173,7 @@ export const Chatting: React.FC<ChattingProps> = ({ quiz, header, onUpdate }) =>
           </div>
         )}
 
-        <div className="space-y-3 pb-3">
+        <div className="space-y-4 pb-3">
           {visibleChats?.map((chat, index) => (
             <div
               key={chat.id || index}
@@ -173,60 +182,72 @@ export const Chatting: React.FC<ChattingProps> = ({ quiz, header, onUpdate }) =>
               <div
                 className={`flex items-end gap-2 max-w-[85%] ${chat.role === 'user' ? 'flex-row-reverse' : 'flex-row'}`}
               >
-                {/* Chat Bubble */}
+                {/* Chat Bubble - Interactive */}
                 <div
+                  onClick={() =>
+                    chat.explain &&
+                    setExpandedExplanation(expandedExplanation === chat.id ? null : chat.id)
+                  }
                   className={`
-                        relative px-3 py-2 text-sm leading-snug rounded-xl shadow-sm animate-in fade-in slide-in-from-bottom-1 duration-200
+                        relative px-4 py-3 text-sm leading-snug rounded-2xl shadow-sm animate-in fade-in slide-in-from-bottom-1 duration-200 cursor-pointer group
                         ${
                           chat.role === 'user'
-                            ? 'bg-[hsl(var(--primary))] text-white rounded-br-none'
-                            : 'bg-[hsl(var(--muted))] text-[hsl(var(--foreground))] rounded-bl-none border border-[hsl(var(--border))]'
+                            ? 'bg-[hsl(var(--primary))] text-white rounded-br-sm'
+                            : 'bg-[hsl(var(--muted))] text-[hsl(var(--foreground))] rounded-bl-sm border border-[hsl(var(--border))]'
                         }
+                        hover:brightness-95 transition-all
                         `}
                 >
-                  {chat.content}
+                  {chat.img && (
+                    <img
+                      src={chat.img}
+                      alt="context"
+                      className="rounded-lg mb-2 max-w-full h-auto object-cover"
+                    />
+                  )}
 
-                  {/* IPA Display */}
-                  {chat.ipa && (
+                  <div className="flex flex-col">
+                    <span>{chat.content}</span>
+
+                    {/* IPA Display */}
+                    {chat.ipa && (
+                      <span
+                        className={`text-[11px] mt-1 font-mono opacity-80 ${chat.role === 'user' ? 'text-blue-100' : 'text-[hsl(var(--muted-foreground))]'}`}
+                      >
+                        /{chat.ipa}/
+                      </span>
+                    )}
+                  </div>
+
+                  {/* Hint indicator if explain exists */}
+                  {chat.explain && (
                     <div
-                      className={`text-[10px] mt-1 font-mono opacity-80 ${chat.role === 'user' ? 'text-blue-100' : 'text-gray-500'}`}
-                    >
-                      /{chat.ipa}/
-                    </div>
+                      className={`absolute -top-1 -right-1 w-2 h-2 rounded-full bg-blue-400 opacity-0 group-hover:opacity-100 transition-opacity ${expandedExplanation === chat.id ? 'opacity-100' : ''}`}
+                    />
                   )}
                 </div>
 
                 {/* Audio Button */}
                 <button
-                  onClick={() => playAudio(chat.content, chat.audio, chat.id)}
+                  onClick={(e) => playAudio(e, chat.content, chat.audio, chat.id)}
                   className={`p-1.5 rounded-full hover:bg-[hsl(var(--action-hover))] transition-colors ${playingAudioId === chat.id ? 'text-[hsl(var(--primary))]' : 'text-[hsl(var(--muted-foreground))]'}`}
                 >
                   <Volume2
-                    size={14}
+                    size={16}
                     className={playingAudioId === chat.id ? 'animate-pulse' : ''}
                   />
                 </button>
-
-                {/* Explain Button (if available) */}
-                {chat.explain && (
-                  <button
-                    onClick={() =>
-                      setExpandedExplanation(expandedExplanation === chat.id ? null : chat.id)
-                    }
-                    className={`p-1.5 rounded-full hover:bg-[hsl(var(--action-hover))] transition-colors text-[hsl(var(--muted-foreground))]`}
-                  >
-                    <Info size={14} />
-                  </button>
-                )}
               </div>
 
-              {/* Explanation Panel */}
+              {/* Explanation Panel - Inline but styled distinctively */}
               {expandedExplanation === chat.id && chat.explain && (
                 <div
-                  className={`mt-1 text-xs text-[hsl(var(--muted-foreground))] bg-[hsl(var(--muted))] p-2 rounded-md max-w-[85%] animate-in fade-in zoom-in-95 duration-200`}
+                  className={`mt-2 ml-2 text-xs text-[hsl(var(--muted-foreground))] bg-[hsl(var(--muted))]/50 border border-[hsl(var(--border))] p-3 rounded-lg max-w-[85%] animate-in fade-in slide-in-from-top-1 duration-200 select-none`}
                 >
-                  <span className="font-bold text-[hsl(var(--primary))]">Explain: </span>
-                  {chat.explain}
+                  <div className="flex items-start gap-2">
+                    <Info size={14} className="mt-0.5 text-[hsl(var(--primary))]" />
+                    <span className="italic">{chat.explain}</span>
+                  </div>
                 </div>
               )}
             </div>
@@ -234,8 +255,8 @@ export const Chatting: React.FC<ChattingProps> = ({ quiz, header, onUpdate }) =>
 
           {isTyping && (
             <div className="flex justify-start animate-in fade-in slide-in-from-bottom-1">
-              <div className="bg-[hsl(var(--muted))] text-[hsl(var(--foreground))] rounded-xl rounded-bl-none px-3 py-2 border border-[hsl(var(--border))]">
-                <div className="flex space-x-1">
+              <div className="bg-[hsl(var(--muted))] text-[hsl(var(--foreground))] rounded-2xl rounded-bl-none px-4 py-3 border border-[hsl(var(--border))]">
+                <div className="flex space-x-1.5">
                   <div className="w-1.5 h-1.5 bg-[hsl(var(--foreground))] opacity-40 rounded-full animate-bounce [animation-delay:-0.3s]"></div>
                   <div className="w-1.5 h-1.5 bg-[hsl(var(--foreground))] opacity-40 rounded-full animate-bounce [animation-delay:-0.15s]"></div>
                   <div className="w-1.5 h-1.5 bg-[hsl(var(--foreground))] opacity-40 rounded-full animate-bounce"></div>
@@ -248,11 +269,11 @@ export const Chatting: React.FC<ChattingProps> = ({ quiz, header, onUpdate }) =>
 
       {/* Interactive Options Area */}
       {showOptions && (
-        <div className="p-3 bg-[hsl(var(--card))] border-t border-[hsl(var(--border))] animate-in slide-in-from-bottom-2 duration-300 z-10">
-          <p className="text-xs font-medium text-[hsl(var(--muted-foreground))] mb-2 text-center">
-            Choose the best response:
+        <div className="p-4 bg-[hsl(var(--card))] border-t border-[hsl(var(--border))] animate-in slide-in-from-bottom-2 duration-300 z-10 shadow-lg -mt-px relative">
+          <p className="text-xs font-semibold uppercase tracking-wider text-[hsl(var(--muted-foreground))] mb-3 text-center">
+            Select the best response
           </p>
-          <div className="grid gap-2 max-w-xl mx-auto">
+          <div className="grid gap-2.5 max-w-xl mx-auto">
             {currentChat.options?.map((option) => {
               // Determine state
               const isSelected = currentAnswerState?.selected === option.key;
@@ -260,18 +281,18 @@ export const Chatting: React.FC<ChattingProps> = ({ quiz, header, onUpdate }) =>
               const isWrongAnswer = !currentAnswerState?.isCorrect && isSelected;
 
               // Styles
-              let borderClass = 'border-[hsl(var(--border))]';
+              let borderClass = 'border-[hsl(var(--border))] hover:border-[hsl(var(--primary))]';
               let bgClass = 'bg-[hsl(var(--background))] hover:bg-[hsl(var(--accent))]';
               let icon = null;
 
               if (isCorrectAnswer) {
-                borderClass = 'border-green-500';
+                borderClass = 'border-green-500 ring-1 ring-green-500';
                 bgClass = 'bg-green-500/10';
-                icon = <Check size={14} className="text-green-600" />;
+                icon = <Check size={16} className="text-green-600" strokeWidth={3} />;
               } else if (isWrongAnswer) {
-                borderClass = 'border-red-500';
+                borderClass = 'border-red-500 ring-1 ring-red-500';
                 bgClass = 'bg-red-500/10';
-                icon = <X size={14} className="text-red-500" />;
+                icon = <X size={16} className="text-red-500" strokeWidth={3} />;
               }
 
               return (
@@ -282,12 +303,12 @@ export const Chatting: React.FC<ChattingProps> = ({ quiz, header, onUpdate }) =>
                   }
                   disabled={currentAnswerState?.isCorrect}
                   className={`
-                    w-full flex items-center justify-between p-2.5 rounded-lg border text-left transition-all duration-200
+                    w-full flex items-center justify-between p-3 rounded-xl border-2 text-left transition-all duration-200
                     ${borderClass} ${bgClass}
-                    active:scale-[0.99]
+                    active:scale-[0.98] outline-none
                 `}
                 >
-                  <span className="text-sm text-[hsl(var(--foreground))] font-medium flex-1">
+                  <span className="text-sm text-[hsl(var(--foreground))] font-medium flex-1 pr-2">
                     {option.text}
                   </span>
                   {icon}
@@ -296,20 +317,32 @@ export const Chatting: React.FC<ChattingProps> = ({ quiz, header, onUpdate }) =>
             })}
           </div>
           {currentAnswerState?.selected && !currentAnswerState?.isCorrect && (
-            <p className="text-center text-xs text-red-500 font-medium mt-2 animate-pulse">
+            <p className="text-center text-xs text-red-500 font-bold mt-2 animate-pulse">
               Try again!
             </p>
           )}
         </div>
       )}
 
-      {/* End Indicator */}
+      {/* End Completed Screen */}
       {currentIndex >= chats.length && !isTyping && (
-        <div className="p-3 text-center animate-in fade-in duration-500">
-          <div className="inline-flex items-center justify-center w-8 h-8 rounded-full bg-green-100 text-green-600 mb-1">
-            <Check size={16} strokeWidth={3} />
+        <div className="p-6 text-center animate-in zoom-in-95 duration-500 flex flex-col items-center justify-center bg-[hsl(var(--background))] h-full absolute inset-0 z-20">
+          <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mb-4 animate-bounce">
+            <Check size={40} className="text-green-600" strokeWidth={3} />
           </div>
-          <p className="text-xs text-[hsl(var(--muted-foreground))] font-medium">Completed</p>
+          <h2 className="text-xl font-bold text-[hsl(var(--foreground))] mb-2">
+            Lesson Completed!
+          </h2>
+          <p className="text-[hsl(var(--muted-foreground))] mb-8 max-w-xs mx-auto">
+            Great job! You've finished this conversation practice.
+          </p>
+
+          <button
+            onClick={handleReplay}
+            className="px-8 py-3 bg-[hsl(var(--primary))] text-white rounded-full font-bold shadow-lg hover:shadow-xl hover:scale-105 active:scale-95 transition-all"
+          >
+            Practice Again
+          </button>
         </div>
       )}
     </div>

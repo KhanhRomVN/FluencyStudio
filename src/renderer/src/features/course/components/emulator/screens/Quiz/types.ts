@@ -27,6 +27,7 @@ export interface ChatMessage {
   ipa?: string;
   audio?: string;
   explain?: string;
+  img?: string;
 }
 
 export interface MatchingItem {

@@ -66,9 +66,11 @@ export interface QuizAnswer {
 export interface QuizQuestion {
   id: string;
   question: string;
-  options?: string[]; // For multiple choice
-  answer?: string | string[] | { key: string; text: string }[]; // For gap-fill or multiple choice
+  options?: string[]; // For multiple choice (now just text values, no keys)
+  answer?: string | string[]; // For gap-fill or multiple choice (text value)
+  answers?: string[]; // For multiple-answer questions (text values)
   example?: string; // For speaking/writing sample answers
   topic?: string; // For speaking part 3
   exampleQuestion?: string[]; // For speaking part 3 (multiple questions per block)
+  explain?: string; // For explanation of the answer
 }

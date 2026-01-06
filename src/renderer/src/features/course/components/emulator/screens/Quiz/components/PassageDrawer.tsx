@@ -32,8 +32,10 @@ export const PassageDrawer: React.FC<PassageDrawerProps> = ({
   const [error, setError] = useState<string | null>(null);
   const [activeSegmentIndex, setActiveSegmentIndex] = useState<number | null>(null);
 
-  // DirectoryDrawer state
+  // DirectoryDrawer state with delayed mount for animation
   const [directoryOpen, setDirectoryOpen] = useState(false);
+  const [directoryMounted, setDirectoryMounted] = useState(false);
+  const [directoryVisible, setDirectoryVisible] = useState(false);
   const [selectedWord, setSelectedWord] = useState<string | null>(null);
 
   // Long press handling
@@ -41,17 +43,35 @@ export const PassageDrawer: React.FC<PassageDrawerProps> = ({
   const isLongPress = useRef(false);
   const startPos = useRef({ x: 0, y: 0 });
 
+  // Delayed mount/unmount for DirectoryDrawer animation
   useEffect(() => {
-    if (isOpen && passagePath) {
-      setLoading(true);
-      setError(null);
-      setActiveSegmentIndex(null);
+    if (directoryOpen) {
+      setDirectoryMounted(true);
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => setDirectoryVisible(true));
+      });
+    } else {
+      setDirectoryVisible(false);
+      const timer = setTimeout(() => setDirectoryMounted(false), 300);
+      return () => clearTimeout(timer);
+    }
+  }, [directoryOpen]);
 
-      // Resolve full path if relative
-      let fullPath = passagePath;
-      if (passagePath.startsWith('./') && parentFilePath) {
-        const dir = parentFilePath.substring(0, parentFilePath.lastIndexOf('/'));
-        fullPath = `${dir}/${passagePath.substring(2)}`;
+  useEffect(() => {
+    if (!isOpen || !passagePath) return;
+
+    // Resolve full path if relative
+    let fullPath = passagePath;
+    if (passagePath.startsWith('./') && parentFilePath) {
+      const dir = parentFilePath.substring(0, parentFilePath.lastIndexOf('/'));
+      fullPath = `${dir}/${passagePath.substring(2)}`;
+    }
+
+    const loadPassage = (showLoading = true) => {
+      if (showLoading) {
+        setLoading(true);
+        setError(null);
+        setActiveSegmentIndex(null);
       }
 
       folderService
@@ -67,9 +87,33 @@ export const PassageDrawer: React.FC<PassageDrawerProps> = ({
           console.error(err);
           setError('Failed to load passage');
         })
-        .finally(() => setLoading(false));
-    }
+        .finally(() => {
+          if (showLoading) setLoading(false);
+        });
+    };
+
+    // Initial load
+    loadPassage();
+
+    // Watch for file changes
+    const handleFileChange = () => {
+      console.log('[PassageDrawer] File changed, reloading...');
+      loadPassage(false); // Don't show loading spinner on refresh
+    };
+
+    folderService.watchFile(fullPath, handleFileChange);
+
+    return () => {
+      folderService.unwatchFile(fullPath, handleFileChange);
+    };
   }, [isOpen, passagePath, parentFilePath]);
+
+  // Helper function to parse content and handle </n> tags
+  const parseContent = (content: string): string => {
+    if (!content) return '';
+    // Replace </n> tags with <br/> for proper line breaks
+    return content.replace(/<\/n\s*>/gi, '<br/>');
+  };
 
   const getWordFromPoint = (x: number, y: number): string | null => {
     // @ts-ignore - Webkit specific
@@ -222,7 +266,7 @@ export const PassageDrawer: React.FC<PassageDrawerProps> = ({
                 return (
                   <React.Fragment key={index}>
                     <span
-                      className={`inline cursor-pointer px-1 py-0.5 rounded mx-1 transition-all duration-200 select-text ${
+                      className={`inline cursor-pointer py-0.5 rounded transition-all duration-200 select-text ${
                         isActive
                           ? 'bg-[hsl(var(--primary))]/20 shadow-sm'
                           : 'hover:bg-[hsl(var(--primary))]/5'
@@ -232,17 +276,15 @@ export const PassageDrawer: React.FC<PassageDrawerProps> = ({
                       onPointerUp={(e) => handlePointerUp(e, index)}
                       onPointerCancel={handlePointerCancel}
                       onContextMenu={(e) => e.preventDefault()}
-                      dangerouslySetInnerHTML={{ __html: segment.content }}
+                      dangerouslySetInnerHTML={{ __html: parseContent(segment.content) }}
                     />
 
                     {isActive && (
                       <span
-                        className="inline ml-1 px-2 py-0.5 rounded bg-[hsl(var(--secondary))] text-[hsl(var(--secondary-foreground))] font-medium italic [&_p]:inline [&_p]:m-0 animate-in fade-in zoom-in-95 duration-200 border border-[hsl(var(--border))]"
-                        dangerouslySetInnerHTML={{ __html: `(${segment.translate})` }}
+                        className="inline py-0.5 rounded bg-[hsl(var(--secondary))] text-[hsl(var(--secondary-foreground))] font-medium italic [&_p]:inline [&_p]:m-0 animate-in fade-in zoom-in-95 duration-200 border border-[hsl(var(--border))]"
+                        dangerouslySetInnerHTML={{ __html: parseContent(segment.translate) }}
                       />
                     )}
-                    {/* Add a space after each segment for separation */}
-                    <span> </span>
                   </React.Fragment>
                 );
               })}
@@ -258,11 +300,13 @@ export const PassageDrawer: React.FC<PassageDrawerProps> = ({
       </div>
 
       {/* Directory Drawer for word lookup */}
-      <DirectoryDrawer
-        isOpen={directoryOpen}
-        onClose={() => setDirectoryOpen(false)}
-        word={selectedWord}
-      />
+      {directoryMounted && (
+        <DirectoryDrawer
+          isOpen={directoryVisible}
+          onClose={() => setDirectoryOpen(false)}
+          word={selectedWord}
+        />
+      )}
     </>
   );
 };

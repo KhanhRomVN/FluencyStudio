@@ -1,4 +1,4 @@
-import { FileText, Upload, X, ChevronLeft, ChevronRight, Loader2 } from 'lucide-react';
+import { FileText, Upload, X, ChevronLeft, ChevronRight, Loader2, Copy } from 'lucide-react';
 import { useState, useRef, useEffect, memo, useCallback } from 'react';
 import DocViewer, { DocViewerRenderers } from '@cyntler/react-doc-viewer';
 import { pdfjs, Document, Page } from 'react-pdf';
@@ -13,10 +13,23 @@ pdfjs.GlobalWorkerOptions.workerSrc = new URL(
   import.meta.url,
 ).toString();
 
+interface ContextMenuState {
+  visible: boolean;
+  x: number;
+  y: number;
+  pageNumber: number;
+}
+
 const PDFPreview = ({ file, targetPage }: { file: File; targetPage?: number }) => {
   const [numPages, setNumPages] = useState<number>(0);
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [pageInput, setPageInput] = useState('1');
+  const [contextMenu, setContextMenu] = useState<ContextMenuState>({
+    visible: false,
+    x: 0,
+    y: 0,
+    pageNumber: 1,
+  });
 
   const containerRef = useRef<HTMLDivElement>(null);
   const pageRefs = useRef<{ [key: number]: HTMLDivElement | null }>({});
@@ -80,6 +93,63 @@ const PDFPreview = ({ file, targetPage }: { file: File; targetPage?: number }) =
     }
   };
 
+  // Context menu handlers
+  const handleContextMenu = (e: React.MouseEvent, pageNumber: number) => {
+    e.preventDefault();
+    setContextMenu({
+      visible: true,
+      x: e.clientX,
+      y: e.clientY,
+      pageNumber,
+    });
+  };
+
+  const closeContextMenu = () => {
+    setContextMenu((prev) => ({ ...prev, visible: false }));
+  };
+
+  const handleCopyPage = async () => {
+    const pageEl = pageRefs.current[contextMenu.pageNumber];
+    if (!pageEl) {
+      closeContextMenu();
+      return;
+    }
+
+    const canvas = pageEl.querySelector('canvas');
+    if (!canvas) {
+      closeContextMenu();
+      return;
+    }
+
+    try {
+      // Convert canvas to blob
+      const blob = await new Promise<Blob | null>((resolve) => {
+        canvas.toBlob(resolve, 'image/png');
+      });
+
+      if (blob) {
+        // Copy to clipboard using Clipboard API
+        await navigator.clipboard.write([new ClipboardItem({ 'image/png': blob })]);
+      }
+    } catch (err) {
+      console.error('Failed to copy page image:', err);
+    }
+
+    closeContextMenu();
+  };
+
+  // Close context menu on outside click
+  useEffect(() => {
+    const handleClickOutside = () => {
+      if (contextMenu.visible) {
+        closeContextMenu();
+      }
+    };
+
+    document.addEventListener('click', handleClickOutside);
+    return () => document.removeEventListener('click', handleClickOutside);
+  }, [contextMenu.visible]);
+
   return (
     <div className="flex flex-col h-full w-full">
       {/* Header */}
@@ -139,7 +209,8 @@ const PDFPreview = ({ file, targetPage }: { file: File; targetPage?: number }) =
               key={`page_${index + 1}`}
               ref={(el) => (pageRefs.current[index + 1] = el)}
               data-page-number={index + 1}
-              className="shadow-sm w-full flex justify-center"
+              className="shadow-sm w-full flex justify-center cursor-context-menu"
+              onContextMenu={(e) => handleContextMenu(e, index + 1)}
             >
               <Page
                 pageNumber={index + 1}
@@ -151,6 +222,26 @@ const PDFPreview = ({ file, targetPage }: { file: File; targetPage?: number }) =
             </div>
           ))}
         </Document>
+
+        {/* Context Menu */}
+        {contextMenu.visible && (
+          <div
+            className="fixed z-50 bg-popover border border-border rounded-md shadow-lg py-1 min-w-[120px]"
+            style={{
+              left: contextMenu.x,
+              top: contextMenu.y,
+            }}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <button
+              onClick={handleCopyPage}
+              className="w-full flex items-center gap-2 px-3 py-1.5 text-sm text-popover-foreground hover:bg-muted transition-colors"
+            >
+              <Copy size={14} />
+              Copy
+            </button>
+          </div>
+        )}
       </div>
 
       {/* CSS Override for React-PDF to ensure full width responsiveness */}

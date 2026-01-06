@@ -93,7 +93,7 @@ export const DirectoryDrawer: React.FC<DirectoryDrawerProps> = ({ isOpen, onClos
         </div>
 
         {/* Content */}
-        <div className="flex-1 overflow-y-auto p-6 text-[hsl(var(--foreground))] bg-[hsl(var(--background))] pb-20 [&::-webkit-scrollbar]:hidden">
+        <div className="flex-1 overflow-y-auto p-6 text-[hsl(var(--foreground))] bg-[hsl(var(--background))] pb-16 [&::-webkit-scrollbar]:hidden">
           {loading && (
             <div className="flex items-center justify-center h-40 text-[hsl(var(--muted-foreground))] animate-pulse">
               Searching definition...
@@ -108,13 +108,13 @@ export const DirectoryDrawer: React.FC<DirectoryDrawerProps> = ({ isOpen, onClos
           )}
 
           {!loading && !error && entry && (
-            <div className="space-y-6">
+            <div className="space-y-4">
               {/* Source Badge if requested by User in previous turn, let's put it here or near Title? User said "thêm 1 badge là data này lấy từ freedictionaryapi.com hay api.dictionaryapi.dev" */}
 
               {/* Word Header */}
               <div className="space-y-2">
                 <div className="flex items-center gap-3 flex-wrap">
-                  <h1 className="text-3xl font-bold text-[hsl(var(--foreground))] capitalize">
+                  <h1 className="text-2xl font-bold text-[hsl(var(--foreground))] capitalize">
                     {entry.word}
                   </h1>
                   {/* Source Badge */}
@@ -132,9 +132,9 @@ export const DirectoryDrawer: React.FC<DirectoryDrawerProps> = ({ isOpen, onClos
                     {entry.phonetics.map((p, idx) => (
                       <div
                         key={idx}
-                        className="flex items-center gap-2 bg-[hsl(var(--muted))] px-3 py-1 rounded-full"
+                        className="flex items-center gap-1.5 bg-[hsl(var(--muted))] px-2 py-0.5 rounded-full"
                       >
-                        <span className="font-mono text-sm">{p.text}</span>
+                        <span className="font-mono text-xs">{p.text}</span>
                         {p.tag && (
                           <span className="text-[10px] uppercase font-bold text-[hsl(var(--muted-foreground))]">
                             {p.tag}
@@ -155,25 +155,25 @@ export const DirectoryDrawer: React.FC<DirectoryDrawerProps> = ({ isOpen, onClos
               </div>
 
               {/* Meanings */}
-              <div className="space-y-6">
+              <div className="space-y-4">
                 {entry.meanings.map((meaning, mIdx) => (
-                  <div key={mIdx} className="space-y-3">
+                  <div key={mIdx} className="space-y-2">
                     <div className="flex items-center gap-2">
-                      <span className="px-2 py-1 bg-[hsl(var(--primary))]/10 text-[hsl(var(--primary))] text-sm font-bold rounded uppercase">
+                      <span className="px-1.5 py-0.5 bg-[hsl(var(--primary))]/10 text-[hsl(var(--primary))] text-xs font-bold rounded uppercase">
                         {meaning.partOfSpeech}
                       </span>
                       <div className="h-[1px] flex-1 bg-[hsl(var(--border))]/50"></div>
                     </div>
 
-                    <ul className="space-y-4 pl-0">
+                    <ul className="space-y-2 pl-0">
                       {meaning.definitions.map((def, dIdx) => (
-                        <li key={dIdx} className="space-y-2">
+                        <li key={dIdx} className="space-y-1">
                           <div className="flex gap-2">
-                            <span className="text-[hsl(var(--muted-foreground))] font-mono text-sm mt-1">
+                            <span className="text-[hsl(var(--muted-foreground))] font-mono text-xs mt-0.5">
                               {dIdx + 1}.
                             </span>
                             <div className="flex-1">
-                              <p className="text-[hsl(var(--foreground))] text-base leading-relaxed">
+                              <p className="text-[hsl(var(--foreground))] text-sm leading-relaxed">
                                 {def.definition}
                               </p>
 
@@ -183,7 +183,7 @@ export const DirectoryDrawer: React.FC<DirectoryDrawerProps> = ({ isOpen, onClos
                                   {def.translations.map((t, tIdx) => (
                                     <span
                                       key={tIdx}
-                                      className="inline-flex items-center text-[hsl(var(--secondary-foreground))] font-medium text-sm"
+                                      className="inline-flex items-center text-[hsl(var(--secondary-foreground))] font-medium text-xs"
                                     >
                                       {t}
                                       {tIdx < def.translations.length - 1 ? ',' : ''}

@@ -81,12 +81,16 @@ export const MultipleChoice: React.FC<MultipleChoiceProps> = ({
   const renderQuestion = (question: QuizQuestion) => {
     const userSelections = selectedAnswers[question.id] || [];
 
+    // Options are now string[], normalize them
+    const options: string[] = (question.options || []) as string[];
+
     // Normalize correct answers to a Set for easy lookup
+    // Answers are now the text values themselves
     const correctAnswers = new Set<string>();
     if (question.answers && question.answers.length > 0) {
-      question.answers.forEach((a) => correctAnswers.add(a));
+      question.answers.forEach((a) => correctAnswers.add(String(a)));
     } else if (question.answer) {
-      correctAnswers.add(question.answer);
+      correctAnswers.add(String(question.answer));
     }
 
     const isQuestionCorrect =
@@ -100,19 +104,16 @@ export const MultipleChoice: React.FC<MultipleChoiceProps> = ({
         </h3>
 
         <div className="space-y-3">
-          {question.options.map((option) => {
-            const isSelected = userSelections.includes(option.key);
-            const isAnswerCorrect = correctAnswers.has(option.key);
+          {options.map((optionText, index) => {
+            // Use the option text as the key for selection/answer matching
+            const isSelected = userSelections.includes(optionText);
+            const isAnswerCorrect = correctAnswers.has(optionText);
 
             let containerClass = 'border-[hsl(var(--border))] bg-transparent';
             let textColor = 'text-[hsl(var(--foreground))]';
             let circleBorder = 'border-[hsl(var(--border))]';
             let circleBg = 'bg-transparent';
-            let circleContent = (
-              <span className="text-xs font-bold text-[hsl(var(--muted-foreground))]">
-                {option.key}
-              </span>
-            );
+            let circleContent: React.ReactNode = null;
 
             if (isChecked) {
               if (isAnswerCorrect) {
@@ -142,8 +143,8 @@ export const MultipleChoice: React.FC<MultipleChoiceProps> = ({
 
             return (
               <div
-                key={option.key}
-                onClick={() => handleOptionSelect(question.id, option.key)}
+                key={index}
+                onClick={() => handleOptionSelect(question.id, optionText)}
                 className={`
                     flex items-center p-3 rounded-lg border transition-all duration-200
                     ${containerClass}
@@ -158,7 +159,7 @@ export const MultipleChoice: React.FC<MultipleChoiceProps> = ({
                 >
                   {circleContent}
                 </div>
-                <span className={`text-[15px] font-medium ${textColor}`}>{option.text}</span>
+                <span className={`text-[15px] font-medium ${textColor}`}>{optionText}</span>
               </div>
             );
           })}

@@ -56,8 +56,10 @@ export const TranscriptDrawer: React.FC<TranscriptDrawerProps> = ({
   // Track active dialogue ID for manual translation toggle
   const [activeDialogueId, setActiveDialogueId] = useState<string | null>(null);
 
-  // DirectoryDrawer state
+  // DirectoryDrawer state with delayed mount for animation
   const [directoryOpen, setDirectoryOpen] = useState(false);
+  const [directoryMounted, setDirectoryMounted] = useState(false);
+  const [directoryVisible, setDirectoryVisible] = useState(false);
   const [selectedWord, setSelectedWord] = useState<string | null>(null);
 
   // Long press handling
@@ -66,6 +68,20 @@ export const TranscriptDrawer: React.FC<TranscriptDrawerProps> = ({
   const startPos = useRef({ x: 0, y: 0 });
 
   const activeSegmentRef = useRef<HTMLDivElement | null>(null);
+
+  // Delayed mount/unmount for DirectoryDrawer animation
+  useEffect(() => {
+    if (directoryOpen) {
+      setDirectoryMounted(true);
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => setDirectoryVisible(true));
+      });
+    } else {
+      setDirectoryVisible(false);
+      const timer = setTimeout(() => setDirectoryMounted(false), 300);
+      return () => clearTimeout(timer);
+    }
+  }, [directoryOpen]);
 
   useEffect(() => {
     if (isOpen && transcriptPath) {
@@ -351,11 +367,13 @@ export const TranscriptDrawer: React.FC<TranscriptDrawerProps> = ({
       </div>
 
       {/* Directory Drawer for word lookup */}
-      <DirectoryDrawer
-        isOpen={directoryOpen}
-        onClose={() => setDirectoryOpen(false)}
-        word={selectedWord}
-      />
+      {directoryMounted && (
+        <DirectoryDrawer
+          isOpen={directoryVisible}
+          onClose={() => setDirectoryOpen(false)}
+          word={selectedWord}
+        />
+      )}
     </>
   );
 };

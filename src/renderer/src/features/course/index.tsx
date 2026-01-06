@@ -9,6 +9,9 @@ import {
   Palette,
   AudioWaveform,
   FileSearch,
+  BookOpenText,
+  AudioLines,
+  ArrowLeft,
 } from 'lucide-react';
 import { FilePreviewPanel } from './components/FilePreviewPanel';
 import { CodeBlock } from '../../components/CodeBlock';
@@ -55,6 +58,11 @@ const CoursePageContent = () => {
   const widthRef = useRef(384); // Track live width for event handlers
   const [isResizing, setIsResizing] = useState(false);
   const sidebarRef = useRef<HTMLDivElement>(null);
+
+  // State for Source Code Preview switching (quiz -> passage/transcript)
+  const [sourceViewMode, setSourceViewMode] = useState<'quiz' | 'passage' | 'transcript'>('quiz');
+  const [linkedSourceData, setLinkedSourceData] = useState<any>(null);
+  const [linkedSourcePath, setLinkedSourcePath] = useState<string>('');
 
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
@@ -124,6 +132,65 @@ const CoursePageContent = () => {
       setLoading(false);
     }
   }, [courseId]);
+
+  // Reset source view mode when selection changes
+  useEffect(() => {
+    setSourceViewMode('quiz');
+    setLinkedSourceData(null);
+    setLinkedSourcePath('');
+  }, [selection.id]);
+
+  // Load linked source (passage/transcript) data
+  const loadLinkedSource = async (relativePath: string, type: 'passage' | 'transcript') => {
+    if (!relativePath || !selection.parentData?._filePath) return;
+
+    try {
+      // Resolve relative path from the lesson file location
+      const lessonDir = selection.parentData._filePath.substring(
+        0,
+        selection.parentData._filePath.lastIndexOf('/'),
+      );
+      const absolutePath = `${lessonDir}/${relativePath.replace('./', '')}`;
+
+      // Load the JSON file
+      const data = await folderService.parseCourseMetadata(absolutePath);
+      if (data) {
+        setLinkedSourceData(data);
+        setLinkedSourcePath(absolutePath);
+        setSourceViewMode(type);
+      }
+    } catch (error) {
+      console.error(`Error loading ${type}:`, error);
+    }
+  };
+
+  // Handle linked source data update (save)
+  const handleLinkedSourceChange = (newCode: string) => {
+    try {
+      const parsed = JSON.parse(newCode);
+      setLinkedSourceData(parsed);
+
+      // Debounced save
+      if (saveTimeoutRef.current) {
+        clearTimeout(saveTimeoutRef.current);
+      }
+      saveTimeoutRef.current = setTimeout(async () => {
+        if (linkedSourcePath) {
+          const result = await folderService.saveFile(
+            linkedSourcePath,
+            JSON.stringify(parsed, null, 2),
+          );
+          if (!result.success) {
+            console.error('Failed to save linked source:', result.error);
+          } else {
+            console.log('Linked source saved:', linkedSourcePath);
+          }
+        }
+      }, 1000);
+    } catch (e) {
+      // Invalid JSON
+    }
+  };
 
   // Load course data and watch for changes
   useEffect(() => {
@@ -557,16 +624,70 @@ const CoursePageContent = () => {
         {/* CODE BLOCK AREA */}
         <div className="flex-1 flex flex-col min-w-0 border-r">
           <div className="h-10 border-b flex items-center px-4 bg-muted/20 justify-between">
-            <span className="text-xs font-medium text-muted-foreground">Source Code Preview</span>
-            <span className="text-xs text-muted-foreground bg-muted px-2 py-0.5 rounded">JSON</span>
+            <div className="flex items-center gap-2">
+              {sourceViewMode !== 'quiz' && (
+                <button
+                  onClick={() => {
+                    setSourceViewMode('quiz');
+                    setLinkedSourceData(null);
+                    setLinkedSourcePath('');
+                  }}
+                  className="p-1 hover:bg-muted rounded transition-colors text-muted-foreground hover:text-foreground"
+                  title="Back to Quiz"
+                >
+                  <ArrowLeft size={14} />
+                </button>
+              )}
+              <span className="text-xs font-medium text-muted-foreground">
+                {sourceViewMode === 'quiz' && 'Source Code Preview'}
+                {sourceViewMode === 'passage' && 'Passage Editor'}
+                {sourceViewMode === 'transcript' && 'Transcript Editor'}
+              </span>
+            </div>
+            <div className="flex items-center gap-2">
+              {/* Switch buttons - only show for quiz type with passage/transcript */}
+              {selection.type === 'quiz' && sourceViewMode === 'quiz' && (
+                <>
+                  {selection.sourceData?.passage && (
+                    <button
+                      onClick={() => loadLinkedSource(selection.sourceData.passage, 'passage')}
+                      className="p-1.5 hover:bg-muted rounded transition-colors text-muted-foreground hover:text-primary flex items-center gap-1"
+                      title="Edit Passage"
+                    >
+                      <BookOpenText size={14} />
+                      <span className="text-xs">Passage</span>
+                    </button>
+                  )}
+                  {selection.sourceData?.transcript && (
+                    <button
+                      onClick={() =>
+                        loadLinkedSource(selection.sourceData.transcript, 'transcript')
+                      }
+                      className="p-1.5 hover:bg-muted rounded transition-colors text-muted-foreground hover:text-primary flex items-center gap-1"
+                      title="Edit Transcript"
+                    >
+                      <AudioLines size={14} />
+                      <span className="text-xs">Transcript</span>
+                    </button>
+                  )}
+                </>
+              )}
+              <span className="text-xs text-muted-foreground bg-muted px-2 py-0.5 rounded">
+                JSON
+              </span>
+            </div>
           </div>
           <div className="flex-1 overflow-hidden relative">
             <CodeBlock
-              code={JSON.stringify(selection.sourceData || selection.data, null, 2)}
+              code={
+                sourceViewMode === 'quiz'
+                  ? JSON.stringify(selection.sourceData || selection.data, null, 2)
+                  : JSON.stringify(linkedSourceData, null, 2)
+              }
               language="json"
               themeConfig={{ background: '#1e1e1e10' }}
               readOnly={false}
-              onChange={handleCodeChange}
+              onChange={sourceViewMode === 'quiz' ? handleCodeChange : handleLinkedSourceChange}
               highlightText={activeElementContent}
             />
           </div>

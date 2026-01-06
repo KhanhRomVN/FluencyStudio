@@ -105,60 +105,33 @@
           "id": "question_01",
           "question": "Why does the speaker apologise about the seats?",
           "options": [
-            {
-              "key": "A",
-              "text": "They are too small."
-            },
-            {
-              "key": "B",
-              "text": "There are not enough of them."
-            },
-            {
-              "key": "C",
-              "text": "Some of them are very close together."
-            }
+            "They are too small.",
+            "There are not enough of them.",
+            "Some of them are very close together."
           ],
-          "answer": "C",
+          "answer": "Some of them are very close together.",
           "explain": "<p>Diễn giả nói: \"We have brought in extra seats so that no one has to stand, but it does mean that the people at the back of the room may be a bit squashed.\"</p>\n<p>Từ khóa \"squashed\" có nghĩa là bị ép chặt, chật chội, tương đương với \"very close together\" trong lựa chọn C.</p>\n<p>Phân tích các phương án sai:</p>\n<p>A. \"They are too small\" - Không được đề cập trong bài. Diễn giả chỉ nói về khoảng cách giữa các ghế, không nói về kích thước ghế.</p>\n<p>B. \"There are not enough of them\" - Ngược lại với thông tin thực tế: \"We have brought in extra seats so that no one has to stand\" - Đã có thêm ghế để không ai phải đứng.</p>\n<p>Đây là ví dụ về việc sử dụng từ đồng nghĩa/paraphrase trong IELTS. \"Squashed\" được paraphrase thành \"very close together\".</p>"
         },
         {
           "id": "question_02",
           "question": "What does the speaker say about the age of volunteers?",
           "options": [
-            {
-              "key": "A",
-              "text": "The age of volunteers is less important than other factors."
-            },
-            {
-              "key": "B",
-              "text": "Young volunteers are less reliable than older ones."
-            },
-            {
-              "key": "C",
-              "text": "Most volunteers are about 60 years old."
-            }
+            "The age of volunteers is less important than other factors.",
+            "Young volunteers are less reliable than older ones.",
+            "Most volunteers are about 60 years old."
           ],
-          "answer": "A",
+          "answer": "The age of volunteers is less important than other factors.",
           "explain": "<p>Diễn giả nói: \"Other considerations, such as reliability, are crucial in voluntary work and age isn't related to these in our experience.\"</p>\n<p>Câu này có nghĩa: Các yếu tố khác như độ tin cậy là quan trọng trong công việc tình nguyện, và theo kinh nghiệm của họ, tuổi tác không liên quan đến những yếu tố này. Điều này tương đương với phương án A - tuổi của tình nguyện viên ít quan trọng hơn các yếu tố khác.</p>\n<p>Phân tích các phương án sai:</p>\n<p>B. \"Young volunteers are less reliable than older ones\" - Ngược lại với thông tin: \"age isn't related to these\" (tuổi tác không liên quan đến độ tin cậy).</p>\n<p>C. \"Most volunteers are about 60 years old\" - Không được đề cập. Diễn giả chỉ nói bạn có thể từ 16 đến 60 tuổi trở lên, không nói hầu hết khoảng 60 tuổi.</p>\n<p>Đây là dạng câu hỏi yêu cầu hiểu ý chính thay vì thông tin chi tiết cụ thể.</p>"
         },
         {
           "id": "question_03",
           "question": "What does the speaker say about training?",
           "options": [
-            {
-              "key": "A",
-              "text": "It is continuous."
-            },
-            {
-              "key": "B",
-              "text": "It is conducted by a manager."
-            },
-            {
-              "key": "C",
-              "text": "It takes place online."
-            }
+            "It is continuous.",
+            "It is conducted by a manager.",
+            "It takes place online."
           ],
-          "answer": "A",
+          "answer": "It is continuous.",
           "explain": "<p>Diễn giả nói: \"What's more, training doesn't end when you start working for us. It takes place before, during and after periods of work.\"</p>\n<p>Cụm \"before, during and after\" mô tả quá trình đào tạo liên tục, không ngừng, tương đương với \"continuous\" trong phương án A.</p>\n<p>Phân tích các phương án sai:</p>\n<p>B. \"It is conducted by a manager\" - Ngược lại với thông tin: \"Often it's run by other experienced volunteers as managers tend to prefer to get on with other things.\" - Thường được thực hiện bởi các tình nguyện viên có kinh nghiệm vì các quản lý thường thích làm việc khác.</p>\n<p>C. \"It takes place online\" - Ngược lại với thông tin: \"Well, there's plenty of that and it's all face-to-face.\" - Tất cả đều trực tiếp mặt đối mặt.</p>\n<p>Đây là ví dụ về việc thông tin chính xác được đưa ra ngay sau khi đề cập đến chủ đề, và các phương án sai chứa thông tin trái ngược hoặc không được đề cập.</p>"
         }
       ]
@@ -177,30 +150,15 @@
           "id": "question_01",
           "question": "Which TWO issues does the speaker ask the audience to consider before they apply to be volunteers?",
           "options": [
-            {
-              "key": "A",
-              "text": "their financial situation"
-            },
-            {
-              "key": "B",
-              "text": "their level of commitment"
-            },
-            {
-              "key": "C",
-              "text": "their work experience"
-            },
-            {
-              "key": "D",
-              "text": "their ambition"
-            },
-            {
-              "key": "E",
-              "text": "their availability"
-            }
+            "their financial situation",
+            "their level of commitment",
+            "their work experience",
+            "their ambition",
+            "their availability"
           ],
           "answers": [
-            "B",
-            "E"
+            "their level of commitment",
+            "their availability"
           ],
           "explain": "<p>Diễn giả đề cập hai vấn đề chính cần cân nhắc:</p>\n<p>1. Về commitment (mức độ cam kết): \"What we value is dedication. Some of our most loyal volunteers earn very little themselves but still give their full energy to the work they do with us.\" - Tương ứng với phương án B.</p>\n<p>2. Về availability (khả năng sẵn sàng/thời gian có sẵn): \"But it is critical that you have enough hours in the day for whatever role we agree is suitable for you.\" - Tương ứng với phương án E.</p>\n<p>Phân tích các phương án sai:</p>\n<p>A. \"their financial situation\" - Ngược lại với thông tin: \"You may think that your income is important, but we don't ask about that.\"</p>\n<p>C. \"their work experience\" - Không được đề cập là vấn đề cần cân nhắc trước khi ứng tuyển. Diễn giả chỉ nói về lý do mọi người muốn làm tình nguyện (có thể để có kinh nghiệm làm việc).</p>\n<p>D. \"their ambition\" - Không được đề cập. Diễn giả nói: \"We don't worry about why you want to be a volunteer.\" - Họ không quan tâm đến lý do/ambition của ứng viên.</p>\n<p>Đây là dạng câu hỏi chọn 2 đáp án đúng, yêu cầu thí sinh phải xác định được tất cả các thông tin liên quan và loại trừ các phương án sai. Lưu ý rằng thông tin cho hai đáp án đúng thường xuất hiện gần nhau trong bài nghe.</p>"
         }
@@ -272,120 +230,66 @@
           "id": "question_01",
           "question": "What problem did Chantal have at the start of the talk?",
           "options": [
-            {
-              "key": "A",
-              "text": "Her view of the speaker was blocked."
-            },
-            {
-              "key": "B",
-              "text": "She was unable to find an empty seat."
-            },
-            {
-              "key": "C",
-              "text": "The students next to her were talking."
-            }
+            "Her view of the speaker was blocked.",
+            "She was unable to find an empty seat.",
+            "The students next to her were talking."
           ],
-          "answer": "A",
+          "answer": "Her view of the speaker was blocked.",
           "explain": "<p>Chantal giải thích: \"I went early so that I'd get a seat and not have to stand. But then this guy sat right in front of me and he was so tall.\" Hugo đáp lại: \"It's hard to see through people's heads, isn't it?\" và Chantal xác nhận: \"Impossible.\"</p>\n<p>Vấn đề của Chantal là tầm nhìn bị che khuất bởi một người đàn ông cao ngồi phía trước, tương ứng với phương án A \"Her view of the speaker was blocked.\"</p>\n<p>Phân tích các phương án sai:</p>\n<p>B. \"She was unable to find an empty seat\" - Ngược lại với thông tin: Chantal đến sớm và đã tìm được chỗ ngồi.</p>\n<p>C. \"The students next to her were talking\" - Hugo có hỏi về việc này (\"were the people beside you chatting or something?\") nhưng Chantal nói \"It wasn't that\" - không phải vấn đề đó.</p>"
         },
         {
           "id": "question_02",
           "question": "What were Hugo and Chantal surprised to hear about the job market?",
           "options": [
-            {
-              "key": "A",
-              "text": "It has become more competitive than it used to be."
-            },
-            {
-              "key": "B",
-              "text": "There is more variety in it than they had realised."
-            },
-            {
-              "key": "C",
-              "text": "Some areas of it are more exciting than others."
-            }
+            "It has become more competitive than it used to be.",
+            "There is more variety in it than they had realised.",
+            "Some areas of it are more exciting than others."
           ],
-          "answer": "B",
+          "answer": "There is more variety in it than they had realised.",
           "explain": "<p>Hugo nói: \"But it looks like there's a whole range of areas of work that we hadn't even thought of, like fashion journalism, for instance.\" Chantal đồng ý: \"Yeah, I wasn't expecting so many career options.\"</p>\n<p>Cụm \"a whole range of areas\" và \"so many career options\" cho thấy họ ngạc nhiên về sự đa dạng trong thị trường việc làm, tương ứng với phương án B \"There is more variety in it than they had realised.\"</p>\n<p>Phân tích các phương án sai:</p>\n<p>A. \"It has become more competitive\" - Hugo có nói \"we know we're going into a really competitive field\" nhưng đây là điều họ đã biết trước, không phải điều ngạc nhiên.</p>\n<p>C. \"Some areas are more exciting\" - Không được đề cập trong cuộc trò chuyện.</p>"
         },
         {
           "id": "question_03",
           "question": "Hugo and Chantal agree that the speaker's message was",
           "options": [
-            {
-              "key": "A",
-              "text": "unfair to them at times."
-            },
-            {
-              "key": "B",
-              "text": "hard for them to follow."
-            },
-            {
-              "key": "C",
-              "text": "critical of the industry."
-            }
+            "unfair to them at times.",
+            "hard for them to follow.",
+            "critical of the industry."
           ],
-          "answer": "A",
+          "answer": "unfair to them at times.",
           "explain": "<p>Hugo nói: \"Overall, she had quite a strong message, didn't she?\" Chantal đáp: \"She did. She kept saying things like, I know you all think this, but... and then she'd tell us how it really is.\" Hugo tiếp: \"Perhaps she thinks students are a bit narrow-minded about the industry.\" Chantal đồng ý: \"It was a bit harsh, though.\"</p>\n<p>Từ \"harsh\" (khắt khe, gay gắt) cho thấy họ cảm thấy thông điệp có phần không công bằng đối với sinh viên, tương ứng với phương án A \"unfair to them at times.\"</p>\n<p>Phân tích các phương án sai:</p>\n<p>B. \"hard for them to follow\" - Không có thông tin nào cho thấy họ khó hiểu nội dung.</p>\n<p>C. \"critical of the industry\" - Người phát biểu phê phán sinh viên hơn là phê phán ngành công nghiệp.</p>"
         },
         {
           "id": "question_04",
           "question": "What do Hugo and Chantal criticise about their school careers advice?",
           "options": [
-            {
-              "key": "A",
-              "text": "when they received the advice"
-            },
-            {
-              "key": "B",
-              "text": "how much advice was given"
-            },
-            {
-              "key": "C",
-              "text": "who gave the advice"
-            }
+            "when they received the advice",
+            "how much advice was given",
+            "who gave the advice"
           ],
-          "answer": "C",
+          "answer": "who gave the advice",
           "explain": "<p>Hugo nói: \"Well, we had numerous talks on careers, which was good, but none of them were very inspiring. They could have asked more people like today's speaker to talk to us.\" Chantal đồng ý: \"I agree. We were told about lots of different careers, just when we needed to be, but not by the experts who really know stuff.\"</p>\n<p>Cả hai đều phê phán việc người đưa ra lời khuyên không phải là chuyên gia thực thụ, tương ứng với phương án C \"who gave the advice.\"</p>\n<p>Phân tích các phương án sai:</p>\n<p>A. \"when they received the advice\" - Chantal nói \"just when we needed to be\" - đúng thời điểm.</p>\n<p>B. \"how much advice was given\" - Hugo nói \"numerous talks\" và Chantal nói \"lots of different careers\" - không thiếu về số lượng.</p>"
         },
         {
           "id": "question_05",
           "question": "When discussing their future, Hugo and Chantal disagree on",
           "options": [
-            {
-              "key": "A",
-              "text": "which is the best career in fashion."
-            },
-            {
-              "key": "B",
-              "text": "when to choose a career in fashion."
-            },
-            {
-              "key": "C",
-              "text": "why they would like a career in fashion."
-            }
+            "which is the best career in fashion.",
+            "when to choose a career in fashion.",
+            "why they would like a career in fashion."
           ],
-          "answer": "B",
+          "answer": "when to choose a career in fashion.",
           "explain": "<p>Chantal nói: \"Well, I promised myself that I'd go through this course and keep an open mind till the end.\" Hugo không đồng ý: \"But I think it's better to pick an area of the industry now and then aim to get better and better at it.\" Chantal kết luận: \"Well... I think we'll just have to differ on that issue.\"</p>\n<p>Sự bất đồng là về thời điểm chọn nghề: Chantal muốn giữ tâm thế cởi mở cho đến cuối khóa học, trong khi Hugo muốn chọn ngay bây giờ. Điều này tương ứng với phương án B \"when to choose a career in fashion.\"</p>\n<p>Phân tích các phương án sai:</p>\n<p>A. \"which is the best career\" - Họ không tranh luận về nghề nào tốt nhất.</p>\n<p>C. \"why they would like a career\" - Lý do chọn nghề không được thảo luận.</p>"
         },
         {
           "id": "question_06",
           "question": "How does Hugo feel about being an unpaid assistant?",
           "options": [
-            {
-              "key": "A",
-              "text": "He is realistic about the practice."
-            },
-            {
-              "key": "B",
-              "text": "He feels the practice is dishonest."
-            },
-            {
-              "key": "C",
-              "text": "He thinks others want to change the practice."
-            }
+            "He is realistic about the practice.",
+            "He feels the practice is dishonest.",
+            "He thinks others want to change the practice."
           ],
-          "answer": "A",
+          "answer": "He is realistic about the practice.",
           "explain": "<p>Hugo nói: \"One thing's for certain, though. From what she said, we'll be unpaid assistants in the industry for quite a long time. I'm prepared for that. Aren't you?\"</p>\n<p>Cụm \"I'm prepared for that\" cho thấy Hugo chấp nhận thực tế này một cách thực tế, tương ứng với phương án A \"He is realistic about the practice.\"</p>\n<p>Phân tích các phương án sai:</p>\n<p>B. \"He feels the practice is dishonest\" - Hugo không nói thực hành này không trung thực, mà chỉ chuẩn bị chấp nhận nó.</p>\n<p>C. \"He thinks others want to change the practice\" - Chantal là người không chấp nhận quan điểm này (\"Actually, I'm not going to accept that view\"), không phải Hugo nghĩ người khác muốn thay đổi.</p>"
         }
       ]
@@ -404,30 +308,15 @@
           "id": "question_01",
           "question": "Which TWO mistakes did the speaker admit she made in her first job?",
           "options": [
-            {
-              "key": "A",
-              "text": "being dishonest to her employer"
-            },
-            {
-              "key": "B",
-              "text": "paying too much attention to how she looked"
-            },
-            {
-              "key": "C",
-              "text": "expecting to become well known"
-            },
-            {
-              "key": "D",
-              "text": "trying to earn a lot of money"
-            },
-            {
-              "key": "E",
-              "text": "openly disliking her client"
-            }
+            "being dishonest to her employer",
+            "paying too much attention to how she looked",
+            "expecting to become well known",
+            "trying to earn a lot of money",
+            "openly disliking her client"
           ],
           "answers": [
-            "B",
-            "E"
+            "paying too much attention to how she looked",
+            "openly disliking her client"
           ],
           "explain": "<p>Diễn giả thừa nhận hai sai lầm trong công việc đầu tiên:</p>\n<p>1. Về việc chú ý quá nhiều đến ngoại hình của chính mình (Phương án B):</p>\n<p>Hugo nói: \"And then he was so mean telling her she was more interested in her own appearance than his.\" Chantal đáp: \"But she did realise he was right about that, which really made me think. I'm always considering my own clothes, but now I can see you should be focusing on your client.\"</p>\n<p>2. Về việc thể hiện công khai sự không thích khách hàng (Phương án E):</p>\n<p>Chantal nói: \"Well, as she said, she should have hidden her negative feelings about him, but she didn't.\" Điều này cho thấy diễn giả đã công khai thể hiện cảm xúc tiêu cực về khách hàng của mình.</p>\n<p>Phân tích các phương án sai:</p>\n<p>A. \"being dishonest to her employer\" - Không được đề cập.</p>\n<p>C. \"expecting to become well known\" - Không được đề cập như một sai lầm.</p>\n<p>D. \"trying to earn a lot of money\" - Ngược lại, Chantal nói: \"Though she said all she was looking for back then was experience, not financial reward.\"</p>"
         },
@@ -435,30 +324,15 @@
           "id": "question_02",
           "question": "Which TWO pieces of retail information do Hugo and Chantal agree would be useful?",
           "options": [
-            {
-              "key": "A",
-              "text": "the reasons people return fashion items"
-            },
-            {
-              "key": "B",
-              "text": "how much time people have to shop for clothes"
-            },
-            {
-              "key": "C",
-              "text": "fashion designs people want but can't find"
-            },
-            {
-              "key": "D",
-              "text": "the best time of year for fashion buying"
-            },
-            {
-              "key": "E",
-              "text": "the most popular fashion sizes"
-            }
+            "the reasons people return fashion items",
+            "how much time people have to shop for clothes",
+            "fashion designs people want but can't find",
+            "the best time of year for fashion buying",
+            "the most popular fashion sizes"
           ],
           "answers": [
-            "A",
-            "C"
+            "the reasons people return fashion items",
+            "fashion designs people want but can't find"
           ],
           "explain": "<p>Hugo và Chantal đồng ý hai loại thông tin bán lẻ hữu ích:</p>\n<p>1. Lý do mọi người trả lại sản phẩm thời trang (Phương án A):</p>\n<p>Chantal nói: \"They also take things back to the store if they aren't right.\" Hugo đồng ý và đưa ví dụ: \"Yeah. Imagine you worked in an expensive shop and you found out the garments sold there were being returned because they fell apart in the wash.\" Chantal xác nhận: \"Yeah, it would be good to know that kind of thing.\"</p>\n<p>2. Các thiết kế thời trang mà mọi người muốn nhưng không tìm thấy (Phương án C):</p>\n<p>Hugo nói: \"However, it would be useful to know if there's a gap in the market, you know? An item that no one's stocking, but that consumers are looking for.\" Chantal đồng ý: \"Yeah, people don't give up searching.\"</p>\n<p>Phân tích các phương án sai:</p>\n<p>B. \"how much time people have to shop\" - Không được đề cập.</p>\n<p>D. \"the best time of year for fashion buying\" - Không được thảo luận.</p>\n<p>E. \"the most popular fashion sizes\" - Chantal có đề cập \"how big or small the average shopper is\" nhưng Hugo nói \"I think that's an issue for manufacturers, not designers\" - đây không phải là thông tin họ đồng ý là hữu ích cho designers.</p>"
         }

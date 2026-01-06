@@ -140,6 +140,30 @@ const CoursePageContent = () => {
     setLinkedSourcePath('');
   }, [selection.id]);
 
+  // Watch linked source file for changes
+  useEffect(() => {
+    if (!linkedSourcePath) return;
+
+    const handleFileChange = async () => {
+      console.log('[CoursePage] Linked source file changed, reloading...', linkedSourcePath);
+      try {
+        const data = await folderService.parseCourseMetadata(linkedSourcePath);
+        if (data) {
+          setLinkedSourceData(data);
+        }
+      } catch (error) {
+        console.error('Error reloading linked source:', error);
+      }
+    };
+
+    console.log('[CoursePage] Watching linked source file:', linkedSourcePath);
+    folderService.watchFile(linkedSourcePath, handleFileChange);
+
+    return () => {
+      folderService.unwatchFile(linkedSourcePath, handleFileChange);
+    };
+  }, [linkedSourcePath]);
+
   // Load linked source (passage/transcript) data
   const loadLinkedSource = async (relativePath: string, type: 'passage' | 'transcript') => {
     if (!relativePath || !selection.parentData?._filePath) return;
@@ -679,6 +703,9 @@ const CoursePageContent = () => {
           </div>
           <div className="flex-1 overflow-hidden relative">
             <CodeBlock
+              key={
+                sourceViewMode === 'quiz' ? `quiz-${selection.id}` : `linked-${linkedSourcePath}`
+              }
               code={
                 sourceViewMode === 'quiz'
                   ? JSON.stringify(selection.sourceData || selection.data, null, 2)

@@ -7,8 +7,8 @@
       "translate": "<p style='italic center'>Làm thế nào việc quản lý gỗ chất lượng thấp (còn gọi là gỗ ít giá trị sử dụng) cho năng lượng sinh khối có thể khuyến khích quản lý rừng bền vững</p>"
     },
     {
-      "content": "<p><span style='bold'>A</span> A tree's 'value' depends on several factors including its species, size, form, condition, quality, function, and accessibility, and depends on the management goals for a given forest.</p>",
-      "translate": "<p><span style='bold'>A</span> 'Giá trị' của một cây phụ thuộc vào nhiều yếu tố bao gồm loài, kích thước, hình dạng, tình trạng, chất lượng, chức năng và khả năng tiếp cận, và phụ thuộc vào mục tiêu quản lý của một khu rừng nhất định.</p>"
+      "content": "<p style='bold 24'>A</p><p> A tree's 'value' depends on several factors including its species, size, form, condition, quality, function, and accessibility, and depends on the management goals for a given forest.</p>",
+      "translate": "<p>'Giá trị' của một cây phụ thuộc vào nhiều yếu tố bao gồm loài, kích thước, hình dạng, tình trạng, chất lượng, chức năng và khả năng tiếp cận, và phụ thuộc vào mục tiêu quản lý của một khu rừng nhất định.</p>"
     },
     {
       "content": "<p>The same tree can be valued very differently by each person who looks at it.</p>",
@@ -19,12 +19,12 @@
       "translate": "<p>Một cây anh đào đen lớn, thẳng có giá trị cao làm gỗ xẻ để cắt thành khúc hoặc làm đồ nội thất, nhưng đối với một chủ đất quan tâm hơn đến môi trường sống của động vật hoang dã, giá trị thực sự của thân cây đó có thể là thức ăn nó cung cấp cho động vật.</p>"
     },
     {
-      "content": "<p>Likewise, if the tree suffers from black knot disease, its value for timber decreases, but to a woodworker interested in making bowls, it brings an opportunity for a unique and beautiful piece of art.</p>",
-      "translate": "<p>Tương tự, nếu cây bị bệnh nấm hạch đen, giá trị làm gỗ xẻ của nó giảm, nhưng đối với một thợ mộc quan tâm đến việc làm bát, nó mang lại cơ hội cho một tác phẩm nghệ thuật độc đáo và đẹp mắt.</p>"
+      "content": "<p>Likewise, if the tree suffers from black knot disease, its value for timber decreases, but to a woodworker interested in making bowls, it brings an opportunity for a unique and beautiful piece of art.</p></n>",
+      "translate": "<p>Tương tự, nếu cây bị bệnh nấm hạch đen, giá trị làm gỗ xẻ của nó giảm, nhưng đối với một thợ mộc quan tâm đến việc làm bát, nó mang lại cơ hội cho một tác phẩm nghệ thuật độc đáo và đẹp mắt.</p></n>"
     },
     {
-      "content": "<p><span style='bold'>B</span> In the past, Pennsylvania landowners were solely interested in the value of their trees as high-quality timber.</p>",
-      "translate": "<p><span style='bold'>B</span> Trong quá khứ, các chủ đất ở Pennsylvania chỉ quan tâm đến giá trị cây của họ như là gỗ chất lượng cao.</p>"
+      "content": "<p style='bold 24'>B</p><p> In the past, Pennsylvania landowners were solely interested in the value of their trees as high-quality timber.</p>",
+      "translate": "<p>Trong quá khứ, các chủ đất ở Pennsylvania chỉ quan tâm đến giá trị cây của họ như là gỗ chất lượng cao.</p>"
     },
     {
       "content": "<p>The norm was to remove the stems of highest quality and leave behind poorly formed trees that were not as well suited to the site where they grew.</p>",
@@ -43,12 +43,12 @@
       "translate": "<p>Những cây này có giá trị kinh tế thấp hơn đối với thị trường gỗ xẻ truyền thống, cạnh tranh phát triển với những cây có giá trị cao hơn, che bóng những cây tái sinh mong muốn và làm giảm sức khỏe của một lâm phần* khiến nó dễ bị tổn thương hơn trước thời tiết xấu và bệnh tật.</p>"
     },
     {
-      "content": "<p>Management that specifically targets low-use wood can help landowners manage these forest health issues, and wood energy markets help promote this.</p>",
-      "translate": "<p>Việc quản lý nhắm cụ thể vào gỗ ít giá trị sử dụng có thể giúp chủ đất giải quyết các vấn đề sức khỏe rừng này, và thị trường năng lượng từ gỗ giúp thúc đẩy điều này.</p>"
+      "content": "<p>Management that specifically targets low-use wood can help landowners manage these forest health issues, and wood energy markets help promote this.</p></n>",
+      "translate": "<p>Việc quản lý nhắm cụ thể vào gỗ ít giá trị sử dụng có thể giúp chủ đất giải quyết các vấn đề sức khỏe rừng này, và thị trường năng lượng từ gỗ giúp thúc đẩy điều này.</p></n>"
     },
     {
-      "content": "<p><span style='bold'>C</span> Wood energy markets can accept less expensive wood material of lower quality than would be suitable for traditional timber markets.</p>",
-      "translate": "<p><span style='bold'>C</span> Thị trường năng lượng từ gỗ có thể chấp nhận vật liệu gỗ rẻ hơn, chất lượng thấp hơn so với thích hợp cho thị trường gỗ xẻ truyền thống.</p>"
+      "content": "<p><p style='bold 24'>C</p> Wood energy markets can accept less expensive wood material of lower quality than would be suitable for traditional timber markets.</p>",
+      "translate": "<p>Thị trường năng lượng từ gỗ có thể chấp nhận vật liệu gỗ rẻ hơn, chất lượng thấp hơn so với thích hợp cho thị trường gỗ xẻ truyền thống.</p>"
     },
     {
       "content": "<p>Most wood used for energy in Pennsylvania is used to produce heat or electricity through combustion.</p>",
@@ -67,12 +67,12 @@
       "translate": "<p>Tất cả các sản phẩm này chủ yếu được làm từ gỗ ít giá trị sử dụng.</p>"
     },
     {
-      "content": "<p>Several tree- and plant-cutting approaches, which could greatly improve the long-term quality of a forest, focus strongly or solely on the use of wood for those markets.</p>",
-      "translate": "<p>Một số phương pháp chặt cây và thực vật, có thể cải thiện đáng kể chất lượng lâu dài của một khu rừng, tập trung mạnh hoặc chỉ vào việc sử dụng gỗ cho những thị trường đó.</p>"
+      "content": "<p>Several tree- and plant-cutting approaches, which could greatly improve the long-term quality of a forest, focus strongly or solely on the use of wood for those markets.</p></n>",
+      "translate": "<p>Một số phương pháp chặt cây và thực vật, có thể cải thiện đáng kể chất lượng lâu dài của một khu rừng, tập trung mạnh hoặc chỉ vào việc sử dụng gỗ cho những thị trường đó.</p></n>"
     },
     {
-      "content": "<p><span style='bold'>D</span> One such approach is called a Timber Stand Improvement (TSI) Cut.</p>",
-      "translate": "<p><span style='bold'>D</span> Một phương pháp như vậy được gọi là Khai thác Cải thiện Lâm phần (TSI Cut).</p>"
+      "content": "<p><p style='bold 24'>D</p> One such approach is called a Timber Stand Improvement (TSI) Cut.</p>",
+      "translate": "<p>Một phương pháp như vậy được gọi là Khai thác Cải thiện Lâm phần (TSI Cut).</p>"
     },
     {
       "content": "<p>In a TSI Cut, really poor-quality tree and plant material is cut down to allow more space, light, and other resources to the highest-valued stems that remain.</p>",
@@ -87,12 +87,12 @@
       "translate": "<p>Những thân cây còn lại sau đó có thể phát triển về kích thước và phát triển nhiều tán lá và tán cây lớn hơn tạo ra nơi che phủ và hạt sồi cho động vật hoang dã; chúng có cơ hội tái sinh tốt hơn trong một môi trường ít đông đúc hơn.</p>"
     },
     {
-      "content": "<p>TSI Cuts can be tailored to one's specific management goals for his or her land.</p>",
-      "translate": "<p>Các đợt khai thác TSI có thể được điều chỉnh cho phù hợp với mục tiêu quản lý cụ thể của một người đối với đất đai của họ.</p>"
+      "content": "<p>TSI Cuts can be tailored to one's specific management goals for his or her land.</p></N>",
+      "translate": "<p>Các đợt khai thác TSI có thể được điều chỉnh cho phù hợp với mục tiêu quản lý cụ thể của một người đối với đất đai của họ.</p></n>"
     },
     {
-      "content": "<p><span style='bold'>E</span> Another approach that might yield a high amount of low-use wood is a Salvage Cut.</p>",
-      "translate": "<p><span style='bold'>E</span> Một phương pháp khác có thể mang lại một lượng lớn gỗ ít giá trị sử dụng là Khai thác Cứu hộ (Salvage Cut).</p>"
+      "content": "<p><p style='bold 24'>E</p> Another approach that might yield a high amount of low-use wood is a Salvage Cut.</p>",
+      "translate": "<p>Một phương pháp khác có thể mang lại một lượng lớn gỗ ít giá trị sử dụng là Khai thác Cứu hộ (Salvage Cut).</p>"
     },
     {
       "content": "<p>With the many pests and pathogens visiting forests including hemlock wooly adelgid, Asian longhorned beetle, emerald ash borer, and gypsy moth, to name just a few, it is important to remember that those working in the forests can help ease these issues through cutting procedures.</p>",
@@ -100,15 +100,15 @@
     },
     {
       "content": "<p>These types of cut reduce the number of sick trees and seek to manage the future spread of a pest problem.</p>",
-      "translate": "<p>Những loại khai thác này làm giảm số lượng cây bị bệnh và tìm cách quản lý sự lây lan của vấn đề sâu bệnh trong tương lai.</p>"
+      "translate": "<p>Những loại khai thác này làm giảm số lượng cây bị bệnh và tìm cách quản lý sự lây lan của vấn đề sâu bệnh trong tương lai.</p></n>"
     },
     {
       "content": "<p>They leave vigorous trees that have survived healthy enough to survive the outbreak.</p>",
-      "translate": "<p>Chúng để lại những cây khỏe mạnh đã sống sót, đủ sức khỏe để tồn tại sau đợt bùng phát.</p>"
+      "translate": "<p>Chúng để lại những cây khỏe mạnh đã sống sót, đủ sức khỏe để tồn tại sau đợt bùng phát.</p></n>"
     },
     {
-      "content": "<p><span style='bold'>F</span> A Shelterwood Cut, which only takes place in a mature forest that has already been thinned several times, involves removing all the mature trees when other seedlings have become established.</p>",
-      "translate": "<p><span style='bold'>F</span> Khai thác Tạo tán che (Shelterwood Cut), chỉ diễn ra trong một khu rừng trưởng thành đã được tỉa thưa nhiều lần, liên quan đến việc loại bỏ tất cả các cây trưởng thành khi các cây con khác đã được thiết lập.</p>"
+      "content": "<p style='bold 24'>F</p> A Shelterwood Cut, which only takes place in a mature forest that has already been thinned several times, involves removing all the mature trees when other seedlings have become established.</p>",
+      "translate": "<p>Khai thác Tạo tán che (Shelterwood Cut), chỉ diễn ra trong một khu rừng trưởng thành đã được tỉa thưa nhiều lần, liên quan đến việc loại bỏ tất cả các cây trưởng thành khi các cây con khác đã được thiết lập.</p>"
     },
     {
       "content": "<p>This then allows the forester to decide which tree species are regenerated.</p>",
@@ -127,8 +127,8 @@
       "translate": "<p>Có hai vụ thu hoạch và số tiền thu được trải dài trong một thập kỷ hoặc hơn.</p>"
     },
     {
-      "content": "<p><span style='bold'>G</span> Thinnings and dense and dead wood removal for fire prevention also center on the production of low-use wood.</p>",
-      "translate": "<p><span style='bold'>G</span> Việc tỉa thưa và loại bỏ gỗ rậm rạp, chết để phòng cháy cũng tập trung vào sản xuất gỗ ít giá trị sử dụng.</p>"
+      "content": "<p><p style='bold'>G</p> Thinnings and dense and dead wood removal for fire prevention also center on the production of low-use wood.</p>",
+      "translate": "<p><p style='bold'>G</p> Việc tỉa thưa và loại bỏ gỗ rậm rạp, chết để phòng cháy cũng tập trung vào sản xuất gỗ ít giá trị sử dụng.</p>"
     },
     {
       "content": "<p>However, it is important to remember that some retention of what many people classify as low-use wood is very important.</p>",

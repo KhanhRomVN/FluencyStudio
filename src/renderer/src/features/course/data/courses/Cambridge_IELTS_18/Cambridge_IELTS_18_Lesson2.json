@@ -41,7 +41,7 @@
     },
     {
       "id": "quiz_02",
-      "title": "True/False/Not Given - Urban farming",
+      "title": "Urban farming",
       "type": "matching-dropdown",
       "subtype": "multi-answer",
       "instruction": "<p>Do the following statements agree with the information given in passage?</p>",

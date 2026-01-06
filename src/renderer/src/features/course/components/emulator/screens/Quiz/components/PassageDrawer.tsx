@@ -97,10 +97,11 @@ export const PassageDrawer: React.FC<PassageDrawerProps> = ({
 
     // Watch for file changes
     const handleFileChange = () => {
-      console.log('[PassageDrawer] File changed, reloading...');
+      console.log('[PassageDrawer] File changed, reloading...', fullPath);
       loadPassage(false); // Don't show loading spinner on refresh
     };
 
+    console.log('[PassageDrawer] Watching file:', fullPath);
     folderService.watchFile(fullPath, handleFileChange);
 
     return () => {
@@ -108,11 +109,53 @@ export const PassageDrawer: React.FC<PassageDrawerProps> = ({
     };
   }, [isOpen, passagePath, parentFilePath]);
 
-  // Helper function to parse content and handle </n> tags
+  // Helper function to parse content and handle </n> tags and custom styles
   const parseContent = (content: string): string => {
     if (!content) return '';
+
+    let result = content;
+
     // Replace </n> tags with <br/> for proper line breaks
-    return content.replace(/<\/n\s*>/gi, '<br/>');
+    result = result.replace(/<\/n\s*>/gi, '<br/>');
+
+    // Convert custom <p style='...'> tags to proper HTML with inline styles
+    result = result.replace(
+      /<p\s+style='([^']*)'>|<p\s+style="([^"]*)">/gi,
+      (match, styleAttr1, styleAttr2) => {
+        const styleAttr = styleAttr1 || styleAttr2 || '';
+        const styles: string[] = [];
+        const lowerStyle = styleAttr.toLowerCase();
+
+        if (lowerStyle.includes('italic')) {
+          styles.push('font-style: italic');
+        }
+        if (lowerStyle.includes('bold')) {
+          styles.push('font-weight: bold');
+        }
+        if (lowerStyle.includes('center')) {
+          styles.push('text-align: center; display: block');
+        }
+
+        // Check for font size (number in the style)
+        const fontSizeMatch = styleAttr.match(/(\d+)/);
+        if (fontSizeMatch) {
+          styles.push(`font-size: ${fontSizeMatch[1]}px`);
+        }
+
+        if (styles.length > 0) {
+          return `<span style="${styles.join('; ')}">`;
+        }
+        return '<span>';
+      },
+    );
+
+    // Replace closing </p> tags with </span>
+    result = result.replace(/<\/p>/gi, '</span>');
+
+    // Also handle simple <p> tags without style
+    result = result.replace(/<p>/gi, '<span>');
+
+    return result;
   };
 
   const getWordFromPoint = (x: number, y: number): string | null => {
@@ -270,7 +313,7 @@ export const PassageDrawer: React.FC<PassageDrawerProps> = ({
                         isActive
                           ? 'bg-[hsl(var(--primary))]/20 shadow-sm'
                           : 'hover:bg-[hsl(var(--primary))]/5'
-                      } [&_p]:inline [&_p]:m-0`}
+                      } [&_p]:inline [&_p]:m-0 [&_span]:inline [&_span]:m-0`}
                       onPointerDown={handlePointerDown}
                       onPointerMove={handlePointerMove}
                       onPointerUp={(e) => handlePointerUp(e, index)}
@@ -281,7 +324,7 @@ export const PassageDrawer: React.FC<PassageDrawerProps> = ({
 
                     {isActive && (
                       <span
-                        className="inline py-0.5 rounded bg-[hsl(var(--secondary))] text-[hsl(var(--secondary-foreground))] font-medium italic [&_p]:inline [&_p]:m-0 animate-in fade-in zoom-in-95 duration-200 border border-[hsl(var(--border))]"
+                        className="inline py-0.5 rounded bg-[hsl(var(--secondary))] text-[hsl(var(--secondary-foreground))] font-medium italic [&_p]:inline [&_p]:m-0 [&_span]:inline [&_span]:m-0 animate-in fade-in zoom-in-95 duration-200 border border-[hsl(var(--border))]"
                         dangerouslySetInnerHTML={{ __html: parseContent(segment.translate) }}
                       />
                     )}

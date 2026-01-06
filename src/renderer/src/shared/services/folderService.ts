@@ -207,6 +207,14 @@ class FolderService {
     try {
       if (window.electron?.ipcRenderer) {
         const success = await window.electron.ipcRenderer.invoke('file:write', filePath, content);
+        if (success) {
+          // Manually notify listeners since chokidar might not detect self-writes
+          setTimeout(() => {
+            if (this.listeners.has(filePath)) {
+              this.listeners.get(filePath)?.forEach((callback) => callback(filePath, 'change'));
+            }
+          }, 100);
+        }
         return { success };
       }
       return { success: false, error: 'No IPC available' };

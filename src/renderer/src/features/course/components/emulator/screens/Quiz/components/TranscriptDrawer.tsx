@@ -84,9 +84,14 @@ export const TranscriptDrawer: React.FC<TranscriptDrawerProps> = ({
   }, [directoryOpen]);
 
   useEffect(() => {
-    if (isOpen && transcriptPath) {
-      setLoading(true);
-      setError(null);
+    if (!isOpen || !transcriptPath) return;
+
+    const loadTranscript = (showLoading = true) => {
+      if (showLoading) {
+        setLoading(true);
+        setError(null);
+      }
+
       folderService
         .parseCourseMetadata(transcriptPath)
         .then((result: any) => {
@@ -100,9 +105,75 @@ export const TranscriptDrawer: React.FC<TranscriptDrawerProps> = ({
           console.error(err);
           setError('Failed to load transcript');
         })
-        .finally(() => setLoading(false));
-    }
+        .finally(() => {
+          if (showLoading) setLoading(false);
+        });
+    };
+
+    // Initial load
+    loadTranscript();
+
+    // Watch for file changes
+    const handleFileChange = () => {
+      console.log('[TranscriptDrawer] File changed, reloading...');
+      loadTranscript(false);
+    };
+
+    folderService.watchFile(transcriptPath, handleFileChange);
+
+    return () => {
+      folderService.unwatchFile(transcriptPath, handleFileChange);
+    };
   }, [isOpen, transcriptPath]);
+
+  // Helper function to parse content and handle </n> tags and custom styles
+  const parseContent = (content: string): string => {
+    if (!content) return '';
+
+    let result = content;
+
+    // Replace </n> tags with <br/> for proper line breaks
+    result = result.replace(/<\/n\s*>/gi, '<br/>');
+
+    // Convert custom <p style='...'> tags to proper HTML with inline styles
+    result = result.replace(
+      /<p\s+style='([^']*)'>|<p\s+style="([^"]*)">/gi,
+      (match, styleAttr1, styleAttr2) => {
+        const styleAttr = styleAttr1 || styleAttr2 || '';
+        const styles: string[] = [];
+        const lowerStyle = styleAttr.toLowerCase();
+
+        if (lowerStyle.includes('italic')) {
+          styles.push('font-style: italic');
+        }
+        if (lowerStyle.includes('bold')) {
+          styles.push('font-weight: bold');
+        }
+        if (lowerStyle.includes('center')) {
+          styles.push('text-align: center; display: block');
+        }
+
+        // Check for font size (number in the style)
+        const fontSizeMatch = styleAttr.match(/(\d+)/);
+        if (fontSizeMatch) {
+          styles.push(`font-size: ${fontSizeMatch[1]}px`);
+        }
+
+        if (styles.length > 0) {
+          return `<span style="${styles.join('; ')}">`;
+        }
+        return '<span>';
+      },
+    );
+
+    // Replace closing </p> tags with </span>
+    result = result.replace(/<\/p>/gi, '</span>');
+
+    // Also handle simple <p> tags without style
+    result = result.replace(/<p>/gi, '<span>');
+
+    return result;
+  };
 
   // Scroll active segment into view
   useEffect(() => {
@@ -323,19 +394,21 @@ export const TranscriptDrawer: React.FC<TranscriptDrawerProps> = ({
                               onPointerUp={(e) => handlePointerUp(dlg.id, e)}
                               onPointerCancel={handlePointerCancel}
                               onContextMenu={(e) => e.preventDefault()}
-                              className="inline cursor-pointer hover:bg-[hsl(var(--muted))]/50 rounded px-1 -mx-1 transition-colors [&_p]:inline [&_p]:m-0"
-                              dangerouslySetInnerHTML={{ __html: dlg.original }}
+                              className={`inline cursor-pointer py-0.5 rounded transition-all duration-200 [&_p]:inline [&_p]:m-0 [&_span]:inline [&_span]:m-0 ${
+                                isDialogueActive
+                                  ? 'bg-[hsl(var(--primary))]/20 shadow-sm'
+                                  : 'hover:bg-[hsl(var(--primary))]/5'
+                              }`}
+                              dangerouslySetInnerHTML={{ __html: parseContent(dlg.original) }}
                             />
 
                             {/* Translation - Manual Toggle */}
                             {isDialogueActive && (
                               <span
-                                className="inline ml-2 px-2 py-0.5 rounded bg-[hsl(var(--secondary))] text-[hsl(var(--secondary-foreground))] font-medium italic text-sm [&_p]:inline [&_p]:m-0 animate-in fade-in zoom-in-95 duration-200 border border-[hsl(var(--border))]"
-                                dangerouslySetInnerHTML={{ __html: `(${dlg.translation})` }}
+                                className="inline py-0.5 rounded bg-[hsl(var(--secondary))] text-[hsl(var(--secondary-foreground))] font-medium italic text-sm [&_p]:inline [&_p]:m-0 [&_span]:inline [&_span]:m-0 animate-in fade-in zoom-in-95 duration-200 border border-[hsl(var(--border))]"
+                                dangerouslySetInnerHTML={{ __html: parseContent(dlg.translation) }}
                               />
                             )}
-                            {/* Add a space after each dialogue */}
-                            <span className="inline"> </span>
                           </span>
                         );
                       })}

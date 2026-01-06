@@ -5,7 +5,7 @@
   "quiz": [
     {
       "id": "quiz_01",
-      "title": "IELTS Listening Test 1 - Part 1: Transport Survey Interview",
+      "title": "Transport Survey",
       "type": "gap-fill",
       "instruction": "<p>Write </p><p style='bold'>ONE WORD AND/OR A NUMBER </p><p>for each answer.</p>",
       "quizNumber": 1,
@@ -93,7 +93,7 @@
     },
     {
       "id": "quiz_02",
-      "title": "IELTS Listening Test 1 - Part 2: Volunteer Organization Presentation",
+      "title": "Volunteer Organization (Part 1)",
       "type": "multiple-choice",
       "instruction": "<p>Choose the correct letter, A, B or C.</p>",
       "quizNumber": 2,
@@ -138,7 +138,7 @@
     },
     {
       "id": "quiz_03",
-      "title": "IELTS Listening Test 1 - Part 2: Volunteer Organization Presentation",
+      "title": "Volunteer Organization (Part 2)",
       "type": "multiple-choice",
       "instruction": "<p>Answer the questions below.</p>",
       "quizNumber": 3,
@@ -166,7 +166,7 @@
     },
     {
       "id": "quiz_04",
-      "title": "IELTS Listening Test 1 - Part 2: Volunteer Work Areas",
+      "title": "Volunteer Work Areas",
       "type": "matching-dropdown",
       "subtype": "single-answer",
       "instruction": "<p>Choose </p><p style='bold'>FIVE </p><p>answers from the box and write the correct letter.</p>",
@@ -218,7 +218,7 @@
     },
     {
       "id": "quiz_05",
-      "title": "IELTS Listening Test 1 - Part 3: Talk on jobs in fashion design",
+      "title": "Jobs in Fashion Design (Part 1)",
       "type": "multiple-choice",
       "instruction": "<p>Choose the correct letter, A, B or C.</p>",
       "quizNumber": 5,
@@ -296,7 +296,7 @@
     },
     {
       "id": "quiz_06",
-      "title": "IELTS Listening Test 1 - Part 3: Talk on jobs in fashion design",
+      "title": "Jobs in Fashion Design (Part 2)",
       "type": "multiple-choice",
       "instruction": "<p>Choose</p><p style='bold'> TWO </p><p>letters, </p><p style='bold'>A–E</p>",
       "quizNumber": 6,
@@ -340,7 +340,7 @@
     },
     {
       "id": "quiz_07",
-      "title": "IELTS Listening Test 1 - Part 4: Elephant translocation",
+      "title": "Elephant Translocation",
       "type": "gap-fill",
       "instruction": "<p>Write</p><p style='bold'> ONE WORD ONLY </p><p>for each answer.</p>",
       "quizNumber": 7,

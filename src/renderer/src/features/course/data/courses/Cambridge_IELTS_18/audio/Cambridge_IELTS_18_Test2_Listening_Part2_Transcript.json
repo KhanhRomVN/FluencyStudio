@@ -1,197 +1,258 @@
 {
-  "language_code": "eng",
-  "segments": [
+  "metadata": {
+    "language_code": "eng",
+    "title": "Nunston Housing Development Presentation"
+  },
+  "transcript": [
     {
+      "id": 1,
       "speaker": "IELTS_Examiner",
-      "start": "00:00",
-      "end": "01:06",
-      "text": "Part 3. You will hear two geography students, Adam and Michelle, talking about a volcanic eruption which took place in Iceland in 1783. First, you have some time to look at questions 21 to 26. Now listen carefully and answer questions 21 to 26. So,"
+      "timestamps": {
+        "start": "00:00",
+        "end": "00:39"
+      },
+      "dialogues": [
+        {
+          "id": "1-1",
+          "original": "<p>Part 2.</p>",
+          "translation": "<p>Phần 2.</p>"
+        },
+        {
+          "id": "1-2",
+          "original": "<p>You will hear a talk to members of the public about plans for a new housing development near a town called Nunston.</p>",
+          "translation": "<p>Bạn sẽ nghe một bài nói chuyện với các thành viên công chúng về kế hoạch cho một khu phát triển nhà ở mới gần một thị trấn tên là Nunston.</p>"
+        },
+        {
+          "id": "1-3",
+          "original": "<p>First, you have some time to look at questions 11 to 14.</p>",
+          "translation": "<p>Trước tiên, bạn có một ít thời gian để xem các câu hỏi từ 11 đến 14.</p>"
+        },
+        {
+          "id": "1-4",
+          "original": "<p>Now listen carefully and answer questions 11 to 14.</p>",
+          "translation": "<p>Bây giờ hãy lắng nghe cẩn thận và trả lời các câu hỏi 11 đến 14.</p>"
+        }
+      ]
     },
     {
-      "speaker": "Adam",
-      "start": "01:06",
-      "end": "01:12",
-      "text": "Michelle, shall we make a start on our presentation? We haven't got that much time left."
+      "id": 2,
+      "speaker": "Mark_Reynolds",
+      "timestamps": {
+        "start": "00:39",
+        "end": "03:20"
+      },
+      "dialogues": [
+        {
+          "id": "2-1",
+          "original": "<p>Hello everyone.</p>",
+          "translation": "<p>Xin chào tất cả mọi người.</p>"
+        },
+        {
+          "id": "2-2",
+          "original": "<p>It's good to see that so many members of the public have shown up for our presentation on the new housing development planned on the outskirts of Nunstan.</p>",
+          "translation": "<p>Thật tốt khi thấy nhiều thành viên công chúng tham dự buổi thuyết trình của chúng tôi về khu phát triển nhà ở mới được lên kế hoạch ở ngoại ô Nunstan.</p>"
+        },
+        {
+          "id": "2-3",
+          "original": "<p>I'm Mark Reynolds and I'm Communications Manager at the development.</p>",
+          "translation": "<p>Tôi là Mark Reynolds và tôi là Quản lý Truyền thông tại dự án phát triển này.</p>"
+        },
+        {
+          "id": "2-4",
+          "original": "<p>I'll start by giving you a brief overview of our plans for the development.</p>",
+          "translation": "<p>Tôi sẽ bắt đầu bằng cách cung cấp cho bạn một cái nhìn tổng quan ngắn gọn về kế hoạch của chúng tôi cho dự án phát triển.</p>"
+        },
+        {
+          "id": "2-5",
+          "original": "<p>So, one thing I'm sure you'll want to know is why we've selected this particular site for a housing development.</p>",
+          "translation": "<p>Vì vậy, một điều tôi chắc chắn bạn sẽ muốn biết là tại sao chúng tôi đã chọn địa điểm cụ thể này cho một dự án phát triển nhà ở.</p>"
+        },
+        {
+          "id": "2-6",
+          "original": "<p>At present, it's being used for farming, like much of the land around Nunston.</p>",
+          "translation": "<p>Hiện tại, nó đang được sử dụng cho canh tác nông nghiệp, giống như nhiều vùng đất xung quanh Nunston.</p>"
+        },
+        {
+          "id": "2-7",
+          "original": "<p>But because of the new industrial centre in Nunston, there's a lot of demand for housing for employees in the region, as many employees are having to commute long distances at present.</p>",
+          "translation": "<p>Nhưng do có trung tâm công nghiệp mới ở Nunston, có rất nhiều nhu cầu về nhà ở cho nhân viên trong khu vực, vì nhiều nhân viên hiện đang phải đi lại quãng đường dài.</p>"
+        },
+        {
+          "id": "2-8",
+          "original": "<p>Of course, there's also the fact that we have an international airport just 20 minutes' drive away,</p>",
+          "translation": "<p>Tất nhiên, còn có thực tế là chúng ta có một sân bay quốc tế chỉ cách đó 20 phút lái xe,</p>"
+        },
+        {
+          "id": "2-9",
+          "original": "<p>But, although that's certainly convenient, it wasn't one of our major criteria for choosing the site.</p>",
+          "translation": "<p>Nhưng, mặc dù điều đó chắc chắn thuận tiện, nó không phải là một trong những tiêu chí chính của chúng tôi để chọn địa điểm.</p>"
+        },
+        {
+          "id": "2-10",
+          "original": "<p>We were more interested in the fact that there's an excellent hospital just 15 kilometres away, and a large secondary school even closer than that.</p>",
+          "translation": "<p>Chúng tôi quan tâm hơn đến thực tế là có một bệnh viện tuyệt vời chỉ cách đó 15 km, và một trường trung học lớn thậm chí còn gần hơn thế.</p>"
+        },
+        {
+          "id": "2-11",
+          "original": "<p>One drawback to the site is that it's on quite a steep slope, but we've taken account of that in our planning, so it shouldn't be a major problem.</p>",
+          "translation": "<p>Một nhược điểm của địa điểm là nó nằm trên một sườn dốc khá cao, nhưng chúng tôi đã tính đến điều đó trong kế hoạch của mình, vì vậy nó không nên là một vấn đề lớn.</p>"
+        },
+        {
+          "id": "2-12",
+          "original": "<p>We've had a lot of positive feedback about the plans.</p>",
+          "translation": "<p>Chúng tôi đã nhận được rất nhiều phản hồi tích cực về các kế hoạch.</p>"
+        },
+        {
+          "id": "2-13",
+          "original": "<p>People like the wide variety of accommodation types and prices, and the fact that it's only a short drive to get out into the countryside from the development.</p>",
+          "translation": "<p>Mọi người thích sự đa dạng về loại hình chỗ ở và giá cả, và thực tế là chỉ cần một quãng lái xe ngắn để ra ngoại ô từ khu phát triển.</p>"
+        },
+        {
+          "id": "2-14",
+          "original": "<p>We were particularly pleased that so many people liked the designs for the layout of the development, with the majority of people saying it generally made a good impression and blended in well with the natural features of the landscape, with provision made for protecting trees and wildlife on the site.</p>",
+          "translation": "<p>Chúng tôi đặc biệt hài lòng khi nhiều người thích thiết kế bố cục của khu phát triển, với đa số người nói rằng nó thường tạo ấn tượng tốt và hòa quyện tốt với các đặc điểm tự nhiên của cảnh quan, với các biện pháp được thực hiện để bảo vệ cây cối và động vật hoang dã trên địa điểm.</p>"
+        },
+        {
+          "id": "2-15",
+          "original": "<p>Some people have mentioned that they'd like to see more facilities for cyclists, and we'll look at that, but the overall feedback has been that the design and facilities of the development make it seem a place where people of all ages can live together happily.</p>",
+          "translation": "<p>Một số người đã đề cập rằng họ muốn thấy nhiều cơ sở vật chất hơn cho người đi xe đạp, và chúng tôi sẽ xem xét điều đó, nhưng phản hồi tổng thể là thiết kế và cơ sở vật chất của khu phát triển khiến nó có vẻ như một nơi mà mọi người ở mọi lứa tuổi có thể sống cùng nhau một cách hạnh phúc.</p>"
+        }
+      ]
     },
     {
-      "speaker": "Michelle",
-      "start": "01:12",
-      "end": "01:21",
-      "text": "No, Adam, but at least we've done all the background reading. I found it really interesting. I'd never even heard of the Larkie eruption before this."
-    },
-    {
-      "speaker": "Adam",
-      "start": "01:21",
-      "end": "01:26",
-      "text": "Me neither. I suppose 1783 is a long time ago."
-    },
-    {
-      "speaker": "Michelle",
-      "start": "01:26",
-      "end": "01:31",
-      "text": "But it was a huge eruption and it had such devastating consequences."
-    },
-    {
-      "speaker": "Adam",
-      "start": "01:31",
-      "end": "01:45",
-      "text": "I know. It was great there were so many primary sources to look at. It really gives you a sense of how catastrophic the volcano was. People were really trying to make sense of the science for the first time."
-    },
-    {
-      "speaker": "Michelle",
-      "start": "01:45",
-      "end": "01:57",
-      "text": "That's right. But what I found more significant was how it impacted directly and indirectly on political events, as well as having massive social and economic consequences."
-    },
-    {
-      "speaker": "Adam",
-      "start": "01:57",
-      "end": "02:02",
-      "text": "I know. That should be the main focus of our presentation."
-    },
-    {
-      "speaker": "Michelle",
-      "start": "02:02",
-      "end": "02:14",
-      "text": "The observations made by people at the time were interesting, weren't they? I mean, they all gave a pretty consistent account of what happened, even if they didn't always use the same terminology."
-    },
-    {
-      "speaker": "Adam",
-      "start": "02:14",
-      "end": "02:23",
-      "text": "Yeah. I was surprised there were so many weather stations established by that time. So, you know, you can see how the weather changed often by the hour."
-    },
-    {
-      "speaker": "Michelle",
-      "start": "02:23",
-      "end": "02:43",
-      "text": "Right. Writers at the time talked about the larky haze to describe the volcanic fog that spread across Europe. They all realised that this wasn't the sort of fog they were used to. And, of course, this was in pre-industrial times, so they hadn't experienced sulphur-smelling fog before."
-    },
-    {
-      "speaker": "Adam",
-      "start": "02:43",
-      "end": "02:44",
-      "text": "No, that's true."
-    },
-    {
-      "speaker": "Michelle",
-      "start": "02:44",
-      "end": "02:57",
-      "text": "Reports from the period blamed the haze for an increase in headaches, respiratory issues and asthma attacks. and they all describe how it covered the sun and made it look a strange red colour."
-    },
-    {
-      "speaker": "Adam",
-      "start": "02:57",
-      "end": "03:00",
-      "text": "Must have been very weird."
-    },
-    {
-      "speaker": "Michelle",
-      "start": "03:00",
-      "end": "03:09",
-      "text": "It's interesting that Benjamin Franklin wrote about the haze. Did you read that? He was the American ambassador in Paris at the time."
-    },
-    {
-      "speaker": "Adam",
-      "start": "03:09",
-      "end": "03:15",
-      "text": "Yeah. At first no one realised that the haze was caused by the volcanic eruption in Iceland."
-    },
-    {
-      "speaker": "Michelle",
-      "start": "03:15",
-      "end": "03:19",
-      "text": "It was Benjamin Franklin who realised that before anyone else."
-    },
-    {
-      "speaker": "Adam",
-      "start": "03:19",
-      "end": "03:33",
-      "text": "He's often credited with that, apparently. But a French naturalist beat him to it. I can't remember his name. I'd have to look it up. Then other naturalists had the same idea. All independently of each other."
-    },
-    {
-      "speaker": "Michelle",
-      "start": "03:33",
-      "end": "03:46",
-      "text": "Oh, right. We should talk about the immediate impact of the eruption, which was obviously enormous, especially in Iceland where so many people died."
-    },
-    {
-      "speaker": "Adam",
-      "start": "03:46",
-      "end": "04:02",
-      "text": "You'd expect that, and the fact that the volcanic ash drifted so swiftly, but not that the effects would go on for so long, or that two years after the eruption, strange weather events were being reported as far away as North America and North Africa."
-    },
-    {
-      "speaker": "Michelle",
-      "start": "04:02",
-      "end": "04:15",
-      "text": "No, I found all that hard to believe too. It must have been terrible and there was nothing anyone could do about it, even if they knew the ash cloud was coming in their direction."
-    },
-    {
+      "id": 3,
       "speaker": "IELTS_Examiner",
-      "start": "04:15",
-      "end": "04:53",
-      "text": "Before you hear the rest of the discussion, you have some time to look at questions 27 to 30. Now listen and answer questions 27"
+      "timestamps": {
+        "start": "03:20",
+        "end": "04:05"
+      },
+      "dialogues": [
+        {
+          "id": "3-1",
+          "original": "<p>Before you hear the rest of the talk, you have some time to look at questions 15 to 20.</p>",
+          "translation": "<p>Trước khi bạn nghe phần còn lại của bài nói chuyện, bạn có một ít thời gian để xem các câu hỏi từ 15 đến 20.</p>"
+        },
+        {
+          "id": "3-2",
+          "original": "<p>Now listen and answer questions 15 to 20.</p>",
+          "translation": "<p>Bây giờ hãy lắng nghe và trả lời các câu hỏi 15 đến 20.</p>"
+        }
+      ]
     },
     {
-      "speaker": "Adam",
-      "start": "04:53",
-      "end": "05:01",
-      "text": "to 30. Starting"
-    },
-    {
-      "speaker": "Michelle",
-      "start": "05:01",
-      "end": "05:06",
-      "text": "with Iceland, where the impact on farming was devastating."
-    },
-    {
-      "speaker": "Adam",
-      "start": "05:06",
-      "end": "05:20",
-      "text": "Hmm. One of the most dramatic things there was the effect on livestock as they grazed in the fields. They were poisoned because they ate vegetation that had been contaminated with fluorine as a result of the volcanic fallout."
-    },
-    {
-      "speaker": "Michelle",
-      "start": "05:20",
-      "end": "05:32",
-      "text": "That was horrible. In Egypt, the bizarre weather patterns led to a severe drought and as a result the Nile didn't flood, which meant the crops all failed."
-    },
-    {
-      "speaker": "Adam",
-      "start": "05:32",
-      "end": "05:42",
-      "text": "It's so far from where the eruption happened, and yet the famine there led to more people dying than any other country. It was worse than the plague."
-    },
-    {
-      "speaker": "Michelle",
-      "start": "05:42",
-      "end": "06:00",
-      "text": "OK. Then, in the UK, the mortality rate went up a lot, presumably from respiratory illnesses. According to one report, it was about double the usual number and included an unusually high percentage of people under the age of 25."
-    },
-    {
-      "speaker": "Adam",
-      "start": "06:00",
-      "end": "06:17",
-      "text": "I think people will be surprised to hear that the weather in the USA was badly affected too. George Washington even makes a note in his diary that they were snowbound until March in Virginia. That was before he became president."
-    },
-    {
-      "speaker": "Michelle",
-      "start": "06:17",
-      "end": "06:22",
-      "text": "Yes, and there was ice floating down the Mississippi, which was unprecedented."
-    },
-    {
-      "speaker": "Adam",
-      "start": "06:22",
-      "end": "06:31",
-      "text": "Astonishing, really. Anyway, what do you think we should include next?"
-    },
-    {
-      "speaker": "IELTS_Examiner",
-      "start": "06:31",
-      "end": "06:41",
-      "text": "That is the end of Part 3. You now have 30 seconds to check your answers to Part 3."
+      "id": 4,
+      "speaker": "Mark_Reynolds",
+      "timestamps": {
+        "start": "04:05",
+        "end": "06:15"
+      },
+      "dialogues": [
+        {
+          "id": "4-1",
+          "original": "<p>OK, so I'll put a map of the proposed development up on the screen.</p>",
+          "translation": "<p>OK, vậy tôi sẽ đưa bản đồ của dự án phát triển được đề xuất lên màn hình.</p>"
+        },
+        {
+          "id": "4-2",
+          "original": "<p>You'll see it's bounded on the south side by the main road, which then goes on to Nunston.</p>",
+          "translation": "<p>Bạn sẽ thấy nó giáp phía nam bởi con đường chính, sau đó dẫn đến Nunston.</p>"
+        },
+        {
+          "id": "4-3",
+          "original": "<p>Another boundary is formed by London Road on the western side of the development.</p>",
+          "translation": "<p>Một ranh giới khác được tạo thành bởi London Road ở phía tây của khu phát triển.</p>"
+        },
+        {
+          "id": "4-4",
+          "original": "<p>Inside the development, there'll be about 400 houses and three apartment blocks.</p>",
+          "translation": "<p>Bên trong khu phát triển, sẽ có khoảng 400 ngôi nhà và ba tòa chung cư.</p>"
+        },
+        {
+          "id": "4-5",
+          "original": "<p>There'll also be a school for children up to 11 years old.</p>",
+          "translation": "<p>Sẽ có một trường học cho trẻ em đến 11 tuổi.</p>"
+        },
+        {
+          "id": "4-6",
+          "original": "<p>If you look at the south entrance at the bottom of the map, there's a road from there that goes right up through the development.</p>",
+          "translation": "<p>Nếu bạn nhìn vào lối vào phía nam ở dưới cùng của bản đồ, có một con đường từ đó đi thẳng lên qua khu phát triển.</p>"
+        },
+        {
+          "id": "4-7",
+          "original": "<p>The school will be on that road, at the corner of the second turning to the left.</p>",
+          "translation": "<p>Trường học sẽ nằm trên con đường đó, ở góc của ngã rẽ thứ hai bên trái.</p>"
+        },
+        {
+          "id": "4-8",
+          "original": "<p>A large sports centre is planned with facilities for indoor and outdoor activities.</p>",
+          "translation": "<p>Một trung tâm thể thao lớn được lên kế hoạch với các cơ sở vật chất cho các hoạt động trong nhà và ngoài trời.</p>"
+        },
+        {
+          "id": "4-9",
+          "original": "<p>This will be on the western side of the development, just below the road that branches off from London Road.</p>",
+          "translation": "<p>Điều này sẽ ở phía tây của khu phát triển, ngay bên dưới con đường nhánh từ London Road.</p>"
+        },
+        {
+          "id": "4-10",
+          "original": "<p>There'll be a clinic where residents can go if they have any health problems.</p>",
+          "translation": "<p>Sẽ có một phòng khám nơi cư dân có thể đến nếu họ có bất kỳ vấn đề sức khỏe nào.</p>"
+        },
+        {
+          "id": "4-11",
+          "original": "<p>Can you see the lake towards the top of the map?</p>",
+          "translation": "<p>Bạn có thể thấy hồ nước ở phía trên cùng của bản đồ không?</p>"
+        },
+        {
+          "id": "4-12",
+          "original": "<p>The clinic will be just below this, to the right of a street of houses.</p>",
+          "translation": "<p>Phòng khám sẽ ở ngay bên dưới cái này, bên phải của một dãy nhà.</p>"
+        },
+        {
+          "id": "4-13",
+          "original": "<p>There'll also be a community centre for people of all ages.</p>",
+          "translation": "<p>Sẽ cũng có một trung tâm cộng đồng cho mọi người ở mọi lứa tuổi.</p>"
+        },
+        {
+          "id": "4-14",
+          "original": "<p>On the north-east side of the development there'll be a row of specially designed houses specifically for residents over 65, and the community centre will be adjoining this.</p>",
+          "translation": "<p>Ở phía đông bắc của khu phát triển sẽ có một dãy nhà được thiết kế đặc biệt dành riêng cho cư dân trên 65 tuổi, và trung tâm cộng đồng sẽ liền kề với điều này.</p>"
+        },
+        {
+          "id": "4-15",
+          "original": "<p>We haven't forgotten about shopping.</p>",
+          "translation": "<p>Chúng tôi không quên mua sắm.</p>"
+        },
+        {
+          "id": "4-16",
+          "original": "<p>There'll be a supermarket between the two entrances to the development.</p>",
+          "translation": "<p>Sẽ có một siêu thị giữa hai lối vào của khu phát triển.</p>"
+        },
+        {
+          "id": "4-17",
+          "original": "<p>We're planning to leave the three large trees near London Road and it'll be just to the south of these.</p>",
+          "translation": "<p>Chúng tôi đang lên kế hoạch để lại ba cây lớn gần London Road và nó sẽ ở ngay phía nam của chúng.</p>"
+        },
+        {
+          "id": "4-18",
+          "original": "<p>It's planned to have a playground for younger children.</p>",
+          "translation": "<p>Được lên kế hoạch có một sân chơi cho trẻ nhỏ.</p>"
+        },
+        {
+          "id": "4-19",
+          "original": "<p>If you look at the road that goes up from the south entrance, you'll see it curves round to the left at the top.</p>",
+          "translation": "<p>Nếu bạn nhìn vào con đường đi lên từ lối vào phía nam, bạn sẽ thấy nó uốn cong sang trái ở trên cùng.</p>"
+        },
+        {
+          "id": "4-20",
+          "original": "<p>And the playground will be in that curve with nice views of the lake.</p>",
+          "translation": "<p>Và sân chơi sẽ ở trong khúc cong đó với tầm nhìn đẹp ra hồ.</p>"
+        },
+        {
+          "id": "4-21",
+          "original": "<p>OK, so, now, does anyone have any questions?</p>",
+          "translation": "<p>OK, vậy, bây giờ, có ai có câu hỏi nào không?</p>"
+        }
+      ]
     }
   ]
 }

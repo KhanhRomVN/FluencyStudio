@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { X, Pilcrow } from 'lucide-react';
 import { folderService } from '../../../../../../../shared/services/folderService';
-import { DirectoryDrawer } from './DirectoryDrawer';
+// import { DirectoryDrawer } from './DirectoryDrawer';
 import { directoryStorage } from '../services/directoryStorage';
 
 interface PassageDrawerProps {
@@ -32,9 +32,6 @@ export const PassageDrawer: React.FC<PassageDrawerProps> = ({
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [activeSegmentIndex, setActiveSegmentIndex] = useState<number | null>(null);
-
-  const [directoryOpen, setDirectoryOpen] = useState(false);
-  const [selectedWord, setSelectedWord] = useState<string | null>(null);
   const longPressTimer = useRef<NodeJS.Timeout | null>(null);
   const isLongPress = useRef(false);
   const startPos = useRef({ x: 0, y: 0 });
@@ -118,43 +115,6 @@ export const PassageDrawer: React.FC<PassageDrawerProps> = ({
       }
     }
     return null;
-  };
-
-  const handlePointerDown = (e: React.PointerEvent) => {
-    // Only process left click for hold (mouse) or touch
-    if (e.pointerType === 'mouse' && e.button !== 0) return;
-
-    isLongPress.current = false;
-    startPos.current = { x: e.clientX, y: e.clientY };
-
-    // Clear any existing timer
-    if (longPressTimer.current) clearTimeout(longPressTimer.current);
-
-    longPressTimer.current = setTimeout(() => {
-      isLongPress.current = true;
-      const word = getWordFromPoint(e.clientX, e.clientY);
-      if (word) {
-        // Clean punctuation
-        const cleanWord = word.replace(/^[^\w]+|[^\w]+$/g, '');
-        if (cleanWord && cleanWord.length > 0) {
-          const finalWord = cleanWord.toLowerCase();
-
-          // Fetch via directory service first.
-          // If we have data, we open. If not, we do nothing.
-          // To avoid UI freezing or no feedback, could show a spinner.
-          // But requirement is "only show if data".
-          directoryStorage.fetchAndSave(finalWord).then((entry) => {
-            if (entry) {
-              setSelectedWord(finalWord);
-              setDirectoryOpen(true);
-            } else {
-              // Optional: Simple toast or console log
-              console.log('No dictionary data found for', finalWord);
-            }
-          });
-        }
-      }
-    }, 600); // 600ms hold
   };
 
   const handlePointerMove = (e: React.PointerEvent) => {
@@ -251,7 +211,6 @@ export const PassageDrawer: React.FC<PassageDrawerProps> = ({
                           ? 'bg-[hsl(var(--primary))]/20 shadow-sm'
                           : 'hover:bg-[hsl(var(--primary))]/5'
                       } [&_p]:inline [&_p]:m-0`}
-                      onPointerDown={handlePointerDown}
                       onPointerMove={handlePointerMove}
                       onPointerUp={(e) => handlePointerUp(e, index)}
                       onPointerCancel={handlePointerCancel}
@@ -283,11 +242,11 @@ export const PassageDrawer: React.FC<PassageDrawerProps> = ({
         </div>
       </div>
 
-      <DirectoryDrawer
+      {/* <DirectoryDrawer
         isOpen={directoryOpen}
         onClose={() => setDirectoryOpen(false)}
         word={selectedWord}
-      />
+      /> */}
     </>
   );
 };

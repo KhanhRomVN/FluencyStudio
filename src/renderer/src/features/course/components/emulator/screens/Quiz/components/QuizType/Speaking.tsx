@@ -2,7 +2,7 @@ import React, { useState, useEffect, useMemo } from 'react';
 import { Mic, CheckCircle2, ChevronRight, MicOff } from 'lucide-react';
 import { Quiz, QuizQuestion } from '../../types';
 import { RichTextParser } from '../RichTextParser';
-import { WritingHintDrawer } from '../WritingHintDrawer';
+import { HintDrawer } from '../HintDrawer';
 
 interface SpeakingProps {
   quiz: Quiz;
@@ -78,11 +78,7 @@ export const Speaking: React.FC<SpeakingProps> = ({ quiz, header }) => {
       <div className="flex-1 overflow-y-auto p-4 [&::-webkit-scrollbar]:hidden pb-32">
         {header}
 
-        {quiz.instruction && questions.length > 1 && (
-          <div className="mb-6 text-[hsl(var(--foreground))]">
-            <RichTextParser content={quiz.instruction} onHintClick={handleHintClick} />
-          </div>
-        )}
+        {/* Instruction now handled by TutorialDrawer in QuizPage */}
 
         <div
           className="space-y-6 animate-in fade-in slide-in-from-right-4 duration-300"
@@ -91,37 +87,13 @@ export const Speaking: React.FC<SpeakingProps> = ({ quiz, header }) => {
           {/* Question Display */}
           <div className="w-full">
             {/* Type guard/check for properties */}
-            {'topic' in currentQuestion && currentQuestion.topic && (
-              <div className="text-sm font-bold text-[hsl(var(--primary))] mb-2 uppercase tracking-wider">
-                {currentQuestion.topic}
-              </div>
-            )}
-
             {currentQuestion.question && (
               <div className="text-base leading-relaxed text-[hsl(var(--foreground))]">
                 {currentQuestion.question}
               </div>
             )}
 
-            {/* Part 2: Instruction serves as the main question if proper question is missing */}
-            {!currentQuestion.question &&
-              'instruction' in currentQuestion &&
-              currentQuestion.instruction && (
-                <div className="text-base leading-relaxed text-[hsl(var(--foreground))]">
-                  <RichTextParser
-                    content={currentQuestion.instruction}
-                    onHintClick={handleHintClick}
-                  />
-                </div>
-              )}
-
-            {'exampleQuestion' in currentQuestion && currentQuestion.exampleQuestion && (
-              <ul className="list-disc list-inside space-y-2 mt-2 font-normal text-base text-[hsl(var(--muted-foreground))]">
-                {currentQuestion.exampleQuestion.map((q, idx) => (
-                  <li key={idx}>{q}</li>
-                ))}
-              </ul>
-            )}
+            {/* Part 2: Instruction now handled by TutorialDrawer - removed from here */}
           </div>
 
           {/* Input Area */}
@@ -210,7 +182,7 @@ export const Speaking: React.FC<SpeakingProps> = ({ quiz, header }) => {
         </div>
       </div>
 
-      <WritingHintDrawer
+      <HintDrawer
         isOpen={showHintDrawer}
         onClose={() => setShowHintDrawer(false)}
         hintContent={currentHint}

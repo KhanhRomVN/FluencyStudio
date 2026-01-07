@@ -58,20 +58,9 @@ export const MatchingDropdown: React.FC<MatchingDropdownProps> = ({
   }, [quiz.options]);
 
   // Derived state: Available options for each row
-  // We want to hide options that are already selected in OTHER rows
-  // ONLY IF subtype is NOT 'multi-answer'
+  // All options are always available (multi-answer behavior)
   const getAvailableOptions = (currentMatchingId: string) => {
-    // If subtype is multi-answer, all options are always available
-    if (quiz.subtype === 'multi-answer') {
-      return options;
-    }
-
-    // Default behavior (single-answer): Hide options selected in other rows
-    const selectedKeys = Object.entries(selectedAnswers)
-      .filter(([id]) => id !== currentMatchingId) // Ignore current row's selection
-      .map(([, key]) => key);
-
-    return options.filter((opt) => !selectedKeys.includes(opt.key));
+    return options;
   };
 
   // Notify parent about explain drawer state

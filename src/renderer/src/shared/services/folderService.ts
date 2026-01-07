@@ -265,6 +265,38 @@ class FolderService {
     }
   }
 
+  /**
+   * Load image file as base64 data URL
+   */
+  async loadImageFile(filePath: string): Promise<string | null> {
+    try {
+      if (window.electron?.ipcRenderer) {
+        const content = await window.electron.ipcRenderer.invoke('file:read', filePath, {
+          encoding: 'base64',
+        });
+        if (content) {
+          // Determine mime type from file extension
+          const ext = filePath.toLowerCase().split('.').pop();
+          let mimeType = 'image/png';
+          if (ext === 'jpg' || ext === 'jpeg') {
+            mimeType = 'image/jpeg';
+          } else if (ext === 'gif') {
+            mimeType = 'image/gif';
+          } else if (ext === 'webp') {
+            mimeType = 'image/webp';
+          } else if (ext === 'svg') {
+            mimeType = 'image/svg+xml';
+          }
+          return `data:${mimeType};base64,${content}`;
+        }
+      }
+      return null;
+    } catch (error) {
+      console.error('Error loading image file:', error);
+      return null;
+    }
+  }
+
   private getDefaultFolderStructure(): CourseFolderStructure {
     return {
       courseJson: undefined,

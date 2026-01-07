@@ -5,16 +5,16 @@
   "quiz": [
     {
       "id": "quiz_01",
-      "title": "",
+      "title": "Task 1: Urbanization Trends in Asian Countries",
       "type": "writing",
       "page": 31,
-      "instruction": "<p style='bold'>The graph below gives information about the percentage of the population in four Asian countries living in cities from 1970 to 2020, with predictions for 2030 and 2040.</p></n><p style='bold'>Summarise the information by selecting and reporting the main features, and make comparisons where relevant</p></n><image src='./image/Test1_Writing.png'> style='center'",
+      "instruction": "<p>The graph below gives information about the percentage of the population in four Asian countries living in cities from 1970 to 2020, with predictions for 2030 and 2040.</p></n><p style='bold'>Summarise the information by selecting and reporting the main features, and make comparisons where relevant</p></n></img src='./image/Test1_Writing.png'>",
       "min": 150,
       "example": "<p hint='<p>Đoạn mở bài cần nêu đầy đủ thông tin: loại biểu đồ, đối tượng, thời gian và dự báo.</p>' importance='high'>The line graph illustrates the urbanization trends in the Philippines, Malaysia, Thailand, and Indonesia from 1970 to 2020, with forecasts extending to 2040.</p><p hint='<p>Đoạn tổng quan (overview) là phần quan trọng nhất trong Task 1, cần nêu các xu hướng chính.</p>' importance='high'>Overall, Malaysia consistently had the highest proportion of urban dwellers, a trend predicted to continue. Indonesia and the Philippines showed steady, significant growth, while Thailand's urbanization rate remained the lowest and most gradual.</p><p>In 1970, Malaysia's urban population stood at just over 30%, leading the four countries. This figure </p><p hint='<p>\"rose sharply\" là cụm từ mô tả xu hướng tăng nhanh, cần học để áp dụng cho các biểu đồ khác.</p>' importance='medium'>rose sharply</p><p> to about 50% by 1990 and continued climbing to around 75% by 2020. Predictions suggest it will reach approximately 85% by 2040.</p><p>Indonesia and the Philippines followed similar upward trajectories, starting at roughly 15% and 30% respectively in 1970. By 2020, both had reached about 55%. Their growth is expected to persist, with Indonesia slightly </p><p hint='<p>\"overtaking\" là từ vựng tốt để diễn đạt việc vượt qua/vượt lên trong so sánh.</p>' importance='medium'>overtaking</p><p> the Philippines to hit nearly 65% by 2040, compared to the Philippines' projected 62%.</p><p hint='<p>\"In contrast\" là cụm từ chuyển tiếp hiệu quả để giới thiệu đối tượng có xu hướng ngược lại.</p>' importance='medium'>In contrast</p><p>, Thailand's urban population grew </p><p hint='<p>\"modestly\" là từ vựng học thuật thay thế cho \"slowly\" hoặc \"a little\".</p>' importance='low'>modestly</p><p> from around 15% in 1970 to just under 35% in 2020. Forecasts indicate a continued slow rise to about 45% by 2040, maintaining its position as the least urbanized nation among the four.</p>"
     },
     {
       "id": "quiz_02",
-      "title": "",
+      "title": "Task 2: The Primary Aim of Science",
       "type": "writing",
       "page": 32,
       "instruction": "<p style='bold'>The most important aim of science should be to improve people's lives.</p></n><p style='bold'>To what extent do you agree or disagree with this statement?</p></n><p>Give reasons for your answer and include any relevant examples from your own knowledge or experience.</p></n><p>Write at least 250 words.</p>",

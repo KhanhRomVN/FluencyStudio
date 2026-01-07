@@ -1,5 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { AudioLines, ChevronLeft, AlignEndVertical, Info, BadgeInfo, Pilcrow } from 'lucide-react';
+import {
+  AudioLines,
+  ChevronLeft,
+  AlignEndVertical,
+  Info,
+  Pilcrow,
+  CircleDotDashed,
+} from 'lucide-react';
 import { Quiz } from './types';
 import { GapFill } from './components/QuizType/GapFill';
 import { MultipleChoice } from './components/QuizType/MultipleChoice';
@@ -13,7 +20,7 @@ import { SentenceTransformation } from './components/QuizType/SentenceTransforma
 import { MediaPlayer } from './components/MediaPlayer';
 import { QuizDrawer } from './components/QuizDrawer';
 import { TranscriptDrawer } from './components/TranscriptDrawer';
-import { WritingInstructionDrawer } from './components/WritingInstructionDrawer';
+import { TutorialDrawer } from './components/TutorialDrawer';
 import { PassageDrawer } from './components/PassageDrawer';
 import { useAudio } from '../../../../hooks/useAudio';
 
@@ -35,17 +42,20 @@ export const QuizPage: React.FC<QuizPageProps> = ({
   const [showMenu, setShowMenu] = useState(false);
 
   const [showExplainDrawer, setShowExplainDrawer] = useState(false);
-  const [showInstructionDrawer, setShowInstructionDrawer] = useState(false);
+  const [showTutorialDrawer, setShowTutorialDrawer] = useState(false);
   const [showPassageDrawer, setShowPassageDrawer] = useState(false);
 
   // Delayed mount states for drawer animations
   const [transcriptMounted, setTranscriptMounted] = useState(false);
   const [menuMounted, setMenuMounted] = useState(false);
-  const [instructionMounted, setInstructionMounted] = useState(false);
+  const [tutorialMounted, setTutorialMounted] = useState(false);
   const [passageMounted, setPassageMounted] = useState(false);
 
   // Track visited quizzes to show colored help icon only on first visit
   const [visitedQuizzes, setVisitedQuizzes] = useState<Set<string>>(new Set());
+
+  // Track visited tutorials to change icon color
+  const [visitedTutorials, setVisitedTutorials] = useState<Set<string>>(new Set());
 
   // Determine Quizzes List and Current Index
   const quizzes = parentLesson?.quiz || [quizData];
@@ -83,8 +93,11 @@ export const QuizPage: React.FC<QuizPageProps> = ({
   // States for drawer open animation (visible after mount)
   const [transcriptVisible, setTranscriptVisible] = useState(false);
   const [menuVisible, setMenuVisible] = useState(false);
-  const [instructionVisible, setInstructionVisible] = useState(false);
+  const [tutorialVisible, setTutorialVisible] = useState(false);
   const [passageVisible, setPassageVisible] = useState(false);
+
+  // Check if quiz has tutorial content (instruction field only)
+  const hasTutorialContent = Boolean(quizData.instruction);
 
   // Delayed mount/unmount effects for drawer animations
   useEffect(() => {
@@ -115,17 +128,17 @@ export const QuizPage: React.FC<QuizPageProps> = ({
   }, [showMenu]);
 
   useEffect(() => {
-    if (showInstructionDrawer) {
-      setInstructionMounted(true);
+    if (showTutorialDrawer) {
+      setTutorialMounted(true);
       requestAnimationFrame(() => {
-        requestAnimationFrame(() => setInstructionVisible(true));
+        requestAnimationFrame(() => setTutorialVisible(true));
       });
     } else {
-      setInstructionVisible(false);
-      const timer = setTimeout(() => setInstructionMounted(false), 300);
+      setTutorialVisible(false);
+      const timer = setTimeout(() => setTutorialMounted(false), 300);
       return () => clearTimeout(timer);
     }
-  }, [showInstructionDrawer]);
+  }, [showTutorialDrawer]);
 
   useEffect(() => {
     if (showPassageDrawer) {
@@ -150,6 +163,18 @@ export const QuizPage: React.FC<QuizPageProps> = ({
   };
 
   const handleTutorialClick = () => {
+    // Mark tutorial as visited when clicked
+    if (!visitedTutorials.has(quizData.id)) {
+      setVisitedTutorials((prev) => {
+        const next = new Set(prev);
+        next.add(quizData.id);
+        return next;
+      });
+    }
+    setShowTutorialDrawer(true);
+  };
+
+  const handleInfoClick = () => {
     // Mark as visited when clicked
     if (isNewQuiz) {
       setVisitedQuizzes((prev) => {
@@ -186,12 +211,17 @@ export const QuizPage: React.FC<QuizPageProps> = ({
               <Pilcrow size={18} />
             </button>
           )}
-          {quizData.type === 'writing' && (
+          {hasTutorialContent && (
             <button
-              onClick={() => setShowInstructionDrawer(true)}
-              className="p-1.5 rounded-lg hover:bg-[hsl(var(--muted))] active:scale-95 transition-all text-[hsl(var(--foreground))]"
+              onClick={handleTutorialClick}
+              className={
+                'p-1.5 rounded-lg hover:bg-[hsl(var(--muted))] active:scale-95 transition-all ' +
+                (!visitedTutorials.has(quizData.id)
+                  ? 'text-[hsl(var(--primary))]'
+                  : 'text-[hsl(var(--foreground))]')
+              }
             >
-              <BadgeInfo size={18} />
+              <CircleDotDashed size={18} />
             </button>
           )}
           {isChecked && quizData.transcript && (
@@ -210,8 +240,11 @@ export const QuizPage: React.FC<QuizPageProps> = ({
           </div>
 
           <button
-            onClick={handleTutorialClick}
-            className={`p-1.5 rounded-lg hover:bg-[hsl(var(--muted))] active:scale-95 transition-all ${isNewQuiz ? 'text-[hsl(var(--primary))]' : 'text-[hsl(var(--foreground))]'}`}
+            onClick={handleInfoClick}
+            className={
+              'p-1.5 rounded-lg hover:bg-[hsl(var(--muted))] active:scale-95 transition-all ' +
+              (isNewQuiz ? 'text-[hsl(var(--primary))]' : 'text-[hsl(var(--foreground))]')
+            }
           >
             <Info size={18} />
           </button>
@@ -371,11 +404,12 @@ export const QuizPage: React.FC<QuizPageProps> = ({
         />
       )}
 
-      {quizData.type === 'writing' && instructionMounted && (
-        <WritingInstructionDrawer
-          isOpen={instructionVisible}
-          onClose={() => setShowInstructionDrawer(false)}
-          instruction={quizData.instruction || ''}
+      {hasTutorialContent && tutorialMounted && (
+        <TutorialDrawer
+          isOpen={tutorialVisible}
+          onClose={() => setShowTutorialDrawer(false)}
+          content={quizData.instruction || ''}
+          parentFilePath={parentLesson?._filePath}
         />
       )}
 

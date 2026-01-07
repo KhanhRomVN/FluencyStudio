@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Send } from 'lucide-react';
 import { Quiz } from '../../types';
 import { RichTextParser } from '../RichTextParser';
-import { WritingHintDrawer } from '../WritingHintDrawer';
+import { HintDrawer } from '../HintDrawer';
 
 interface WritingProps {
   quiz: Quiz;
@@ -89,7 +89,7 @@ export const Writing: React.FC<WritingProps> = ({ quiz, header }) => {
         </div>
       )}
 
-      <WritingHintDrawer
+      <HintDrawer
         isOpen={showHintDrawer}
         onClose={() => setShowHintDrawer(false)}
         hintContent={currentHint}

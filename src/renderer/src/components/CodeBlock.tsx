@@ -271,7 +271,20 @@ const CodeBlock: React.FC<CodeBlockProps> = ({
   // Update value
   useEffect(() => {
     if (editorInstance.current && editorInstance.current.getValue() !== code) {
+      // Save cursor position and selection before updating
+      const position = editorInstance.current.getPosition();
+      const selection = editorInstance.current.getSelection();
+
+      // Update the value
       editorInstance.current.setValue(code);
+
+      // Restore cursor position and selection
+      if (position) {
+        editorInstance.current.setPosition(position);
+      }
+      if (selection) {
+        editorInstance.current.setSelection(selection);
+      }
     }
   }, [code]);
 

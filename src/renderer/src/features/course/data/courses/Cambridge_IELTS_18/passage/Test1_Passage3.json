@@ -7,12 +7,12 @@
       "translate": "<p style='italic center'>Vệ tinh, mảnh tên lửa và mảnh vỡ va chạm đang tạo ra những rủi ro giao thông lớn trên quỹ đạo quanh hành tinh. Các nhà nghiên cứu đang nỗ lực giảm thiểu những mối đe dọa này</p>"
     },
     {
-      "content": "<p>A Last year, commercial companies, military and civil departments and amateurs sent more than 400 satellites into orbit, over four times the yearly average in the previous decade.</p>",
+      "content": "<p style='bold 24'>A</p><p> Last year, commercial companies, military and civil departments and amateurs sent more than 400 satellites into orbit, over four times the yearly average in the previous decade.</p>",
       "translate": "<p>A Năm ngoái, các công ty thương mại, các cơ quan quân sự, dân sự và các nhà nghiên cứu nghiệp dư đã phóng hơn 400 vệ tinh lên quỹ đạo, gấp hơn bốn lần mức trung bình hàng năm trong thập kỷ trước.</p>"
     },
     {
-      "content": "<p>Numbers could rise even more sharply if leading space companies follow through on plans to deploy hundreds to thousands of large constellations of satellites to space in the next few years.</p>",
-      "translate": "<p>Con số có thể tăng thậm chí còn mạnh hơn nữa nếu các công ty vũ trụ hàng đầu thực hiện kế hoạch triển khai hàng trăm đến hàng ngàn chòm sao vệ tinh lớn vào không gian trong vài năm tới.</p>"
+      "content": "<p>Numbers could rise even more sharply if leading space companies follow through on plans to deploy hundreds to thousands of large constellations of satellites to space in the next few years.</p></n>",
+      "translate": "<p>Con số có thể tăng thậm chí còn mạnh hơn nữa nếu các công ty vũ trụ hàng đầu thực hiện kế hoạch triển khai hàng trăm đến hàng ngàn chòm sao vệ tinh lớn vào không gian trong vài năm tới.</p></n>"
     },
     {
       "content": "<p>All that traffic can lead to disaster.</p>",
@@ -23,11 +23,11 @@
       "translate": "<p>Mười năm trước, một vệ tinh thương mại Iridium của Mỹ đã đâm vào một vệ tinh liên lạc Nga không hoạt động có tên Cosmos-2251, tạo ra hàng ngàn mảnh vỡ không gian mới hiện đang đe dọa các vệ tinh khác trong quỹ đạo Trái đất tầm thấp – khu vực kéo dài lên đến 2.000 km độ cao.</p>"
     },
     {
-      "content": "<p>Altogether, there are roughly 20,000 human-made objects in orbit, from working satellites to small rocket pieces, and satellite operators can't steer away from every potential crash, because each move consumes time and fuel that could otherwise be used for the spacecraft's main job.</p>",
-      "translate": "<p>Tổng cộng, có khoảng 20.000 vật thể nhân tạo trên quỹ đạo, từ các vệ tinh đang hoạt động đến các mảnh tên lửa nhỏ, và các nhà điều hành vệ tinh không thể lái tránh mọi vụ va chạm tiềm tàng, vì mỗi lần di chuyển tiêu tốn thời gian và nhiên liệu lẽ ra có thể được sử dụng cho công việc chính của tàu vũ trụ.</p>"
+      "content": "<p>Altogether, there are roughly 20,000 human-made objects in orbit, from working satellites to small rocket pieces, and satellite operators can't steer away from every potential crash, because each move consumes time and fuel that could otherwise be used for the spacecraft's main job.</p></n>",
+      "translate": "<p>Tổng cộng, có khoảng 20.000 vật thể nhân tạo trên quỹ đạo, từ các vệ tinh đang hoạt động đến các mảnh tên lửa nhỏ, và các nhà điều hành vệ tinh không thể lái tránh mọi vụ va chạm tiềm tàng, vì mỗi lần di chuyển tiêu tốn thời gian và nhiên liệu lẽ ra có thể được sử dụng cho công việc chính của tàu vũ trụ.</p></n>"
     },
     {
-      "content": "<p>B Concern about space junk goes back to the beginning of the satellite era, but the number of objects in orbit is rising so rapidly that researchers are investigating new ways of attacking the problem.</p>",
+      "content": "<p style='bold 24'>B</p><p> Concern about space junk goes back to the beginning of the satellite era, but the number of objects in orbit is rising so rapidly that researchers are investigating new ways of attacking the problem.</p>",
       "translate": "<p>B Mối quan tâm về rác không gian có từ thời kỳ đầu của kỷ nguyên vệ tinh, nhưng số lượng vật thể trên quỹ đạo đang tăng lên nhanh chóng đến mức các nhà nghiên cứu đang tìm hiểu những cách mới để giải quyết vấn đề.</p>"
     },
     {
@@ -39,8 +39,8 @@
       "translate": "<p>Một số nhà nghiên cứu hiện đang bắt đầu biên soạn một danh sách chủ khổng lồ bao gồm tất cả thông tin quỹ đạo về vị trí của mọi thứ trên quỹ đạo.</p>"
     },
     {
-      "content": "<p>Others are developing taxonomies of space debris – working on measuring properties such as the shape and size of an object, so that satellite operators know how much to worry about what's coming their way.</p>",
-      "translate": "<p>Những người khác đang phát triển hệ thống phân loại rác không gian – nghiên cứu đo lường các thuộc tính như hình dạng và kích thước của một vật thể, để các nhà điều hành vệ tinh biết phải lo lắng bao nhiêu về những gì đang đến với họ.</p>"
+      "content": "<p>Others are developing taxonomies of space debris – working on measuring properties such as the shape and size of an object, so that satellite operators know how much to worry about what's coming their way.</p></n>",
+      "translate": "<p>Những người khác đang phát triển hệ thống phân loại rác không gian – nghiên cứu đo lường các thuộc tính như hình dạng và kích thước của một vật thể, để các nhà điều hành vệ tinh biết phải lo lắng bao nhiêu về những gì đang đến với họ.</p></n>"
     },
     {
       "content": "<p>The alternative, many say, is unthinkable.</p>",
@@ -51,12 +51,12 @@
       "translate": "<p>Chỉ một vài vụ va chạm không gian không kiểm soát có thể tạo ra đủ mảnh vỡ để kích hoạt một chuỗi mảnh vỡ không thể kiểm soát, khiến không gian gần Trái đất không thể sử dụng được.</p>"
     },
     {
-      "content": "<p>'If we go on like this, we will reach a point of no return,' says Carolin Frueh, an astrodynamical researcher at Purdue University in West Lafayette, Indiana.</p>",
-      "translate": "<p>'Nếu chúng ta cứ tiếp tục như thế này, chúng ta sẽ đạt đến điểm không thể quay đầu,' Carolin Frueh, một nhà nghiên cứu động lực học thiên thể tại Đại học Purdue ở West Lafayette, Indiana, nói.</p>"
+      "content": "<p>'If we go on like this, we will reach a point of no return,' says Carolin Frueh, an astrodynamical researcher at Purdue University in West Lafayette, Indiana.</p></n>",
+      "translate": "<p>'Nếu chúng ta cứ tiếp tục như thế này, chúng ta sẽ đạt đến điểm không thể quay đầu,' Carolin Frueh, một nhà nghiên cứu động lực học thiên thể tại Đại học Purdue ở West Lafayette, Indiana, nói.</p></n>"
     },
     {
-      "content": "<p>C Even as our ability to monitor space objects increases, so too does the total number of items in orbit.</p>",
-      "translate": "<p>C Ngay cả khi khả năng giám sát các vật thể không gian của chúng ta tăng lên, thì tổng số vật thể trên quỹ đạo cũng tăng theo.</p>"
+      "content": "<p style='bold 24'>C</p><p> Even as our ability to monitor space objects increases, so too does the total number of items in orbit.</p>",
+      "translate": "<p>Ngay cả khi khả năng giám sát các vật thể không gian của chúng ta tăng lên, thì tổng số vật thể trên quỹ đạo cũng tăng theo.</p>"
     },
     {
       "content": "<p>That means companies, governments and other players in space are collaborating in new ways to avoid a shared threat.</p>",
@@ -87,12 +87,12 @@
       "translate": "<p>'Điều gì sẽ xảy ra với những người thất bại hoặc phá sản?' ông hỏi.</p>"
     },
     {
-      "content": "<p>'They are probably not going to spend money to remove their satellites.'</p>",
-      "translate": "<p>'Họ có lẽ sẽ không chi tiền để loại bỏ vệ tinh của họ.'</p>"
+      "content": "<p>'They are probably not going to spend money to remove their satellites.'</p></n>",
+      "translate": "<p>'Họ có lẽ sẽ không chi tiền để loại bỏ vệ tinh của họ.'</p></n>"
     },
     {
-      "content": "<p>D In theory, given the vastness of space, satellite operators should have plenty of room for all these missions to fly safely without ever nearing another object.</p>",
-      "translate": "<p>D Về lý thuyết, với sự rộng lớn của không gian, các nhà điều hành vệ tinh phải có nhiều chỗ cho tất cả các nhiệm vụ này bay an toàn mà không bao giờ đến gần một vật thể khác.</p>"
+      "content": "<p style='bold 24'>D</p><p> In theory, given the vastness of space, satellite operators should have plenty of room for all these missions to fly safely without ever nearing another object.</p>",
+      "translate": "<p>Về lý thuyết, với sự rộng lớn của không gian, các nhà điều hành vệ tinh phải có nhiều chỗ cho tất cả các nhiệm vụ này bay an toàn mà không bao giờ đến gần một vật thể khác.</p>"
     },
     {
       "content": "<p>So some scientists are tackling the problem of space junk by trying to find out where all the debris is to a high degree of precision.</p>",
@@ -103,12 +103,12 @@
       "translate": "<p>Điều đó sẽ làm giảm nhu cầu cho nhiều thao tác không cần thiết được thực hiện để tránh va chạm tiềm tàng.</p>"
     },
     {
-      "content": "<p>'If you knew precisely where everything was, you would almost never have a problem,' says Marlon Sorge, a space-debris specialist at the Aerospace Corporation in El Segundo, California.</p>",
-      "translate": "<p>'Nếu bạn biết chính xác mọi thứ ở đâu, bạn hầu như sẽ không bao giờ gặp vấn đề,' Marlon Sorge, một chuyên gia về rác không gian tại Tập đoàn Hàng không Vũ trụ ở El Segundo, California, nói.</p>"
+      "content": "<p>'If you knew precisely where everything was, you would almost never have a problem,' says Marlon Sorge, a space-debris specialist at the Aerospace Corporation in El Segundo, California.</p></n>",
+      "translate": "<p>'Nếu bạn biết chính xác mọi thứ ở đâu, bạn hầu như sẽ không bao giờ gặp vấn đề,' Marlon Sorge, một chuyên gia về rác không gian tại Tập đoàn Hàng không Vũ trụ ở El Segundo, California, nói.</p></n>"
     },
     {
-      "content": "<p>E The field is called space traffic management, because it's similar to managing traffic on the roads or in the air.</p>",
-      "translate": "<p>E Lĩnh vực này được gọi là quản lý giao thông không gian, bởi vì nó tương tự như quản lý giao thông trên đường bộ hoặc trên không.</p>"
+      "content": "<p style='bold 24'>E</p><p> The field is called space traffic management, because it's similar to managing traffic on the roads or in the air.</p>",
+      "translate": "<p>Lĩnh vực này được gọi là quản lý giao thông không gian, bởi vì nó tương tự như quản lý giao thông trên đường bộ hoặc trên không.</p>"
     },
     {
       "content": "<p>Think about a busy day at an airport, says Moriba Jah, an astrodynamicist at the University of Texas at Austin: planes line up in the sky, landing and taking off close to one another in a carefully choreographed routine.</p>",
@@ -123,12 +123,12 @@
       "translate": "<p>Điều tương tự không thể nói về rác không gian.</p>"
     },
     {
-      "content": "<p>Not all objects in orbit are known, and even those included in databases are not tracked consistently.</p>",
-      "translate": "<p>Không phải tất cả các vật thể trên quỹ đạo đều được biết đến, và ngay cả những vật thể có trong cơ sở dữ liệu cũng không được theo dõi một cách nhất quán.</p>"
+      "content": "<p>Not all objects in orbit are known, and even those included in databases are not tracked consistently.</p></n>",
+      "translate": "<p>Không phải tất cả các vật thể trên quỹ đạo đều được biết đến, và ngay cả những vật thể có trong cơ sở dữ liệu cũng không được theo dõi một cách nhất quán.</p></n>"
     },
     {
-      "content": "<p>F An additional problem is that there is no authoritative catalogue that accurately lists the orbits of all known space debris.</p>",
-      "translate": "<p>F Một vấn đề bổ sung là không có danh mục có thẩm quyền nào liệt kê chính xác quỹ đạo của tất cả các mảnh rác không gian đã biết.</p>"
+      "content": "<p style='bold 24'>F</p><p> An additional problem is that there is no authoritative catalogue that accurately lists the orbits of all known space debris.</p>",
+      "translate": "<p>Một vấn đề bổ sung là không có danh mục có thẩm quyền nào liệt kê chính xác quỹ đạo của tất cả các mảnh rác không gian đã biết.</p>"
     },
     {
       "content": "<p>Jah illustrates this with a web-based database that he has developed.</p>",

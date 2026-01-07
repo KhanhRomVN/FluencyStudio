@@ -26,11 +26,11 @@
       "quiz": [
         {
           "id": "quiz_01",
-          "title": "IELTS Listening Test 1 - Part 1: Transport Survey Interview",
+          "title": "Transport Survey",
           "type": "gap-fill",
           "instruction": "<p>Write </p><p style='bold'>ONE WORD AND/OR A NUMBER </p><p>for each answer.</p>",
           "quizNumber": 1,
-          "page": 4,
+          "page": 12,
           "question": "<p style='bold center 18'>Transport survey</p></n><p style='bold'>Name: </p><p size='14'>Sadie Jones</p></n><p style='bold'>Year of birth:</p> <p>1991</p></n><p style='bold'>Postcode: </p></gap id='answer_01'></n></n><p style='bold'>Travelling by bus</p></n><p>Date of bus journey: </p></gap id='answer_02'></n><p>Reason for trip: </p><p>shopping and visit to the </p></gap id='answer_03'></n><p>Travelled by bus because cost of </p></gap id='answer_04'><p> too high</p></n><p>Got on bus at </p></gap id='answer_05'><p> Street</p></n><p>Complaints about bus service:</p></n><p>- bus today was </p></gap id='answer_06'></n><p>- frequency of buses in the </p></gap id='answer_07'></n><p bold>Travelling by car</p></n><p>Goes to the </p></gap id='answer_08'><p> by car</p></n><p bold>Travelling by bicycle</p></n><p>Dislikes travelling by bike in the city centre because of the </p></gap id='answer_09'></n><p>Doesn’t own a bike because of a lack of </p></gap id='answer_10'>",
           "audio": "./audio/Cambridge_IELTS_18_Test1_Listening_Part1.mp3",
           "transcript": "./audio/Cambridge_IELTS_18_Test1_Listening_Part1_Transcript.json",
@@ -114,11 +114,11 @@
         },
         {
           "id": "quiz_02",
-          "title": "IELTS Listening Test 1 - Part 2: Volunteer Organization Presentation",
+          "title": "Volunteer Organization (Part 1)",
           "type": "multiple-choice",
           "instruction": "<p>Choose the correct letter, A, B or C.</p>",
           "quizNumber": 2,
-          "page": 5,
+          "page": 13,
           "audio": "./audio/Cambridge_IELTS_18_Test1_Listening_Part2.mp3",
           "transcript": "./audio/Cambridge_IELTS_18_Test1_Listening_Part2_Transcript.json",
           "questions": [
@@ -126,71 +126,44 @@
               "id": "question_01",
               "question": "Why does the speaker apologise about the seats?",
               "options": [
-                {
-                  "key": "A",
-                  "text": "They are too small."
-                },
-                {
-                  "key": "B",
-                  "text": "There are not enough of them."
-                },
-                {
-                  "key": "C",
-                  "text": "Some of them are very close together."
-                }
+                "They are too small.",
+                "There are not enough of them.",
+                "Some of them are very close together."
               ],
-              "answer": "C",
+              "answer": "Some of them are very close together.",
               "explain": "<p>Diễn giả nói: \"We have brought in extra seats so that no one has to stand, but it does mean that the people at the back of the room may be a bit squashed.\"</p>\n<p>Từ khóa \"squashed\" có nghĩa là bị ép chặt, chật chội, tương đương với \"very close together\" trong lựa chọn C.</p>\n<p>Phân tích các phương án sai:</p>\n<p>A. \"They are too small\" - Không được đề cập trong bài. Diễn giả chỉ nói về khoảng cách giữa các ghế, không nói về kích thước ghế.</p>\n<p>B. \"There are not enough of them\" - Ngược lại với thông tin thực tế: \"We have brought in extra seats so that no one has to stand\" - Đã có thêm ghế để không ai phải đứng.</p>\n<p>Đây là ví dụ về việc sử dụng từ đồng nghĩa/paraphrase trong IELTS. \"Squashed\" được paraphrase thành \"very close together\".</p>"
             },
             {
               "id": "question_02",
               "question": "What does the speaker say about the age of volunteers?",
               "options": [
-                {
-                  "key": "A",
-                  "text": "The age of volunteers is less important than other factors."
-                },
-                {
-                  "key": "B",
-                  "text": "Young volunteers are less reliable than older ones."
-                },
-                {
-                  "key": "C",
-                  "text": "Most volunteers are about 60 years old."
-                }
+                "The age of volunteers is less important than other factors.",
+                "Young volunteers are less reliable than older ones.",
+                "Most volunteers are about 60 years old."
               ],
-              "answer": "A",
+              "answer": "The age of volunteers is less important than other factors.",
               "explain": "<p>Diễn giả nói: \"Other considerations, such as reliability, are crucial in voluntary work and age isn't related to these in our experience.\"</p>\n<p>Câu này có nghĩa: Các yếu tố khác như độ tin cậy là quan trọng trong công việc tình nguyện, và theo kinh nghiệm của họ, tuổi tác không liên quan đến những yếu tố này. Điều này tương đương với phương án A - tuổi của tình nguyện viên ít quan trọng hơn các yếu tố khác.</p>\n<p>Phân tích các phương án sai:</p>\n<p>B. \"Young volunteers are less reliable than older ones\" - Ngược lại với thông tin: \"age isn't related to these\" (tuổi tác không liên quan đến độ tin cậy).</p>\n<p>C. \"Most volunteers are about 60 years old\" - Không được đề cập. Diễn giả chỉ nói bạn có thể từ 16 đến 60 tuổi trở lên, không nói hầu hết khoảng 60 tuổi.</p>\n<p>Đây là dạng câu hỏi yêu cầu hiểu ý chính thay vì thông tin chi tiết cụ thể.</p>"
             },
             {
               "id": "question_03",
               "question": "What does the speaker say about training?",
               "options": [
-                {
-                  "key": "A",
-                  "text": "It is continuous."
-                },
-                {
-                  "key": "B",
-                  "text": "It is conducted by a manager."
-                },
-                {
-                  "key": "C",
-                  "text": "It takes place online."
-                }
+                "It is continuous.",
+                "It is conducted by a manager.",
+                "It takes place online."
               ],
-              "answer": "A",
+              "answer": "It is continuous.",
               "explain": "<p>Diễn giả nói: \"What's more, training doesn't end when you start working for us. It takes place before, during and after periods of work.\"</p>\n<p>Cụm \"before, during and after\" mô tả quá trình đào tạo liên tục, không ngừng, tương đương với \"continuous\" trong phương án A.</p>\n<p>Phân tích các phương án sai:</p>\n<p>B. \"It is conducted by a manager\" - Ngược lại với thông tin: \"Often it's run by other experienced volunteers as managers tend to prefer to get on with other things.\" - Thường được thực hiện bởi các tình nguyện viên có kinh nghiệm vì các quản lý thường thích làm việc khác.</p>\n<p>C. \"It takes place online\" - Ngược lại với thông tin: \"Well, there's plenty of that and it's all face-to-face.\" - Tất cả đều trực tiếp mặt đối mặt.</p>\n<p>Đây là ví dụ về việc thông tin chính xác được đưa ra ngay sau khi đề cập đến chủ đề, và các phương án sai chứa thông tin trái ngược hoặc không được đề cập.</p>"
             }
           ]
         },
         {
           "id": "quiz_03",
-          "title": "IELTS Listening Test 1 - Part 2: Volunteer Organization Presentation",
+          "title": "Volunteer Organization (Part 2)",
           "type": "multiple-choice",
           "instruction": "<p>Answer the questions below.</p>",
           "quizNumber": 3,
-          "page": 5,
+          "page": 13,
           "audio": "./audio/Cambridge_IELTS_18_Test1_Listening_Part2.mp3",
           "transcript": "./audio/Cambridge_IELTS_18_Test1_Listening_Part2_Transcript.mp3",
           "questions": [
@@ -198,30 +171,15 @@
               "id": "question_01",
               "question": "Which TWO issues does the speaker ask the audience to consider before they apply to be volunteers?",
               "options": [
-                {
-                  "key": "A",
-                  "text": "their financial situation"
-                },
-                {
-                  "key": "B",
-                  "text": "their level of commitment"
-                },
-                {
-                  "key": "C",
-                  "text": "their work experience"
-                },
-                {
-                  "key": "D",
-                  "text": "their ambition"
-                },
-                {
-                  "key": "E",
-                  "text": "their availability"
-                }
+                "their financial situation",
+                "their level of commitment",
+                "their work experience",
+                "their ambition",
+                "their availability"
               ],
               "answers": [
-                "B",
-                "E"
+                "their level of commitment",
+                "their availability"
               ],
               "explain": "<p>Diễn giả đề cập hai vấn đề chính cần cân nhắc:</p>\n<p>1. Về commitment (mức độ cam kết): \"What we value is dedication. Some of our most loyal volunteers earn very little themselves but still give their full energy to the work they do with us.\" - Tương ứng với phương án B.</p>\n<p>2. Về availability (khả năng sẵn sàng/thời gian có sẵn): \"But it is critical that you have enough hours in the day for whatever role we agree is suitable for you.\" - Tương ứng với phương án E.</p>\n<p>Phân tích các phương án sai:</p>\n<p>A. \"their financial situation\" - Ngược lại với thông tin: \"You may think that your income is important, but we don't ask about that.\"</p>\n<p>C. \"their work experience\" - Không được đề cập là vấn đề cần cân nhắc trước khi ứng tuyển. Diễn giả chỉ nói về lý do mọi người muốn làm tình nguyện (có thể để có kinh nghiệm làm việc).</p>\n<p>D. \"their ambition\" - Không được đề cập. Diễn giả nói: \"We don't worry about why you want to be a volunteer.\" - Họ không quan tâm đến lý do/ambition của ứng viên.</p>\n<p>Đây là dạng câu hỏi chọn 2 đáp án đúng, yêu cầu thí sinh phải xác định được tất cả các thông tin liên quan và loại trừ các phương án sai. Lưu ý rằng thông tin cho hai đáp án đúng thường xuất hiện gần nhau trong bài nghe.</p>"
             }
@@ -229,12 +187,11 @@
         },
         {
           "id": "quiz_04",
-          "title": "IELTS Listening Test 1 - Part 2: Volunteer Work Areas",
+          "title": "Volunteer Work Areas",
           "type": "matching-dropdown",
-          "subtype": "single-answer",
           "instruction": "<p>Choose </p><p style='bold'>FIVE </p><p>answers from the box and write the correct letter.</p>",
           "quizNumber": 4,
-          "page": 6,
+          "page": 14,
           "options": [
             "financial situation",
             "original, new ideas",
@@ -281,11 +238,11 @@
         },
         {
           "id": "quiz_05",
-          "title": "IELTS Listening Test 1 - Part 3: Talk on jobs in fashion design",
+          "title": "Jobs in Fashion Design (Part 1)",
           "type": "multiple-choice",
           "instruction": "<p>Choose the correct letter, A, B or C.</p>",
           "quizNumber": 5,
-          "page": 7,
+          "page": 15,
           "audio": "./audio/Cambridge_IELTS_18_Test1_Listening_Part3.mp3",
           "transcript": "./audio/Cambridge_IELTS_18_Test1_Listening_Part3_Transcript.json",
           "questions": [
@@ -293,131 +250,77 @@
               "id": "question_01",
               "question": "What problem did Chantal have at the start of the talk?",
               "options": [
-                {
-                  "key": "A",
-                  "text": "Her view of the speaker was blocked."
-                },
-                {
-                  "key": "B",
-                  "text": "She was unable to find an empty seat."
-                },
-                {
-                  "key": "C",
-                  "text": "The students next to her were talking."
-                }
+                "Her view of the speaker was blocked.",
+                "She was unable to find an empty seat.",
+                "The students next to her were talking."
               ],
-              "answer": "A",
+              "answer": "Her view of the speaker was blocked.",
               "explain": "<p>Chantal giải thích: \"I went early so that I'd get a seat and not have to stand. But then this guy sat right in front of me and he was so tall.\" Hugo đáp lại: \"It's hard to see through people's heads, isn't it?\" và Chantal xác nhận: \"Impossible.\"</p>\n<p>Vấn đề của Chantal là tầm nhìn bị che khuất bởi một người đàn ông cao ngồi phía trước, tương ứng với phương án A \"Her view of the speaker was blocked.\"</p>\n<p>Phân tích các phương án sai:</p>\n<p>B. \"She was unable to find an empty seat\" - Ngược lại với thông tin: Chantal đến sớm và đã tìm được chỗ ngồi.</p>\n<p>C. \"The students next to her were talking\" - Hugo có hỏi về việc này (\"were the people beside you chatting or something?\") nhưng Chantal nói \"It wasn't that\" - không phải vấn đề đó.</p>"
             },
             {
               "id": "question_02",
               "question": "What were Hugo and Chantal surprised to hear about the job market?",
               "options": [
-                {
-                  "key": "A",
-                  "text": "It has become more competitive than it used to be."
-                },
-                {
-                  "key": "B",
-                  "text": "There is more variety in it than they had realised."
-                },
-                {
-                  "key": "C",
-                  "text": "Some areas of it are more exciting than others."
-                }
+                "It has become more competitive than it used to be.",
+                "There is more variety in it than they had realised.",
+                "Some areas of it are more exciting than others."
               ],
-              "answer": "B",
+              "answer": "There is more variety in it than they had realised.",
               "explain": "<p>Hugo nói: \"But it looks like there's a whole range of areas of work that we hadn't even thought of, like fashion journalism, for instance.\" Chantal đồng ý: \"Yeah, I wasn't expecting so many career options.\"</p>\n<p>Cụm \"a whole range of areas\" và \"so many career options\" cho thấy họ ngạc nhiên về sự đa dạng trong thị trường việc làm, tương ứng với phương án B \"There is more variety in it than they had realised.\"</p>\n<p>Phân tích các phương án sai:</p>\n<p>A. \"It has become more competitive\" - Hugo có nói \"we know we're going into a really competitive field\" nhưng đây là điều họ đã biết trước, không phải điều ngạc nhiên.</p>\n<p>C. \"Some areas are more exciting\" - Không được đề cập trong cuộc trò chuyện.</p>"
             },
             {
               "id": "question_03",
               "question": "Hugo and Chantal agree that the speaker's message was",
               "options": [
-                {
-                  "key": "A",
-                  "text": "unfair to them at times."
-                },
-                {
-                  "key": "B",
-                  "text": "hard for them to follow."
-                },
-                {
-                  "key": "C",
-                  "text": "critical of the industry."
-                }
+                "unfair to them at times.",
+                "hard for them to follow.",
+                "critical of the industry."
               ],
-              "answer": "A",
+              "answer": "unfair to them at times.",
               "explain": "<p>Hugo nói: \"Overall, she had quite a strong message, didn't she?\" Chantal đáp: \"She did. She kept saying things like, I know you all think this, but... and then she'd tell us how it really is.\" Hugo tiếp: \"Perhaps she thinks students are a bit narrow-minded about the industry.\" Chantal đồng ý: \"It was a bit harsh, though.\"</p>\n<p>Từ \"harsh\" (khắt khe, gay gắt) cho thấy họ cảm thấy thông điệp có phần không công bằng đối với sinh viên, tương ứng với phương án A \"unfair to them at times.\"</p>\n<p>Phân tích các phương án sai:</p>\n<p>B. \"hard for them to follow\" - Không có thông tin nào cho thấy họ khó hiểu nội dung.</p>\n<p>C. \"critical of the industry\" - Người phát biểu phê phán sinh viên hơn là phê phán ngành công nghiệp.</p>"
             },
             {
               "id": "question_04",
               "question": "What do Hugo and Chantal criticise about their school careers advice?",
               "options": [
-                {
-                  "key": "A",
-                  "text": "when they received the advice"
-                },
-                {
-                  "key": "B",
-                  "text": "how much advice was given"
-                },
-                {
-                  "key": "C",
-                  "text": "who gave the advice"
-                }
+                "when they received the advice",
+                "how much advice was given",
+                "who gave the advice"
               ],
-              "answer": "C",
+              "answer": "who gave the advice",
               "explain": "<p>Hugo nói: \"Well, we had numerous talks on careers, which was good, but none of them were very inspiring. They could have asked more people like today's speaker to talk to us.\" Chantal đồng ý: \"I agree. We were told about lots of different careers, just when we needed to be, but not by the experts who really know stuff.\"</p>\n<p>Cả hai đều phê phán việc người đưa ra lời khuyên không phải là chuyên gia thực thụ, tương ứng với phương án C \"who gave the advice.\"</p>\n<p>Phân tích các phương án sai:</p>\n<p>A. \"when they received the advice\" - Chantal nói \"just when we needed to be\" - đúng thời điểm.</p>\n<p>B. \"how much advice was given\" - Hugo nói \"numerous talks\" và Chantal nói \"lots of different careers\" - không thiếu về số lượng.</p>"
             },
             {
               "id": "question_05",
               "question": "When discussing their future, Hugo and Chantal disagree on",
               "options": [
-                {
-                  "key": "A",
-                  "text": "which is the best career in fashion."
-                },
-                {
-                  "key": "B",
-                  "text": "when to choose a career in fashion."
-                },
-                {
-                  "key": "C",
-                  "text": "why they would like a career in fashion."
-                }
+                "which is the best career in fashion.",
+                "when to choose a career in fashion.",
+                "why they would like a career in fashion."
               ],
-              "answer": "B",
+              "answer": "when to choose a career in fashion.",
               "explain": "<p>Chantal nói: \"Well, I promised myself that I'd go through this course and keep an open mind till the end.\" Hugo không đồng ý: \"But I think it's better to pick an area of the industry now and then aim to get better and better at it.\" Chantal kết luận: \"Well... I think we'll just have to differ on that issue.\"</p>\n<p>Sự bất đồng là về thời điểm chọn nghề: Chantal muốn giữ tâm thế cởi mở cho đến cuối khóa học, trong khi Hugo muốn chọn ngay bây giờ. Điều này tương ứng với phương án B \"when to choose a career in fashion.\"</p>\n<p>Phân tích các phương án sai:</p>\n<p>A. \"which is the best career\" - Họ không tranh luận về nghề nào tốt nhất.</p>\n<p>C. \"why they would like a career\" - Lý do chọn nghề không được thảo luận.</p>"
             },
             {
               "id": "question_06",
               "question": "How does Hugo feel about being an unpaid assistant?",
               "options": [
-                {
-                  "key": "A",
-                  "text": "He is realistic about the practice."
-                },
-                {
-                  "key": "B",
-                  "text": "He feels the practice is dishonest."
-                },
-                {
-                  "key": "C",
-                  "text": "He thinks others want to change the practice."
-                }
+                "He is realistic about the practice.",
+                "He feels the practice is dishonest.",
+                "He thinks others want to change the practice."
               ],
-              "answer": "A",
+              "answer": "He is realistic about the practice.",
               "explain": "<p>Hugo nói: \"One thing's for certain, though. From what she said, we'll be unpaid assistants in the industry for quite a long time. I'm prepared for that. Aren't you?\"</p>\n<p>Cụm \"I'm prepared for that\" cho thấy Hugo chấp nhận thực tế này một cách thực tế, tương ứng với phương án A \"He is realistic about the practice.\"</p>\n<p>Phân tích các phương án sai:</p>\n<p>B. \"He feels the practice is dishonest\" - Hugo không nói thực hành này không trung thực, mà chỉ chuẩn bị chấp nhận nó.</p>\n<p>C. \"He thinks others want to change the practice\" - Chantal là người không chấp nhận quan điểm này (\"Actually, I'm not going to accept that view\"), không phải Hugo nghĩ người khác muốn thay đổi.</p>"
             }
           ]
         },
         {
           "id": "quiz_06",
-          "title": "IELTS Listening Test 1 - Part 3: Talk on jobs in fashion design",
+          "title": "Jobs in Fashion Design (Part 2)",
           "type": "multiple-choice",
           "instruction": "<p>Choose</p><p style='bold'> TWO </p><p>letters, </p><p style='bold'>A–E</p>",
           "quizNumber": 6,
-          "page": 7,
+          "page": 16,
           "audio": "./audio/Cambridge_IELTS_18_Test1_Listening_Part3.mp3",
           "transcript": "./audio/Cambridge_IELTS_18_Test1_Listening_Part3_Transcript.json",
           "questions": [
@@ -425,30 +328,15 @@
               "id": "question_01",
               "question": "Which TWO mistakes did the speaker admit she made in her first job?",
               "options": [
-                {
-                  "key": "A",
-                  "text": "being dishonest to her employer"
-                },
-                {
-                  "key": "B",
-                  "text": "paying too much attention to how she looked"
-                },
-                {
-                  "key": "C",
-                  "text": "expecting to become well known"
-                },
-                {
-                  "key": "D",
-                  "text": "trying to earn a lot of money"
-                },
-                {
-                  "key": "E",
-                  "text": "openly disliking her client"
-                }
+                "being dishonest to her employer",
+                "paying too much attention to how she looked",
+                "expecting to become well known",
+                "trying to earn a lot of money",
+                "openly disliking her client"
               ],
               "answers": [
-                "B",
-                "E"
+                "paying too much attention to how she looked",
+                "openly disliking her client"
               ],
               "explain": "<p>Diễn giả thừa nhận hai sai lầm trong công việc đầu tiên:</p>\n<p>1. Về việc chú ý quá nhiều đến ngoại hình của chính mình (Phương án B):</p>\n<p>Hugo nói: \"And then he was so mean telling her she was more interested in her own appearance than his.\" Chantal đáp: \"But she did realise he was right about that, which really made me think. I'm always considering my own clothes, but now I can see you should be focusing on your client.\"</p>\n<p>2. Về việc thể hiện công khai sự không thích khách hàng (Phương án E):</p>\n<p>Chantal nói: \"Well, as she said, she should have hidden her negative feelings about him, but she didn't.\" Điều này cho thấy diễn giả đã công khai thể hiện cảm xúc tiêu cực về khách hàng của mình.</p>\n<p>Phân tích các phương án sai:</p>\n<p>A. \"being dishonest to her employer\" - Không được đề cập.</p>\n<p>C. \"expecting to become well known\" - Không được đề cập như một sai lầm.</p>\n<p>D. \"trying to earn a lot of money\" - Ngược lại, Chantal nói: \"Though she said all she was looking for back then was experience, not financial reward.\"</p>"
             },
@@ -456,30 +344,15 @@
               "id": "question_02",
               "question": "Which TWO pieces of retail information do Hugo and Chantal agree would be useful?",
               "options": [
-                {
-                  "key": "A",
-                  "text": "the reasons people return fashion items"
-                },
-                {
-                  "key": "B",
-                  "text": "how much time people have to shop for clothes"
-                },
-                {
-                  "key": "C",
-                  "text": "fashion designs people want but can't find"
-                },
-                {
-                  "key": "D",
-                  "text": "the best time of year for fashion buying"
-                },
-                {
-                  "key": "E",
-                  "text": "the most popular fashion sizes"
-                }
+                "the reasons people return fashion items",
+                "how much time people have to shop for clothes",
+                "fashion designs people want but can't find",
+                "the best time of year for fashion buying",
+                "the most popular fashion sizes"
               ],
               "answers": [
-                "A",
-                "C"
+                "the reasons people return fashion items",
+                "fashion designs people want but can't find"
               ],
               "explain": "<p>Hugo và Chantal đồng ý hai loại thông tin bán lẻ hữu ích:</p>\n<p>1. Lý do mọi người trả lại sản phẩm thời trang (Phương án A):</p>\n<p>Chantal nói: \"They also take things back to the store if they aren't right.\" Hugo đồng ý và đưa ví dụ: \"Yeah. Imagine you worked in an expensive shop and you found out the garments sold there were being returned because they fell apart in the wash.\" Chantal xác nhận: \"Yeah, it would be good to know that kind of thing.\"</p>\n<p>2. Các thiết kế thời trang mà mọi người muốn nhưng không tìm thấy (Phương án C):</p>\n<p>Hugo nói: \"However, it would be useful to know if there's a gap in the market, you know? An item that no one's stocking, but that consumers are looking for.\" Chantal đồng ý: \"Yeah, people don't give up searching.\"</p>\n<p>Phân tích các phương án sai:</p>\n<p>B. \"how much time people have to shop\" - Không được đề cập.</p>\n<p>D. \"the best time of year for fashion buying\" - Không được thảo luận.</p>\n<p>E. \"the most popular fashion sizes\" - Chantal có đề cập \"how big or small the average shopper is\" nhưng Hugo nói \"I think that's an issue for manufacturers, not designers\" - đây không phải là thông tin họ đồng ý là hữu ích cho designers.</p>"
             }
@@ -487,11 +360,11 @@
         },
         {
           "id": "quiz_07",
-          "title": "IELTS Listening Test 1 - Part 4: Elephant translocation",
+          "title": "Elephant Translocation",
           "type": "gap-fill",
           "instruction": "<p>Write</p><p style='bold'> ONE WORD ONLY </p><p>for each answer.</p>",
           "quizNumber": 7,
-          "page": 8,
+          "page": 17,
           "question": "<p style='bold center 18'>Elephant translocation</p></n></n><p style='bold'>Reasons for overpopulation at Majete National Park</p></n><p>- strict enforcement of anti-poaching laws</p></n><p>- successful breeding</p></n></n><p style='bold'>Problems caused by elephant overpopulation</p></n><p>- greater competition, causing hunger for elephants</p></n><p>- damage to </p></gap id='answer_01'><p> in the park</p></n></n><p style='bold'>The translocation process</p></n><p>- a suitable group of elephants from the same </p></gap id='answer_02'><p> was selected</p></n><p>- vets and park staff made use of </p></gap id='answer_03'><p> to help guide the elephants into an open plain</p></n><p>- elephants were immobilised with tranquilisers</p></n><p>  - this process had to be completed quickly to reduce </p></gap id='answer_04'></n><p>  - elephants had to be turned on their </p></gap id='answer_05'><p> to avoid damage to their lungs</p></n><p>  - elephants' </p></gap id='answer_06'><p> had to be monitored constantly</p></n><p>  - tracking devices were fitted to the matriarchs</p></n<p>  - data including the size of their tusks and </p></gap id='answer_07'><p> was taken</p></n><p>- elephants were taken by truck to their new reserve</p></n></n><p style='bold'>Advantages of translocation at Nkotakota Wildlife Park</p></n><p>- </p></gap id='answer_08'><p> opportunities</p></n><p>- a reduction in the number of poachers and </p></gap id='answer_09'></n><p>- an example of conservation that other parks can follow</p></n><p>- an increase in </p></gap id='answer_10'><p> as a contributor to GDP</p>",
           "audio": "./audio/Cambridge_IELTS_18_Test1_Listening_Part4.mp3",
           "transcript": "./audio/Cambridge_IELTS_18_Test1_Listening_Part4_Transcript.json",
@@ -578,75 +451,149 @@
       "quiz": [
         {
           "id": "quiz_01",
-          "title": "",
+          "title": "Urban farming in Paris",
           "type": "gap-fill",
-          "instruction": "<p>Choose </p><p style='bold'>NO MORE THAN TWO WORDS AND/OR A NUMBER</p><p> from the passage for each answer.</p>",
+          "instruction": "<p>Choose </p><p style='bold'>NO MORE THAN TWO WORDS AND/OR A NUMBER</p><p> from the passage for each answer.</p><p>Write your answers in boxes 1–3 on your answer sheet.</p>",
           "quizNumber": 1,
-          "passage": "./passage/Test1_Passage1.json"
+          "page": 20,
+          "passage": "./passage/Test1_Passage1.json",
+          "question": "<p style='bold center 18'>Urban farming in Paris</p></n></n><p style='bold'>1</p><p>   Vertical tubes are used to grow strawberries, </p></gap id='answer_01'><p> and herbs.</p></n><p style='bold'>2</p><p>   There will eventually be a daily harvest of as much as </p></gap id='answer_02'><p> in weight of fruit and vegetables.</p></n><p style='bold'>3</p><p>   It may be possible that the farm's produce will account for as much as 10% of the city's </p></gap id='answer_03'><p> overall.</p>",
+          "answers": [
+            {
+              "id": "answer_01",
+              "answer": [
+                "lettuces"
+              ],
+              "explain": "<p style='bold'>Đáp án: lettuces</p>\n<p style='bold'>Vị trí trong bài đọc:</p><p>Đoạn văn nói về các ống dọc (vertical tubes): \"From identical vertical tubes nearby burst upon row of lettuces; near those are aromatic herbs, such as basil, sage and peppermint.\"</p>\n<p style='bold'>Phân tích chi tiết:</p>\n<p>• Bài đọc mô tả ba loại cây được trồng trong các ống dọc: dâu tây (strawberries), rau diếp (lettuces) và thảo mộc (herbs).</p>\n<p>• Câu hỏi đã cho sẵn \"strawberries\" và \"herbs\", yêu cầu tìm loại cây còn thiếu ở giữa.</p>\n<p>• Từ \"lettuces\" (rau diếp) xuất hiện ngay trong câu mô tả về các ống dọc tương tự.</p>\n<p style='bold'>Mẹo làm bài:</p><p>Dạng câu hỏi điền từ thường yêu cầu tìm các thành phần trong một danh sách. Khi đã biết hai thành phần, hãy dò tìm thành phần còn lại trong đoạn văn liên quan.</p>\n<p style='bold'>Từ vựng quan trọng:</p>\n<p>• Vertical tubes = ống dọc (phương pháp trồng cây theo chiều thẳng đứng)</p>\n<p>• Aromatic herbs = thảo mộc có mùi thơm</p>\n<p>• Burst upon = mọc lên, nảy mầm</p>"
+            },
+            {
+              "id": "answer_02",
+              "answer": [
+                "1,000 kg",
+                "1000 kg",
+                "1,000kg",
+                "1000kg"
+              ],
+              "explain": "<p style='bold'>Đáp án: 1,000 kg (hoặc 1000 kg)</p>\n<p style='bold'>Vị trí trong bài đọc:</p><p>\"When the remaining two thirds of the vast open area are in production, 20 staff will harvest up to 1,000 kg of perhaps 35 different varieties of fruit and vegetables, every day.\"</p>\n<p style='bold'>Phân tích chi tiết:</p>\n<p>• Câu hỏi hỏi về sản lượng thu hoạch hàng ngày khi trang trại hoạt động đầy đủ.</p>\n<p>• Con số \"1,000 kg\" được đề cập rõ ràng là sản lượng tối đa mỗi ngày.</p>\n<p>• Chú ý: Câu hỏi yêu cầu \"NO MORE THAN TWO WORDS AND/OR A NUMBER\", vì vậy \"1,000 kg\" hoặc \"1000 kg\" đều được chấp nhận.</p>\n<p style='bold'>Mẹo làm bài:</p><p>Khi câu hỏi có từ khóa về số lượng (\"as much as\", \"up to\"), hãy tìm các con số trong bài đọc. Các dạng viết số khác nhau (có dấu phẩy hoặc không) thường đều được chấp nhận.</p>\n<p style='bold'>Từ vựng quan trọng:</p>\n<p>• Vast open area = khu vực rộng lớn</p>\n<p>• In production = đang hoạt động sản xuất</p>\n<p>• Harvest = thu hoạch</p>\n<p>• Varieties = các giống loại khác nhau</p>"
+            },
+            {
+              "id": "answer_03",
+              "answer": [
+                "consumption"
+              ],
+              "explain": "<p style='bold'>Đáp án: consumption</p>\n<p style='bold'>Vị trí trong bài đọc:</p><p>\"But if enough unused space can be developed like this, there's no reason why you shouldn't eventually target maybe between 5% and 10% of consumption.\"</p>\n<p style='bold'>Phân tích chi tiết:</p>\n<p>• Câu hỏi hỏi về mục tiêu 10% của thành phố mà trang trại có thể đạt được.</p>\n<p>• Pascal Hardy nói về việc có thể đạt từ 5% đến 10% \"consumption\" (nhu cầu tiêu thụ) của thành phố.</p>\n<p>• Từ \"consumption\" ở đây có nghĩa là tổng lượng tiêu thụ thực phẩm của cả thành phố.</p>\n<p style='bold'>Mẹo làm bài:</p>\n<p>• Câu hỏi dùng \"10%\" trong khi bài đọc nói \"between 5% and 10%\" - đây là cách paraphrase phổ biến trong IELTS.</p>\n<p>• Khi thấy câu hỏi có \"overall\" (tổng thể), hãy tìm các từ chỉ tổng số hoặc mức tiêu thụ chung.</p>\n<p style='bold'>Từ vựng quan trọng:</p>\n<p>• Consumption = sự tiêu thụ, mức tiêu dùng</p>\n<p>• Target = nhắm đến, đặt mục tiêu</p>\n<p>• Eventually = cuối cùng, rốt cuộc</p>\n<p>• Unused space = không gian chưa sử dụng</p>\n<p style='bold'>Mở rộng kiến thức:</p><p>Bài đọc này nói về xu hướng nông nghiệp đô thị (urban farming) - một giải pháp bền vững để giảm khoảng cách vận chuyển thực phẩm, giảm ô nhiễm môi trường và cung cấp thực phẩm tươi cho cư dân thành phố.</p>"
+            }
+          ]
         },
         {
           "id": "quiz_02",
-          "title": "",
+          "title": "Urban farming",
           "type": "matching-dropdown",
-          "subtype": "multi-answer",
           "instruction": "<p>Do the following statements agree with the information given in passage?</p>",
           "quizNumber": 2,
-          "otpions": [],
-          "passage": "./passage/Test1_Passage1.json"
+          "page": 21,
+          "options": [
+            "TRUE",
+            "FALSE",
+            "NOT GIVEN"
+          ],
+          "passage": "./passage/Test1_Passage1.json",
+          "matchings": [
+            {
+              "id": "matching_01",
+              "question": "Urban farming can take place above or below ground.",
+              "answer": "TRUE",
+              "explain": "<p style='bold'>Đáp án: TRUE</p>\n<p style='bold'>Vị trí trong bài đọc:</p><p>\"Inner-city agriculture is booming from Shanghai to Detroit and Tokyo to Bangkok. Strawberries grow in disused shipping containers, mushrooms in underground carparks.\"</p>\n<p style='bold'>Phân tích chi tiết:</p>\n<p>• Bài đọc nói rõ dâu tây được trồng trong container (above ground) và nấm được trồng trong bãi đậu xe ngầm (below ground - underground).</p>\n<p>• \"Underground carparks\" = bãi đậu xe ngầm → dưới mặt đất.</p>\n<p>• \"Disused shipping containers\" và trang trại trên mái nhà → trên mặt đất.</p>\n<p>• Vì cả hai hình thức đều được đề cập, câu phát biểu là TRUE.</p>\n<p style='bold'>Mẹo làm bài:</p><p>Với dạng TRUE/FALSE/NOT GIVEN, cần tìm bằng chứng cụ thể trong bài. Câu này yêu cầu xác nhận cả hai điều kiện (above AND below ground) và bài đọc đều có đề cập đến.</p>\n<p style='bold'>Từ vựng quan trọng:</p>\n<p>• Underground carparks = bãi đậu xe ngầm</p>\n<p>• Disused = không còn sử dụng</p>\n<p>• Shipping containers = container vận chuyển</p>"
+            },
+            {
+              "id": "matching_02",
+              "question": "Some of the equipment used in aeroponic farming can be made by hand.",
+              "answer": "NOT GIVEN",
+              "explain": "<p style='bold'>Đáp án: NOT GIVEN</p>\n<p style='bold'>Phân tích chi tiết:</p>\n<p>• Bài đọc có đề cập đến thiết bị canh tác khí canh: \"The equipment weighs little, can be installed on almost any flat surface and is cheap to buy: roughly €100 to €150 per square metre.\"</p>\n<p>• Tuy nhiên, bài đọc KHÔNG đề cập đến việc thiết bị có thể được làm thủ công (made by hand) hay không.</p>\n<p>• Vì không có thông tin về việc tự làm thiết bị, đáp án là NOT GIVEN.</p>\n<p style='bold'>Mẹo làm bài:</p>\n<p>• Đừng suy luận quá xa! Chỉ vì thiết bị \"rẻ\" và \"nhẹ\" không có nghĩa là có thể tự làm.</p>\n<p>• NOT GIVEN = thông tin không được đề cập trong bài, không phải là bạn không tìm thấy.</p>\n<p style='bold'>Từ vựng quan trọng:</p>\n<p>• Aeroponic farming = canh tác khí canh</p>\n<p>• Equipment = thiết bị</p>\n<p>• Made by hand = làm thủ công</p>"
+            },
+            {
+              "id": "matching_03",
+              "question": "Urban farming relies more on electricity than some other types of farming.",
+              "answer": "FALSE",
+              "explain": "<p style='bold'>Đáp án: FALSE</p>\n<p style='bold'>Vị trí trong bài đọc:</p><p>\"It is cheap to run, too, consuming a tiny fraction of the electricity used by some techniques.\"</p>\n<p style='bold'>Phân tích chi tiết:</p>\n<p>• Bài đọc nói rõ canh tác đô thị tiêu thụ \"a tiny fraction\" (một phần rất nhỏ) điện năng so với một số kỹ thuật khác.</p>\n<p>• \"A tiny fraction\" ≠ \"more\" → câu phát biểu nói ngược lại với thông tin trong bài.</p>\n<p>• Vì vậy đáp án là FALSE.</p>\n<p style='bold'>Mẹo làm bài:</p>\n<p>• Chú ý các từ so sánh: \"more than\", \"less than\", \"a tiny fraction of\".</p>\n<p>• Khi câu hỏi dùng \"more\" nhưng bài đọc nói \"less/tiny fraction\", đáp án thường là FALSE.</p>\n<p style='bold'>Từ vựng quan trọng:</p>\n<p>• A tiny fraction = một phần rất nhỏ</p>\n<p>• Rely on = phụ thuộc vào</p>\n<p>• Consuming = tiêu thụ</p>"
+            },
+            {
+              "id": "matching_04",
+              "question": "Fruit and vegetables grown on an aeroponic urban farm are cheaper than traditionally grown organic produce.",
+              "answer": "TRUE",
+              "explain": "<p style='bold'>Đáp án: TRUE</p>\n<p style='bold'>Vị trí trong bài đọc:</p><p>\"Produce grown this way typically sells at prices that, while generally higher than those of classic intensive agriculture, are lower than soil-based organic growers.\"</p>\n<p style='bold'>Phân tích chi tiết:</p>\n<p>• Bài đọc so sánh giá sản phẩm khí canh với hai loại khác:</p>\n<p>  - Cao hơn nông nghiệp thâm canh cổ điển (classic intensive agriculture)</p>\n<p>  - THẤP HƠN người trồng hữu cơ dùng đất (soil-based organic growers)</p>\n<p>• \"Lower than soil-based organic growers\" = rẻ hơn sản phẩm hữu cơ truyền thống.</p>\n<p>• Câu hỏi nói \"cheaper than traditionally grown organic\" → khớp với bài đọc.</p>\n<p style='bold'>Mẹo làm bài:</p>\n<p>• Đọc kỹ câu so sánh trong bài. Ở đây có HAI so sánh trong một câu.</p>\n<p>• \"Soil-based organic\" = \"traditionally grown organic\" (paraphrase).</p>\n<p style='bold'>Từ vựng quan trọng:</p>\n<p>• Produce = sản phẩm nông nghiệp</p>\n<p>• Soil-based = dùng đất</p>\n<p>• Organic growers = người trồng hữu cơ</p>"
+            },
+            {
+              "id": "matching_05",
+              "question": "Most produce can be grown on an aeroponic urban farm at any time of the year.",
+              "answer": "FALSE",
+              "explain": "<p style='bold'>Đáp án: FALSE</p>\n<p style='bold'>Vị trí trong bài đọc:</p><p>\"There are limits to what farmers can grow this way, of course, and much of the produce is suited to the summer months.\"</p>\n<p style='bold'>Phân tích chi tiết:</p>\n<p>• Bài đọc nói \"much of the produce is suited to the summer months\" = phần lớn sản phẩm phù hợp với những tháng mùa hè.</p>\n<p>• Điều này TRÁI NGƯỢC với câu phát biểu \"at any time of the year\" (bất kỳ lúc nào trong năm).</p>\n<p>• \"Summer months\" ≠ \"any time of the year\" → FALSE.</p>\n<p style='bold'>Mẹo làm bài:</p>\n<p>• Cẩn thận với các từ chỉ mức độ: \"most\", \"any\", \"all\", \"some\".</p>\n<p>• \"Much of\" (phần lớn) trong bài đọc bị giới hạn bởi \"summer months\", nên \"any time\" là sai.</p>\n<p style='bold'>Từ vựng quan trọng:</p>\n<p>• Suited to = phù hợp với</p>\n<p>• Summer months = những tháng mùa hè</p>\n<p>• At any time = bất kỳ lúc nào</p>"
+            },
+            {
+              "id": "matching_06",
+              "question": "Beans take longer to grow on an urban farm than other vegetables.",
+              "answer": "NOT GIVEN",
+              "explain": "<p style='bold'>Đáp án: NOT GIVEN</p>\n<p style='bold'>Vị trí trong bài đọc:</p><p>\"And beans tend to take up a lot of space for not much return.\"</p>\n<p style='bold'>Phân tích chi tiết:</p>\n<p>• Bài đọc nói về đậu (beans) chiếm nhiều không gian nhưng không mang lại nhiều lợi nhuận.</p>\n<p>• Bài đọc KHÔNG đề cập đến thời gian trồng đậu (how long beans take to grow).</p>\n<p>• \"Take up a lot of space\" (chiếm nhiều không gian) ≠ \"take longer to grow\" (mất nhiều thời gian hơn để trồng).</p>\n<p>• Vì không có thông tin về thời gian trồng, đáp án là NOT GIVEN.</p>\n<p style='bold'>Mẹo làm bài:</p>\n<p>• Đọc kỹ từng từ trong câu hỏi. \"Take longer\" liên quan đến TIME, nhưng bài đọc nói về SPACE.</p>\n<p>• Đừng nhầm lẫn giữa \"take up space\" và \"take time\"!</p>\n<p style='bold'>Từ vựng quan trọng:</p>\n<p>• Take up space = chiếm không gian</p>\n<p>• Take longer = mất nhiều thời gian hơn</p>\n<p>• Return = lợi nhuận, sản lượng thu về</p>"
+            }
+          ]
         },
         {
           "id": "quiz_03",
-          "title": "",
+          "title": "Forest management in Pennsylvania",
           "type": "matching-dropdown",
-          "subtype": "single-answer",
-          "instruction": "<p>Reading Passage 2 has seven paragraphs, A–G.</p><p>Which paragraph contains the following information?</p><p>Write the correct letter, A–G, in boxes 14–18 on your answer sheet.</p>",
+          "instruction": "<p>Reading Passage 2 has seven paragraphs, A–G.</p><p>Which paragraph contains the following information?</p><p>Write the correct letter, A–G, in boxes 14–18 on your answer sheet.</p><p style='bold italic'>NB You may use any letter more than once.</p>",
           "quizNumber": 3,
+          "page": 24,
           "passage": "./passage/Test1_Passage2.json",
           "options": [
             "A",
             "B",
-            "C"
+            "C",
+            "D",
+            "E",
+            "F",
+            "G"
           ],
           "matchings": [
             {
-              "id": "matching_14",
+              "id": "matching_01",
               "question": "bad outcomes for a forest when people focus only on its financial reward",
               "answer": "B",
-              "explain": ""
+              "explain": "<p style='bold'>Đáp án: B</p>\n<p style='bold'>Vị trí trong bài đọc:</p><p>Đoạn B nói: \"In the past, Pennsylvania landowners were solely interested in the value of their trees as high-quality timber... This practice, called 'high-grading', has left a legacy of 'low-use wood' in the forests... These trees... compete for growth with higher-value trees, shade out desirable regeneration and decrease the health of a stand leaving it more vulnerable to poor weather and disease.\"</p>\n<p style='bold'>Phân tích chi tiết:</p>\n<p>• Câu hỏi tìm \"bad outcomes\" (hậu quả xấu) khi chủ đất chỉ tập trung vào giá trị tài chính (financial reward).</p>\n<p>• Đoạn B mô tả thực hành \"high-grading\" khi chủ đất \"solely interested in\" (chỉ quan tâm) giá trị gỗ chất lượng cao.</p>\n<p>• Hậu quả: cây cối cạnh tranh, giảm tái sinh, giảm sức khỏe của rừng, dễ bị bệnh và thời tiết xấu.</p>\n<p style='bold'>Mẹo làm bài:</p><p>Dạng câu hỏi \"Which paragraph contains\" yêu cầu tìm đoạn chứa ý chính. Không cần khớp từng từ mà cần hiểu ý nghĩa tổng thể.</p>\n<p style='bold'>Từ vựng quan trọng:</p>\n<p>• Solely interested = chỉ quan tâm</p>\n<p>• High-grading = khai thác chọn lọc cao</p>\n<p>• Legacy = di sản, hậu quả để lại</p>\n<p>• Vulnerable = dễ bị tổn thương</p>"
             },
             {
-              "id": "matching_15",
+              "id": "matching_02",
               "question": "reference to the aspects of any tree that contribute to its worth",
               "answer": "A",
-              "explain": ""
+              "explain": "<p style='bold'>Đáp án: A</p>\n<p style='bold'>Vị trí trong bài đọc:</p><p>Đoạn A nói: \"A tree's 'value' depends on several factors including its species, size, form, condition, quality, function, and accessibility, and depends on the management goals for a given forest.\"</p>\n<p style='bold'>Phân tích chi tiết:</p>\n<p>• Câu hỏi tìm \"aspects\" (các khía cạnh) đóng góp vào \"worth\" (giá trị) của cây.</p>\n<p>• Đoạn A liệt kê rõ ràng các yếu tố: loài (species), kích thước (size), hình dạng (form), tình trạng (condition), chất lượng (quality), chức năng (function), khả năng tiếp cận (accessibility).</p>\n<p>• \"Worth\" = \"value\" (paraphrase), \"aspects\" = \"factors\" (paraphrase).</p>\n<p style='bold'>Mẹo làm bài:</p><p>Đây là dạng matching trực tiếp - đoạn A liệt kê các yếu tố quyết định giá trị cây, khớp trực tiếp với câu hỏi.</p>\n<p style='bold'>Từ vựng quan trọng:</p>\n<p>• Aspects = factors = các khía cạnh, yếu tố</p>\n<p>• Worth = value = giá trị</p>\n<p>• Accessibility = khả năng tiếp cận</p>"
             },
             {
-              "id": "matching_16",
+              "id": "matching_03",
               "question": "mention of the potential use of wood to help run vehicles",
               "answer": "C",
-              "explain": ""
+              "explain": "<p style='bold'>Đáp án: C</p>\n<p style='bold'>Vị trí trong bài đọc:</p><p>Đoạn C nói: \"Wood can also be gasified for electrical generation and can even be made into liquid fuels like ethanol and gasoline for lorries and cars.\"</p>\n<p style='bold'>Phân tích chi tiết:</p>\n<p>• Câu hỏi tìm việc sử dụng gỗ để \"help run vehicles\" (giúp chạy xe).</p>\n<p>• Đoạn C mô tả gỗ có thể chế tạo thành nhiên liệu lỏng như ethanol và xăng cho xe tải và ô tô.</p>\n<p>• \"Run vehicles\" = sử dụng làm nhiên liệu cho xe (lorries and cars).</p>\n<p style='bold'>Mẹo làm bài:</p><p>Chú ý từ khóa \"vehicles\" được paraphrase thành \"lorries and cars\". IELTS thường không dùng từ y hệt trong câu hỏi và bài đọc.</p>\n<p style='bold'>Từ vựng quan trọng:</p>\n<p>• Gasified = khí hóa</p>\n<p>• Liquid fuels = nhiên liệu lỏng</p>\n<p>• Lorries = xe tải</p>\n<p>• Vehicles = phương tiện (paraphrase của lorries and cars)</p>"
             },
             {
-              "id": "matching_17",
+              "id": "matching_04",
               "question": "examples of insects that attack trees",
               "answer": "E",
-              "explain": ""
+              "explain": "<p style='bold'>Đáp án: E</p>\n<p style='bold'>Vị trí trong bài đọc:</p><p>Đoạn E nói: \"With the many pests and pathogens visiting forests including hemlock wooly adelgid, Asian longhorned beetle, emerald ash borer, and gypsy moth, to name just a few...\"</p>\n<p style='bold'>Phân tích chi tiết:</p>\n<p>• Câu hỏi tìm \"examples of insects\" (ví dụ về côn trùng) tấn công cây.</p>\n<p>• Đoạn E liệt kê cụ thể: hemlock wooly adelgid (rệp len cây thủy tùng), Asian longhorned beetle (bọ cánh cứng châu Á), emerald ash borer (bọ cánh cứng đục thân tần bì), gypsy moth (bướm đêm gypsy).</p>\n<p>• \"Insects that attack trees\" = \"pests\" (sâu bệnh gây hại).</p>\n<p style='bold'>Mẹo làm bài:</p><p>Khi câu hỏi yêu cầu \"examples\", hãy tìm đoạn có liệt kê cụ thể các ví dụ. Đoạn E có từ \"including\" và \"to name just a few\" - dấu hiệu của việc liệt kê ví dụ.</p>\n<p style='bold'>Từ vựng quan trọng:</p>\n<p>• Pests = sâu bệnh, côn trùng gây hại</p>\n<p>• Pathogens = mầm bệnh</p>\n<p>• Adelgid, beetle, borer, moth = các loại côn trùng</p>"
             },
             {
-              "id": "matching_18",
+              "id": "matching_05",
               "question": "an alternative name for trees that produce low-use wood",
               "answer": "B",
-              "explain": "</p>"
+              "explain": "<p style='bold'>Đáp án: B</p>\n<p style='bold'>Vị trí trong bài đọc:</p><p>Đoạn B nói: \"This practice, called 'high-grading', has left a legacy of 'low-use wood' in the forests. Some people even call these 'junk trees', and they are abundant in Pennsylvania.\"</p>\n<p style='bold'>Phân tích chi tiết:</p>\n<p>• Câu hỏi tìm \"alternative name\" (tên gọi khác) cho cây tạo ra gỗ ít giá trị sử dụng.</p>\n<p>• Đoạn B nói rõ: \"Some people even call these 'junk trees'\" (Một số người thậm chí gọi đây là 'cây rác').</p>\n<p>• \"Alternative name\" = tên gọi khác = \"call these...\"</p>\n<p>• \"Trees that produce low-use wood\" = cây tạo ra gỗ ít giá trị = \"junk trees\".</p>\n<p style='bold'>Mẹo làm bài:</p><p>Chú ý từ khóa \"alternative name\", \"also called\", \"known as\" - đây là dấu hiệu của việc đưa ra tên gọi khác. Lưu ý rằng một đoạn có thể chứa câu trả lời cho nhiều câu hỏi (đoạn B xuất hiện ở cả câu 14 và 18).</p>\n<p style='bold'>Từ vựng quan trọng:</p>\n<p>• Alternative name = tên gọi khác</p>\n<p>• Junk trees = cây rác</p>\n<p>• Low-use wood = gỗ ít giá trị sử dụng</p>\n<p>• Legacy = di sản, hậu quả để lại</p>"
             }
           ]
         },
         {
           "id": "quiz_04",
-          "title": "IELTS Reading Test 1 - Passage 2: Forest management in Pennsylvania, USA",
+          "title": "Timber Cuts",
           "type": "matching-dropdown",
-          "subtype": "single-answer",
           "instruction": "<p>Look at the following purposes (Questions 19–21) and the list of timber cuts below.</p><p>Match each purpose with the correct timber cut, A, B or C.</p><p>Write the correct letter, A, B or C, in boxes 19–21 on your answer sheet.</p>",
           "quizNumber": 4,
+          "page": 25,
           "passage": "./passage/Test1_Passage2.json",
           "options": [
             "a TSI Cut",
@@ -655,172 +602,206 @@
           ],
           "matchings": [
             {
-              "id": "matching_19",
+              "id": "matching_01",
               "question": "to remove trees that are diseased",
-              "answer": "",
-              "explain": ""
+              "answer": "a Salvage Cut",
+              "explain": "<p style='bold'>Đáp án: B - a Salvage Cut</p>\n<p style='bold'>Vị trí trong bài đọc:</p><p>Đoạn E nói: \"With the many pests and pathogens visiting forests including hemlock wooly adelgid, Asian longhorned beetle, emerald ash borer, and gypsy moth... These types of cut reduce the number of sick trees and seek to manage the future spread of a pest problem.\"</p>\n<p style='bold'>Phân tích chi tiết:</p>\n<p>• Câu hỏi tìm loại khai thác để \"remove trees that are diseased\" (loại bỏ cây bị bệnh).</p>\n<p>• Salvage Cut được mô tả trong đoạn E như một phương pháp giải quyết vấn đề sâu bệnh và mầm bệnh.</p>\n<p>• \"Reduce the number of sick trees\" (giảm số lượng cây bị bệnh) khớp trực tiếp với mục đích của câu hỏi.</p>\n<p>• Loại khai thác này nhằm quản lý sự lây lan của vấn đề sâu bệnh trong tương lai.</p>\n<p style='bold'>Mẹo làm bài:</p><p>Từ khóa \"diseased\" (bị bệnh) tương ứng với \"sick trees\", \"pests and pathogens\" trong bài đọc. Salvage = cứu hộ, tức là cứu những cây còn khỏe bằng cách loại bỏ cây bị bệnh.</p>\n<p style='bold'>Từ vựng quan trọng:</p>\n<p>• Diseased = sick = bị bệnh</p>\n<p>• Salvage = cứu hộ, thu hồi</p>\n<p>• Pests and pathogens = sâu bệnh và mầm bệnh</p>\n<p>• Manage the spread = quản lý sự lây lan</p>"
             },
             {
-              "id": "matching_20",
+              "id": "matching_02",
               "question": "to generate income across a number of years",
-              "answer": "",
-              "explain": "<"
+              "answer": "a Shelterwood Cut",
+              "explain": "<p style='bold'>Đáp án: C - a Shelterwood Cut</p>\n<p style='bold'>Vị trí trong bài đọc:</p><p>Đoạn F nói: \"There are two harvests and the money that comes in is spread out over a decade or more.\"</p>\n<p style='bold'>Phân tích chi tiết:</p>\n<p>• Câu hỏi tìm loại khai thác để \"generate income across a number of years\" (tạo thu nhập qua nhiều năm).</p>\n<p>• Shelterwood Cut có hai vụ thu hoạch và số tiền thu được \"spread out over a decade or more\" (trải dài trong một thập kỷ hoặc hơn).</p>\n<p>• \"Across a number of years\" = \"over a decade or more\" (paraphrase về thời gian dài).</p>\n<p>• \"Generate income\" = \"money that comes in\" (paraphrase về thu nhập).</p>\n<p style='bold'>Mẹo làm bài:</p><p>Chú ý paraphrase: \"a number of years\" được diễn đạt cụ thể hơn là \"a decade or more\". Hai vụ thu hoạch (two harvests) có nghĩa là thu nhập được chia ra theo thời gian.</p>\n<p style='bold'>Từ vựng quan trọng:</p>\n<p>• Generate income = tạo thu nhập</p>\n<p>• Spread out = trải dài, phân bổ</p>\n<p>• Decade = thập kỷ (10 năm)</p>\n<p>• Harvests = vụ thu hoạch</p>"
             },
             {
-              "id": "matching_21",
+              "id": "matching_03",
               "question": "to create a forest whose trees are close in age",
-              "answer": "C",
-              "explain": ""
+              "answer": "a Shelterwood Cut",
+              "explain": "<p style='bold'>Đáp án: C - a Shelterwood Cut</p>\n<p style='bold'>Vị trí trong bài đọc:</p><p>Đoạn F nói: \"It leaves a young forest where all trees are at a similar point in their growth.\"</p>\n<p style='bold'>Phân tích chi tiết:</p>\n<p>• Câu hỏi tìm loại khai thác tạo ra rừng có cây \"close in age\" (gần nhau về tuổi).</p>\n<p>• Shelterwood Cut tạo ra một khu rừng non nơi \"all trees are at a similar point in their growth\" (tất cả các cây đều ở một điểm tương tự trong quá trình phát triển).</p>\n<p>• \"Close in age\" = \"at a similar point in their growth\" (paraphrase - cùng giai đoạn phát triển nghĩa là cùng tuổi).</p>\n<p>• Phương pháp này loại bỏ tất cả cây trưởng thành khi cây con đã được thiết lập, tạo ra rừng đồng tuổi.</p>\n<p style='bold'>Mẹo làm bài:</p><p>Lưu ý rằng Shelterwood Cut xuất hiện làm đáp án cho CẢ câu 20 và 21 (NB: You may use any letter more than once). Một loại khai thác có thể có nhiều mục đích khác nhau.</p>\n<p style='bold'>Từ vựng quan trọng:</p>\n<p>• Close in age = gần nhau về tuổi</p>\n<p>• Similar point in growth = giai đoạn phát triển tương tự</p>\n<p>• Young forest = rừng non</p>\n<p>• Shelterwood = tạo tán che (phương pháp tái sinh rừng)</p>"
             }
           ]
         },
         {
           "id": "quiz_05",
-          "title": "IELTS Reading Test 1 - Passage 2: Forest management in Pennsylvania, USA",
+          "title": "Forest management considerations",
           "type": "gap-fill",
           "instruction": "<p>Choose </p><p style='bold'>ONE WORD ONLY</p><p> from the passage for each answer.</p>",
           "quizNumber": 5,
-          "passage": "./passage/Test1_Passage2.json"
+          "page": 26,
+          "passage": "./passage/Test1_Passage2.json",
+          "question": "<p>Some dead wood is removed to avoid the possibility of </p></gap id='answer_01'><p> .</p></n><p>The </p></gap id='answer_02'><p> from the tops of cut trees can help improve soil quality.</p></n><p>Some damaged trees should be left, as their </p></gap id='answer_03'><p> provide habitats for a range of creatures.</p></n><p>Some trees that are small, such as </p></gap id='answer_04'><p> , are a source of food for animals and insects.</p></n><p>Any trees that are </p></gap id='answer_05'><p> should be left to grow, as they add to the variety of species in the forest.</p>",
+          "answers": [
+            {
+              "id": "answer_01",
+              "answer": [
+                "fire",
+                "fires"
+              ],
+              "explain": "<p style='bold'>Đáp án: fire (hoặc fires)</p>\n<p style='bold'>Vị trí trong bài đọc:</p><p>Đoạn G nói: \"Thinnings and dense and dead wood removal for fire prevention also center on the production of low-use wood.\"</p>\n<p style='bold'>Phân tích chi tiết:</p>\n<p>• Câu hỏi hỏi về lý do loại bỏ gỗ chết: \"to avoid the possibility of ______\".</p>\n<p>• Bài đọc đề cập \"dead wood removal for fire prevention\" (loại bỏ gỗ chết để phòng cháy).</p>\n<p>• \"Fire prevention\" = ngăn chặn cháy = \"avoid the possibility of fire\" (tránh khả năng cháy).</p>\n<p>• Cả \"fire\" và \"fires\" đều được chấp nhận vì ý nghĩa giống nhau.</p>\n<p style='bold'>Mẹo làm bài:</p><p>Với dạng gap-fill, tìm ngữ cảnh tương tự trong bài. \"Fire prevention\" được paraphrase thành \"avoid the possibility of fire\". Chú ý chỉ điền MỘT từ.</p>\n<p style='bold'>Từ vựng quan trọng:</p>\n<p>• Fire prevention = phòng cháy</p>\n<p>• Avoid the possibility = tránh khả năng</p>\n<p>• Dead wood = gỗ chết</p>\n<p>• Thinnings = việc tỉa thưa</p>"
+            },
+            {
+              "id": "answer_02",
+              "answer": [
+                "nutrients"
+              ],
+              "explain": "<p style='bold'>Đáp án: nutrients</p>\n<p style='bold'>Vị trí trong bài đọc:</p><p>Đoạn G nói: \"The tops of trees that have been cut down should be left on the site so that their nutrients cycle back into the soil.\"</p>\n<p style='bold'>Phân tích chi tiết:</p>\n<p>• Câu hỏi hỏi về thứ gì từ ngọn cây có thể cải thiện chất lượng đất.</p>\n<p>• Bài đọc nói rõ \"their nutrients cycle back into the soil\" (chất dinh dưỡng của chúng quay trở lại đất).</p>\n<p>• \"Improve soil quality\" = \"cycle back into the soil\" (paraphrase - chất dinh dưỡng quay lại đất = cải thiện chất lượng đất).</p>\n<p>• \"The tops of cut trees\" trong câu hỏi khớp chính xác với \"the tops of trees that have been cut down\" trong bài.</p>\n<p style='bold'>Mẹo làm bài:</p><p>Đây là dạng matching trực tiếp - cụm từ \"tops of cut trees\" xuất hiện y hệt trong bài đọc, giúp bạn dễ dàng định vị câu trả lời.</p>\n<p style='bold'>Từ vựng quan trọng:</p>\n<p>• Nutrients = chất dinh dưỡng</p>\n<p>• Cycle back = quay trở lại</p>\n<p>• Soil quality = chất lượng đất</p>\n<p>• The tops of trees = ngọn cây</p>"
+            },
+            {
+              "id": "answer_03",
+              "answer": [
+                "cavities"
+              ],
+              "explain": "<p style='bold'>Đáp án: cavities</p>\n<p style='bold'>Vị trí trong bài đọc:</p><p>Đoạn G nói: \"In addition, trees with many cavities are extremely important habitats for insect predators like woodpeckers, bats and small mammals.\"</p>\n<p style='bold'>Phân tích chi tiết:</p>\n<p>• Câu hỏi hỏi về đặc điểm của cây bị hư hại (damaged trees) cung cấp môi trường sống cho sinh vật.</p>\n<p>• Bài đọc nói \"trees with many cavities\" (cây có nhiều hốc) là môi trường sống quan trọng.</p>\n<p>• \"Damaged trees\" = cây có nhiều \"cavities\" (hốc) - cây bị hư hại thường có các lỗ hổng, hốc trống.</p>\n<p>• \"Provide habitats for a range of creatures\" tương ứng với \"important habitats for insect predators\" và các loài khác.</p>\n<p style='bold'>Mẹo làm bài:</p><p>\"Damaged trees\" là paraphrase của \"trees with many cavities\". Cây bị hư hại tạo ra các hốc, và đây là nơi sinh sống quan trọng cho động vật.</p>\n<p style='bold'>Từ vựng quan trọng:</p>\n<p>• Cavities = hốc, khoảng trống</p>\n<p>• Habitats = môi trường sống</p>\n<p>• Insect predators = động vật ăn côn trùng</p>\n<p>• Damaged trees = cây bị hư hại</p>"
+            },
+            {
+              "id": "answer_04",
+              "answer": [
+                "hawthorn"
+              ],
+              "explain": "<p style='bold'>Đáp án: hawthorn</p>\n<p style='bold'>Vị trí trong bài đọc:</p><p>Đoạn G nói: \"It is also important to remember that not all small trees are low-use. For example, many species like hawthorn provide food for wildlife.\"</p>\n<p style='bold'>Phân tích chi tiết:</p>\n<p>• Câu hỏi yêu cầu ví dụ về cây nhỏ (small trees) cung cấp thức ăn cho động vật và côn trùng.</p>\n<p>• Bài đọc đưa ra ví dụ cụ thể: \"many species like hawthorn provide food for wildlife\".</p>\n<p>• \"Such as\" trong câu hỏi = \"like\" hoặc \"for example\" trong bài đọc - cả hai đều giới thiệu ví dụ.</p>\n<p>• \"Hawthorn\" (cây táo gai) là cây nhỏ cung cấp thức ăn cho động vật hoang dã.</p>\n<p style='bold'>Mẹo làm bài:</p><p>Khi câu hỏi có \"such as\" hoặc \"for example\", hãy tìm các ví dụ cụ thể được nêu trong bài. Bài đọc thường có \"like\", \"such as\", \"for example\", \"including\" để giới thiệu ví dụ.</p>\n<p style='bold'>Từ vựng quan trọng:</p>\n<p>• Hawthorn = cây táo gai</p>\n<p>• Wildlife = động vật hoang dã</p>\n<p>• Low-use = ít giá trị sử dụng</p>\n<p>• Small trees = cây nhỏ</p>"
+            },
+            {
+              "id": "answer_05",
+              "answer": [
+                "rare"
+              ],
+              "explain": "<p style='bold'>Đáp án: rare</p>\n<p style='bold'>Vị trí trong bài đọc:</p><p>Đoạn G nói: \"Finally, rare species of trees in a forest should also stay behind as they add to its structural diversity.\"</p>\n<p style='bold'>Phân tích chi tiết:</p>\n<p>• Câu hỏi hỏi về loại cây nên được để lại vì chúng làm tăng thêm sự đa dạng loài.</p>\n<p>• Bài đọc nói \"rare species of trees... should also stay behind as they add to its structural diversity\".</p>\n<p>• \"Should be left to grow\" = \"should stay behind\" (paraphrase - nên để lại).</p>\n<p>• \"Add to the variety of species\" = \"add to its structural diversity\" (paraphrase - thêm vào sự đa dạng).</p>\n<p>• \"Rare\" (quý hiếm) là tính từ mô tả loại cây cần được bảo tồn.</p>\n<p style='bold'>Mẹo làm bài:</p><p>Từ \"Finally\" trong bài đọc thường đánh dấu điểm quan trọng cuối cùng. Câu hỏi cuối (26) thường tìm thông tin ở cuối đoạn văn.</p>\n<p style='bold'>Từ vựng quan trọng:</p>\n<p>• Rare = quý hiếm</p>\n<p>• Structural diversity = sự đa dạng cấu trúc</p>\n<p>• Variety of species = sự đa dạng loài</p>\n<p>• Stay behind = ở lại, được giữ lại</p>"
+            }
+          ]
         },
         {
           "id": "quiz_06",
-          "title": "IELTS Reading Test 1 - Passage 3: Conquering Earth's space junk problem",
+          "title": "Conquering Earth's space junk problem",
           "type": "matching-dropdown",
-          "subtype": "single-answer",
           "instruction": "<p>Which section contains the following information?</p><p>Write the correct letter, A–F, in boxes 27–31 on your answer sheet.</p>",
           "quizNumber": 6,
+          "page": 29,
           "passage": "./passage/Test1_Passage3.json",
+          "options": [
+            "A",
+            "B",
+            "C",
+            "D",
+            "E",
+            "F"
+          ],
           "matchings": [
             {
-              "id": "matching_27",
+              "id": "matching_01",
               "question": "a reference to the cooperation that takes place to try and minimise risk",
               "answer": "C",
-              "explain": "<p>Paragraph C discusses how companies, governments, and other players are collaborating to avoid space debris threats, and mentions the Inter-Agency Space Debris Coordination Committee.</p>"
+              "explain": "<p style='bold'>Đáp án: C</p>\n<p style='bold'>Vị trí trong bài đọc:</p><p>Section C nói: \"That means companies, governments and other players in space are collaborating in new ways to avoid a shared threat. International groups such as the Inter-Agency Space Debris Coordination Committee have developed guidelines on space sustainability.\"</p>\n<p style='bold'>Phân tích chi tiết:</p>\n<p>• Câu hỏi tìm \"cooperation\" (hợp tác) để giảm thiểu rủi ro.</p>\n<p>• Section C đề cập \"companies, governments and other players in space are collaborating\" (các công ty, chính phủ và các bên tham gia khác đang hợp tác).</p>\n<p>• \"Collaborating\" = \"cooperation\" (paraphrase - cùng nghĩa là hợp tác).</p>\n<p>• \"To avoid a shared threat\" = \"to minimise risk\" (tránh mối đe dọa chung = giảm thiểu rủi ro).</p>\n<p>• Inter-Agency Space Debris Coordination Committee phát triển hướng dẫn về tính bền vững không gian.</p>\n<p style='bold'>Mẹo làm bài:</p><p>Từ khóa \"cooperation\" thường được paraphrase thành \"collaborating\", \"working together\", \"joint effort\". Tìm các đoạn nói về nhiều bên cùng làm việc.</p>\n<p style='bold'>Từ vựng quan trọng:</p>\n<p>• Collaborating = cooperation = hợp tác</p>\n<p>• Shared threat = mối đe dọa chung</p>\n<p>• Minimise risk = giảm thiểu rủi ro</p>\n<p>• Inter-Agency = liên cơ quan</p>"
             },
             {
-              "id": "matching_28",
+              "id": "matching_02",
               "question": "an explanation of a person's aims",
               "answer": "F",
-              "explain": "<p>Paragraph F ends with Jah describing himself as a space environmentalist and his aim to make space safe and useful for future generations.</p>"
+              "explain": "<p style='bold'>Đáp án: F</p>\n<p style='bold'>Vị trí trong bài đọc:</p><p>Section F nói: \"Jah describes himself as a space environmentalist: 'I want to make space a place that is safe to operate, that is free and useful for generations to come.'\"</p>\n<p style='bold'>Phân tích chi tiết:</p>\n<p>• Câu hỏi tìm \"explanation of a person's aims\" (giải thích về mục tiêu của một người).</p>\n<p>• Jah mô tả chính mình và nói rõ: \"I want to make space a place that is safe to operate...\" (Tôi muốn biến không gian thành nơi an toàn để hoạt động...).</p>\n<p>• \"I want to...\" = aims/goals (mục tiêu của ông).</p>\n<p>• Đây là giải thích rõ ràng về mục tiêu cá nhân của Moriba Jah.</p>\n<p style='bold'>Mẹo làm bài:</p><p>Khi câu hỏi tìm \"aims\" hoặc \"goals\" của một người, hãy tìm các câu có \"I want to\", \"My aim is\", \"I hope to\", \"My goal is\". Thường có dấu ngoặc kép đánh dấu lời nói trực tiếp.</p>\n<p style='bold'>Từ vựng quan trọng:</p>\n<p>• Aims = goals = objectives = mục tiêu</p>\n<p>• Space environmentalist = nhà môi trường không gian</p>\n<p>• Safe to operate = an toàn để hoạt động</p>\n<p>• Generations to come = các thế hệ tương lai</p>"
             },
             {
-              "id": "matching_29",
+              "id": "matching_03",
               "question": "a description of a major collision that occurred in space",
               "answer": "A",
-              "explain": "<p>Paragraph A describes the collision between a US Iridium satellite and a Russian Cosmos-2251 satellite.</p>"
+              "explain": "<p style='bold'>Đáp án: A</p>\n<p style='bold'>Vị trí trong bài đọc:</p><p>Section A nói: \"Ten years ago, a US commercial Iridium satellite smashed into an inactive Russian communications satellite called Cosmos-2251, creating thousands of new pieces of space shrapnel that now threaten other satellites in low Earth orbit.\"</p>\n<p style='bold'>Phân tích chi tiết:</p>\n<p>• Câu hỏi tìm mô tả về \"major collision\" (va chạm lớn) xảy ra trong không gian.</p>\n<p>• Section A mô tả cụ thể vụ va chạm: vệ tinh Iridium của Mỹ đâm vào vệ tinh Cosmos-2251 của Nga.</p>\n<p>• \"Smashed into\" = collision (đâm vào = va chạm).</p>\n<p>• Vụ va chạm tạo ra hàng ngàn mảnh vỡ mới, cho thấy đây là va chạm lớn (major collision).</p>\n<p style='bold'>Mẹo làm bài:</p><p>Từ \"collision\" thường được paraphrase thành \"smashed into\", \"crashed into\", \"hit\". Tìm các đoạn mô tả sự kiện cụ thể có tên vệ tinh và kết quả va chạm.</p>\n<p style='bold'>Từ vựng quan trọng:</p>\n<p>• Collision = va chạm</p>\n<p>• Smashed into = đâm vào</p>\n<p>• Space shrapnel = mảnh vỡ không gian</p>\n<p>• Inactive satellite = vệ tinh không hoạt động</p>"
             },
             {
-              "id": "matching_30",
+              "id": "matching_04",
               "question": "a comparison between tracking objects in space and the efficiency of a transportation system",
               "answer": "E",
-              "explain": "<p>Paragraph E compares space traffic management to managing traffic on roads or in the air, specifically mentioning air traffic control.</p>"
+              "explain": "<p style='bold'>Đáp án: E</p>\n<p style='bold'>Vị trí trong bài đọc:</p><p>Section E nói: \"The field is called space traffic management, because it's similar to managing traffic on the roads or in the air. Think about a busy day at an airport... planes line up in the sky, landing and taking off close to one another in a carefully choreographed routine. Air-traffic controllers know the location of the planes down to one metre in accuracy. The same can't be said for space debris.\"</p>\n<p style='bold'>Phân tích chi tiết:</p>\n<p>• Câu hỏi tìm \"comparison\" (so sánh) giữa theo dõi vật thể không gian và hiệu quả của hệ thống giao thông.</p>\n<p>• Section E so sánh space traffic management với air traffic management tại sân bay.</p>\n<p>• \"It's similar to managing traffic on the roads or in the air\" - đây là so sánh trực tiếp.</p>\n<p>• Kiểm soát viên không lưu biết vị trí máy bay chính xác đến mét, nhưng không thể nói như vậy về rác không gian.</p>\n<p>• \"Transportation system\" = hệ thống giao thông hàng không (air traffic).</p>\n<p style='bold'>Mẹo làm bài:</p><p>Khi câu hỏi tìm \"comparison\", hãy tìm từ khóa \"similar to\", \"like\", \"compared to\", \"the same as\". Section E có ví dụ cụ thể về sân bay để so sánh.</p>\n<p style='bold'>Từ vựng quan trọng:</p>\n<p>• Comparison = so sánh</p>\n<p>• Space traffic management = quản lý giao thông không gian</p>\n<p>• Air-traffic controllers = kiểm soát viên không lưu</p>\n<p>• Choreographed routine = thói quen được sắp xếp cẩn thận</p>"
             },
             {
-              "id": "matching_31",
+              "id": "matching_05",
               "question": "a reference to efforts to classify space junk",
               "answer": "B",
-              "explain": "<p>Paragraph B mentions researchers developing taxonomies of space debris, measuring properties like shape and size.</p>"
+              "explain": "<p style='bold'>Đáp án: B</p>\n<p style='bold'>Vị trí trong bài đọc:</p><p>Section B nói: \"Others are developing taxonomies of space debris – working on measuring properties such as the shape and size of an object, so that satellite operators know how much to worry about what's coming their way.\"</p>\n<p style='bold'>Phân tích chi tiết:</p>\n<p>• Câu hỏi tìm \"efforts to classify\" (nỗ lực phân loại) rác không gian.</p>\n<p>• Section B đề cập \"developing taxonomies of space debris\" (phát triển hệ thống phân loại rác không gian).</p>\n<p>• \"Taxonomies\" = classification system (phân loại học = hệ thống phân loại).</p>\n<p>• \"Classify\" = \"taxonomies\" (paraphrase - cùng nghĩa là phân loại).</p>\n<p>• Họ đo lường các thuộc tính như hình dạng, kích thước để phân loại.</p>\n<p style='bold'>Mẹo làm bài:</p><p>\"Classify\" thường được paraphrase thành \"taxonomies\", \"categorize\", \"sort into groups\". Từ \"taxonomies\" là thuật ngữ khoa học cho hệ thống phân loại.</p>\n<p style='bold'>Từ vựng quan trọng:</p>\n<p>• Classify = taxonomies = phân loại</p>\n<p>• Space debris = space junk = rác không gian</p>\n<p>• Properties = thuộc tính</p>\n<p>• Shape and size = hình dạng và kích thước</p>"
             }
           ]
         },
         {
           "id": "quiz_07",
-          "title": "IELTS Reading Test 1 - Passage 3: Conquering Earth's space junk problem",
+          "title": "The Inter-Agency Space Debris Coordination Committee",
           "type": "gap-fill",
-          "instruction": "<p>Choose </p><p style='bold'>ONE WORD ONLY</p><p> from the passage for each answer.</p>",
+          "instruction": "<p>Write your answers in boxes on your answer sheet.</p>",
           "quizNumber": 7,
+          "page": 29,
           "passage": "./passage/Test1_Passage3.json",
-          "questions": [
+          "question": "<p style='bold center 18'>The Inter-Agency Space Debris Coordination Committee</p></n></n><p>The committee gives advice on how the </p></gap id='answer_01'><p> of space can be achieved. The committee advises that when satellites are no longer active, any unused</p></gap id='answer_02'><p> or pressurised material that could cause </p></gap id='answer_03'><p> should be removed.</p></n><p>Although operators of large satellite constellations accept that they have obligations as stewards of space, Holger Krag points out that the operators that become </p></gap id='answer_04'><p> are unlikely to prioritise removing their satellites from space.</p>",
+          "answers": [
             {
-              "id": "question_32",
-              "question": "The committee gives advice on how the 32 ...... of space can be achieved.",
+              "id": "answer_01",
               "answer": [
                 "sustainability"
               ],
-              "explain": "<p>Paragraph C states: \"International groups such as the Inter-Agency Space Debris Coordination Committee have developed guidelines on space sustainability.\"</p>"
+              "explain": "<p style='bold'>Đáp án: sustainability</p>\n<p style='bold'>Vị trí trong bài đọc:</p><p>Section C nói: \"International groups such as the Inter-Agency Space Debris Coordination Committee have developed guidelines on space sustainability.\"</p>\n<p style='bold'>Phân tích chi tiết:</p>\n<p>• Câu hỏi hỏi về điều gì mà ủy ban tư vấn có thể đạt được (\"how the _____ of space can be achieved\").</p>\n<p>• Bài đọc nói rõ ủy ban đã phát triển các hướng dẫn về \"space sustainability\" (tính bền vững của không gian).</p>\n<p>• \"Guidelines on space sustainability\" = advice on how sustainability can be achieved (hướng dẫn về tính bền vững = lời khuyên về cách đạt được tính bền vững).</p>\n<p>• \"Sustainability\" có nghĩa là khả năng duy trì hoạt động lâu dài mà không gây hại cho môi trường.</p>\n<p style='bold'>Mẹo làm bài:</p><p>Khi câu hỏi có \"can be achieved\" (có thể đạt được), hãy tìm các danh từ chỉ mục tiêu hoặc kết quả mong muốn trong bài đọc. \"Sustainability\" là mục tiêu chính của ủy ban.</p>\n<p style='bold'>Từ vựng quan trọng:</p>\n<p>• Sustainability = tính bền vững</p>\n<p>• Guidelines = hướng dẫn</p>\n<p>• Inter-Agency = liên cơ quan</p>\n<p>• Space debris = rác không gian</p>"
             },
             {
-              "id": "question_33",
-              "question": "The committee advises that when satellites are no longer active, any unused 33 ...... or pressurised material that could cause explosions should be removed.",
+              "id": "answer_02",
               "answer": [
                 "fuel"
               ],
-              "explain": "<p>Paragraph C says: \"Those include inactivating satellites at the end of their useful life by venting pressurised materials or leftover fuel that might lead to explosions.\"</p>"
+              "explain": "<p style='bold'>Đáp án: fuel</p>\n<p style='bold'>Vị trí trong bài đọc:</p><p>Section C nói: \"Those include inactivating satellites at the end of their useful life by venting pressurised materials or leftover fuel that might lead to explosions.\"</p>\n<p style='bold'>Phân tích chi tiết:</p>\n<p>• Câu hỏi hỏi về thứ gì chưa sử dụng (unused) hoặc vật liệu được nén (pressurised material) cần được loại bỏ.</p>\n<p>• Bài đọc đề cập \"leftover fuel\" (nhiên liệu dư thừa) và \"pressurised materials\" có thể dẫn đến nổ.</p>\n<p>• \"Leftover fuel\" = \"unused fuel\" (paraphrase - nhiên liệu dư thừa = nhiên liệu chưa sử dụng).</p>\n<p>• Việc xả nhiên liệu và vật liệu nén giúp ngăn ngừa vụ nổ khi vệ tinh không còn hoạt động.</p>\n<p style='bold'>Mẹo làm bài:</p><p>\"Unused\" trong câu hỏi được paraphrase thành \"leftover\" trong bài đọc. Cả hai đều có nghĩa là thứ còn lại chưa dùng đến. Chú ý yêu cầu ONE WORD ONLY nên chỉ điền \"fuel\".</p>\n<p style='bold'>Từ vựng quan trọng:</p>\n<p>• Fuel = nhiên liệu</p>\n<p>• Leftover = unused = dư thừa, chưa sử dụng</p>\n<p>• Venting = xả, thải ra</p>\n<p>• Pressurised materials = vật liệu được nén</p>"
             },
             {
-              "id": "question_34",
-              "question": "any unused fuel or pressurised material that could cause 34 ...... should be removed.",
+              "id": "answer_03",
               "answer": [
                 "explosions"
               ],
-              "explain": "<p>Same as above: \"leftover fuel that might lead to explosions.\" The word 'explosions' is directly mentioned.</p>"
+              "explain": "<p style='bold'>Đáp án: explosions</p>\n<p style='bold'>Vị trí trong bài đọc:</p><p>Section C nói: \"Those include inactivating satellites at the end of their useful life by venting pressurised materials or leftover fuel that might lead to explosions.\"</p>\n<p style='bold'>Phân tích chi tiết:</p>\n<p>• Câu hỏi hỏi về điều gì mà nhiên liệu và vật liệu nén có thể gây ra (\"could cause _____\").</p>\n<p>• Bài đọc nói rõ: \"might lead to explosions\" (có thể dẫn đến nổ).</p>\n<p>• \"Could cause\" = \"might lead to\" (paraphrase - có thể gây ra = có thể dẫn đến).</p>\n<p>• Nhiên liệu dư thừa và vật liệu được nén có áp suất cao, nếu không được xả ra có thể gây nổ trong không gian.</p>\n<p style='bold'>Mẹo làm bài:</p><p>Đây là dạng paraphrase trực tiếp: \"could cause\" trong câu hỏi tương đương với \"might lead to\" trong bài đọc. Cả hai đều diễn đạt mối quan hệ nguyên nhân - kết quả.</p>\n<p style='bold'>Từ vựng quan trọng:</p>\n<p>• Explosions = vụ nổ</p>\n<p>• Lead to = cause = dẫn đến, gây ra</p>\n<p>• Inactivating satellites = vô hiệu hóa vệ tinh</p>\n<p>• Useful life = vòng đời hữu ích</p>"
             },
             {
-              "id": "question_35",
-              "question": "Holger Krag points out that the operators that become 35 ...... are unlikely to prioritise removing their satellites from space.",
+              "id": "answer_04",
               "answer": [
                 "bankrupt"
               ],
-              "explain": "<p>Paragraph C quotes Holger Krag: \"What happens to those that fail or go bankrupt? They are probably not going to spend money to remove their satellites.\"</p>"
+              "explain": "<p style='bold'>Đáp án: bankrupt</p>\n<p style='bold'>Vị trí trong bài đọc:</p><p>Section C nói: \"'What happens to those that fail or go bankrupt?' he asks. 'They are probably not going to spend money to remove their satellites.'\"</p>\n<p style='bold'>Phân tích chi tiết:</p>\n<p>• Câu hỏi nói về các nhà điều hành \"that become _____\" và không có khả năng ưu tiên loại bỏ vệ tinh.</p>\n<p>• Holger Krag hỏi: \"What happens to those that fail or go bankrupt?\" (Điều gì xảy ra với những người thất bại hoặc phá sản?).</p>\n<p>• \"Go bankrupt\" = \"become bankrupt\" (phá sản).</p>\n<p>• Các công ty phá sản sẽ không có tiền để loại bỏ vệ tinh của họ khỏi không gian.</p>\n<p>• \"Are unlikely to prioritise\" = \"probably not going to\" (paraphrase - khó có khả năng ưu tiên = có lẽ sẽ không).</p>\n<p style='bold'>Mẹo làm bài:</p><p>Câu hỏi dùng \"that become\" trong khi bài đọc dùng \"go bankrupt\". Cả hai đều diễn đạt quá trình trở thành phá sản. Từ \"bankrupt\" ở đây có thể là tính từ hoặc động từ.</p>\n<p style='bold'>Từ vựng quan trọng:</p>\n<p>• Bankrupt = phá sản</p>\n<p>• Go bankrupt = become bankrupt = trở nên phá sản</p>\n<p>• Unlikely to prioritise = không có khả năng ưu tiên</p>\n<p>• Stewards of space = người quản lý không gian</p>"
             }
           ]
         },
         {
           "id": "quiz_08",
-          "title": "IELTS Reading Test 1 - Passage 3: Conquering Earth's space junk problem",
+          "title": "",
           "type": "matching-dropdown",
-          "subtype": "single-answer",
-          "instruction": "<p>Look at the following statements (Questions 36–40) and the list of people below.</p><p>Match each statement with the correct person, A, B, C or D.</p><p>Write the correct letter, A, B, C or D, in boxes 36–40 on your answer sheet.</p>",
+          "instruction": "<p>Look at the following statements (Questions 36–40) and the list of people below.</p><p>Match each statement with the correct person, A, B, C or D.</p><p>Write the correct letter, A, B, C or D, in boxes on your answer sheet.</p>",
           "quizNumber": 8,
+          "page": 30,
           "passage": "./passage/Test1_Passage3.json",
           "options": [
-            {
-              "key": "A",
-              "text": "Carolin Frueh"
-            },
-            {
-              "key": "B",
-              "text": "Holger Krag"
-            },
-            {
-              "key": "C",
-              "text": "Marlon Sorge"
-            },
-            {
-              "key": "D",
-              "text": "Moriba Jah"
-            }
+            "Carolin Frueh",
+            "Holger Krag",
+            "Marlon Sorge",
+            "Moriba Jah"
           ],
           "matchings": [
             {
-              "id": "matching_36",
+              "id": "matching_01",
               "question": "Knowing the exact location of space junk would help prevent any possible danger.",
-              "answer": "C",
-              "explain": "<p>Marlon Sorge says in paragraph D: \"If you knew precisely where everything was, you would almost never have a problem.\"</p>"
+              "answer": "Marlon Sorge",
+              "explain": "<p style='bold'>Đáp án: C - Marlon Sorge</p>\n<p style='bold'>Vị trí trong bài đọc:</p><p>Section D nói: \"'If you knew precisely where everything was, you would almost never have a problem,' says Marlon Sorge, a space-debris specialist at the Aerospace Corporation in El Segundo, California.\"</p>\n<p style='bold'>Phân tích chi tiết:</p>\n<p>• Câu hỏi nói về việc biết vị trí chính xác của rác không gian sẽ giúp ngăn ngừa nguy hiểm.</p>\n<p>• Marlon Sorge nói rõ: \"If you knew precisely where everything was, you would almost never have a problem\" (Nếu bạn biết chính xác mọi thứ ở đâu, bạn hầu như sẽ không bao giờ gặp vấn đề).</p>\n<p>• \"Knowing the exact location\" = \"knew precisely where everything was\" (paraphrase - biết vị trí chính xác).</p>\n<p>• \"Help prevent any possible danger\" = \"would almost never have a problem\" (paraphrase - ngăn ngừa nguy hiểm = hầu như không gặp vấn đề).</p>\n<p style='bold'>Mẹo làm bài:</p><p>Với dạng matching người, hãy tìm các câu trích dẫn trực tiếp hoặc ý kiến được quy cho từng người. Từ \"says\" là dấu hiệu quan trọng.</p>\n<p style='bold'>Từ vựng quan trọng:</p>\n<p>• Exact location = precise location = vị trí chính xác</p>\n<p>• Prevent danger = avoid problems = ngăn ngừa nguy hiểm</p>\n<p>• Space-debris specialist = chuyên gia rác không gian</p>"
             },
             {
-              "id": "matching_37",
+              "id": "matching_02",
               "question": "Space should be available to everyone and should be preserved for the future.",
-              "answer": "D",
-              "explain": "<p>Moriba Jah states in paragraph F: \"I want to make space a place that is safe to operate, that is free and useful for generations to come.\"</p>"
+              "answer": "Moriba Jah",
+              "explain": "<p style='bold'>Đáp án: D - Moriba Jah</p>\n<p style='bold'>Vị trí trong bài đọc:</p><p>Section F nói: \"Jah describes himself as a space environmentalist: 'I want to make space a place that is safe to operate, that is free and useful for generations to come.'\"</p>\n<p style='bold'>Phân tích chi tiết:</p>\n<p>• Câu hỏi nói không gian nên có sẵn cho mọi người và được bảo tồn cho tương lai.</p>\n<p>• Moriba Jah nói: \"I want to make space a place that is... free and useful for generations to come\" (Tôi muốn biến không gian thành nơi... tự do và hữu ích cho các thế hệ tương lai).</p>\n<p>• \"Available to everyone\" = \"free\" (paraphrase - có sẵn cho tất cả = tự do tiếp cận).</p>\n<p>• \"Preserved for the future\" = \"useful for generations to come\" (paraphrase - bảo tồn cho tương lai = hữu ích cho các thế hệ tương lai).</p>\n<p>• Jah tự mô tả mình là \"space environmentalist\" (nhà môi trường không gian), cho thấy quan tâm đến bảo vệ không gian.</p>\n<p style='bold'>Mẹo làm bài:</p><p>Chú ý các câu trích dẫn trực tiếp trong dấu ngoặc kép, đặc biệt là các câu bắt đầu bằng \"I want to\", \"I believe\" - đây là ý kiến cá nhân của người đó.</p>\n<p style='bold'>Từ vựng quan trọng:</p>\n<p>• Available = free = có sẵn, tự do tiếp cận</p>\n<p>• Preserved = bảo tồn</p>\n<p>• Generations to come = các thế hệ tương lai</p>\n<p>• Space environmentalist = nhà môi trường không gian</p>"
             },
             {
-              "id": "matching_38",
+              "id": "matching_03",
               "question": "A recommendation regarding satellites is widely ignored.",
-              "answer": "B",
-              "explain": "<p>Holger Krag says in paragraph C: \"But so far, only about half of all missions have abided by this 25-year goal...\" referring to the guideline about deorbiting satellites.</p>"
+              "answer": "Holger Krag",
+              "explain": "<p style='bold'>Đáp án: B - Holger Krag</p>\n<p style='bold'>Vị trí trong bài đọc:</p><p>Section C nói: \"But so far, only about half of all missions have abided by this 25-year goal, says Holger Krag, head of the European Space Agency's space-debris office in Darmstadt, Germany.\"</p>\n<p style='bold'>Phân tích chi tiết:</p>\n<p>• Câu hỏi nói về một khuyến nghị về vệ tinh bị phớt lờ rộng rãi.</p>\n<p>• Holger Krag nói chỉ khoảng một nửa số nhiệm vụ tuân thủ mục tiêu 25 năm (hạ thấp vệ tinh xuống bầu khí quyển).</p>\n<p>• \"Only about half\" = nhiều nhiệm vụ không tuân thủ = khuyến nghị bị phớt lờ.</p>\n<p>• \"Widely ignored\" = chỉ một nửa tuân thủ nghĩa là nửa còn lại phớt lờ (paraphrase).</p>\n<p>• Khuyến nghị này được đề cập trước đó: \"advise lowering satellites deep enough into the atmosphere that they will burn up or disintegrate within 25 years\".</p>\n<p style='bold'>Mẹo làm bài:</p><p>Khi câu hỏi nói về \"recommendation\" hoặc \"guideline\", hãy tìm các đoạn nói về việc tuân thủ (abide by, follow, comply with) hoặc không tuân thủ (ignore, overlook).</p>\n<p style='bold'>Từ vựng quan trọng:</p>\n<p>• Recommendation = guideline = khuyến nghị, hướng dẫn</p>\n<p>• Widely ignored = bị phớt lờ rộng rãi</p>\n<p>• Abided by = tuân thủ</p>\n<p>• 25-year goal = mục tiêu 25 năm</p>"
             },
             {
-              "id": "matching_39",
+              "id": "matching_04",
               "question": "There is conflicting information about where some satellites are in space.",
-              "answer": "D",
-              "explain": "<p>Moriba Jah illustrates in paragraph F that for a Russian rocket body, the US and Russian sources list two different orbits, showing conflicting information.</p>"
+              "answer": "Moriba Jah",
+              "explain": "<p style='bold'>Đáp án: D - Moriba Jah</p>\n<p style='bold'>Vị trí trong bài đọc:</p><p>Section F nói: \"When Jah enters that number, the database draws two purple lines: the US and Russian sources contain two completely different orbits for the same object. Jah says that it is almost impossible to tell which is correct, unless a third source of information made it possible to cross-correlate.\"</p>\n<p style='bold'>Phân tích chi tiết:</p>\n<p>• Câu hỏi nói về thông tin mâu thuẫn về vị trí của một số vệ tinh trong không gian.</p>\n<p>• Jah chỉ ra rằng cơ sở dữ liệu của Mỹ và Nga có \"two completely different orbits for the same object\" (hai quỹ đạo hoàn toàn khác nhau cho cùng một vật thể).</p>\n<p>• \"Conflicting information\" = \"two completely different orbits\" (paraphrase - thông tin mâu thuẫn = hai quỹ đạo khác nhau).</p>\n<p>• Jah nói gần như không thể biết cái nào đúng, cho thấy sự mâu thuẫn trong thông tin.</p>\n<p style='bold'>Mẹo làm bài:</p><p>\"Conflicting information\" thường được paraphrase thành \"different data\", \"contradictory sources\", \"discrepancies\". Tìm các đoạn nói về sự không nhất quán trong dữ liệu.</p>\n<p style='bold'>Từ vựng quan trọng:</p>\n<p>• Conflicting information = thông tin mâu thuẫn</p>\n<p>• Completely different orbits = quỹ đạo hoàn toàn khác nhau</p>\n<p>• Cross-correlate = đối chiếu chéo</p>\n<p>• Database = cơ sở dữ liệu</p>"
             },
             {
-              "id": "matching_40",
+              "id": "matching_05",
               "question": "There is a risk we will not be able to undo the damage that occurs in space.",
-              "answer": "A",
-              "explain": "<p>Carolin Frueh warns in paragraph B: \"If we go on like this, we will reach a point of no return.\"</p>"
+              "answer": "Carolin Frueh",
+              "explain": "<p style='bold'>Đáp án: A - Carolin Frueh</p>\n<p style='bold'>Vị trí trong bài đọc:</p><p>Section B nói: \"'If we go on like this, we will reach a point of no return,' says Carolin Frueh, an astrodynamical researcher at Purdue University in West Lafayette, Indiana.\"</p>\n<p style='bold'>Phân tích chi tiết:</p>\n<p>• Câu hỏi nói về rủi ro không thể hoàn tác thiệt hại xảy ra trong không gian.</p>\n<p>• Carolin Frueh cảnh báo: \"we will reach a point of no return\" (chúng ta sẽ đạt đến điểm không thể quay đầu).</p>\n<p>• \"Not be able to undo the damage\" = \"point of no return\" (paraphrase - không thể hoàn tác = điểm không thể quay đầu).</p>\n<p>• \"Point of no return\" có nghĩa là một trạng thái mà khi đến thì không thể đảo ngược được nữa.</p>\n<p>• Bối cảnh: nếu cứ tiếp tục như vậy, rác không gian sẽ tích tụ đến mức không thể kiểm soát.</p>\n<p style='bold'>Mẹo làm bài:</p><p>Cụm từ \"point of no return\" là một thành ngữ phổ biến nghĩa là điểm mà sau đó không thể quay lại hoặc hoàn tác. Đây là cách paraphrase tinh tế của \"cannot undo\".</p>\n<p style='bold'>Từ vựng quan trọng:</p>\n<p>• Undo the damage = hoàn tác thiệt hại</p>\n<p>• Point of no return = điểm không thể quay đầu</p>\n<p>• Astrodynamical researcher = nhà nghiên cứu động lực học thiên thể</p>\n<p>• Risk = rủi ro, nguy cơ</p>"
             }
           ]
         }
@@ -834,16 +815,18 @@
       "quiz": [
         {
           "id": "quiz_01",
-          "title": "IELTS Writing Task 1: ",
+          "title": "",
           "type": "writing",
+          "page": 31,
           "instruction": "<p style='bold'>The graph below gives information about the percentage of the population in four Asian countries living in cities from 1970 to 2020, with predictions for 2030 and 2040.</p></n><p style='bold'>Summarise the information by selecting and reporting the main features, and make comparisons where relevant</p></n><image src='./image/Test1_Writing.png'> style='center'",
           "min": 150,
           "example": "<p hint='<p>Đoạn mở bài cần nêu đầy đủ thông tin: loại biểu đồ, đối tượng, thời gian và dự báo.</p>' importance='high'>The line graph illustrates the urbanization trends in the Philippines, Malaysia, Thailand, and Indonesia from 1970 to 2020, with forecasts extending to 2040.</p><p hint='<p>Đoạn tổng quan (overview) là phần quan trọng nhất trong Task 1, cần nêu các xu hướng chính.</p>' importance='high'>Overall, Malaysia consistently had the highest proportion of urban dwellers, a trend predicted to continue. Indonesia and the Philippines showed steady, significant growth, while Thailand's urbanization rate remained the lowest and most gradual.</p><p>In 1970, Malaysia's urban population stood at just over 30%, leading the four countries. This figure </p><p hint='<p>\"rose sharply\" là cụm từ mô tả xu hướng tăng nhanh, cần học để áp dụng cho các biểu đồ khác.</p>' importance='medium'>rose sharply</p><p> to about 50% by 1990 and continued climbing to around 75% by 2020. Predictions suggest it will reach approximately 85% by 2040.</p><p>Indonesia and the Philippines followed similar upward trajectories, starting at roughly 15% and 30% respectively in 1970. By 2020, both had reached about 55%. Their growth is expected to persist, with Indonesia slightly </p><p hint='<p>\"overtaking\" là từ vựng tốt để diễn đạt việc vượt qua/vượt lên trong so sánh.</p>' importance='medium'>overtaking</p><p> the Philippines to hit nearly 65% by 2040, compared to the Philippines' projected 62%.</p><p hint='<p>\"In contrast\" là cụm từ chuyển tiếp hiệu quả để giới thiệu đối tượng có xu hướng ngược lại.</p>' importance='medium'>In contrast</p><p>, Thailand's urban population grew </p><p hint='<p>\"modestly\" là từ vựng học thuật thay thế cho \"slowly\" hoặc \"a little\".</p>' importance='low'>modestly</p><p> from around 15% in 1970 to just under 35% in 2020. Forecasts indicate a continued slow rise to about 45% by 2040, maintaining its position as the least urbanized nation among the four.</p>"
         },
         {
           "id": "quiz_02",
-          "title": "IELTS Writing Task 2: ",
+          "title": "",
           "type": "writing",
+          "page": 32,
           "instruction": "<p style='bold'>The most important aim of science should be to improve people's lives.</p></n><p style='bold'>To what extent do you agree or disagree with this statement?</p></n><p>Give reasons for your answer and include any relevant examples from your own knowledge or experience.</p></n><p>Write at least 250 words.</p>",
           "min": 250,
           "example": "<p hint='<p>Mở bài nên nêu rõ quan điểm và có tính chất cân bằng (balanced view). Đây là yêu cầu cơ bản của IELTS Writing Task 2.</p>' importance='high'>I strongly agree that the primary goal of science should be the betterment of human life, though I acknowledge that the pursuit of knowledge for its own sake also holds significant value.</p><p hint='<p>Đoạn body đầu tiên nên đưa ra luận điểm mạnh mẽ nhất ủng hộ quan điểm, kèm ví dụ cụ thể.</p>' importance='high'>The most compelling argument for this view is the tangible impact science has on our daily well-being. Medical science, for instance, has drastically increased life expectancy and reduced suffering through vaccines, antibiotics, and advanced surgical techniques. Agricultural science has developed high-yield crops and efficient farming methods, combating famine and malnutrition for millions. These fields demonstrate science's direct and vital role in solving fundamental human problems of health and survival.</p><p>Furthermore, technology, a practical application of scientific discovery, has revolutionized communication, transportation, and access to information, thereby enhancing economic opportunities, education, and social connectivity. The development of the internet, renewable energy sources, and mobile technology are clear examples of science improving quality of life on a global scale. Prioritizing research that addresses pressing issues like climate change, pandemics, or clean water scarcity is not only practical but also </p><p hint='<p>\"an ethical imperative\" là cụm từ học thuật mạnh mẽ thể hiện trách nhiệm đạo đức. Đây là từ vựng nâng cao giúp tăng band score.</p>' importance='medium'>an ethical imperative</p><p> to ensure a sustainable and equitable future.</p><p hint='<p>Đoạn này thể hiện tư duy phản biện (critical thinking) - yếu tố quan trọng trong IELTS Writing Task 2 để đạt band điểm cao.</p>' importance='high'>However, it is important to recognize that not all scientific inquiry yields immediate practical benefits. Fundamental or blue-sky research, such as astronomy or particle physics, expands our understanding of the universe. While its applications may not be instantly apparent, this pursuit of pure knowledge has often led to unexpected breakthroughs that ultimately benefit humanity, like the development of GPS from relativity theory.</p><p hint='<p>Kết bài nên tóm tắt lại quan điểm và đưa ra thông điệp mạnh mẽ. Đây là phần bắt buộc phải có trong bài luận.</p>' importance='high'>In conclusion, while curiosity-driven exploration remains a noble aspect of science, I believe its most critical objective must be to enhance human welfare. Directing resources and focus towards challenges that affect people's lives ensures that scientific progress translates into meaningful, positive change for society as a whole.</p>"
@@ -858,9 +841,10 @@
       "quiz": [
         {
           "id": "quiz_01",
-          "title": "IELTS Speaking Part 1: ",
+          "title": "",
           "type": "speaking",
           "subtype": "ielts_speaking_1",
+          "page": 33,
           "questions": [
             {
               "id": "question_01",
@@ -886,16 +870,18 @@
         },
         {
           "id": "quiz_02",
-          "title": "IELTS Speaking Part 2: ",
+          "title": "",
           "type": "speaking",
+          "page": 33,
           "subtype": "ielts_speaking_2",
           "instruction": "<p>Describe some food or drink that you learned to prepare.</p><p>You should say:</p><p>• what food or drink you learned to prepare</p><p>• when and where you learned to prepare this</p><p>• how you learned to prepare this</p><p>• and explain how you felt about learning to prepare this food or drink.</p>",
           "example": "<p hint='<p>Mở bài giới thiệu món ăn một cách tự nhiên, trực tiếp trả lời câu hỏi đầu tiên.</p>' importance='high'>I'd like to talk about learning to make Vietnamese pho, which is a traditional noodle soup that's incredibly popular in my country.</p><p hint='<p>Trả lời câu hỏi thứ hai: thời gian và địa điểm học, sử dụng thì quá khứ đơn.</p>' importance='high'>I learned how to make it about three years ago when I was visiting my grandmother in the countryside during summer vacation.</p><p hint='<p>Mô tả quá trình học chi tiết, sử dụng các từ nối thời gian.</p>' importance='medium'>She had a small cooking area in her backyard where she would prepare family meals, and that's where she taught me the entire process.</p><p hint='<p>Trả lời câu hỏi thứ ba: phương pháp học, tập trung vào trải nghiệm thực hành.</p>' importance='high'>I learned through hands-on experience - my grandmother didn't give me a recipe book but rather showed me each step patiently. First, we prepared the broth by simmering beef bones with spices like star anise and cinnamon for several hours. Then, we prepared the fresh rice noodles and thinly sliced beef. The most challenging part was getting the seasoning right - balancing fish sauce, sugar, and salt to create that perfect umami flavor.</p><p hint='<p>Trả lời câu hỏi cuối: cảm xúc và bài học rút ra, sử dụng tính từ mô tả cảm xúc.</p>' importance='high'>As for how I felt about learning this, it was actually quite emotional. Initially, I felt overwhelmed by the complexity of the dish, but as I practiced under my grandmother's guidance, I began to feel a deep sense of connection to my cultural heritage. Completing the dish successfully gave me an incredible sense of accomplishment, and now whenever I make pho, it reminds me of those precious moments with my grandmother. What's more, it's become a valuable skill that allows me to share my culture with friends from different backgrounds.</p><p hint='<p>Kết thúc tự nhiên, có thể thêm một câu tổng kết ngắn gọn.</p>' importance='low'>So, that's the story of how I learned to make pho, and it remains one of my favorite dishes to prepare for special occasions.</p>"
         },
         {
           "id": "quiz_03",
-          "title": "IELTS Speaking Part 3: ",
+          "title": "",
           "type": "speaking",
+          "page": 33,
           "subtype": "ielts_speaking_3",
           "questions": [
             {

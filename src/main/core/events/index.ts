@@ -1,4 +1,4 @@
-import { ipcMain, dialog, app } from 'electron';
+import { ipcMain, dialog } from 'electron';
 import fs from 'fs';
 import path from 'path';
 import { fileWatcherService } from '../services/FileWatcherService';
@@ -179,5 +179,30 @@ export function setupEventHandlers() {
   ipcMain.handle('watcher:unwatch', (_, filePath: string) => {
     fileWatcherService.unwatch(filePath);
     return true;
+  });
+
+  // Save dialog handler
+  ipcMain.handle('dialog:showSave', async (_, options) => {
+    const result = await dialog.showSaveDialog(options);
+    return result;
+  });
+
+  // Export course to zip handler
+  ipcMain.handle('course:exportToZip', async (_, coursePath: string, outputPath: string) => {
+    try {
+      const AdmZip = require('adm-zip');
+      const zip = new AdmZip();
+
+      // Add the entire course directory to the zip
+      zip.addLocalFolder(coursePath);
+
+      // Write the zip file
+      zip.writeZip(outputPath);
+
+      return { success: true };
+    } catch (error) {
+      console.error('Error exporting course to zip:', error);
+      return { success: false, error: String(error) };
+    }
   });
 }

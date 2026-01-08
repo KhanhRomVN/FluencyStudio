@@ -12,6 +12,7 @@ import {
   BookOpenText,
   AudioLines,
   ArrowLeft,
+  Download,
 } from 'lucide-react';
 import { FilePreviewPanel } from './components/FilePreviewPanel';
 import { CodeBlock } from '../../components/CodeBlock';
@@ -57,7 +58,6 @@ const CoursePageContent = () => {
   const [committedWidth, setCommittedWidth] = useState(384); // Width after resize ends
   const widthRef = useRef(384); // Track live width for event handlers
   const [isResizing, setIsResizing] = useState(false);
-  const sidebarRef = useRef<HTMLDivElement>(null);
 
   // State for Source Code Preview switching (quiz -> passage/transcript)
   const [sourceViewMode, setSourceViewMode] = useState<'quiz' | 'passage' | 'transcript'>('quiz');
@@ -481,6 +481,30 @@ const CoursePageContent = () => {
     }
   };
 
+  const handleExportCourse = async () => {
+    if (!course || !coursePath) return;
+
+    try {
+      const defaultFileName = `${course.title.replace(/[^a-z0-9]/gi, '_')}.zip`;
+      const result = await folderService.showSaveDialog({
+        title: 'Export Course',
+        defaultPath: defaultFileName,
+        filters: [{ name: 'ZIP Files', extensions: ['zip'] }],
+      });
+
+      if (!result.canceled && result.filePath) {
+        const exportResult = await folderService.exportCourseToZip(coursePath, result.filePath);
+        if (exportResult.success) {
+          console.log('Course exported successfully to:', result.filePath);
+        } else {
+          console.error('Export failed:', exportResult.error);
+        }
+      }
+    } catch (error) {
+      console.error('Error exporting course:', error);
+    }
+  };
+
   // Render content based on selection
   const renderEmulatorContent = () => {
     if (!selection.data) return <div className="p-4 text-center">Loading...</div>;
@@ -545,6 +569,13 @@ const CoursePageContent = () => {
             {course.bookUrl && !isFilePreviewOpen && (
               <span className="absolute top-1 right-1 w-2 h-2 bg-green-500 rounded-full" />
             )}
+          </button>
+          <button
+            onClick={handleExportCourse}
+            className="p-2 hover:bg-muted rounded-md transition-colors text-muted-foreground hover:text-primary"
+            title="Export Course to ZIP"
+          >
+            <Download size={20} />
           </button>
           <button
             onClick={() => setIsTranscriptDrawerOpen(true)}

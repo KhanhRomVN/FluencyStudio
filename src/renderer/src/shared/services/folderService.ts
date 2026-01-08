@@ -429,6 +429,50 @@ class FolderService {
       return null;
     }
   }
+
+  /**
+   * Show save file dialog
+   */
+  async showSaveDialog(options: {
+    title?: string;
+    defaultPath?: string;
+    filters?: { name: string; extensions: string[] }[];
+  }): Promise<{ canceled: boolean; filePath?: string }> {
+    try {
+      if (window.electron?.ipcRenderer) {
+        const result = await window.electron.ipcRenderer.invoke('dialog:showSave', options);
+        return result || { canceled: true };
+      }
+      console.error('No IPC available for save dialog');
+      return { canceled: true };
+    } catch (error) {
+      console.error('Error showing save dialog:', error);
+      return { canceled: true };
+    }
+  }
+
+  /**
+   * Export course to zip file
+   */
+  async exportCourseToZip(
+    coursePath: string,
+    outputPath: string,
+  ): Promise<{ success: boolean; error?: string }> {
+    try {
+      if (window.electron?.ipcRenderer) {
+        const result = await window.electron.ipcRenderer.invoke(
+          'course:exportToZip',
+          coursePath,
+          outputPath,
+        );
+        return result || { success: false, error: 'No response from IPC' };
+      }
+      return { success: false, error: 'No IPC available' };
+    } catch (error) {
+      console.error('Error exporting course to zip:', error);
+      return { success: false, error: String(error) };
+    }
+  }
 }
 
 export const folderService = new FolderService();

@@ -13,3 +13,5 @@ out
 .env.production.local
 .env.*
 !.env.example
+
+courses

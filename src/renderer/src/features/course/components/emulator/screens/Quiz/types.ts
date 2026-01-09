@@ -80,8 +80,14 @@ export interface Quiz {
 
 export interface ChatMessage {
   id: string;
-  role: 'bot' | 'user';
-  content: string;
+  role: 'assistant' | 'user';
+  content?: string; // For assistant
+  question?: string; // For user (with gaps)
+  answer?: string; // For user
+  ipa?: string;
+  explain?: string;
+  translate?: string;
+  time?: string; // Time of message
 }
 
 export interface MatchingItem {

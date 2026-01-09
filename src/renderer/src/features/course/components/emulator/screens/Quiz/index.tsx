@@ -13,7 +13,7 @@ import { MultipleChoice } from './components/QuizType/MultipleChoice';
 import { MatchingDropdown } from './components/QuizType/MatchingDropdown';
 import { WritingEssay } from './components/QuizType/WritingEssay';
 import { SpeakingEssay } from './components/QuizType/SpeakingEssay';
-import { Chatting } from './components/QuizType/Chatting';
+import { ChattingSpeech } from './components/QuizType/ChattingSpeech';
 import { PronunciationDrill } from './components/QuizType/PronunciationDrill';
 import { SpeechBuilder } from './components/QuizType/SpeechBuilder';
 import { Builder } from './components/QuizType/Builder';
@@ -273,8 +273,8 @@ export const QuizPage: React.FC<QuizPageProps> = ({
             <WritingEssay quiz={quizData} />
           ) : quizType === 'speaking-essay' ? (
             <SpeakingEssay quiz={quizData} />
-          ) : quizType === 'chatting' ? (
-            <Chatting quiz={quizData} />
+          ) : quizType === 'chatting-speech' ? (
+            <ChattingSpeech quiz={quizData} />
           ) : quizType === 'pronunciation-drill' ? (
             <PronunciationDrill quiz={quizData} />
           ) : quizType === 'speech-builder' ? (

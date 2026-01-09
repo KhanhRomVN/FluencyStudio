@@ -243,16 +243,6 @@ export const QuizPage: React.FC<QuizPageProps> = ({
           </div>
 
           <button
-            onClick={handleInfoClick}
-            className={
-              'p-1.5 rounded-lg hover:bg-[hsl(var(--muted))] active:scale-95 transition-all ' +
-              (isNewQuiz ? 'text-[hsl(var(--primary))]' : 'text-[hsl(var(--foreground))]')
-            }
-          >
-            <Info size={18} />
-          </button>
-
-          <button
             onClick={() => setShowMenu(true)}
             className="p-1.5 -mr-2 rounded-lg hover:bg-[hsl(var(--muted))] active:scale-95 transition-all text-[hsl(var(--foreground))]"
           >

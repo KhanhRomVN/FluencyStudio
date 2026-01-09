@@ -105,4 +105,6 @@ export interface QuizQuestion {
   topic?: string; // For speaking part 3
   exampleQuestion?: string[]; // For speaking part 3 (multiple questions per block)
   explain?: string; // For explanation of the answer
+  original?: string; // For sentence transformation
+  require?: string; // For sentence transformation requirement
 }

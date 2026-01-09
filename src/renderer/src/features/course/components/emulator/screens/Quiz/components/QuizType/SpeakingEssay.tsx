@@ -9,7 +9,7 @@ interface SpeakingProps {
   onUpdate?: (updatedQuiz: Quiz) => void;
 }
 
-export const Speaking: React.FC<SpeakingProps> = ({ quiz }) => {
+export const SpeakingEssay: React.FC<SpeakingProps> = ({ quiz }) => {
   const [activeIndex, setActiveIndex] = useState(0);
   const [answers, setAnswers] = useState<Record<number, string>>({});
   const [stepSubmitted, setStepSubmitted] = useState<Record<number, boolean>>({});
@@ -90,8 +90,10 @@ export const Speaking: React.FC<SpeakingProps> = ({ quiz }) => {
           <div className="w-full">
             {/* Type guard/check for properties */}
             {currentQuestion.question && (
-              <div className="text-base leading-relaxed text-[hsl(var(--foreground))]">
-                {currentQuestion.question}
+              <div className="p-4 rounded-xl border border-[hsl(var(--border))]">
+                <div className="text-base leading-relaxed text-[hsl(var(--foreground))]">
+                  {currentQuestion.question}
+                </div>
               </div>
             )}
 
@@ -139,14 +141,14 @@ export const Speaking: React.FC<SpeakingProps> = ({ quiz }) => {
 
       {/* Floating Bottom Controls */}
       <div className="absolute bottom-6 left-0 right-0 flex justify-center items-center pointer-events-none z-10">
-        <div className="flex items-center gap-4 bg-[hsl(var(--background))/80] backdrop-blur-md p-2 rounded-full border border-[hsl(var(--border))] shadow-lg pointer-events-auto">
+        <div className="flex items-center gap-4 pointer-events-auto">
           {/* Mic Toggle */}
           <button
             onClick={toggleRecording}
             className={`w-14 h-14 rounded-full flex items-center justify-center transition-all duration-300 shadow-md ${
               isRecording
                 ? 'bg-red-500 text-white animate-pulse ring-4 ring-red-500/30'
-                : 'bg-[hsl(var(--secondary))] text-[hsl(var(--foreground))] hover:bg-[hsl(var(--secondary)/80)]'
+                : 'bg-[hsl(var(--primary))] text-[hsl(var(--primary-foreground))] hover:opacity-90'
             }`}
           >
             {isRecording ? <MicOff size={24} /> : <Mic size={24} />}

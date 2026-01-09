@@ -35,8 +35,9 @@ export const RichTextParser: React.FC<RichTextParserProps> = ({
 
   // Split by tags we care about: </gap ...>, </n>, <p...>, </p>
   // Improved regex to handle attributes containing ">" (like hints with HTML)
+  // Also supports plain </gap> tag
   const parts = content.split(
-    /((?:<\/gap id='.*?'>)|(?:<\/n\s*?>)|(?:<p(?:\s+(?:[^>"']|"[^"]*"|'[^']*')*)*>)|(?:<\/p>))/gi,
+    /((?:<\/gap id='.*?'>)|(?:<\/gap>)|(?:<\/n\s*?>)|(?:<p(?:\s+(?:[^>"']|"[^"]*"|'[^']*')*)*>)|(?:<\/p>))/gi,
   );
 
   const widgets: React.ReactNode[] = [];
@@ -136,9 +137,13 @@ export const RichTextParser: React.FC<RichTextParserProps> = ({
   parts.forEach((part, index) => {
     // Gap Tag
     const gapMatch = part.match(/<\/gap id='(.*?)'>/i);
-    if (gapMatch) {
+    const plainGapMatch = part.match(/<\/gap>/i);
+
+    if (gapMatch || plainGapMatch) {
+      // For plain gap, pass '0' or empty id
+      const gapId = gapMatch ? gapMatch[1] : '0';
       const gapNode = onGapFound ? (
-        <React.Fragment key={`gap-${index}`}>{onGapFound(gapMatch[1])}</React.Fragment>
+        <React.Fragment key={`gap-${index}`}>{onGapFound(gapId)}</React.Fragment>
       ) : null;
 
       if (gapNode) {

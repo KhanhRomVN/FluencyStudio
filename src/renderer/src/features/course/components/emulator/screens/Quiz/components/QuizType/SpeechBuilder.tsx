@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
-import { Bookmark, Repeat2, RotateCcw, Mic, MicOff, Check, ChevronUp } from 'lucide-react';
-import { Quiz, PronunciationDrillItem } from '../../types';
+import { Mic, MicOff, Check, ChevronUp } from 'lucide-react';
+import { Quiz } from '../../types';
 import { RichTextParser } from '../RichTextParser';
 
-interface PronunciationDrillProps {
+interface SpeechBuilderProps {
   quiz: Quiz;
   onUpdate?: (updatedQuiz: Quiz) => void;
 }
@@ -47,12 +47,12 @@ declare global {
 
 const PASS_THRESHOLD = 70; // Minimum score to pass
 
-export const PronunciationDrill: React.FC<PronunciationDrillProps> = ({ quiz }) => {
-  const drills = quiz.drills || [];
+export const SpeechBuilder: React.FC<SpeechBuilderProps> = ({ quiz }) => {
+  // Support both new 'builders' and old 'sentences' fields for compatibility
+  const items = quiz.builders || quiz.sentences || [];
   const [currentIndex, setCurrentIndex] = useState(0);
   const [cardStates, setCardStates] = useState<Record<string, CardState>>({});
   const [isRecording, setIsRecording] = useState(false);
-  const [isSpeaking, setIsSpeaking] = useState(false);
   const [transcript, setTranscript] = useState('');
 
   const recognitionRef = useRef<ISpeechRecognition | null>(null);
@@ -61,26 +61,12 @@ export const PronunciationDrill: React.FC<PronunciationDrillProps> = ({ quiz }) 
   // Initialize card states
   useEffect(() => {
     const initialStates: Record<string, CardState> = {};
-    drills.forEach((drill) => {
-      initialStates[drill.id] = { score: 0, passed: false, attempts: 0, bestScore: 0 };
+    items.forEach((item) => {
+      initialStates[item.id] = { score: 0, passed: false, attempts: 0, bestScore: 0 };
     });
     setCardStates(initialStates);
     setCurrentIndex(0);
   }, [quiz.id]);
-
-  // Text-to-Speech function
-  const speakText = useCallback((text: string) => {
-    if ('speechSynthesis' in window) {
-      window.speechSynthesis.cancel(); // Cancel any ongoing speech
-      const utterance = new SpeechSynthesisUtterance(text);
-      utterance.lang = 'en-US';
-      utterance.rate = 0.9;
-      utterance.onstart = () => setIsSpeaking(true);
-      utterance.onend = () => setIsSpeaking(false);
-      utterance.onerror = () => setIsSpeaking(false);
-      window.speechSynthesis.speak(utterance);
-    }
-  }, []);
 
   // Initialize Speech Recognition
   const initRecognition = useCallback(() => {
@@ -120,6 +106,35 @@ export const PronunciationDrill: React.FC<PronunciationDrillProps> = ({ quiz }) 
     return Math.round((matches / targetWords.length) * 100);
   };
 
+  // Construct target sentence from Builder item
+  const getTargetSentence = (item: any) => {
+    // New logic: Use answers array to fill gaps in question
+    if (item.question && item.answers) {
+      let text = item.question;
+      const tempDiv = document.createElement('div');
+      tempDiv.innerHTML = text;
+      const gaps = tempDiv.getElementsByTagName('gap');
+
+      // Replace gaps with answers in the temp DOM
+      for (let i = 0; i < gaps.length; i++) {
+        const gapId = gaps[i].getAttribute('id');
+        // Find answer by ID
+        const answerObj = item.answers.find((a: any) => a.id === gapId);
+        if (answerObj) {
+          gaps[i].textContent = answerObj.answer;
+        } else if (item.answers[i]) {
+          // Fallback to index if no ID match (legacy/safety)
+          gaps[i].textContent = item.answers[i].answer;
+        }
+      }
+      return tempDiv.textContent || '';
+    }
+
+    // Fallback old logic
+    if (!item || !item.correctOrder || !item.items) return '';
+    return item.correctOrder.map((i: number) => item.items[i]).join(' ');
+  };
+
   // Start recording
   const startRecording = useCallback(() => {
     const recognition = initRecognition();
@@ -129,7 +144,8 @@ export const PronunciationDrill: React.FC<PronunciationDrillProps> = ({ quiz }) 
     setTranscript('');
     setIsRecording(true);
 
-    const currentDrill = drills[currentIndex];
+    const currentItem = items[currentIndex];
+    const targetText = getTargetSentence(currentItem);
 
     recognition.onresult = (event) => {
       let finalTranscript = '';
@@ -141,10 +157,10 @@ export const PronunciationDrill: React.FC<PronunciationDrillProps> = ({ quiz }) 
 
       if (finalTranscript) {
         setTranscript(finalTranscript);
-        const score = calculateScore(finalTranscript, currentDrill.text);
+        const score = calculateScore(finalTranscript, targetText);
 
         setCardStates((prev) => {
-          const currentState = prev[currentDrill.id] || {
+          const currentState = prev[currentItem.id] || {
             score: 0,
             passed: false,
             attempts: 0,
@@ -155,7 +171,7 @@ export const PronunciationDrill: React.FC<PronunciationDrillProps> = ({ quiz }) 
 
           return {
             ...prev,
-            [currentDrill.id]: {
+            [currentItem.id]: {
               score,
               passed: newPassed,
               attempts: currentState.attempts + 1,
@@ -176,7 +192,7 @@ export const PronunciationDrill: React.FC<PronunciationDrillProps> = ({ quiz }) 
     };
 
     recognition.start();
-  }, [currentIndex, drills, initRecognition]);
+  }, [currentIndex, items, initRecognition]);
 
   // Stop recording
   const stopRecording = useCallback(() => {
@@ -186,19 +202,9 @@ export const PronunciationDrill: React.FC<PronunciationDrillProps> = ({ quiz }) 
     setIsRecording(false);
   }, []);
 
-  // Restart current card
-  const restartCard = useCallback(() => {
-    const currentDrill = drills[currentIndex];
-    setCardStates((prev) => ({
-      ...prev,
-      [currentDrill.id]: { score: 0, passed: false, attempts: 0, bestScore: 0 },
-    }));
-    setTranscript('');
-  }, [currentIndex, drills]);
-
   // Move to next card
   const goToNext = useCallback(() => {
-    if (currentIndex < drills.length - 1) {
+    if (currentIndex < items.length - 1) {
       setCurrentIndex((prev) => prev + 1);
       setTranscript('');
 
@@ -210,7 +216,7 @@ export const PronunciationDrill: React.FC<PronunciationDrillProps> = ({ quiz }) 
         });
       }, 100);
     }
-  }, [currentIndex, drills.length]);
+  }, [currentIndex, items.length]);
 
   // Get score color
   const getScoreColor = (score: number): string => {
@@ -227,51 +233,20 @@ export const PronunciationDrill: React.FC<PronunciationDrillProps> = ({ quiz }) 
     return 'bg-red-500/20';
   };
 
-  // Render hidden word text
-  const renderHiddenText = (drill: PronunciationDrillItem, isPassed: boolean) => {
-    if (!drill.hiddenWord) {
-      return <span className="text-lg font-bold">{drill.text}</span>;
-    }
-
-    const words = drill.text.split(' ');
-    return (
-      <span className="text-[16px] font-bold">
-        {words.map((word, idx) => {
-          const isHidden = word.toLowerCase().includes(drill.hiddenWord!.toLowerCase());
-          if (isHidden && !isPassed) {
-            return (
-              <span key={idx}>
-                <span className="text-[hsl(var(--primary))] mx-0.5 font-bold tracking-widest">
-                  {'_'.repeat(word.length)}
-                </span>
-                {idx < words.length - 1 ? ' ' : ''}
-              </span>
-            );
-          }
-          return (
-            <span key={idx} className={isHidden && isPassed ? 'text-[hsl(var(--primary))]' : ''}>
-              {word}
-              {idx < words.length - 1 ? ' ' : ''}
-            </span>
-          );
-        })}
-      </span>
-    );
-  };
-
   // Render a single card
-  const renderCard = (drill: PronunciationDrillItem, index: number) => {
-    const state = cardStates[drill.id] || { score: 0, passed: false, attempts: 0, bestScore: 0 };
+  const renderCard = (item: any, index: number) => {
+    const state = cardStates[item.id] || { score: 0, passed: false, attempts: 0, bestScore: 0 };
     const isCurrent = index === currentIndex;
     const isPassed = index < currentIndex || state.passed;
     const isFuture = index > currentIndex;
+    const targetText = getTargetSentence(item);
 
     // Hide future cards
     if (isFuture) return null;
 
     return (
       <div
-        key={drill.id}
+        key={item.id}
         className={`
           relative rounded-2xl border transition-all duration-500 ease-out
           ${
@@ -291,28 +266,78 @@ export const PronunciationDrill: React.FC<PronunciationDrillProps> = ({ quiz }) 
               </div>
             )}
             <span className="text-sm text-[hsl(var(--muted-foreground))]">
-              {index + 1}/{drills.length}
+              {index + 1}/{items.length}
             </span>
           </div>
-
-          {/* Icons removed */}
         </div>
 
         {/* Card Content */}
-        <div className="p-6 text-center space-y-4">
-          {/* Main Text */}
-          <div className="text-[hsl(var(--foreground))]">{renderHiddenText(drill, isPassed)}</div>
+        <div className="p-6 text-center space-y-6">
+          {/* Context Hint */}
+          {(item.hint || item.translate) && (
+            <div className="text-sm text-[hsl(var(--muted-foreground))] italic">
+              <RichTextParser content={item.hint || item.translate} />
+            </div>
+          )}
+          {/* Scrambled Words Display */}
+          {/* Question Display with Gaps */}
+          {item.question ? (
+            <div className="text-xl font-medium leading-relaxed">
+              <RichTextParser
+                content={item.question}
+                onGapFound={(id) => {
+                  // Find answer by ID
+                  const answerObj = item.answers?.find((a: any) => a.id === id);
+                  // If not found by ID, try index fallback if the ID looks like an index or just sequential?
+                  // Actually let's just stick to ID first.
+                  const answerText = answerObj?.answer || '';
 
-          {/* IPA */}
-          <div className="text-[hsl(var(--primary))] text-base font-mono">{drill.ipa}</div>
+                  // Calculate underscores based on answer length
+                  const gapLength = answerText.length > 0 ? answerText.length : 5;
+                  const underscores = '_'.repeat(gapLength);
 
-          {/* Translation */}
-          <div className="text-[hsl(var(--muted-foreground))] text-sm italic">
-            {drill.translate}
-          </div>
-
+                  return (
+                    <span
+                      key={id}
+                      className={`
+                          inline-block mx-1 font-bold tracking-widest
+                          ${state.passed ? 'text-[hsl(var(--primary))]' : 'text-[hsl(var(--primary))] opacity-50'}
+                      `}
+                    >
+                      {state.passed ? answerText : underscores}
+                    </span>
+                  );
+                }}
+              />
+            </div>
+          ) : (
+            /* Legacy Scrambled Words Display */
+            <div className="flex flex-wrap gap-2 justify-center">
+              {item.items?.map((word: string, idx: number) => (
+                <span
+                  key={idx}
+                  className={`
+                            px-3 py-1.5 rounded-lg font-medium text-sm
+                            ${
+                              state.passed
+                                ? 'bg-green-500/10 text-green-600 border border-green-500/20'
+                                : 'bg-[hsl(var(--muted))] text-[hsl(var(--foreground))] border border-[hsl(var(--border))]'
+                            }
+                        `}
+                >
+                  {word}
+                </span>
+              ))}
+            </div>
+          )}
+          {/* Reveal Correct Answer if Passed */}
+          {state.passed && (
+            <div className="text-lg font-bold text-[hsl(var(--primary))] animate-in fade-in slide-in-from-bottom-2">
+              {targetText}
+            </div>
+          )}
           {/* Score Display */}
-          {isCurrent && state.attempts > 0 && (
+          {isCurrent && state.attempts > 0 && !state.passed && (
             <div className={`mt-4 p-3 rounded-xl ${getScoreBgColor(state.score)}`}>
               <div className={`text-3xl font-bold ${getScoreColor(state.score)}`}>
                 {state.bestScore}%
@@ -343,7 +368,7 @@ export const PronunciationDrill: React.FC<PronunciationDrillProps> = ({ quiz }) 
               {isRecording ? <MicOff size={24} /> : <Mic size={24} />}
             </button>
 
-            {state.passed && currentIndex < drills.length - 1 && (
+            {state.passed && currentIndex < items.length - 1 && (
               <button
                 onClick={goToNext}
                 className="h-14 px-6 rounded-full bg-green-500 text-white font-bold flex items-center gap-2 hover:bg-green-600 transition-colors shadow-lg"
@@ -358,10 +383,10 @@ export const PronunciationDrill: React.FC<PronunciationDrillProps> = ({ quiz }) 
     );
   };
 
-  if (drills.length === 0) {
+  if (items.length === 0) {
     return (
       <div className="flex flex-col h-full items-center justify-center text-[hsl(var(--muted-foreground))]">
-        <p>No pronunciation drills available.</p>
+        <p>No speech builder items available.</p>
       </div>
     );
   }
@@ -381,10 +406,10 @@ export const PronunciationDrill: React.FC<PronunciationDrillProps> = ({ quiz }) 
 
         <div className="flex-1 flex flex-col justify-center space-y-4">
           {/* Passed cards */}
-          {drills.slice(0, currentIndex).map((drill, index) => renderCard(drill, index))}
+          {items.slice(0, currentIndex).map((item, index) => renderCard(item, index))}
 
           {/* Current card */}
-          {drills[currentIndex] && renderCard(drills[currentIndex], currentIndex)}
+          {items[currentIndex] && renderCard(items[currentIndex], currentIndex)}
         </div>
 
         {/* Invisible spacer to balance the top instruction ensuring the cards are perfectly centered in the screen */}

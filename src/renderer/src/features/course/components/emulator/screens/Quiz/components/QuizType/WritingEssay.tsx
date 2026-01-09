@@ -9,7 +9,7 @@ interface WritingProps {
   onUpdate?: (updatedQuiz: Quiz) => void;
 }
 
-export const Writing: React.FC<WritingProps> = ({ quiz }) => {
+export const WritingEssay: React.FC<WritingProps> = ({ quiz }) => {
   const [content, setContent] = useState('');
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [showHintDrawer, setShowHintDrawer] = useState(false);

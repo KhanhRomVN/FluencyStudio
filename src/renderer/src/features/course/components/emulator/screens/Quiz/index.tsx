@@ -11,10 +11,11 @@ import { Quiz } from './types';
 import { GapFill } from './components/QuizType/GapFill';
 import { MultipleChoice } from './components/QuizType/MultipleChoice';
 import { MatchingDropdown } from './components/QuizType/MatchingDropdown';
-import { Writing } from './components/QuizType/Writing';
-import { Speaking } from './components/QuizType/Speaking';
+import { WritingEssay } from './components/QuizType/WritingEssay';
+import { SpeakingEssay } from './components/QuizType/SpeakingEssay';
 import { Chatting } from './components/QuizType/Chatting';
 import { PronunciationDrill } from './components/QuizType/PronunciationDrill';
+import { SpeechBuilder } from './components/QuizType/SpeechBuilder';
 import { Builder } from './components/QuizType/Builder';
 import { SentenceTransformation } from './components/QuizType/SentenceTransformation';
 import { Dictation } from './components/QuizType/Dictation';
@@ -268,14 +269,16 @@ export const QuizPage: React.FC<QuizPageProps> = ({
               onCheck={handleCheck}
               onExplainRequest={setShowExplainDrawer}
             />
-          ) : quizType === 'writing' ? (
-            <Writing quiz={quizData} />
-          ) : quizType === 'speaking' ? (
-            <Speaking quiz={quizData} />
+          ) : quizType === 'writing-essay' ? (
+            <WritingEssay quiz={quizData} />
+          ) : quizType === 'speaking-essay' ? (
+            <SpeakingEssay quiz={quizData} />
           ) : quizType === 'chatting' ? (
             <Chatting quiz={quizData} />
           ) : quizType === 'pronunciation-drill' ? (
             <PronunciationDrill quiz={quizData} />
+          ) : quizType === 'speech-builder' ? (
+            <SpeechBuilder quiz={quizData} />
           ) : quizType === 'builder' || quizType === 'sentence-builder' ? (
             <Builder quiz={quizData} onExplainRequest={setShowExplainDrawer} />
           ) : quizType === 'sentence-transformation' ? (

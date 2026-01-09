@@ -8,9 +8,11 @@ export interface PronunciationDrillItem {
 
 export interface BuilderItem {
   id: string;
-  items: string[]; // Shuffled word/phrase/sentence blocks
-  correctOrder: number[]; // Correct indices order
-  hint?: string; // Context/hint (was translate)
+  items?: string[]; // Shuffled word/phrase/sentence blocks
+  correctOrder?: number[]; // Correct indices order
+  question?: string; // HTML string with <gap> tags for speech builder
+  answers?: { id: string; answer: string }[]; // Correct answers for gaps
+  hint?: string; // text or HTML context
   explain?: string; // Explanation using HTML
 }
 

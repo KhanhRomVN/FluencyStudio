@@ -129,7 +129,7 @@ export const Builder: React.FC<BuilderProps> = ({ quiz, onExplainRequest }) => {
 
   // Get correct sentence string
   const getCorrectString = () => {
-    if (!currentItem) return '';
+    if (!currentItem || !currentItem.correctOrder) return '';
     return currentItem.correctOrder.map((i) => itemBlocks[i]).join(' ');
   };
 
@@ -180,7 +180,7 @@ export const Builder: React.FC<BuilderProps> = ({ quiz, onExplainRequest }) => {
                           : 'bg-[hsl(var(--primary))] text-[hsl(var(--primary-foreground))] cursor-pointer hover:opacity-80'
                       }`}
                     >
-                      {currentItem.items[itemIndex]}
+                      {currentItem.items?.[itemIndex]}
                     </span>
                   ))}
                 </div>
@@ -214,7 +214,7 @@ export const Builder: React.FC<BuilderProps> = ({ quiz, onExplainRequest }) => {
 
             {/* Items Blocks */}
             <div className="flex flex-wrap gap-2 justify-center">
-              {currentItem.items.map((item, idx) => {
+              {(currentItem.items || []).map((item, idx) => {
                 const isSelected = currentState.selectedIndices.includes(idx);
                 return (
                   <button
@@ -252,7 +252,7 @@ export const Builder: React.FC<BuilderProps> = ({ quiz, onExplainRequest }) => {
           )}
 
           {!currentState.isChecked &&
-            currentState.selectedIndices.length === currentItem?.items.length && (
+            currentState.selectedIndices.length === (currentItem?.items?.length || 0) && (
               <button
                 onClick={checkAnswer}
                 className="w-full h-10 rounded-md bg-[hsl(var(--primary))] text-[hsl(var(--primary-foreground))] font-bold flex items-center justify-center gap-2 hover:opacity-90 transition-all active:scale-95 shadow-md"

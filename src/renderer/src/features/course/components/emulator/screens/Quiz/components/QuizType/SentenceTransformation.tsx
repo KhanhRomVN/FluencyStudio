@@ -2,11 +2,11 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { Check, ChevronRight, RotateCcw, Info, Lightbulb } from 'lucide-react';
 import { Quiz } from '../../types';
 import { ExplainDrawer } from '../ExplainDrawer';
+import { RichTextParser } from '../RichTextParser';
 
 interface SentenceTransformationProps {
   quiz: Quiz;
   onUpdate?: (updatedQuiz: Quiz) => void;
-  header?: React.ReactNode;
 }
 
 interface CardState {
@@ -15,7 +15,7 @@ interface CardState {
   isChecked: boolean;
 }
 
-export const SentenceTransformation: React.FC<SentenceTransformationProps> = ({ quiz, header }) => {
+export const SentenceTransformation: React.FC<SentenceTransformationProps> = ({ quiz }) => {
   const transformations = quiz.transformations || [];
   const [currentIndex, setCurrentIndex] = useState(0);
   const [cardStates, setCardStates] = useState<Record<string, CardState>>({});
@@ -126,10 +126,6 @@ export const SentenceTransformation: React.FC<SentenceTransformationProps> = ({ 
     <div className="flex flex-col h-full bg-[hsl(var(--background))] overflow-hidden">
       {/* Header */}
       <div className="px-4 py-3 border-b border-[hsl(var(--border))]/50">
-        {header}
-        {quiz.instruction && (
-          <p className="text-sm text-[hsl(var(--muted-foreground))]">{quiz.instruction}</p>
-        )}
         <div className="flex items-center gap-2 mt-2">
           <span className="text-xs font-bold text-[hsl(var(--primary))] bg-[hsl(var(--primary))]/10 px-2 py-0.5 rounded">
             {currentIndex + 1}/{transformations.length}
@@ -139,6 +135,11 @@ export const SentenceTransformation: React.FC<SentenceTransformationProps> = ({ 
 
       {/* Content */}
       <div className="flex-1 overflow-y-auto p-4 [&::-webkit-scrollbar]:hidden">
+        {quiz.instruction && (
+          <div className="mb-4 text-[hsl(var(--foreground))] text-[16px]">
+            <RichTextParser content={quiz.instruction} />
+          </div>
+        )}
         {currentItem && (
           <div
             className="space-y-6 animate-in fade-in slide-in-from-right-4 duration-300"
@@ -149,7 +150,7 @@ export const SentenceTransformation: React.FC<SentenceTransformationProps> = ({ 
               <p className="text-xs text-[hsl(var(--muted-foreground))] uppercase font-bold mb-2">
                 Original Sentence
               </p>
-              <p className="text-lg text-[hsl(var(--foreground))] leading-relaxed">
+              <p className="text-[16px] text-[hsl(var(--foreground))] leading-relaxed">
                 {currentItem.original}
               </p>
             </div>
@@ -158,7 +159,9 @@ export const SentenceTransformation: React.FC<SentenceTransformationProps> = ({ 
             <div className="flex items-center gap-3">
               <Lightbulb size={20} className="text-yellow-500" />
               <div>
-                <span className="text-sm text-[hsl(var(--muted-foreground))]">Use the word: </span>
+                <span className="text-[16px] text-[hsl(var(--muted-foreground))]">
+                  Use the word:{' '}
+                </span>
                 <span className="font-bold text-[hsl(var(--primary))] uppercase tracking-wider">
                   {currentItem.keyword}
                 </span>
@@ -175,7 +178,7 @@ export const SentenceTransformation: React.FC<SentenceTransformationProps> = ({ 
                 onChange={(e) => handleInputChange(e.target.value)}
                 disabled={currentState.isChecked}
                 placeholder="Type your answer here..."
-                className={`w-full h-32 p-4 rounded-xl border-2 transition-colors resize-none text-[hsl(var(--foreground))] ${
+                className={`w-full h-32 p-4 rounded-xl border-2 transition-colors resize-none text-[hsl(var(--foreground))] text-[16px] ${
                   currentState.isChecked
                     ? currentState.isCorrect
                       ? 'border-green-500 bg-green-500/10'

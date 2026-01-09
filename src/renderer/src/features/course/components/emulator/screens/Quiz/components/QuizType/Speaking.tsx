@@ -7,10 +7,9 @@ import { HintDrawer } from '../HintDrawer';
 interface SpeakingProps {
   quiz: Quiz;
   onUpdate?: (updatedQuiz: Quiz) => void;
-  header?: React.ReactNode;
 }
 
-export const Speaking: React.FC<SpeakingProps> = ({ quiz, header }) => {
+export const Speaking: React.FC<SpeakingProps> = ({ quiz }) => {
   const [activeIndex, setActiveIndex] = useState(0);
   const [answers, setAnswers] = useState<Record<number, string>>({});
   const [stepSubmitted, setStepSubmitted] = useState<Record<number, boolean>>({});
@@ -76,9 +75,12 @@ export const Speaking: React.FC<SpeakingProps> = ({ quiz, header }) => {
   return (
     <div className="flex flex-col h-full bg-[hsl(var(--background))] overflow-hidden relative">
       <div className="flex-1 overflow-y-auto p-4 [&::-webkit-scrollbar]:hidden pb-32">
-        {header}
-
-        {/* Instruction now handled by TutorialDrawer in QuizPage */}
+        {/* Instruction now handled locally */}
+        {quiz.instruction && (
+          <div className="mb-4 text-[hsl(var(--foreground))] text-[16px]">
+            <RichTextParser content={quiz.instruction} />
+          </div>
+        )}
 
         <div
           className="space-y-6 animate-in fade-in slide-in-from-right-4 duration-300"
@@ -103,12 +105,12 @@ export const Speaking: React.FC<SpeakingProps> = ({ quiz, header }) => {
               {/* <span>{currentAnswer.length} chars</span> */}
             </div>
             {isCurrentSubmitted ? (
-              <div className="text-[hsl(var(--foreground))] leading-relaxed text-sm whitespace-pre-wrap p-4 bg-[hsl(var(--secondary)/10)] rounded-lg italic min-h-[120px]">
+              <div className="text-[hsl(var(--foreground))] leading-relaxed text-[16px] whitespace-pre-wrap p-4 bg-[hsl(var(--secondary)/10)] rounded-lg italic min-h-[120px]">
                 {currentAnswer}
               </div>
             ) : (
               <textarea
-                className="w-full h-48 p-4 rounded-lg border border-[hsl(var(--border))] bg-[hsl(var(--card))] text-[hsl(var(--foreground))] resize-none focus:outline-none focus:ring-2 focus:ring-[hsl(var(--primary))]"
+                className="w-full h-48 p-4 rounded-lg border border-[hsl(var(--border))] bg-[hsl(var(--card))] text-[hsl(var(--foreground))] resize-none focus:outline-none focus:ring-2 focus:ring-[hsl(var(--primary))] text-[16px]"
                 placeholder="Type your answer here..."
                 value={currentAnswer}
                 onChange={(e) => handleTextChange(e.target.value)}
@@ -120,11 +122,11 @@ export const Speaking: React.FC<SpeakingProps> = ({ quiz, header }) => {
           {/* Sample Answer Section */}
           {isCurrentSubmitted && getExample(currentQuestion) && (
             <div className="animate-in fade-in slide-in-from-bottom-4 duration-500 pt-4 pb-8">
-              <h3 className="font-bold text-lg mb-3 text-[hsl(var(--foreground))] flex items-center gap-2">
+              <h3 className="font-bold text-[16px] mb-3 text-[hsl(var(--foreground))] flex items-center gap-2">
                 <CheckCircle2 size={18} className="text-green-500" />
                 Sample Answer
               </h3>
-              <div className="p-4 rounded-lg bg-[hsl(var(--secondary)/30)] border border-[hsl(var(--border))] text-[hsl(var(--foreground))] leading-relaxed text-sm">
+              <div className="p-4 rounded-lg bg-[hsl(var(--secondary)/30)] border border-[hsl(var(--border))] text-[hsl(var(--foreground))] leading-relaxed text-[16px]">
                 <RichTextParser
                   content={getExample(currentQuestion) || ''}
                   onHintClick={handleHintClick}

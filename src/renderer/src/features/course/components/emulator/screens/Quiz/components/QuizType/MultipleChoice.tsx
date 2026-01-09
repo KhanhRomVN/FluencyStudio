@@ -8,8 +8,6 @@ interface MultipleChoiceProps {
   quiz: Quiz;
   isChecked: boolean;
   onCheck: () => void;
-  onUpdate?: (updatedQuiz: Quiz) => void;
-  header?: React.ReactNode;
   onExplainRequest?: (isOpen: boolean) => void;
 }
 
@@ -17,8 +15,6 @@ export const MultipleChoice: React.FC<MultipleChoiceProps> = ({
   quiz,
   isChecked,
   onCheck,
-  onUpdate,
-  header,
   onExplainRequest,
 }) => {
   // State now stores array of strings for each question ID
@@ -27,15 +23,11 @@ export const MultipleChoice: React.FC<MultipleChoiceProps> = ({
   const [isExplainOpen, setIsExplainOpen] = useState(false);
   const [currentExplanation, setCurrentExplanation] = useState('');
 
-  // Local state for editing in emulator
-  const [instruction, setInstruction] = useState(quiz.instruction || '');
-
   // Sync with quiz prop changes
   useEffect(() => {
-    setInstruction(quiz.instruction || '');
     setSelectedAnswers({});
     setAreAllAnswered(false);
-  }, [quiz.id, quiz.instruction]);
+  }, [quiz.id]);
 
   // Notify parent about explain drawer state
   useEffect(() => {
@@ -103,7 +95,7 @@ export const MultipleChoice: React.FC<MultipleChoiceProps> = ({
 
     return (
       <div key={question.id} className="mb-8">
-        <h3 className="font-bold text-lg text-[hsl(var(--foreground))] mb-3">
+        <h3 className="font-bold text-[16px] text-[hsl(var(--foreground))] mb-3">
           {question.question}
         </h3>
 
@@ -163,7 +155,7 @@ export const MultipleChoice: React.FC<MultipleChoiceProps> = ({
                 >
                   {circleContent}
                 </div>
-                <span className={`text-[15px] font-medium ${textColor}`}>{optionText}</span>
+                <span className={`text-[16px] font-medium ${textColor}`}>{optionText}</span>
               </div>
             );
           })}
@@ -196,17 +188,9 @@ export const MultipleChoice: React.FC<MultipleChoiceProps> = ({
   return (
     <div className="flex flex-col h-full">
       <div className="flex-1 overflow-y-auto px-4 py-3 [&::-webkit-scrollbar]:hidden">
-        {header}
-        {instruction && (
-          <div className="mb-6 text-[hsl(var(--foreground))]">
-            <RichTextParser
-              content={instruction}
-              sectionId="instruction"
-              onChange={(newContent) => {
-                setInstruction(newContent);
-                onUpdate?.({ ...quiz, instruction: newContent });
-              }}
-            />
+        {quiz.instruction && (
+          <div className="mb-4 text-[hsl(var(--foreground))] text-[16px]">
+            <RichTextParser content={quiz.instruction} />
           </div>
         )}
         {questions.map(renderQuestion)}
@@ -216,7 +200,7 @@ export const MultipleChoice: React.FC<MultipleChoiceProps> = ({
         <div className="p-4 bg-[hsl(var(--background))]">
           <button
             onClick={onCheck}
-            className="w-full py-2 bg-[hsl(var(--primary))] text-white rounded-md font-bold text-base active:scale-[0.98] transition-all"
+            className="w-full py-2 bg-[hsl(var(--primary))] text-white rounded-md font-bold text-[16px] active:scale-[0.98] transition-all"
           >
             Check answers
           </button>

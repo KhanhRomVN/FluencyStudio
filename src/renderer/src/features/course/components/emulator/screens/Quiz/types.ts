@@ -6,11 +6,12 @@ export interface PronunciationDrillItem {
   hiddenWord?: string; // For phrases: word to hide until success
 }
 
-export interface SentenceBuilderItem {
+export interface BuilderItem {
   id: string;
-  words: string[]; // Shuffled word blocks
+  items: string[]; // Shuffled word/phrase/sentence blocks
   correctOrder: number[]; // Correct indices order
-  translate?: string; // Vietnamese translation hint
+  hint?: string; // Context/hint (was translate)
+  explain?: string; // Explanation using HTML
 }
 
 export interface SentenceTransformationItem {
@@ -21,10 +22,37 @@ export interface SentenceTransformationItem {
   explain?: string; // Explanation
 }
 
+// For dictation quizzes
+export interface DictationItem {
+  id: string;
+  audio?: string; // If present, use audio file. Requires transcript.
+  transcript?: string; // The correct text to match against when using audio.
+  text?: string; // If present (and no audio), use TTS. This is the correct text.
+  translate?: string;
+  speed?: number; // Only used for TTS (text mode). Ignored/Invalid for audio mode.
+}
+
+export interface ErrorCorrectionItem {
+  id: string;
+  sentence: string; // "I has a cat"
+  error: string; // "has"
+  correction: string; // "have"
+  explain?: string;
+}
+
+export interface FlashcardItem {
+  id: string;
+  front: string; // Text or Question
+  back: string; // Answer or Definition
+  frontAudio?: string;
+  backAudio?: string;
+  image?: string;
+}
+
 export interface Quiz {
   id: string;
   title: string;
-  type: string; // 'gap-fill' | 'multiple-choice' | 'pronunciation-drill' | 'sentence-builder' | 'sentence-transformation'
+  type: string; // 'gap-fill' | 'multiple-choice' | 'pronunciation-drill' | 'sentence-builder' | 'sentence-transformation' | 'dictation' | 'error-correction' | 'flashcard'
   question: string;
   audio?: string; // Path to audio file
   passage?: string; // Path to passage file
@@ -40,8 +68,12 @@ export interface Quiz {
   example?: string;
   chats?: ChatMessage[];
   drills?: PronunciationDrillItem[]; // For pronunciation drill quizzes
-  sentences?: SentenceBuilderItem[]; // For sentence builder quizzes
+  builders?: BuilderItem[]; // For builder quizzes (words, phrases, sentences)
+  sentences?: BuilderItem[]; // Deprecated: For backward compatibility
   transformations?: SentenceTransformationItem[]; // For sentence transformation quizzes
+  dictations?: DictationItem[]; // For dictation quizzes
+  errorCorrections?: ErrorCorrectionItem[]; // For error correction quizzes
+  flashcards?: FlashcardItem[]; // For flashcard quizzes
 }
 
 export interface ChatMessage {

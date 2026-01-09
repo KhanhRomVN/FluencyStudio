@@ -14,8 +14,6 @@ interface MatchingDropdownProps {
   quiz: MatchingDropdownQuiz;
   isChecked: boolean;
   onCheck: () => void;
-  onUpdate?: (updatedQuiz: Quiz) => void;
-  header?: React.ReactNode;
   onExplainRequest?: (isOpen: boolean) => void;
 }
 
@@ -25,21 +23,15 @@ export const MatchingDropdown: React.FC<MatchingDropdownProps> = ({
   quiz,
   isChecked,
   onCheck,
-  onUpdate,
-  header,
   onExplainRequest,
 }) => {
   const [selectedAnswers, setSelectedAnswers] = useState<{ [key: string]: string }>({});
   const [isExplainOpen, setIsExplainOpen] = useState(false);
   const [currentExplanation, setCurrentExplanation] = useState('');
 
-  // Local state for editing
-  const [instruction, setInstruction] = useState(quiz.instruction || '');
-
   useEffect(() => {
-    setInstruction(quiz.instruction || '');
     setSelectedAnswers({});
-  }, [quiz.id, quiz.instruction]);
+  }, [quiz.id]);
 
   // Generate options from the quiz.options array
   const options = useMemo(() => {
@@ -59,7 +51,7 @@ export const MatchingDropdown: React.FC<MatchingDropdownProps> = ({
 
   // Derived state: Available options for each row
   // All options are always available (multi-answer behavior)
-  const getAvailableOptions = (currentMatchingId: string) => {
+  const getAvailableOptions = () => {
     return options;
   };
 
@@ -171,7 +163,7 @@ export const MatchingDropdown: React.FC<MatchingDropdownProps> = ({
               <option value="" disabled>
                 Choose an answer
               </option>
-              {getAvailableOptions(matching.id).map((opt) => (
+              {getAvailableOptions().map((opt) => (
                 <option key={opt.key} value={opt.key}>
                   {opt.text}
                 </option>
@@ -225,24 +217,12 @@ export const MatchingDropdown: React.FC<MatchingDropdownProps> = ({
   return (
     <div className="flex flex-col h-full">
       <div className="flex-1 overflow-y-auto px-4 py-3 [&::-webkit-scrollbar]:hidden">
-        {header}
-
-        {/* Instruction */}
-        {instruction && (
-          <div className="mb-4 text-[hsl(var(--foreground))] text-base">
-            <RichTextParser
-              content={instruction}
-              sectionId="instruction"
-              onChange={(newContent) => {
-                setInstruction(newContent);
-                onUpdate?.({ ...quiz, instruction: newContent });
-              }}
-            />
+        {quiz.instruction && (
+          <div className="mb-4 text-[hsl(var(--foreground))] text-[16px]">
+            <RichTextParser content={quiz.instruction} />
           </div>
         )}
-
-        {/* Matchings List */}
-        <div className="space-y-1">{quiz.matchings?.map(renderMatchingRow)}</div>
+        {quiz.matchings?.map(renderMatchingRow)}
       </div>
 
       {/* Check Button */}

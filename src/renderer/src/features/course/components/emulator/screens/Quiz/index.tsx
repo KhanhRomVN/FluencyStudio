@@ -15,8 +15,11 @@ import { Writing } from './components/QuizType/Writing';
 import { Speaking } from './components/QuizType/Speaking';
 import { Chatting } from './components/QuizType/Chatting';
 import { PronunciationDrill } from './components/QuizType/PronunciationDrill';
-import { SentenceBuilder } from './components/QuizType/SentenceBuilder';
+import { Builder } from './components/QuizType/Builder';
 import { SentenceTransformation } from './components/QuizType/SentenceTransformation';
+import { Dictation } from './components/QuizType/Dictation';
+import { ErrorCorrection } from './components/QuizType/ErrorCorrection';
+import { Flashcard } from './components/QuizType/Flashcard';
 import { MediaPlayer } from './components/MediaPlayer';
 import { QuizDrawer } from './components/QuizDrawer';
 import { TranscriptDrawer } from './components/TranscriptDrawer';
@@ -259,107 +262,50 @@ export const QuizPage: React.FC<QuizPageProps> = ({
       </div>
 
       {/* Main Content */}
-      <div className="flex-1 overflow-hidden relative">
-        {quizType.includes('multiple-choice') ? (
-          <MultipleChoice
-            quiz={quizData}
-            isChecked={isChecked}
-            onCheck={handleCheck}
-            onUpdate={onQuizUpdate}
-            onExplainRequest={setShowExplainDrawer}
-            header={
-              <h2 className="font-bold text-lg text-[hsl(var(--foreground))] leading-tight mb-3">
-                {displayTitle}
-              </h2>
-            }
-          />
-        ) : quizType === 'matching-dropdown' ? (
-          <MatchingDropdown
-            quiz={quizData}
-            isChecked={isChecked}
-            onCheck={handleCheck}
-            onUpdate={onQuizUpdate}
-            onExplainRequest={setShowExplainDrawer}
-            header={
-              <h2 className="font-bold text-lg text-[hsl(var(--foreground))] leading-tight mb-3">
-                {displayTitle}
-              </h2>
-            }
-          />
-        ) : quizType === 'writing' ? (
-          <Writing
-            quiz={quizData}
-            onUpdate={onQuizUpdate}
-            header={
-              <h2 className="font-bold text-lg text-[hsl(var(--foreground))] leading-tight mb-3">
-                {displayTitle}
-              </h2>
-            }
-          />
-        ) : quizType === 'speaking' ? (
-          <Speaking
-            quiz={quizData}
-            onUpdate={onQuizUpdate}
-            header={
-              <h2 className="font-bold text-lg text-[hsl(var(--foreground))] leading-tight mb-3">
-                {displayTitle}
-              </h2>
-            }
-          />
-        ) : quizType === 'chatting' ? (
-          <Chatting
-            quiz={quizData}
-            onUpdate={onQuizUpdate}
-            header={
-              <h2 className="font-bold text-lg text-[hsl(var(--foreground))] leading-tight mb-3">
-                {displayTitle}
-              </h2>
-            }
-          />
-        ) : quizType === 'pronunciation-drill' ? (
-          <PronunciationDrill
-            quiz={quizData}
-            onUpdate={onQuizUpdate}
-            header={
-              <h2 className="font-bold text-lg text-[hsl(var(--foreground))] leading-tight mb-3">
-                {displayTitle}
-              </h2>
-            }
-          />
-        ) : quizType === 'sentence-builder' ? (
-          <SentenceBuilder
-            quiz={quizData}
-            onUpdate={onQuizUpdate}
-            header={
-              <h2 className="font-bold text-lg text-[hsl(var(--foreground))] leading-tight mb-3">
-                {displayTitle}
-              </h2>
-            }
-          />
-        ) : quizType === 'sentence-transformation' ? (
-          <SentenceTransformation
-            quiz={quizData}
-            onUpdate={onQuizUpdate}
-            header={
-              <h2 className="font-bold text-lg text-[hsl(var(--foreground))] leading-tight mb-3">
-                {displayTitle}
-              </h2>
-            }
-          />
-        ) : (
-          <GapFill
-            quiz={quizData}
-            isChecked={isChecked}
-            onCheck={handleCheck}
-            onUpdate={onQuizUpdate}
-            onExplainRequest={setShowExplainDrawer}
-            header={
-              <h2 className="font-bold text-lg text-[hsl(var(--foreground))] leading-tight mb-3">
-                {displayTitle}
-              </h2>
-            }
-          />
-        )}
+      <div className="flex-1 overflow-hidden relative flex flex-col">
+        <div className="flex-1 overflow-hidden relative">
+          {quizType.includes('multiple-choice') ? (
+            <MultipleChoice
+              quiz={quizData}
+              isChecked={isChecked}
+              onCheck={handleCheck}
+              onExplainRequest={setShowExplainDrawer}
+            />
+          ) : quizType === 'matching-dropdown' ? (
+            <MatchingDropdown
+              quiz={quizData}
+              isChecked={isChecked}
+              onCheck={handleCheck}
+              onExplainRequest={setShowExplainDrawer}
+            />
+          ) : quizType === 'writing' ? (
+            <Writing quiz={quizData} />
+          ) : quizType === 'speaking' ? (
+            <Speaking quiz={quizData} />
+          ) : quizType === 'chatting' ? (
+            <Chatting quiz={quizData} />
+          ) : quizType === 'pronunciation-drill' ? (
+            <PronunciationDrill quiz={quizData} />
+          ) : quizType === 'builder' || quizType === 'sentence-builder' ? (
+            <Builder quiz={quizData} onExplainRequest={setShowExplainDrawer} />
+          ) : quizType === 'sentence-transformation' ? (
+            <SentenceTransformation quiz={quizData} />
+          ) : quizType === 'dictation' ? (
+            <Dictation quiz={quizData} isChecked={isChecked} onCheck={handleCheck} />
+          ) : quizType === 'error-correction' ? (
+            <ErrorCorrection quiz={quizData} isChecked={isChecked} onCheck={handleCheck} />
+          ) : quizType === 'flashcard' ? (
+            <Flashcard quiz={quizData} />
+          ) : (
+            <GapFill
+              quiz={quizData}
+              isChecked={isChecked}
+              onCheck={handleCheck}
+              onUpdate={onQuizUpdate}
+              onExplainRequest={setShowExplainDrawer}
+            />
+          )}
+        </div>
       </div>
 
       {/* Audio Player */}
@@ -408,6 +354,7 @@ export const QuizPage: React.FC<QuizPageProps> = ({
         <TutorialDrawer
           isOpen={tutorialVisible}
           onClose={() => setShowTutorialDrawer(false)}
+          title={displayTitle}
           content={quizData.instruction || ''}
           parentFilePath={parentLesson?._filePath}
         />

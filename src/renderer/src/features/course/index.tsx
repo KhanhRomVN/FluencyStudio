@@ -1,11 +1,10 @@
 import { useState, useEffect, useRef } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import {
   ChevronRight,
   ChevronDown,
   BookOpen,
   FileText,
-  CheckCircle,
   Palette,
   AudioWaveform,
   FileSearch,
@@ -13,6 +12,9 @@ import {
   AudioLines,
   ArrowLeft,
   Download,
+  CheckCircle2,
+  CircleDashed,
+  Home,
 } from 'lucide-react';
 import { FilePreviewPanel } from './components/FilePreviewPanel';
 import { CodeBlock } from '../../components/CodeBlock';
@@ -23,7 +25,7 @@ import { TranscriptDrawer } from './components/TranscriptDrawer';
 import { folderService } from '../../shared/services/folderService';
 import { EmulatorEditProvider, useEmulatorEdit } from './components/emulator/EmulatorEditContext';
 
-const STORAGE_KEY = 'fluency_course_paths';
+const ROOT_PATH_KEY = 'fluency_courses_root_path';
 
 type SelectionType = 'course' | 'lesson' | 'quiz';
 
@@ -38,6 +40,7 @@ interface SelectionState {
 const CoursePageContent = () => {
   const { activeElementContent } = useEmulatorEdit();
   const { courseId } = useParams<{ courseId: string }>();
+  const navigate = useNavigate();
   const [course, setCourse] = useState<any>(null);
   const [loading, setLoading] = useState(true);
 
@@ -107,30 +110,42 @@ const CoursePageContent = () => {
   // State for course path
   const [coursePath, setCoursePath] = useState<string | null>(null);
 
-  // Find course path from ID
+  // Find course path from ID using the new root path system
   useEffect(() => {
     if (!courseId) return;
-    try {
-      const storedPaths = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
-      let foundPath = '';
-      for (const path of storedPaths) {
-        const folderName = path.split('/').pop() || '';
-        const id = folderName.toLowerCase().replace(/[^a-z0-9]/g, '_');
-        if (id === courseId) {
-          foundPath = path;
-          break;
+
+    const findCoursePath = async () => {
+      try {
+        const rootPath = localStorage.getItem(ROOT_PATH_KEY);
+
+        if (!rootPath) {
+          console.error('No courses root path found in localStorage');
+          setLoading(false);
+          return;
         }
-      }
-      if (foundPath) {
-        setCoursePath(foundPath);
-      } else {
-        console.error('Course path not found for ID:', courseId);
+
+        // Get all course folders from root
+        const courseFolders = await folderService.getCourseFolders(rootPath);
+
+        // Find the matching folder
+        for (const folderName of courseFolders) {
+          const id = folderName.toLowerCase().replace(/[^a-z0-9]/g, '_');
+          if (id === courseId) {
+            const fullPath = `${rootPath}/${folderName}`;
+            setCoursePath(fullPath);
+            return;
+          }
+        }
+
+        console.error('Course folder not found for ID:', courseId);
+        setLoading(false);
+      } catch (e) {
+        console.error('Error finding course path:', e);
         setLoading(false);
       }
-    } catch (e) {
-      console.error('Error finding course path:', e);
-      setLoading(false);
-    }
+    };
+
+    findCoursePath();
   }, [courseId]);
 
   // Reset source view mode when selection changes
@@ -421,10 +436,14 @@ const CoursePageContent = () => {
 
       if (selection.type === 'course') {
         filePathToSave = selection.data._filePath;
-        contentToSave = JSON.stringify(parsed, null, 2);
+        // Exclude 'lessons' field from course JSON since lessons are in separate files
+        const { lessons, _filePath, ...courseDataToSave } = parsed;
+        contentToSave = JSON.stringify(courseDataToSave, null, 2);
       } else if (selection.type === 'lesson') {
         filePathToSave = selection.data._filePath;
-        contentToSave = JSON.stringify(parsed, null, 2);
+        // Exclude internal _filePath field from lesson JSON
+        const { _filePath: _, ...lessonDataToSave } = parsed;
+        contentToSave = JSON.stringify(lessonDataToSave, null, 2);
       } else if (selection.type === 'quiz') {
         const parentLesson = selection.parentData;
         if (parentLesson && parentLesson._filePath) {
@@ -435,7 +454,9 @@ const CoursePageContent = () => {
               q.id === selection.id ? parsed : q,
             );
           }
-          contentToSave = JSON.stringify(updatedLesson, null, 2);
+          // Exclude internal _filePath field from lesson JSON when saving quiz
+          const { _filePath: _, ...lessonDataToSave } = updatedLesson;
+          contentToSave = JSON.stringify(lessonDataToSave, null, 2);
         }
       }
 
@@ -550,7 +571,16 @@ const CoursePageContent = () => {
     <div className="h-screen flex flex-col bg-background">
       {/* Header */}
       <div className="h-14 border-b flex items-center justify-between px-4 bg-card">
-        <h1 className="text-lg font-semibold">Course Designer: {course.title}</h1>
+        <div className="flex items-center gap-3">
+          <button
+            onClick={() => navigate('/')}
+            className="p-2 hover:bg-muted rounded-md transition-colors text-muted-foreground hover:text-primary"
+            title="Back to Dashboard"
+          >
+            <Home size={20} />
+          </button>
+          <h1 className="text-lg font-semibold">{course.title}</h1>
+        </div>
         <div className="flex items-center gap-1">
           <button
             onClick={() => setIsFilePreviewOpen(!isFilePreviewOpen)}
@@ -624,29 +654,49 @@ const CoursePageContent = () => {
 
                       {/* Quizzes List */}
                       {expandedLessons.has(lesson.id) && (
-                        <div className="pl-6 mt-1 space-y-0.5">
+                        <div className="pl-2 mt-2 space-y-2">
                           {lesson.quiz &&
-                            lesson.quiz.map((quiz: any) => (
-                              <div
-                                key={quiz.id}
-                                className={`flex items-center gap-2 p-1.5 rounded-md cursor-pointer text-sm ${selection.id === quiz.id && selection.parentData?.id === lesson.id ? 'bg-primary/10 text-primary font-medium' : 'text-muted-foreground hover:bg-muted hover:text-foreground'}`}
-                                onClick={(e) => {
-                                  e.stopPropagation();
-                                  handleQuizClick(quiz, lesson);
-                                }}
-                              >
-                                <CheckCircle
-                                  size={14}
-                                  className={
-                                    selection.id === quiz.id &&
-                                    selection.parentData?.id === lesson.id
-                                      ? 'opacity-100'
-                                      : 'opacity-70'
-                                  }
-                                />
-                                <span className="truncate">{quiz.title}</span>
-                              </div>
-                            ))}
+                            lesson.quiz.map((quiz: any) => {
+                              const isSelected =
+                                selection.id === quiz.id && selection.parentData?.id === lesson.id;
+                              const statusIcon =
+                                quiz.status === 'completed' ? CheckCircle2 : CircleDashed;
+                              const StatusIcon = statusIcon;
+
+                              return (
+                                <div
+                                  key={quiz.id}
+                                  className={`p-3 rounded-lg cursor-pointer border transition-all ${
+                                    isSelected
+                                      ? 'bg-primary/10 border-primary/30 shadow-sm'
+                                      : 'bg-card border-border/50 hover:border-primary/20 hover:shadow-sm'
+                                  }`}
+                                  onClick={(e) => {
+                                    e.stopPropagation();
+                                    handleQuizClick(quiz, lesson);
+                                  }}
+                                >
+                                  {/* Title & Status */}
+                                  <div className="flex items-center justify-between gap-2">
+                                    <h4
+                                      className={`text-sm font-medium truncate flex-1 ${isSelected ? 'text-primary' : 'text-foreground'}`}
+                                    >
+                                      {quiz.title}
+                                    </h4>
+                                    {quiz.status && (
+                                      <StatusIcon
+                                        size={16}
+                                        className={
+                                          quiz.status === 'completed'
+                                            ? 'text-green-500'
+                                            : 'text-muted-foreground'
+                                        }
+                                      />
+                                    )}
+                                  </div>
+                                </div>
+                              );
+                            })}
                         </div>
                       )}
                     </div>

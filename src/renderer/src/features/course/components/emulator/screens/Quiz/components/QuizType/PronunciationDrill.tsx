@@ -1,11 +1,11 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { Bookmark, Repeat2, RotateCcw, Mic, MicOff, Check, ChevronUp } from 'lucide-react';
 import { Quiz, PronunciationDrillItem } from '../../types';
+import { RichTextParser } from '../RichTextParser';
 
 interface PronunciationDrillProps {
   quiz: Quiz;
   onUpdate?: (updatedQuiz: Quiz) => void;
-  header?: React.ReactNode;
 }
 
 interface CardState {
@@ -47,7 +47,7 @@ declare global {
 
 const PASS_THRESHOLD = 70; // Minimum score to pass
 
-export const PronunciationDrill: React.FC<PronunciationDrillProps> = ({ quiz, header }) => {
+export const PronunciationDrill: React.FC<PronunciationDrillProps> = ({ quiz }) => {
   const drills = quiz.drills || [];
   const [currentIndex, setCurrentIndex] = useState(0);
   const [cardStates, setCardStates] = useState<Record<string, CardState>>({});
@@ -235,7 +235,7 @@ export const PronunciationDrill: React.FC<PronunciationDrillProps> = ({ quiz, he
 
     const words = drill.text.split(' ');
     return (
-      <span className="text-lg font-bold">
+      <span className="text-[16px] font-bold">
         {words.map((word, idx) => {
           const isHidden = word.toLowerCase().includes(drill.hiddenWord!.toLowerCase());
           if (isHidden && !isPassed) {
@@ -398,10 +398,7 @@ export const PronunciationDrill: React.FC<PronunciationDrillProps> = ({ quiz, he
     <div className="flex flex-col h-full bg-[hsl(var(--background))] overflow-hidden">
       {/* Header */}
       <div className="px-4 py-3 border-b border-[hsl(var(--border))]/50">
-        {header}
-        {quiz.instruction && (
-          <p className="text-sm text-[hsl(var(--muted-foreground))]">{quiz.instruction}</p>
-        )}
+        <p className="font-bold">Pronunciation Drill</p>
       </div>
 
       {/* Cards Container - Scrollable */}
@@ -409,6 +406,11 @@ export const PronunciationDrill: React.FC<PronunciationDrillProps> = ({ quiz, he
         ref={scrollContainerRef}
         className="flex-1 overflow-y-auto p-4 space-y-4 [&::-webkit-scrollbar]:hidden"
       >
+        {quiz.instruction && (
+          <div className="mb-4 text-[hsl(var(--foreground))] text-[16px]">
+            <RichTextParser content={quiz.instruction} />
+          </div>
+        )}
         {/* Passed cards */}
         {drills.slice(0, currentIndex).map((drill, index) => renderCard(drill, index))}
 

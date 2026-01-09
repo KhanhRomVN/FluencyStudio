@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Quiz, QuizAnswer } from '../../types';
 
 import { RichTextParser } from '../RichTextParser';
@@ -9,7 +9,6 @@ interface GapFillProps {
   isChecked: boolean;
   onCheck: () => void;
   onUpdate?: (updatedQuiz: Quiz) => void;
-  header?: React.ReactNode;
   onExplainRequest?: (isOpen: boolean) => void;
 }
 
@@ -18,7 +17,6 @@ export const GapFill: React.FC<GapFillProps> = ({
   isChecked,
   onCheck,
   onUpdate,
-  header,
   onExplainRequest,
 }) => {
   const [inputs, setInputs] = useState<{ [key: string]: string }>({});
@@ -27,16 +25,14 @@ export const GapFill: React.FC<GapFillProps> = ({
   const [currentExplanation, setCurrentExplanation] = useState('');
 
   // Local state for editing
-  const [instruction, setInstruction] = useState(quiz.instruction || '');
   const [question, setQuestion] = useState(quiz.question || '');
 
   // Sync with quiz prop changes
   useEffect(() => {
-    setInstruction(quiz.instruction || '');
     setQuestion(quiz.question || '');
     setInputs({});
     setAreAllGapsFilled(false);
-  }, [quiz.id, quiz.instruction, quiz.question]);
+  }, [quiz.id, quiz.question]);
 
   // Notify parent about explain drawer state
   useEffect(() => {
@@ -160,6 +156,7 @@ export const GapFill: React.FC<GapFillProps> = ({
                   text-center 
                   font-bold 
                   text-[hsl(var(--foreground))]
+                  text-[16px]
                   focus:border-[hsl(var(--primary))] 
                   focus:border-b-2
                   transition-all
@@ -176,18 +173,10 @@ export const GapFill: React.FC<GapFillProps> = ({
 
   return (
     <div className="flex flex-col h-full">
-      <div className="flex-1 overflow-y-auto px-4 py-3 text-[15px] leading-relaxed text-[hsl(var(--foreground))] [&::-webkit-scrollbar]:hidden">
-        {header}
-        {instruction && (
-          <div className="mb-6 text-[hsl(var(--foreground))]">
-            <RichTextParser
-              content={instruction}
-              sectionId="instruction"
-              onChange={(newContent) => {
-                setInstruction(newContent);
-                onUpdate?.({ ...quiz, instruction: newContent });
-              }}
-            />
+      <div className="flex-1 overflow-y-auto px-4 py-3 text-[16px] leading-relaxed text-[hsl(var(--foreground))] [&::-webkit-scrollbar]:hidden">
+        {quiz.instruction && (
+          <div className="mb-4">
+            <RichTextParser content={quiz.instruction} />
           </div>
         )}
         <div>{renderContent()}</div>
@@ -197,7 +186,7 @@ export const GapFill: React.FC<GapFillProps> = ({
         <div className="p-2 bg-[hsl(var(--background))]">
           <button
             onClick={onCheck}
-            className="w-full py-2 bg-[hsl(var(--primary))] text-white rounded-md font-bold text-base active:scale-[0.98] transition-all"
+            className="w-full py-2 bg-[hsl(var(--primary))] text-white rounded-md font-bold text-[16px] active:scale-[0.98] transition-all"
           >
             Check answers
           </button>

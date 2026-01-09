@@ -5,6 +5,7 @@ import { folderService } from '../../../../../../../shared/services/folderServic
 interface TutorialDrawerProps {
   isOpen: boolean;
   onClose: () => void;
+  title?: string;
   content: string;
   parentFilePath?: string;
 }
@@ -12,6 +13,7 @@ interface TutorialDrawerProps {
 export const TutorialDrawer: React.FC<TutorialDrawerProps> = ({
   isOpen,
   onClose,
+  title,
   content,
   parentFilePath,
 }) => {
@@ -166,10 +168,17 @@ export const TutorialDrawer: React.FC<TutorialDrawerProps> = ({
               Loading content...
             </div>
           ) : (
-            <div
-              className="prose prose-sm dark:prose-invert leading-relaxed max-w-none [&_img]:max-w-full [&_img]:h-auto [&_img]:rounded-lg [&_img]:shadow-lg [&_img]:my-4"
-              dangerouslySetInnerHTML={{ __html: parsedContent }}
-            />
+            <>
+              {title && (
+                <h4 className="text-xl font-bold text-[hsl(var(--foreground))] mb-4 border-b pb-2 border-[hsl(var(--border))]/50">
+                  {title}
+                </h4>
+              )}
+              <div
+                className="prose prose-base dark:prose-invert leading-relaxed max-w-none [&_img]:max-w-full [&_img]:h-auto [&_img]:rounded-lg [&_img]:shadow-lg [&_img]:my-4"
+                dangerouslySetInnerHTML={{ __html: parsedContent }}
+              />
+            </>
           )}
         </div>
       </div>

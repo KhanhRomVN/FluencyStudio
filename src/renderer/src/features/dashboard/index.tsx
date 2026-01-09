@@ -2,139 +2,78 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Course } from '../../types/course';
 import { folderService } from '../../shared/services/folderService';
-import { debugWindowAPI } from '@shared/utils/debugAPI';
-import { FolderOpen, Plus, Trash2, AlertCircle, RefreshCw, X } from 'lucide-react';
+import { debugWindowAPI } from '../../shared/utils/debugAPI';
+import { FolderOpen, RefreshCw, Trash2 } from 'lucide-react';
 
-const STORAGE_KEY = 'fluency_course_paths';
+const STORAGE_KEY = 'fluency_courses_root_path';
 
 const Dashboard = () => {
   const navigate = useNavigate();
   const [courses, setCourses] = useState<Course[]>([]);
-  const [isAddingCourse, setIsAddingCourse] = useState(false);
-  const [isValidating, setIsValidating] = useState(false);
-  // Base path is less relevant if we pick absolute paths, but keeping for display if passed down
-  const [baseCoursesPath] = useState<string>('/home/user/Courses');
+  const [rootPath, setRootPath] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
 
-  // Load courses on component mount
   useEffect(() => {
-    // Debug APIs on mount
     debugWindowAPI();
-    loadCourses();
+    loadRootPath();
   }, []);
 
-  // Function to load courses from persistence
-  const loadCourses = async () => {
-    try {
-      const storedPaths = localStorage.getItem(STORAGE_KEY);
-      if (storedPaths) {
-        setIsValidating(true);
-        const paths: string[] = JSON.parse(storedPaths);
-        const loadedCourses: Course[] = [];
+  const loadRootPath = async () => {
+    const savedPath = localStorage.getItem(STORAGE_KEY);
+    if (savedPath) {
+      setRootPath(savedPath);
+      await scanCourses(savedPath);
+    }
+  };
 
-        // Load each course path safely
-        for (const path of paths) {
-          const course = await folderService.createCourseFromFolder(path);
-          if (course) {
-            loadedCourses.push(course);
-          } else {
-            const exists = await folderService.checkFolderExists(path);
-            if (exists) {
-              const validCourse = await folderService.createCourseFromFolder(path);
-              if (validCourse) loadedCourses.push(validCourse);
-            } else {
-              loadedCourses.push({
-                id: path,
-                name: path.split('/').pop() || 'Unknown',
-                folderPath: path,
-                description: 'Folder missing',
-                lessonCount: 0,
-                isValid: false,
-              });
-            }
-          }
-        }
-        setCourses(loadedCourses);
-        setIsValidating(false);
-      } else {
+  const scanCourses = async (path: string) => {
+    setIsLoading(true);
+    try {
+      const exists = await folderService.checkFolderExists(path);
+      if (!exists) {
+        setRootPath(null);
+        localStorage.removeItem(STORAGE_KEY);
         setCourses([]);
+        return;
       }
-    } catch (error) {
-      console.error('Error loading courses:', error);
-      setIsValidating(false);
-    }
-  };
 
-  // Function to save current course paths to storage
-  const saveToStorage = (currentCourses: Course[]) => {
-    const paths = currentCourses.map((c) => c.folderPath);
-    // Remove duplicates just in case
-    const uniquePaths = Array.from(new Set(paths));
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(uniquePaths));
-  };
+      // Get all subfolders
+      const courseFolders = await folderService.getCourseFolders(path);
+      const loadedCourses: Course[] = [];
 
-  // Function to check if folders exist (Re-validation)
-  const validateCourseFolders = async () => {
-    setIsValidating(true);
-    try {
-      const updatedCourses = await Promise.all(
-        courses.map(async (course) => {
-          const isValid = await folderService.checkFolderExists(course.folderPath);
-          return { ...course, isValid };
-        }),
-      );
-      setCourses(updatedCourses);
-      // We don't necessarily need to update storage here unless we remove them.
+      for (const folderName of courseFolders) {
+        // Assuming getCourseFolders returns just names, but let's assume implementation details.
+        // Actually folderService.getCourseFolders returns "folders" which are names if using fs.readdir
+        // We need full paths.
+        // Let's rely on constructing the path.
+        // Wait, folderService.getCourseFolders in main/events returns names.
+        // Let's double check folderService implementation details.
+        // The current implementation of `folder:getCourses` in main returns names.
+        const fullPath = `${path}/${folderName}`; // basic join
+        const course = await folderService.createCourseFromFolder(fullPath);
+        if (course) {
+          loadedCourses.push(course);
+        }
+      }
+      setCourses(loadedCourses);
     } catch (error) {
-      console.error('Error validating folders:', error);
+      console.error('Error scanning courses:', error);
     } finally {
-      setIsValidating(false);
+      setIsLoading(false);
     }
   };
 
-  // Remove courses with non-existent folders
-  const removeInvalidCourses = () => {
-    const validCourses = courses.filter((course) => course.isValid);
-    setCourses(validCourses);
-    saveToStorage(validCourses);
-  };
-
-  const handleRemoveCourse = (courseId: string) => {
-    if (confirm('Are you sure you want to remove this course from the dashboard?')) {
-      const newCourses = courses.filter((c) => c.id !== courseId);
-      setCourses(newCourses);
-      saveToStorage(newCourses);
-    }
-  };
-
-  // Open folder picker
-  const openFolderPicker = async () => {
-    setIsAddingCourse(true);
+  const handleSelectRootFolder = async () => {
     try {
       const result = await folderService.selectCourseFolder();
       if (!result.canceled && result.filePaths.length > 0) {
-        const folderPath = result.filePaths[0];
-
-        // Check if already exists
-        if (courses.some((c) => c.folderPath === folderPath)) {
-          alert('This course is already in your dashboard.');
-          return;
-        }
-
-        // Create course from selected folder
-        const newCourse = await folderService.createCourseFromFolder(folderPath);
-        if (newCourse) {
-          const newCourseList = [...courses, newCourse];
-          setCourses(newCourseList);
-          saveToStorage(newCourseList);
-        } else {
-          alert('Selected folder does not contain a valid course structure.');
-        }
+        const selectedPath = result.filePaths[0];
+        setRootPath(selectedPath);
+        localStorage.setItem(STORAGE_KEY, selectedPath);
+        await scanCourses(selectedPath);
       }
     } catch (error) {
-      console.error('Error selecting folder:', error);
-      alert('Error selecting folder. Please try again.');
-    } finally {
-      setIsAddingCourse(false);
+      console.error('Error selecting root folder:', error);
     }
   };
 
@@ -142,148 +81,134 @@ const Dashboard = () => {
     navigate(`/course/${courseId}`);
   };
 
+  const clearRootFolder = () => {
+    if (confirm('Are you sure you want to clear the courses folder selection?')) {
+      setRootPath(null);
+      localStorage.removeItem(STORAGE_KEY);
+      setCourses([]);
+    }
+  };
+
   return (
-    <div className="p-6">
+    <div className="p-6 h-screen flex flex-col">
       <div className="flex justify-between items-center mb-6">
         <div>
           <h1 className="text-3xl font-bold">Course Dashboard</h1>
-          <p className="text-muted-foreground">Manage your language learning courses</p>
+          <p className="text-muted-foreground">
+            {rootPath
+              ? `Managing courses in: ${rootPath}`
+              : 'Select a folder to manage your courses'}
+          </p>
         </div>
         <div className="flex gap-3">
+          {rootPath && (
+            <>
+              <button
+                onClick={() => scanCourses(rootPath)}
+                disabled={isLoading}
+                className="px-4 py-2 border rounded-lg flex items-center gap-2 hover:bg-accent disabled:opacity-50"
+              >
+                <RefreshCw className={isLoading ? 'animate-spin' : ''} size={18} />
+                Refresh
+              </button>
+              <button
+                onClick={clearRootFolder}
+                className="px-4 py-2 border border-destructive text-destructive rounded-lg flex items-center gap-2 hover:bg-destructive/10"
+              >
+                <Trash2 size={18} />
+                Unlink Folder
+              </button>
+            </>
+          )}
           <button
-            onClick={validateCourseFolders}
-            disabled={isValidating}
-            className="px-4 py-2 border rounded-lg flex items-center gap-2 hover:bg-accent disabled:opacity-50"
-          >
-            {isValidating ? (
-              <>
-                <RefreshCw className="animate-spin" size={18} />
-                Validating...
-              </>
-            ) : (
-              <>
-                <AlertCircle size={18} />
-                Validate Folders
-              </>
-            )}
-          </button>
-          <button
-            onClick={openFolderPicker}
-            disabled={isAddingCourse || isValidating}
+            onClick={handleSelectRootFolder}
+            disabled={isLoading}
             className="px-4 py-2 bg-primary text-primary-foreground rounded-lg flex items-center gap-2 hover:bg-primary/90 disabled:opacity-50"
           >
-            {isAddingCourse ? (
+            <FolderOpen size={18} />
+            {rootPath ? 'Change Courses Folder' : 'Select Courses Folder'}
+          </button>
+        </div>
+      </div>
+
+      <div className="flex-1 overflow-auto border rounded-xl bg-card shadow-sm">
+        {courses.length === 0 ? (
+          <div className="h-full flex flex-col items-center justify-center text-muted-foreground">
+            {rootPath ? (
               <>
-                <RefreshCw className="animate-spin" size={18} />
-                Adding...
+                <FolderOpen className="h-16 w-16 mb-4 opacity-20" />
+                <h3 className="text-xl font-semibold">No courses found</h3>
+                <p>No valid course folders found in the selected directory.</p>
               </>
             ) : (
               <>
-                <Plus size={18} />
-                Add Course Folder
+                <FolderOpen className="h-16 w-16 mb-4 opacity-20" />
+                <h3 className="text-xl font-semibold">No folder selected</h3>
+                <p className="mb-6">
+                  Please select a folder containing your courses to get started.
+                </p>
+                <button
+                  onClick={handleSelectRootFolder}
+                  className="px-6 py-2 bg-primary text-primary-foreground rounded-lg"
+                >
+                  Select Folder
+                </button>
               </>
             )}
-          </button>
-        </div>
-      </div>
-
-      {courses.filter((c) => !c.isValid).length > 0 && (
-        <div className="mb-6 p-4 bg-destructive/10 border border-destructive rounded-lg">
-          <div className="flex justify-between items-center">
-            <div className="flex items-center gap-3">
-              <AlertCircle className="text-destructive" />
-              <div>
-                <h3 className="font-semibold">Invalid Course Folders</h3>
-                <p className="text-sm text-muted-foreground">
-                  {courses.filter((c) => !c.isValid).length} course folder(s) no longer exist or are
-                  inaccessible.
-                </p>
-              </div>
-            </div>
-            <button
-              onClick={removeInvalidCourses}
-              className="px-3 py-1 bg-destructive text-destructive-foreground rounded flex items-center gap-2 text-sm"
-            >
-              <Trash2 size={16} />
-              Remove Invalid
-            </button>
           </div>
-        </div>
-      )}
-
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {courses.map((course) => (
-          <div
-            key={course.id}
-            className={`group relative border rounded-xl p-5 hover:shadow-lg transition-shadow cursor-pointer bg-card ${!course.isValid ? 'opacity-60' : ''}`}
-            onClick={() => course.isValid && openCourse(course.id)}
-          >
-            <div className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity">
-              <button
-                onClick={(e) => {
-                  e.stopPropagation();
-                  handleRemoveCourse(course.id);
-                }}
-                className="p-1 hover:bg-destructive/10 hover:text-destructive rounded-full"
-                title="Remove from Dashboard"
-              >
-                <X size={16} />
-              </button>
-            </div>
-
-            <div className="flex justify-between items-start mb-4 pr-6">
-              <div>
-                <h3 className="text-xl font-semibold truncate pr-2">{course.name}</h3>
-                <p className="text-sm text-muted-foreground mt-1 line-clamp-2">
-                  {course.description || 'No description'}
-                </p>
-              </div>
-            </div>
-
-            {!course.isValid && (
-              <div className="mb-2">
-                <span className="px-2 py-1 text-xs bg-destructive/20 text-destructive rounded font-medium">
-                  Folder Missing
-                </span>
-              </div>
-            )}
-
-            <div className="flex items-center gap-2 text-sm text-muted-foreground mb-4">
-              <FolderOpen size={16} className="min-w-[16px]" />
-              <span className="truncate" title={course.folderPath}>
-                {course.folderPath}
-              </span>
-            </div>
-
-            <div className="flex justify-between items-center pt-2 border-t">
-              <span className="text-sm font-medium">{course.lessonCount} lessons</span>
-              <button
-                className={`px-3 py-1 rounded text-sm transition-colors ${course.isValid ? 'bg-primary/10 text-primary hover:bg-primary hover:text-primary-foreground' : 'bg-muted text-muted-foreground cursor-not-allowed'}`}
-                disabled={!course.isValid}
-              >
-                {course.isValid ? 'Open Course' : 'Unavailable'}
-              </button>
-            </div>
-          </div>
-        ))}
+        ) : (
+          <table className="w-full text-left border-collapse">
+            <thead className="bg-muted/50 sticky top-0 z-10">
+              <tr>
+                <th className="p-4 font-semibold border-b">Course Name</th>
+                <th className="p-4 font-semibold border-b">Lessons</th>
+                <th className="p-4 font-semibold border-b">Path</th>
+                <th className="p-4 font-semibold border-b text-right">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {courses.map((course) => (
+                <tr
+                  key={course.id}
+                  className="border-b hover:bg-muted/30 transition-colors group cursor-pointer"
+                  onClick={() => openCourse(course.id)}
+                >
+                  <td className="p-4 font-medium">
+                    <div className="flex items-center gap-3">
+                      <div className="bg-primary/10 p-2 rounded-lg text-primary">
+                        <FolderOpen size={20} />
+                      </div>
+                      <div>
+                        <div className="font-semibold">{course.name}</div>
+                        <div className="text-xs text-muted-foreground">{course.id}</div>
+                      </div>
+                    </div>
+                  </td>
+                  <td className="p-4">
+                    <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-secondary text-secondary-foreground">
+                      {course.lessonCount} lessons
+                    </span>
+                  </td>
+                  <td className="p-4 text-sm text-muted-foreground font-mono truncate max-w-[300px]">
+                    {course.folderPath}
+                  </td>
+                  <td className="p-4 text-right">
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        openCourse(course.id);
+                      }}
+                      className="px-3 py-1.5 bg-primary text-primary-foreground text-sm rounded hover:bg-primary/90"
+                    >
+                      Open
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        )}
       </div>
-
-      {courses.length === 0 && !isValidating && (
-        <div className="text-center py-16 border-2 border-dashed rounded-xl bg-muted/5">
-          <FolderOpen className="mx-auto h-12 w-12 text-muted-foreground/50" />
-          <h3 className="mt-4 text-lg font-semibold">No courses yet</h3>
-          <p className="text-muted-foreground mt-1 mb-6">
-            Add your first course folder to get started
-          </p>
-          <button
-            onClick={openFolderPicker}
-            className="px-6 py-2.5 bg-primary text-primary-foreground rounded-lg flex items-center gap-2 mx-auto hover:bg-primary/90 transition-all shadow-sm"
-          >
-            <Plus size={20} />
-            Add Course Folder
-          </button>
-        </div>
-      )}
     </div>
   );
 };

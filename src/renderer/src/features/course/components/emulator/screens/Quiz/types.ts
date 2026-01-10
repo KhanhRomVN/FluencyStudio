@@ -80,14 +80,13 @@ export interface Quiz {
 
 export interface ChatMessage {
   id: string;
-  role: 'assistant' | 'user';
-  content?: string; // For assistant
-  question?: string; // For user (with gaps)
-  answer?: string; // For user
-  ipa?: string;
-  explain?: string;
-  translate?: string;
+  role: string; // Occupation/position: "Teacher", "Student", etc.
+  name?: string | null; // Optional character name
+  question: string; // All messages use question field (with translate attribute in <p> tags)
   time?: string; // Time of message
+  isUser: boolean; // Identifies if this message belongs to the user
+  explain?: string | null; // Optional explanation shown after completion
+  ipa?: string | null; // Optional IPA pronunciation guide
 }
 
 export interface MatchingItem {

@@ -1,84 +1,65 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
-import {
-  Mic,
-  MicOff,
-  Check,
-  ChevronRight,
-  Volume2,
-  Languages,
-  Ear,
-  StepForward,
-} from 'lucide-react';
+import { Volume2, StepForward, HelpCircle } from 'lucide-react';
 import { Quiz, ChatMessage } from '../../types';
 import { RichTextParser } from '../RichTextParser';
 
 interface ChattingSpeechProps {
   quiz: Quiz;
-  onUpdate?: (updatedQuiz: Quiz) => void;
-  onTestSkip?: () => void;
 }
 
-// Reuse speech types from PronunciationDrill or similar
-interface ISpeechRecognition extends EventTarget {
-  lang: string;
-  interimResults: boolean;
-  maxAlternatives: number;
-  continuous: boolean;
-  onresult: ((event: any) => void) | null;
-  onerror: ((event: any) => void) | null;
-  onend: (() => void) | null;
-  start: () => void;
-  stop: () => void;
-  abort: () => void;
+interface WordFeedback {
+  word: string;
+  status: 'correct' | 'incorrect' | 'missing' | 'extra';
 }
 
-const PASS_THRESHOLD = 75;
+interface MessageScore {
+  score: number;
+  feedback: WordFeedback[];
+  transcript: string;
+}
 
 export const ChattingSpeech: React.FC<ChattingSpeechProps> = ({ quiz }) => {
   const chats = quiz.chats || [];
 
-  // State
+  const [activeMessageId, setActiveMessageId] = useState<string | null>(null);
+  const [messageScores, setMessageScores] = useState<Record<string, MessageScore>>({});
   const [visibleCount, setVisibleCount] = useState(0);
-  const [activeUserIndex, setActiveUserIndex] = useState(-1); // Index of the user message currently being attempted
+  const [ipaVisible, setIpaVisible] = useState<Record<string, boolean>>({});
 
-  // Map of message ID -> pass status
-  const [messageStates, setMessageStates] = useState<
-    Record<string, { passed: boolean; score: number }>
-  >({});
+  // Long press handling
+  const longPressTimer = useRef<NodeJS.Timeout | null>(null);
+  const isLongPress = useRef(false);
+  const startPos = useRef({ x: 0, y: 0 });
 
-  const [isRecording, setIsRecording] = useState(false);
-  const [showTranslate, setShowTranslate] = useState<Record<string, boolean>>({});
-  const [showIpa, setShowIpa] = useState<Record<string, boolean>>({});
-  const [transcript, setTranscript] = useState('');
-
-  const recognitionRef = useRef<ISpeechRecognition | null>(null);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
+
+  // Helper to extract translate text from <p translate='...'> attribute
+  const extractTranslate = (html: string): string | null => {
+    const match = html.match(/<p[^>]*translate=['"]([^'"]*)['"]/i);
+    return match ? match[1] : null;
+  };
+
+  // Helper to get text content from HTML
+  const getTextContent = (html: string): string => {
+    const doc = new DOMParser().parseFromString(html, 'text/html');
+    return doc.body.textContent || '';
+  };
 
   // Helper to find next user turn
   const findNextUserIndex = (startIndex: number) => {
     for (let i = startIndex; i < chats.length; i++) {
-      if (chats[i].role === 'user') return i;
+      if (chats[i].isUser) return i;
     }
     return -1;
   };
 
-  // Initialize
+  // Init visible count
   useEffect(() => {
-    // Reset states
-    setMessageStates({});
-    setTranscript('');
-    setIsRecording(false);
-
-    // Initial calculation: Show up to first user message (inclusive)
-    // If no user message, show all.
     const firstUserIdx = findNextUserIndex(0);
     if (firstUserIdx !== -1) {
       setVisibleCount(firstUserIdx + 1);
-      setActiveUserIndex(firstUserIdx);
-      // Mark all preceding assistant messages as "shown" (no state needed really)
     } else {
       setVisibleCount(chats.length);
-      setActiveUserIndex(-1);
     }
   }, [quiz.id]);
 
@@ -92,7 +73,7 @@ export const ChattingSpeech: React.FC<ChattingSpeechProps> = ({ quiz }) => {
         });
       }, 100);
     }
-  }, [visibleCount, transcript]); // also scroll on transcript update to keep input in view?
+  }, [visibleCount]);
 
   const speakText = useCallback((text: string) => {
     if ('speechSynthesis' in window) {
@@ -104,312 +85,401 @@ export const ChattingSpeech: React.FC<ChattingSpeechProps> = ({ quiz }) => {
     }
   }, []);
 
-  const initRecognition = useCallback(() => {
-    const SpeechRecognitionAPI =
-      (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
-    if (!SpeechRecognitionAPI) return null;
-    const recognition = new SpeechRecognitionAPI();
-    recognition.lang = 'en-US';
-    recognition.interimResults = true;
-    return recognition;
-  }, []);
-
+  // Calculate similarity score
   const calculateScore = (spoken: string, target: string): number => {
-    const spokenLower = spoken
-      .toLowerCase()
-      .replace(/[.,!?]/g, '')
-      .trim();
-    // Target is the answer word mixed with the question text?
-    // Wait, the "question" has gaps. The user speaks the FULL sentence (implied).
-    // Or just the answer?
-    // Usually speech builder = full sentence.
-    // Let's assume full sentence reconstruction.
-
-    // We need to reconstruct the "ideal" sentence from question + answer.
-    // Simple approach: remove tags from question, fill gap with answer.
-    // If multiple gaps, we need logic. Assuming 1 gap for now or answer is array?
-    // Types says answer is string.
-
-    // Reconstruct target:
-    // This requires strict parsing. For now, let's just strip HTML from 'question' and put 'answer' in?
-    // Actually, simpler: construct normalized target string.
-    // But 'question' has `<gap>`.
-    // Let's rely on standard text similarity.
-    // We can strip `<gap>` and insert `answer`.
-
-    // Quick Parse: replace <gap...></gap> with answer.
-    // Regex for gap: /<gap[^>]*>.*?<\/gap>/gi or just /<gap[^>]*\/>/
-    const targetLower = target
-      .toLowerCase()
-      .replace(/[.,!?]/g, '')
-      .trim();
+    const spokenLower = spoken.toLowerCase().trim();
+    const targetLower = target.toLowerCase().trim();
 
     if (spokenLower === targetLower) return 100;
 
-    // Word match
     const spokenWords = spokenLower.split(/\s+/);
     const targetWords = targetLower.split(/\s+/);
+
     let matches = 0;
-    targetWords.forEach((w) => {
-      if (spokenWords.includes(w)) matches++;
+    targetWords.forEach((word) => {
+      if (spokenWords.some((sw) => sw.includes(word) || word.includes(sw))) {
+        matches++;
+      }
     });
+
     return Math.round((matches / targetWords.length) * 100);
   };
 
-  const getTargetSentence = (msg: ChatMessage) => {
-    if (!msg.question || !msg.answer) return '';
-    // Replace <gap> with answer.
-    // Simple regex replace.
-    // Assuming single answer for now as per JSON example `answer: "present"`.
-    const q = msg.question;
-    // Remove all tags except gap? No, remove all tags. Use answer.
-    // Actually, we want to construct the text.
-    // "I don't understand ... <gap> ... versus went"
-    // We need to replace `<gap>` (or `<gap></gap>`) with `msg.answer`.
-    // Current JSON: `<gap></gap>`
-    let text = q.replace(/<gap[^>]*>.*?<\/gap>/gi, msg.answer); // handles <gap>content</gap>
-    text = text.replace(/<gap[^>]*\/>/gi, msg.answer); // handles <gap/>
+  // Simulate pronunciation with some errors
+  const simulatePronunciation = (targetText: string): string => {
+    const words = targetText.split(' ');
+    const result: string[] = [];
+    const errorRate = 0.3;
 
-    // If the gap was distinct, say `<p>...</p><gap></gap><p>...</p>`
-    // The replace above might miss if gap is empty and has no content regex match?
-    // The regex `/<gap[^>]*>.*?<\/gap>/` matches `<gap></gap>`.
+    words.forEach((word) => {
+      const rand = Math.random();
 
-    // Strip other HTML
-    const doc = new DOMParser().parseFromString(text, 'text/html');
-    return doc.body.textContent || '';
+      if (rand < errorRate * 0.4) {
+        return; // Skip word
+      } else if (rand < errorRate * 0.7) {
+        const wrongWords = ['the', 'a', 'an', 'is', 'was', 'were', 'very', 'much', 'so'];
+        result.push(wrongWords[Math.floor(Math.random() * wrongWords.length)]);
+      } else if (rand < errorRate) {
+        const chars = word.split('');
+        const idx = Math.floor(Math.random() * chars.length);
+        chars[idx] = String.fromCharCode(97 + Math.floor(Math.random() * 26));
+        result.push(chars.join(''));
+      } else {
+        result.push(word);
+      }
+    });
+
+    if (Math.random() < 0.2) {
+      const extraWords = ['um', 'uh', 'like', 'actually'];
+      const extraWord = extraWords[Math.floor(Math.random() * extraWords.length)];
+      const insertPos = Math.floor(Math.random() * (result.length + 1));
+      result.splice(insertPos, 0, extraWord);
+    }
+
+    return result.join(' ');
   };
 
-  const startRecording = useCallback(() => {
-    if (activeUserIndex === -1) return;
-    const recognition = initRecognition();
-    if (!recognition) return;
+  // Levenshtein distance
+  const levenshteinDistance = (a: string, b: string): number => {
+    const matrix: number[][] = [];
 
-    recognitionRef.current = recognition;
-    setTranscript('');
-    setIsRecording(true);
+    for (let i = 0; i <= b.length; i++) {
+      matrix[i] = [i];
+    }
 
-    const currentMsg = chats[activeUserIndex];
-    if (!currentMsg) return;
+    for (let j = 0; j <= a.length; j++) {
+      matrix[0][j] = j;
+    }
 
-    const targetText = getTargetSentence(currentMsg);
-
-    recognition.onresult = (event: { resultIndex: any; results: string | any[] }) => {
-      let finalTranscript = '';
-      for (let i = event.resultIndex; i < event.results.length; i++) {
-        if (event.results[i].isFinal) finalTranscript += event.results[i][0].transcript;
-      }
-
-      if (finalTranscript) {
-        setTranscript(finalTranscript);
-        const score = calculateScore(finalTranscript, targetText);
-
-        // Update state
-        if (score >= PASS_THRESHOLD) {
-          setMessageStates((prev) => ({
-            ...prev,
-            [currentMsg.id]: { passed: true, score },
-          }));
-          // Stop success? user handles stop or auto?
-          // Usually auto-stop on success.
-          recognition.stop();
+    for (let i = 1; i <= b.length; i++) {
+      for (let j = 1; j <= a.length; j++) {
+        if (b.charAt(i - 1) === a.charAt(j - 1)) {
+          matrix[i][j] = matrix[i - 1][j - 1];
+        } else {
+          matrix[i][j] = Math.min(
+            matrix[i - 1][j - 1] + 1,
+            matrix[i][j - 1] + 1,
+            matrix[i - 1][j] + 1,
+          );
         }
       }
-    };
+    }
 
-    recognition.onend = () => {
-      setIsRecording(false);
-      // If passed, maybe auto-advance?
-      // "explain... xuất hiện ngay sau khi người dùng nói" implies we stay on this state but show content.
-      // User then clicks "Next"?
-      // Or we just unlock "Next".
-    };
-
-    recognition.start();
-  }, [activeUserIndex, chats, initRecognition]);
-
-  const stopRecording = () => {
-    recognitionRef.current?.stop();
-    setIsRecording(false);
+    return matrix[b.length][a.length];
   };
 
-  const handleContinue = () => {
-    // Move to next user index
-    const nextUserIdx = findNextUserIndex(activeUserIndex + 1);
-    if (nextUserIdx !== -1) {
-      setVisibleCount(nextUserIdx + 1);
-      setActiveUserIndex(nextUserIdx);
-      setTranscript('');
-    } else {
-      // No more user messages, show all assistant messages till end
-      setVisibleCount(chats.length);
-      setActiveUserIndex(-1); // Finished
+  // Analyze word-by-word feedback
+  const analyzeWordFeedback = (spoken: string, target: string): WordFeedback[] => {
+    const spokenWords = spoken
+      .toLowerCase()
+      .trim()
+      .split(/\s+/)
+      .filter((w) => w);
+    const targetWords = target
+      .toLowerCase()
+      .trim()
+      .split(/\s+/)
+      .filter((w) => w);
+
+    const feedback: WordFeedback[] = new Array(targetWords.length);
+    const usedSpokenIndices = new Set<number>();
+
+    // First pass: exact matches
+    targetWords.forEach((targetWord, targetIdx) => {
+      const spokenIdx = spokenWords.findIndex(
+        (w, idx) => !usedSpokenIndices.has(idx) && w === targetWord,
+      );
+
+      if (spokenIdx !== -1) {
+        feedback[targetIdx] = { word: targetWord, status: 'correct' };
+        usedSpokenIndices.add(spokenIdx);
+      }
+    });
+
+    // Second pass: similar matches
+    targetWords.forEach((targetWord, targetIdx) => {
+      if (feedback[targetIdx]) return;
+
+      const spokenIdx = spokenWords.findIndex(
+        (w, idx) =>
+          !usedSpokenIndices.has(idx) &&
+          (w.includes(targetWord) ||
+            targetWord.includes(w) ||
+            levenshteinDistance(w, targetWord) <= 2),
+      );
+
+      if (spokenIdx !== -1) {
+        feedback[targetIdx] = { word: targetWord, status: 'incorrect' };
+        usedSpokenIndices.add(spokenIdx);
+      } else {
+        feedback[targetIdx] = { word: targetWord, status: 'missing' };
+      }
+    });
+
+    // Third pass: extra words
+    const extraWords: WordFeedback[] = [];
+    spokenWords.forEach((spokenWord, idx) => {
+      if (!usedSpokenIndices.has(idx)) {
+        extraWords.push({ word: spokenWord, status: 'extra' });
+      }
+    });
+
+    return [...feedback, ...extraWords];
+  };
+
+  // Simulate test for a message
+  const handleSimulateTest = (chatId: string, targetText: string, messageIndex: number) => {
+    const simulatedTranscript = simulatePronunciation(targetText);
+    const score = calculateScore(simulatedTranscript, targetText);
+    const feedback = analyzeWordFeedback(simulatedTranscript, targetText);
+
+    setMessageScores((prev) => ({
+      ...prev,
+      [chatId]: {
+        score,
+        feedback,
+        transcript: simulatedTranscript,
+      },
+    }));
+
+    // If score is good (>= 50%) and this is the last visible message, advance
+    if (score >= 50 && messageIndex === visibleCount - 1) {
+      const nextUserIdx = findNextUserIndex(visibleCount);
+      if (nextUserIdx !== -1) {
+        setVisibleCount(nextUserIdx + 1);
+      } else {
+        setVisibleCount(chats.length);
+      }
     }
   };
 
-  const handleTestSkip = () => {
-    if (activeUserIndex === -1) return;
-    const currentMsg = chats[activeUserIndex];
-    if (!currentMsg) return;
+  const handlePointerDown = (e: React.PointerEvent) => {
+    startPos.current = { x: e.clientX, y: e.clientY };
+    isLongPress.current = false;
 
-    // Simulate a passing score
-    setMessageStates((prev) => ({
-      ...prev,
-      [currentMsg.id]: { passed: true, score: 85 },
-    }));
+    longPressTimer.current = setTimeout(() => {
+      isLongPress.current = true;
+    }, 500);
+  };
 
-    // Set a simulated transcript
-    const simulatedText = getTargetSentence(currentMsg);
-    setTranscript(simulatedText);
+  const handlePointerMove = (e: React.PointerEvent) => {
+    if (longPressTimer.current) {
+      const dist = Math.sqrt(
+        Math.pow(e.clientX - startPos.current.x, 2) + Math.pow(e.clientY - startPos.current.y, 2),
+      );
+      if (dist > 10) {
+        clearTimeout(longPressTimer.current);
+        longPressTimer.current = null;
+      }
+    }
+  };
+
+  const handlePointerUp = (messageId: string, e: React.PointerEvent) => {
+    if (longPressTimer.current) {
+      clearTimeout(longPressTimer.current);
+      longPressTimer.current = null;
+    }
+
+    if (!isLongPress.current) {
+      e.stopPropagation();
+      setActiveMessageId((prev) => (prev === messageId ? null : messageId));
+    }
+
+    setTimeout(() => {
+      isLongPress.current = false;
+    }, 0);
+  };
+
+  const handlePointerCancel = () => {
+    if (longPressTimer.current) {
+      clearTimeout(longPressTimer.current);
+      longPressTimer.current = null;
+    }
+    isLongPress.current = false;
+  };
+
+  // Get score color
+  const getScoreColor = (score: number): string => {
+    if (score >= 80) return 'text-green-500';
+    if (score >= 60) return 'text-yellow-500';
+    return 'text-red-500';
+  };
+
+  // Render text with pronunciation feedback
+  const renderTextWithFeedback = (text: string, feedback: WordFeedback[]) => {
+    return (
+      <span className="text-sm">
+        {feedback.map((item, idx) => {
+          if (item.status === 'extra') return null;
+
+          let colorClass = '';
+          if (item.status === 'correct') {
+            colorClass = 'text-[hsl(var(--primary))]';
+          } else if (item.status === 'incorrect' || item.status === 'missing') {
+            colorClass = 'text-red-500';
+          }
+
+          return (
+            <span key={idx}>
+              <span className={colorClass}>{item.word}</span>
+              {idx < feedback.filter((f) => f.status !== 'extra').length - 1 ? ' ' : ''}
+            </span>
+          );
+        })}
+      </span>
+    );
   };
 
   // Renderers
   const renderBubble = (chat: ChatMessage, index: number) => {
-    const isUser = chat.role === 'user';
-    const isActive = index === activeUserIndex;
-    const state = messageStates[chat.id];
-    const isPassed = state?.passed || false;
-    const effectivelyPassed =
-      isPassed || (activeUserIndex !== -1 && index < activeUserIndex) || activeUserIndex === -1;
-
-    const toggleTranslate = () => {
-      setShowTranslate((prev) => ({ ...prev, [chat.id]: !prev[chat.id] }));
-    };
-
-    const toggleIpa = () => {
-      setShowIpa((prev) => ({ ...prev, [chat.id]: !prev[chat.id] }));
-    };
+    const isUserMessage = chat.isUser;
+    const translateText = extractTranslate(chat.question);
+    const isTranslateActive = activeMessageId === chat.id;
+    const scoreData = messageScores[chat.id];
+    const targetText = getTextContent(chat.question);
+    const showIpaButton = scoreData && scoreData.score < 50 && chat.ipa;
 
     const handleSpeak = () => {
-      if (isUser && chat.question) {
-        const fullText = getTargetSentence(chat);
-        speakText(fullText);
-      } else if (!isUser && chat.content) {
-        speakText(chat.content);
-      }
+      speakText(targetText);
+    };
+
+    const handleTestClick = (e: React.MouseEvent) => {
+      e.stopPropagation();
+      handleSimulateTest(chat.id, targetText, index);
+    };
+
+    const toggleIpa = (e: React.MouseEvent) => {
+      e.stopPropagation();
+      setIpaVisible((prev) => ({ ...prev, [chat.id]: !prev[chat.id] }));
     };
 
     return (
       <div
         key={chat.id}
-        className={`flex flex-col gap-1 ${isUser ? 'items-end' : 'items-start'} mb-3 animate-in fade-in slide-in-from-bottom-2 duration-300`}
+        className={`flex flex-col mb-4 animate-in fade-in slide-in-from-bottom-2 duration-300 w-full`}
       >
-        {/* Time display if available */}
-        {chat.time && (
-          <div
-            className={`text-xs text-[hsl(var(--muted-foreground))] mb-0.5 ${isUser ? 'text-right' : 'text-left'}`}
-          >
-            {chat.time}
-          </div>
-        )}
-
-        {/* Bubble */}
         <div
-          className={`max-w-[80%] rounded-xl px-3 py-2 text-sm leading-relaxed relative ${
-            isUser
-              ? 'bg-[hsl(var(--primary))] text-[hsl(var(--primary-foreground))] rounded-br-none'
-              : 'bg-[hsl(var(--muted))] text-[hsl(var(--foreground))] rounded-bl-none'
-          }`}
+          className={`flex flex-col gap-1 w-full ${isUserMessage ? 'items-end' : 'items-start'}`}
         >
-          {isUser ? (
-            <div>
-              <RichTextParser
-                content={chat.question || ''}
-                onGapFound={() => {
-                  const answerLength = chat.answer?.length || 5;
-                  const underscores = '_'.repeat(answerLength);
-                  return (
-                    <span
-                      className={`inline-block mx-1 font-bold tracking-widest ${
-                        effectivelyPassed
-                          ? 'text-[hsl(var(--primary-foreground))]'
-                          : 'text-[hsl(var(--primary-foreground))] opacity-70'
-                      }`}
-                    >
-                      {effectivelyPassed ? chat.answer : underscores}
-                    </span>
-                  );
-                }}
-              />
+          {/* Role/Name badge */}
+          <div
+            className={`flex items-center gap-1.5 text-xs ${isUserMessage ? 'flex-row-reverse' : 'flex-row'}`}
+          >
+            <span className="font-semibold text-[hsl(var(--primary))]">{chat.role}</span>
+            {chat.name && (
+              <span className="text-[hsl(var(--muted-foreground))]">({chat.name})</span>
+            )}
+            {chat.time && (
+              <span className="text-[hsl(var(--muted-foreground))] font-mono ml-1">
+                {chat.time}
+              </span>
+            )}
+          </div>
+
+          {/* Bubble */}
+          <div
+            className={`max-w-[80%] rounded-xl px-3 py-2 text-sm leading-relaxed relative ${
+              isUserMessage
+                ? 'bg-[hsl(var(--card))] text-[hsl(var(--foreground))] border-2 border-[hsl(var(--primary))]/30 border-solid rounded-br-none'
+                : 'bg-transparent text-[hsl(var(--foreground))] border-2 border-[hsl(var(--primary))] border-dashed rounded-bl-none'
+            }`}
+          >
+            <span
+              className={`inline cursor-pointer transition-all duration-200 select-text ${
+                isTranslateActive
+                  ? 'bg-[hsl(var(--primary))]/20 shadow-sm'
+                  : 'hover:bg-[hsl(var(--primary))]/5'
+              } [&_p]:inline [&_p]:m-0 [&_span]:inline [&_span]:m-0`}
+              onPointerDown={handlePointerDown}
+              onPointerMove={handlePointerMove}
+              onPointerUp={(e) => handlePointerUp(chat.id, e)}
+              onPointerCancel={handlePointerCancel}
+              onContextMenu={(e) => e.preventDefault()}
+            >
+              {scoreData ? (
+                renderTextWithFeedback(targetText, scoreData.feedback)
+              ) : (
+                <RichTextParser content={chat.question} />
+              )}
+            </span>
+
+            {/* Translation - inline next to text */}
+            {translateText && isTranslateActive && (
+              <span className="inline ml-1 py-0.5 px-1.5 rounded bg-[hsl(var(--secondary))] text-[hsl(var(--secondary-foreground))] font-medium italic text-xs [&_p]:inline [&_p]:m-0 [&_span]:inline [&_span]:m-0 animate-in fade-in zoom-in-95 duration-200 border border-[hsl(var(--border))]">
+                {translateText}
+              </span>
+            )}
+
+            {/* IPA Display */}
+            {ipaVisible[chat.id] && chat.ipa && (
+              <div className="block mt-1 text-xs text-[hsl(var(--muted-foreground))] font-mono bg-[hsl(var(--muted))]/30 px-1.5 py-0.5 rounded w-fit animate-in fade-in zoom-in-95">
+                {chat.ipa}
+              </div>
+            )}
+
+            {/* Score badge */}
+            {scoreData && (
+              <div className="flex items-center gap-2 mt-1">
+                <div className={`text-xs font-bold ${getScoreColor(scoreData.score)}`}>
+                  {scoreData.score}%
+                </div>
+                {/* IPA Toggle Button */}
+                {showIpaButton && (
+                  <button
+                    onClick={toggleIpa}
+                    className="text-[hsl(var(--muted-foreground))] hover:text-[hsl(var(--primary))] transition-colors"
+                    title="Show Pronunciation Guide"
+                  >
+                    <HelpCircle size={14} />
+                  </button>
+                )}
+              </div>
+            )}
+          </div>
+
+          {/* User Transcript Display */}
+          {scoreData && isUserMessage && (
+            <div className="max-w-[80%] mt-1 px-2 py-1 rounded bg-[hsl(var(--muted))]/30 border border-dashed border-[hsl(var(--border))]">
+              <div className="text-xs text-[hsl(var(--muted-foreground))] italic">
+                "{scoreData.transcript}"
+              </div>
             </div>
-          ) : (
-            <div>{chat.content}</div>
           )}
+
+          {/* Icon buttons below bubble */}
+          <div
+            className={`flex items-center gap-2 ${isUserMessage ? 'flex-row-reverse' : 'flex-row'}`}
+          >
+            {/* TTS Button */}
+            <button
+              onClick={handleSpeak}
+              className="p-1 hover:bg-[hsl(var(--muted))] rounded transition-colors"
+              title="Play audio"
+            >
+              <Volume2 size={14} className="text-[hsl(var(--muted-foreground))]" />
+            </button>
+
+            {/* Test button - ONLY for User */}
+            {isUserMessage && (
+              <button
+                onClick={handleTestClick}
+                className="p-1 hover:bg-[hsl(var(--muted))] rounded transition-colors"
+                title="Test pronunciation"
+              >
+                <StepForward size={14} className="text-[hsl(var(--muted-foreground))]" />
+              </button>
+            )}
+          </div>
         </div>
 
-        {/* Icon buttons below bubble */}
-        {(chat.translate || chat.ipa || (isUser && chat.question)) && (
-          <div className="flex items-center gap-2">
-            {/* TTS Button */}
-            {((isUser && chat.question) || (!isUser && chat.content)) && (
-              <button
-                onClick={handleSpeak}
-                className="p-1 hover:bg-[hsl(var(--muted))] rounded transition-colors"
-                title="Play audio"
-              >
-                <Volume2 size={14} className="text-[hsl(var(--muted-foreground))]" />
-              </button>
-            )}
-
-            {/* Translate Toggle */}
-            {chat.translate && (
-              <button
-                onClick={toggleTranslate}
-                className={`p-1 hover:bg-[hsl(var(--muted))] rounded transition-colors ${
-                  showTranslate[chat.id] ? 'bg-[hsl(var(--muted))]' : ''
-                }`}
-                title="Toggle translation"
-              >
-                <Languages size={14} className="text-[hsl(var(--muted-foreground))]" />
-              </button>
-            )}
-
-            {/* IPA Toggle - only for user & when passed */}
-            {isUser && chat.ipa && effectivelyPassed && (
-              <button
-                onClick={toggleIpa}
-                className={`p-1 hover:bg-[hsl(var(--muted))] rounded transition-colors ${
-                  showIpa[chat.id] ? 'bg-[hsl(var(--muted))]' : ''
-                }`}
-                title="Toggle IPA"
-              >
-                <Ear size={14} className="text-[hsl(var(--muted-foreground))]" />
-              </button>
-            )}
-          </div>
-        )}
-
-        {/* Conditionally shown content */}
-        <div
-          className={`flex flex-col gap-1 max-w-[80%] ${isUser ? 'items-end text-right' : 'items-start text-left'}`}
-        >
-          {/* Translation - toggleable */}
-          {chat.translate && showTranslate[chat.id] && (
-            <div className="text-xs text-[hsl(var(--muted-foreground))] italic px-2 py-1 bg-[hsl(var(--muted))/30] rounded">
-              <RichTextParser content={chat.translate} />
-            </div>
-          )}
-
-          {/* IPA - toggleable, only for user when passed */}
-          {isUser && chat.ipa && effectivelyPassed && showIpa[chat.id] && (
-            <div className="text-xs font-mono text-[hsl(var(--primary))] px-2 py-1 bg-[hsl(var(--muted))/30] rounded">
-              {chat.ipa}
-            </div>
-          )}
-
-          {/* Explain - always show when passed */}
-          {isUser && chat.explain && effectivelyPassed && (
-            <div className="text-xs text-[hsl(var(--muted-foreground))] flex items-start gap-1 px-2 py-1 bg-[hsl(var(--muted))/30] rounded mt-1">
+        {/* Explanation - Centered after completion */}
+        {scoreData && chat.explain && (
+          <div className="w-full flex justify-center mt-3 mb-1 animate-in fade-in zoom-in-95 duration-300">
+            <div className="bg-transparent border border-dashed border-[hsl(var(--border))] text-[hsl(var(--muted-foreground))] text-sm px-4 py-2 rounded-xl max-w-[90%] text-center italic">
               <RichTextParser content={chat.explain} />
             </div>
-          )}
-
-          {/* Transcript for active turn */}
-          {isActive && transcript && (
-            <div className="text-xs text-[hsl(var(--muted-foreground))] mt-1 italic">
-              "{transcript}"
-            </div>
-          )}
-        </div>
+          </div>
+        )}
       </div>
     );
   };
@@ -419,7 +489,7 @@ export const ChattingSpeech: React.FC<ChattingSpeechProps> = ({ quiz }) => {
       {/* Messages */}
       <div
         ref={scrollContainerRef}
-        className="flex-1 overflow-y-auto p-4 [&::-webkit-scrollbar]:hidden pb-32"
+        className="flex-1 overflow-y-auto p-4 [&::-webkit-scrollbar]:hidden pb-8"
       >
         {quiz.instruction && (
           <div className="mb-4 text-[hsl(var(--foreground))] text-sm text-center opacity-80">
@@ -429,55 +499,6 @@ export const ChattingSpeech: React.FC<ChattingSpeechProps> = ({ quiz }) => {
 
         <div className="flex flex-col">
           {chats.slice(0, visibleCount).map((chat, i) => renderBubble(chat, i))}
-        </div>
-      </div>
-
-      {/* Controls */}
-      {/* Test Skip Button (Emulator only) */}
-      <div className="absolute top-4 right-4 z-20">
-        <button
-          onClick={handleTestSkip}
-          className="p-2 rounded-full bg-[hsl(var(--muted))] hover:bg-[hsl(var(--muted))]/80 transition-colors"
-          title="Simulate user response (test mode)"
-        >
-          <StepForward size={20} className="text-[hsl(var(--foreground))]" />
-        </button>
-      </div>
-
-      <div className="absolute bottom-6 left-0 right-0 flex justify-center items-center gap-4 z-10 pointer-events-none">
-        <div className="flex items-center gap-4 pointer-events-auto">
-          {/* Mic Button - Only if active user turn exists */}
-          {activeUserIndex !== -1 && (
-            <button
-              onClick={isRecording ? stopRecording : startRecording}
-              className={`w-12 h-12 rounded-full flex items-center justify-center transition-all duration-300 shadow-md ${
-                isRecording
-                  ? 'bg-red-500 text-white animate-pulse ring-4 ring-red-500/30'
-                  : 'bg-[hsl(var(--primary))] text-[hsl(var(--primary-foreground))] hover:opacity-90'
-              }`}
-            >
-              {isRecording ? <MicOff size={20} /> : <Mic size={20} />}
-            </button>
-          )}
-
-          {/* Continue Button - If passed current active user turn */}
-          {activeUserIndex !== -1 && messageStates[chats[activeUserIndex]?.id]?.passed && (
-            <button
-              onClick={handleContinue}
-              className="h-12 px-5 rounded-full bg-[hsl(var(--primary))] text-[hsl(var(--primary-foreground))] text-sm font-bold hover:opacity-90 flex items-center gap-2 transition-all active:scale-95 shadow-md animate-in zoom-in duration-300"
-            >
-              Continue
-              <ChevronRight size={18} />
-            </button>
-          )}
-
-          {/* Finish State */}
-          {activeUserIndex === -1 && visibleCount > 0 && (
-            <div className="bg-green-500 text-white px-5 py-2 rounded-full text-sm font-bold flex items-center gap-2 shadow-lg">
-              <Check size={18} />
-              Completed!
-            </div>
-          )}
         </div>
       </div>
     </div>

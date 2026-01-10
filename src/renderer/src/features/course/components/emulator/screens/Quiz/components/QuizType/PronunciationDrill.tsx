@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
-import { Bookmark, Repeat2, RotateCcw, Mic, MicOff, Check, ChevronUp } from 'lucide-react';
+import { Mic, MicOff, Check, StepForward, ChevronRight, RotateCcw } from 'lucide-react';
 import { Quiz, PronunciationDrillItem } from '../../types';
 import { RichTextParser } from '../RichTextParser';
 
@@ -13,6 +13,11 @@ interface CardState {
   passed: boolean;
   attempts: number;
   bestScore: number;
+}
+
+interface WordFeedback {
+  word: string;
+  status: 'correct' | 'incorrect' | 'missing' | 'extra';
 }
 
 // Extend window type for SpeechRecognition
@@ -52,8 +57,8 @@ export const PronunciationDrill: React.FC<PronunciationDrillProps> = ({ quiz }) 
   const [currentIndex, setCurrentIndex] = useState(0);
   const [cardStates, setCardStates] = useState<Record<string, CardState>>({});
   const [isRecording, setIsRecording] = useState(false);
-  const [isSpeaking, setIsSpeaking] = useState(false);
   const [transcript, setTranscript] = useState('');
+  const [wordFeedback, setWordFeedback] = useState<WordFeedback[]>([]);
 
   const recognitionRef = useRef<ISpeechRecognition | null>(null);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
@@ -68,19 +73,16 @@ export const PronunciationDrill: React.FC<PronunciationDrillProps> = ({ quiz }) 
     setCurrentIndex(0);
   }, [quiz.id]);
 
-  // Text-to-Speech function
-  const speakText = useCallback((text: string) => {
-    if ('speechSynthesis' in window) {
-      window.speechSynthesis.cancel(); // Cancel any ongoing speech
-      const utterance = new SpeechSynthesisUtterance(text);
-      utterance.lang = 'en-US';
-      utterance.rate = 0.9;
-      utterance.onstart = () => setIsSpeaking(true);
-      utterance.onend = () => setIsSpeaking(false);
-      utterance.onerror = () => setIsSpeaking(false);
-      window.speechSynthesis.speak(utterance);
-    }
-  }, []);
+  // Text-to-Speech function (currently unused but kept for future use)
+  // const speakText = useCallback((text: string) => {
+  //   if ('speechSynthesis' in window) {
+  //     window.speechSynthesis.cancel();
+  //     const utterance = new SpeechSynthesisUtterance(text);
+  //     utterance.lang = 'en-US';
+  //     utterance.rate = 0.9;
+  //     window.speechSynthesis.speak(utterance);
+  //   }
+  // }, []);
 
   // Initialize Speech Recognition
   const initRecognition = useCallback(() => {
@@ -118,6 +120,134 @@ export const PronunciationDrill: React.FC<PronunciationDrillProps> = ({ quiz }) 
     });
 
     return Math.round((matches / targetWords.length) * 100);
+  };
+
+  // Simulate pronunciation with some errors
+  const simulatePronunciation = (targetText: string): string => {
+    const words = targetText.split(' ');
+    const result: string[] = [];
+    const errorRate = 0.3; // 30% chance of error per word
+
+    words.forEach((word) => {
+      const rand = Math.random();
+
+      if (rand < errorRate * 0.4) {
+        // Skip this word (missing word)
+        return;
+      } else if (rand < errorRate * 0.7) {
+        // Replace with a similar but wrong word
+        const wrongWords = ['the', 'a', 'an', 'is', 'was', 'were', 'very', 'much', 'so'];
+        result.push(wrongWords[Math.floor(Math.random() * wrongWords.length)]);
+      } else if (rand < errorRate) {
+        // Misspell the word slightly
+        const chars = word.split('');
+        const idx = Math.floor(Math.random() * chars.length);
+        chars[idx] = String.fromCharCode(97 + Math.floor(Math.random() * 26));
+        result.push(chars.join(''));
+      } else {
+        // Correct word
+        result.push(word);
+      }
+    });
+
+    // Sometimes add extra words
+    if (Math.random() < 0.2) {
+      const extraWords = ['um', 'uh', 'like', 'actually'];
+      const extraWord = extraWords[Math.floor(Math.random() * extraWords.length)];
+      const insertPos = Math.floor(Math.random() * (result.length + 1));
+      result.splice(insertPos, 0, extraWord);
+    }
+
+    return result.join(' ');
+  };
+
+  // Analyze word-by-word feedback
+  const analyzeWordFeedback = (spoken: string, target: string): WordFeedback[] => {
+    const spokenWords = spoken
+      .toLowerCase()
+      .trim()
+      .split(/\s+/)
+      .filter((w) => w);
+    const targetWords = target
+      .toLowerCase()
+      .trim()
+      .split(/\s+/)
+      .filter((w) => w);
+
+    // Create feedback array with same length as target, maintaining order
+    const feedback: WordFeedback[] = new Array(targetWords.length);
+    const usedSpokenIndices = new Set<number>();
+
+    // First pass: find exact matches
+    targetWords.forEach((targetWord, targetIdx) => {
+      const spokenIdx = spokenWords.findIndex(
+        (w, idx) => !usedSpokenIndices.has(idx) && w === targetWord,
+      );
+
+      if (spokenIdx !== -1) {
+        feedback[targetIdx] = { word: targetWord, status: 'correct' };
+        usedSpokenIndices.add(spokenIdx);
+      }
+    });
+
+    // Second pass: find similar matches for remaining words
+    targetWords.forEach((targetWord, targetIdx) => {
+      if (feedback[targetIdx]) return; // Already matched
+
+      const spokenIdx = spokenWords.findIndex(
+        (w, idx) =>
+          !usedSpokenIndices.has(idx) &&
+          (w.includes(targetWord) ||
+            targetWord.includes(w) ||
+            levenshteinDistance(w, targetWord) <= 2),
+      );
+
+      if (spokenIdx !== -1) {
+        feedback[targetIdx] = { word: targetWord, status: 'incorrect' };
+        usedSpokenIndices.add(spokenIdx);
+      } else {
+        feedback[targetIdx] = { word: targetWord, status: 'missing' };
+      }
+    });
+
+    // Third pass: find extra words (append at the end)
+    const extraWords: WordFeedback[] = [];
+    spokenWords.forEach((spokenWord, idx) => {
+      if (!usedSpokenIndices.has(idx)) {
+        extraWords.push({ word: spokenWord, status: 'extra' });
+      }
+    });
+
+    return [...feedback, ...extraWords];
+  };
+
+  // Levenshtein distance for fuzzy matching
+  const levenshteinDistance = (a: string, b: string): number => {
+    const matrix: number[][] = [];
+
+    for (let i = 0; i <= b.length; i++) {
+      matrix[i] = [i];
+    }
+
+    for (let j = 0; j <= a.length; j++) {
+      matrix[0][j] = j;
+    }
+
+    for (let i = 1; i <= b.length; i++) {
+      for (let j = 1; j <= a.length; j++) {
+        if (b.charAt(i - 1) === a.charAt(j - 1)) {
+          matrix[i][j] = matrix[i - 1][j - 1];
+        } else {
+          matrix[i][j] = Math.min(
+            matrix[i - 1][j - 1] + 1,
+            matrix[i][j - 1] + 1,
+            matrix[i - 1][j] + 1,
+          );
+        }
+      }
+    }
+
+    return matrix[b.length][a.length];
   };
 
   // Start recording
@@ -186,14 +316,15 @@ export const PronunciationDrill: React.FC<PronunciationDrillProps> = ({ quiz }) 
     setIsRecording(false);
   }, []);
 
-  // Restart current card
-  const restartCard = useCallback(() => {
+  // Retry current card
+  const retryCurrentCard = useCallback(() => {
     const currentDrill = drills[currentIndex];
     setCardStates((prev) => ({
       ...prev,
       [currentDrill.id]: { score: 0, passed: false, attempts: 0, bestScore: 0 },
     }));
     setTranscript('');
+    setWordFeedback([]);
   }, [currentIndex, drills]);
 
   // Move to next card
@@ -201,6 +332,7 @@ export const PronunciationDrill: React.FC<PronunciationDrillProps> = ({ quiz }) 
     if (currentIndex < drills.length - 1) {
       setCurrentIndex((prev) => prev + 1);
       setTranscript('');
+      setWordFeedback([]);
 
       // Scroll to show the new current card
       setTimeout(() => {
@@ -212,6 +344,38 @@ export const PronunciationDrill: React.FC<PronunciationDrillProps> = ({ quiz }) 
     }
   }, [currentIndex, drills.length]);
 
+  // Simulate pronunciation test (for emulator testing)
+  const simulateTest = useCallback(() => {
+    const currentDrill = drills[currentIndex];
+    const simulatedTranscript = simulatePronunciation(currentDrill.text);
+    const score = calculateScore(simulatedTranscript, currentDrill.text);
+    const feedback = analyzeWordFeedback(simulatedTranscript, currentDrill.text);
+
+    setTranscript(simulatedTranscript);
+    setWordFeedback(feedback);
+
+    setCardStates((prev) => {
+      const currentState = prev[currentDrill.id] || {
+        score: 0,
+        passed: false,
+        attempts: 0,
+        bestScore: 0,
+      };
+      const newBestScore = Math.max(currentState.bestScore, score);
+      const newPassed = newBestScore >= PASS_THRESHOLD;
+
+      return {
+        ...prev,
+        [currentDrill.id]: {
+          score,
+          passed: newPassed,
+          attempts: currentState.attempts + 1,
+          bestScore: newBestScore,
+        },
+      };
+    });
+  }, [currentIndex, drills]);
+
   // Get score color
   const getScoreColor = (score: number): string => {
     if (score === 0) return 'text-[hsl(var(--muted-foreground))]';
@@ -220,34 +384,76 @@ export const PronunciationDrill: React.FC<PronunciationDrillProps> = ({ quiz }) 
     return 'text-red-500';
   };
 
-  const getScoreBgColor = (score: number): string => {
-    if (score === 0) return 'bg-[hsl(var(--muted))]';
-    if (score >= 80) return 'bg-green-500/20';
-    if (score >= 60) return 'bg-yellow-500/20';
-    return 'bg-red-500/20';
-  };
-
   // Render hidden word text
-  const renderHiddenText = (drill: PronunciationDrillItem, isPassed: boolean) => {
-    if (!drill.hiddenWord) {
-      return <span className="text-lg font-bold">{drill.text}</span>;
-    }
+  // Render text with color-coded pronunciation feedback
+  const renderTextWithFeedback = (
+    drill: PronunciationDrillItem,
+    isPassed: boolean,
+    isCurrent: boolean,
+  ) => {
+    const hasAttempt = isCurrent && wordFeedback.length > 0;
 
-    const words = drill.text.split(' ');
-    return (
-      <span className="text-[16px] font-bold">
-        {words.map((word, idx) => {
-          const isHidden = word.toLowerCase().includes(drill.hiddenWord!.toLowerCase());
-          if (isHidden && !isPassed) {
+    // If hiddenWord mode and not passed, show underscores
+    if (drill.hiddenWord && !isPassed && !hasAttempt) {
+      const words = drill.text.split(' ');
+      return (
+        <span className="text-[16px] font-bold">
+          {words.map((word, idx) => {
+            const isHidden = word.toLowerCase().includes(drill.hiddenWord!.toLowerCase());
+            if (isHidden) {
+              return (
+                <span key={idx}>
+                  <span className="text-[hsl(var(--primary))] mx-0.5 font-bold tracking-widest">
+                    {'_'.repeat(word.length)}
+                  </span>
+                  {idx < words.length - 1 ? ' ' : ''}
+                </span>
+              );
+            }
             return (
               <span key={idx}>
-                <span className="text-[hsl(var(--primary))] mx-0.5 font-bold tracking-widest">
-                  {'_'.repeat(word.length)}
-                </span>
+                {word}
                 {idx < words.length - 1 ? ' ' : ''}
               </span>
             );
-          }
+          })}
+        </span>
+      );
+    }
+
+    // Show color-coded feedback based on pronunciation attempt
+    if (hasAttempt) {
+      return (
+        <span className="text-[16px] font-bold">
+          {wordFeedback.map((item, idx) => {
+            // Skip extra words in the original text display
+            if (item.status === 'extra') return null;
+
+            let colorClass = '';
+            if (item.status === 'correct') {
+              colorClass = 'text-[hsl(var(--primary))]';
+            } else if (item.status === 'incorrect' || item.status === 'missing') {
+              colorClass = 'text-red-500';
+            }
+
+            return (
+              <span key={idx}>
+                <span className={colorClass}>{item.word}</span>
+                {idx < wordFeedback.filter((f) => f.status !== 'extra').length - 1 ? ' ' : ''}
+              </span>
+            );
+          })}
+        </span>
+      );
+    }
+
+    // Default display
+    const words = drill.text.split(' ');
+    return (
+      <span className="text-lg font-bold">
+        {words.map((word, idx) => {
+          const isHidden =
+            drill.hiddenWord && word.toLowerCase().includes(drill.hiddenWord.toLowerCase());
           return (
             <span key={idx} className={isHidden && isPassed ? 'text-[hsl(var(--primary))]' : ''}>
               {word}
@@ -300,8 +506,17 @@ export const PronunciationDrill: React.FC<PronunciationDrillProps> = ({ quiz }) 
 
         {/* Card Content */}
         <div className="p-6 text-center space-y-4">
+          {/* Score Display - shown above text when there's an attempt */}
+          {isCurrent && state.attempts > 0 && (
+            <div className={`text-3xl font-bold ${getScoreColor(state.score)}`}>
+              {state.bestScore}%
+            </div>
+          )}
+
           {/* Main Text */}
-          <div className="text-[hsl(var(--foreground))]">{renderHiddenText(drill, isPassed)}</div>
+          <div className="text-[hsl(var(--foreground))]">
+            {renderTextWithFeedback(drill, isPassed, isCurrent)}
+          </div>
 
           {/* IPA */}
           <div className="text-[hsl(var(--primary))] text-base font-mono">{drill.ipa}</div>
@@ -311,46 +526,64 @@ export const PronunciationDrill: React.FC<PronunciationDrillProps> = ({ quiz }) 
             {drill.translate}
           </div>
 
-          {/* Score Display */}
-          {isCurrent && state.attempts > 0 && (
-            <div className={`mt-4 p-3 rounded-xl ${getScoreBgColor(state.score)}`}>
-              <div className={`text-3xl font-bold ${getScoreColor(state.score)}`}>
-                {state.bestScore}%
-              </div>
-              {transcript && (
-                <div className="text-sm text-[hsl(var(--muted-foreground))] mt-1">
-                  You said: "{transcript}"
-                </div>
-              )}
+          {/* Transcript Display - with dashed border */}
+          {isCurrent && transcript && (
+            <div className="mt-4 p-3 rounded-xl border-2 border-dashed border-[hsl(var(--primary))]">
+              <div className="text-sm text-[hsl(var(--muted-foreground))]">"{transcript}"</div>
             </div>
           )}
         </div>
 
         {/* Card Actions (Current Card Only) */}
         {isCurrent && (
-          <div className="p-4 border-t border-[hsl(var(--border))]/50 flex items-center justify-center gap-4">
-            <button
-              onClick={isRecording ? stopRecording : startRecording}
-              className={`
-                w-12 h-12 rounded-full flex items-center justify-center transition-all duration-300 shadow-lg
-                ${
-                  isRecording
-                    ? 'bg-red-500 text-white animate-pulse ring-4 ring-red-500/30'
-                    : 'bg-[hsl(var(--primary))] text-[hsl(var(--primary-foreground))] hover:opacity-90'
-                }
-              `}
-            >
-              {isRecording ? <MicOff size={24} /> : <Mic size={24} />}
-            </button>
-
-            {state.passed && currentIndex < drills.length - 1 && (
-              <button
-                onClick={goToNext}
-                className="h-14 px-6 rounded-full bg-green-500 text-white font-bold flex items-center gap-2 hover:bg-green-600 transition-colors shadow-lg"
-              >
-                Next
-                <ChevronUp size={20} />
-              </button>
+          <div className="p-4 border-t border-[hsl(var(--border))]/50">
+            {/* Show Retry and Next buttons if score >= 50% */}
+            {state.attempts > 0 && state.bestScore >= 50 ? (
+              <div className="flex gap-3">
+                <button
+                  onClick={retryCurrentCard}
+                  className="flex-1 h-10 rounded-md bg-[hsl(var(--secondary))] text-[hsl(var(--secondary-foreground))] font-medium flex items-center justify-center gap-2 hover:opacity-90 transition-opacity"
+                >
+                  <RotateCcw size={18} />
+                  Retry
+                </button>
+                {currentIndex < drills.length - 1 && (
+                  <button
+                    onClick={goToNext}
+                    className="flex-1 h-10 rounded-md bg-[hsl(var(--primary))] text-[hsl(var(--primary-foreground))] font-bold flex items-center justify-center gap-2 hover:opacity-90 transition-all active:scale-95 shadow-md"
+                  >
+                    Next
+                    <ChevronRight size={20} />
+                  </button>
+                )}
+              </div>
+            ) : state.attempts > 0 && state.bestScore < 50 ? (
+              /* Show retry button (icon only) if score < 50% */
+              <div className="flex items-center justify-center">
+                <button
+                  onClick={retryCurrentCard}
+                  className="w-12 h-12 rounded-full flex items-center justify-center transition-all duration-300 shadow-lg bg-[hsl(var(--secondary))] text-[hsl(var(--secondary-foreground))] hover:opacity-90"
+                >
+                  <RotateCcw size={20} />
+                </button>
+              </div>
+            ) : (
+              /* Show mic button if no attempt yet */
+              <div className="flex items-center justify-center">
+                <button
+                  onClick={isRecording ? stopRecording : startRecording}
+                  className={`
+                    w-12 h-12 rounded-full flex items-center justify-center transition-all duration-300 shadow-lg
+                    ${
+                      isRecording
+                        ? 'bg-red-500 text-white animate-pulse ring-4 ring-red-500/30'
+                        : 'bg-[hsl(var(--primary))] text-[hsl(var(--primary-foreground))] hover:opacity-90'
+                    }
+                  `}
+                >
+                  {isRecording ? <MicOff size={24} /> : <Mic size={24} />}
+                </button>
+              </div>
             )}
           </div>
         )}
@@ -367,7 +600,7 @@ export const PronunciationDrill: React.FC<PronunciationDrillProps> = ({ quiz }) 
   }
 
   return (
-    <div className="flex flex-col h-full bg-[hsl(var(--background))] overflow-hidden">
+    <div className="flex flex-col h-full bg-[hsl(var(--background))] overflow-hidden relative">
       {/* Cards Container - Scrollable */}
       <div
         ref={scrollContainerRef}
@@ -397,6 +630,15 @@ export const PronunciationDrill: React.FC<PronunciationDrillProps> = ({ quiz }) 
         {/* Extra spacer to shift content up by app bar height */}
         <div className="h-14 flex-shrink-0" />
       </div>
+
+      {/* Test Button - Bottom Right Corner */}
+      <button
+        onClick={simulateTest}
+        className="absolute bottom-6 right-6 w-12 h-12 rounded-full bg-[hsl(var(--primary))] text-[hsl(var(--primary-foreground))] shadow-lg hover:opacity-90 transition-all duration-300 flex items-center justify-center z-10"
+        title="Simulate pronunciation test"
+      >
+        <StepForward size={20} />
+      </button>
     </div>
   );
 };

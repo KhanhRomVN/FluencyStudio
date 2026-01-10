@@ -37,16 +37,25 @@ export interface DictationItem {
 
 export interface ErrorCorrectionItem {
   id: string;
-  sentence: string; // "I has a cat"
-  error: string; // "has"
-  correction: string; // "have"
+  question: string; // Contains <error id='...'> tags
+  errors: {
+    id: string;
+    correct: string[];
+  }[];
   explain?: string;
+}
+
+export interface FlashcardBackContent {
+  definition: string;
+  example?: string;
+  synonyms?: string;
+  antonyms?: string;
 }
 
 export interface FlashcardItem {
   id: string;
   front: string; // Text or Question
-  back: string; // Answer or Definition
+  back: string | FlashcardBackContent; // Answer or Definition
   frontAudio?: string;
   backAudio?: string;
   image?: string;

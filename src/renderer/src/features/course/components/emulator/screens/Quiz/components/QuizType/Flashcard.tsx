@@ -50,11 +50,6 @@ export const Flashcard: React.FC<FlashcardProps> = ({ quiz }) => {
   return (
     <div className="flex flex-col h-full">
       <div className="flex-1 overflow-y-auto px-4 py-3 [&::-webkit-scrollbar]:hidden flex flex-col">
-        {quiz.instruction && (
-          <div className="mb-4 text-[hsl(var(--foreground))] text-[16px] shrink-0">
-            <RichTextParser content={quiz.instruction} />
-          </div>
-        )}
         <div className="flex-1 flex flex-col items-center justify-center py-4">
           {/* Card Container */}
           <div
@@ -105,7 +100,56 @@ export const Flashcard: React.FC<FlashcardProps> = ({ quiz }) => {
                   Back
                 </span>
 
-                <p className="text-xl text-[hsl(var(--foreground))] mb-4">{currentCard.back}</p>
+                <div className="text-lg text-[hsl(var(--foreground))] mb-4 text-left w-full overflow-y-auto max-h-[200px] [&::-webkit-scrollbar]:hidden">
+                  {typeof currentCard.back === 'string' ? (
+                    <RichTextParser content={currentCard.back} />
+                  ) : (
+                    <div className="space-y-3">
+                      <div>
+                        {/* <span className="font-bold text-[hsl(var(--primary))] block text-xs uppercase mb-1">Definition</span> */}
+                        <div className="text-[hsl(var(--foreground))]">
+                          <RichTextParser content={currentCard.back.definition} />
+                        </div>
+                      </div>
+
+                      {currentCard.back.example && (
+                        <div>
+                          <span className="font-bold text-[hsl(var(--muted-foreground))] block text-xs uppercase mb-1">
+                            Example
+                          </span>
+                          <div className="text-[hsl(var(--foreground))] italic">
+                            <RichTextParser content={currentCard.back.example} />
+                          </div>
+                        </div>
+                      )}
+
+                      {(currentCard.back.synonyms || currentCard.back.antonyms) && (
+                        <div className="flex flex-wrap gap-x-4 gap-y-2 text-sm">
+                          {currentCard.back.synonyms && (
+                            <div>
+                              <span className="font-bold text-[hsl(var(--muted-foreground))] mr-1">
+                                Syn:
+                              </span>
+                              <span className="text-[hsl(var(--foreground))]">
+                                {currentCard.back.synonyms}
+                              </span>
+                            </div>
+                          )}
+                          {currentCard.back.antonyms && (
+                            <div>
+                              <span className="font-bold text-[hsl(var(--muted-foreground))] mr-1">
+                                Ant:
+                              </span>
+                              <span className="text-[hsl(var(--foreground))]">
+                                {currentCard.back.antonyms}
+                              </span>
+                            </div>
+                          )}
+                        </div>
+                      )}
+                    </div>
+                  )}
+                </div>
 
                 {currentCard.backAudio && (
                   <button
@@ -125,25 +169,25 @@ export const Flashcard: React.FC<FlashcardProps> = ({ quiz }) => {
       </div>
 
       {/* Controls */}
-      <div className="p-4 border-t border-[hsl(var(--border))] bg-[hsl(var(--background))] flex items-center justify-between">
+      <div className="p-3 border-t border-[hsl(var(--border))] bg-[hsl(var(--background))] flex items-center justify-between">
         <button
           onClick={handlePrev}
           disabled={currentIndex === 0}
-          className="p-3 rounded-xl bg-[hsl(var(--secondary))] text-[hsl(var(--foreground))] disabled:opacity-30 disabled:cursor-not-allowed hover:bg-[hsl(var(--secondary))/80] transition-colors"
+          className="p-2 rounded-lg bg-[hsl(var(--secondary))] text-[hsl(var(--foreground))] disabled:opacity-30 disabled:cursor-not-allowed hover:bg-[hsl(var(--secondary))/80] transition-colors"
         >
-          <ChevronLeft size={24} />
+          <ChevronLeft size={20} />
         </button>
 
-        <div className="text-[16px] font-bold text-[hsl(var(--muted-foreground))]">
+        <div className="text-sm font-bold text-[hsl(var(--muted-foreground))]">
           {currentIndex + 1} / {cards.length}
         </div>
 
         <button
           onClick={handleNext}
           disabled={currentIndex === cards.length - 1}
-          className="p-3 rounded-xl bg-[hsl(var(--primary))] text-[hsl(var(--primary-foreground))] disabled:opacity-30 disabled:cursor-not-allowed hover:opacity-90 transition-colors"
+          className="p-2 rounded-lg bg-[hsl(var(--primary))] text-[hsl(var(--primary-foreground))] disabled:opacity-30 disabled:cursor-not-allowed hover:opacity-90 transition-colors"
         >
-          <ChevronRight size={24} />
+          <ChevronRight size={20} />
         </button>
       </div>
 

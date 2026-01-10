@@ -16,10 +16,6 @@ export const ErrorCorrection: React.FC<ErrorCorrectionProps> = ({
 }) => {
   const [inputs, setInputs] = useState<Record<string, string>>({});
 
-  // Track selected "error" words. For simplicity, we might just let user type the full corrected sentence
-  // or just the corrected word.
-  // Let's implement a mode where they type the correction for the error part.
-
   const items = quiz.errorCorrections || [];
 
   const handleInputChange = (id: string, val: string) => {

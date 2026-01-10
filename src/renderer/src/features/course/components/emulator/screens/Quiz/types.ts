@@ -32,6 +32,7 @@ export interface DictationItem {
   text?: string; // If present (and no audio), use TTS. This is the correct text.
   translate?: string;
   speed?: number; // Only used for TTS (text mode). Ignored/Invalid for audio mode.
+  ipa?: string; // IPA phonetic transcription
 }
 
 export interface ErrorCorrectionItem {

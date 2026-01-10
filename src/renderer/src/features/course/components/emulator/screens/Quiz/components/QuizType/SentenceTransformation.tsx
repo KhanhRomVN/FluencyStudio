@@ -91,78 +91,8 @@ export const SentenceTransformation: React.FC<SentenceTransformationProps> = ({ 
   // Check answer for current question
   const checkAnswer = useCallback(() => {
     if (!currentItem || !currentItem.answer) return;
-
-    // Reconstruct the full sentence from question parts and user inputs
-    // Use processed question to ensure IDs match what was rendered
     let rawQuestion = processQuestionText(currentItem.question || '');
 
-    // Based on RichTextParser.tsx, gaps are found via regex: /<\/gap id='(.*?)'>/i
-    // We will split the question string by this regex to find the text parts and the gap IDs in order.
-    // Note: The split regex in RichTextParser is: /((?:<\/gap id='.*?'>)|(?:<\/n\s*?>)|(?:<p(?:\s+(?:[^>"']|"[^"]*"|'[^']*')*)*>)|(?:<\/p>))/gi
-    // It captures the delimiter.
-
-    // Simplified split for our purpose: we only care about interleaving text and gaps.
-    // However, the JSON input provided by the user had gaps like: `</gap>` (no ID).
-    // RichTextParser explicitly looks for `id='.*?'`.
-    // IF the user input contains `</gap>` without ID, RichTextParser's regex `/<\/gap id='(.*?)'>/i` MIGHT FAIL or it skips it?
-    //
-    // Wait, the user said: "gap của SentenceTrans chỉ đơn giản là gap, ko có liên kết với gì cả"
-    // And showed JSON: `<p>She has </p></gap><p> at this company</p></gap><p>five year.</p>`
-    // The `<gap>` appears to be missing an opening tag, or `</gap>` IS the tag.
-    //
-    // If RichTextParser expects `id='...'`, then the user's JSON as shown previously:
-    // `"question": "<p>She has </p></gap><p> at this company</p></gap><p>five year.</p>"`
-    // MIGHT NOT RENDER GAPS if RichTextParser relies rigidly on `id='...'`.
-    //
-    // However, assuming the Parser works (maybe the user updated it or I missed something in regex flexibility),
-    // or assuming the user WILL provide IDs.
-    //
-    // If I use the same split logic as `RichTextParser`, I can reconstruct reliably.
-    // But `RichTextParser` has complex splitting.
-    //
-    // Let's implement a robust "Gap Filler" reconstruction:
-    // 1. We assume the text contains placeholders that render as inputs.
-    // 2. We want to replace those placeholders with the User's Input values.
-    // 3. We then strip all OTHER tags to get the plain text sentence.
-    // 4. Then we compare.
-
-    // To identify WHICH input goes WHERE, we need to know the ID of the gap at that position.
-    // If RichTextParser matches `<\/gap id='(.*?)'>`, it extracts ID.
-    // If the content lacks IDs, but `RichTextParser` magically renders them (maybe user modified local Parser?),
-    // we need to know the IDs.
-    //
-    // Let's assume the content DOES have IDs when we run this, or assume sequential IDs `gap-0`, `gap-1`?
-    // Actually, if we look at `GapFill.tsx`, it iterates regex matches to find IDs.
-    //
-    // Let's assume standard behavior: we scan the string for gap tags.
-    // Regex: `/<gap[^>]*id=['"](.*?)['"][^>]*>.*?<\/gap>|`... NO, the user format is `</gap ...>`.
-    // RichTextParser line 138: `const gapMatch = part.match(/<\/gap id='(.*?)'>/i);`
-    // This confirms it looks for `</gap id='...'>`.
-    //
-    // So if the user's JSON is `</gap>`, it won't work with the current Parser unless the user changed the parser or the JSON is just an example.
-    //
-    // Let's proceed assuming the gaps HAVE IDs, because strict reconstruction requires it.
-    // If they don't have IDs, we can match `</gap>` and assume sequential index?
-    // RichTextParser doesn't seem to support that (it expects match[1]).
-    //
-    // But wait, the user said "gap ... ko có liên kết với gì cả".
-    // This implies we rely on the USER INPUT alone.
-    //
-    // Logic:
-    // 1. Find all gap occurrences in the string.
-    // 2. Replace each occurrence with the corresponding input value.
-    //    - If we have IDs: use ID to fetch input.
-    //    - If no IDs (just `</gap>`): use index 0, 1, 2... and fetch from sorted input keys? Or just array of inputs?
-    //    But `handleInputChange` receives an ID. Where does that ID come from? `onGapFound(id)`.
-    //    So `RichTextParser` MUST satisfy finding an ID to call `onGapFound`.
-    //    If `RichTextParser` finds no ID, it likely passes `undefined` or doesn't call it.
-    //
-    //    So we MUST assume `RichTextParser` finds an ID.
-    //
-    // So, we will simply replace `<gap id='foo'>` logic in the string with `inputs['foo']`.
-
-    // Helper function to strip tags but preserve our substituted content.
-    // We already replaced gaps with values. Now strip `<p>`, `<b>`, etc.
     const stripHtml = (html: string) => {
       const doc = new DOMParser().parseFromString(html, 'text/html');
       return doc.body.textContent || '';
@@ -170,26 +100,9 @@ export const SentenceTransformation: React.FC<SentenceTransformationProps> = ({ 
 
     const inputs = currentState.gapInputs || {};
 
-    // Strategy:
-    // 1. Replace all gap tags with their user input values.
-    //    If the tag has an ID, use it.
-    //    If not, we might fail/skip.
-    //    Regex to capture ID: `<\/gap\s+id=['"]([^'"]+)['"]\s*>`
-
     let filledQuestion = rawQuestion.replace(/<\/gap\s+id=['"]([^'"]+)['"]\s*>/gi, (_match, id) => {
       return inputs[id] || '';
     });
-
-    // Also handle possible self-closing or different gap formats if needed,
-    // but the Parser relies on `</gap id='...'>`.
-    //
-    // IF the user provided JSON `</gap>` (no id), let's assume valid JSON *will* have IDs.
-    // Or we handle the "no id" case by using a counter?
-    // `RichTextParser` regex requires ID. So user MUST have IDs in real data.
-
-    // 2. Clean up any remaining tags (p, n, etc) to get pure text.
-    // Note: The user might have `</gap>` residuals if regex missed.
-    // `RichTextParser` regex is: `<\/gap id='.*?'>`.
 
     const userSentence = stripHtml(filledQuestion).replace(/\s+/g, ' ').trim();
 
@@ -237,18 +150,6 @@ export const SentenceTransformation: React.FC<SentenceTransformationProps> = ({ 
       setCurrentIndex((prev) => prev + 1);
     }
   }, [currentIndex, questions.length]);
-
-  // Get correct answer display - Unused function? Used in result display.
-  // We can keep it or inline it. The updated JSX uses in-line logic but let's keep helper if JSX used it.
-  // Actually, checking previous JSX, it used in-line logic:
-  // `{Array.isArray(currentItem.answer) ? ... : ...}`
-  // So `getCorrectAnswer` provided in the snippet is likely unused or legacy.
-  // Wait, let's look at the result display in previous code block...
-  // It used: `{getCorrectAnswer()}` in the "Correct answer:" block in one version,
-  // but "Show full correct answer(s)" comment in another.
-  // The User Request snippet shows `getCorrectAnswer` defined but unused error on line 241.
-  // So we should remove `getCorrectAnswer` if we use the list rendering in JSX, OR usage it.
-  // I will remove it and use the JSX list rendering which is better.
 
   if (questions.length === 0) {
     return (
